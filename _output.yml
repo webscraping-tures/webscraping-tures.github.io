@@ -1,0 +1,12 @@
+bookdown::gitbook:
+  config:
+    toc:
+      collapse: subsection
+      scroll_highlight: yes
+      before: |
+        Web Scraping mit R
+      after: |
+        <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+    edit: https://github.com/webscraping-tures/webscraping-tures.github.io/%s
+    download: no
+    sharing: no

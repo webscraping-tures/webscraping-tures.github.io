@@ -1,0 +1,18 @@
+--- 
+title: "Web Scraping mit R"
+author: "Jakob Tures"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+link-citations: yes
+github-repo: webscraping-tures/webscraping-tures.github.io
+---
+
+# Einführung
+
+## Was ist Web Scraping?
+
+## Was lernen wir, was nicht?
+
+## Technische Voraussetzungen
