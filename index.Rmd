@@ -13,6 +13,56 @@ github-repo: webscraping-tures/webscraping-tures.github.io
 
 ## Was ist Web Scraping?
 
+* Ziele
+  * Zugang zu Daten die wir auf klassischem Wege nicht bekommen könnten
+  * Zugang zu neuen Formen von Daten die nur im Web denkbar sind (bspw. Kundenreviews, Nutzerverhalten)
+  * Was ist möglich: Beispiele Kriesel 3C
+
+* Methoden
+  * Identifikation für unsere Fragestellung relevanter Webinhalte
+  * Zugriff auf Webinhalte aus einer Programmiersprache heraus (R, Python, etc.)
+  * Extraktion der für unsere Fragestellung relevanten Teilinhalte der Seite
+  * Säuberung und Überführung in ein für die Datenanalyse geeignetes Format -> Datenanalyse
+
+* Ethik
+  * Grundregeln, später Sitzung dazu
+
 ## Was lernen wir, was nicht?
 
+* Grundstruktur des Web
+  * HTML, XML
+  * Überblick zu anderen Bausteinen die wir in der Wildnis treffen, ohne zu tief hineinzugehen
+
+* Einführung in R
+  * Basics in R Studio
+  * Tidyverse
+    * tidy data
+    * dplyr
+    * ggplot
+    * rvest
+    * evtl. stringr
+
+* Scraping
+  * Scrapen ganzer Seiten mit rvest
+  * CSS Selectors und Developement Tools zur Identifikation des Pfades einzelner Inhalte
+    * Extraktion dieser Pfade mit rvest
+  * Evtl. gezieltes Auslesen von XML Inhalten
+  
+* Was nicht:
+  * Umgang mit dynamischen Websites, javascript, Datenbankzugriffen usw. (hier nur grober Überblick was es alles gibt und das es Wege gibt damit umzugehen -> Fortgeschrittene)
+  * Umgang mit Strings & regular expressions (Hinweis dass sie nicht darum herumkommen wenn sie den Weg weitergehen möchten, kurzer Überblick dazu wenn Zeit reicht)
+  * Scrapen mit anderen packages oder Sprachen als R + rvest (evtl. Hinweis auf weitere verbreitete Möglichkeiten)
+
+
 ## Technische Voraussetzungen
+
+* R + R Studio Installation
+  * Tutorial?
+
+* Packages:
+  * easy way: install.packages("tidyverse")
+  
+* ordentlicher Text Editor
+  * Windows: Notepad ++
+  * Mac: ?
+  * Linux: Atom

@@ -146,12 +146,81 @@ Web Scraping mit R
 <h1><span class="header-section-number">1</span> Einführung</h1>
 <div id="was-ist-web-scraping" class="section level2" number="1.1">
 <h2><span class="header-section-number">1.1</span> Was ist Web Scraping?</h2>
+<ul>
+<li>Ziele
+<ul>
+<li>Zugang zu Daten die wir auf klassischem Wege nicht bekommen könnten</li>
+<li>Zugang zu neuen Formen von Daten die nur im Web denkbar sind (bspw. Kundenreviews, Nutzerverhalten)</li>
+<li>Was ist möglich: Beispiele Kriesel 3C</li>
+</ul></li>
+<li>Methoden
+<ul>
+<li>Identifikation für unsere Fragestellung relevanter Webinhalte</li>
+<li>Zugriff auf Webinhalte aus einer Programmiersprache heraus (R, Python, etc.)</li>
+<li>Extraktion der für unsere Fragestellung relevanten Teilinhalte der Seite</li>
+<li>Säuberung und Überführung in ein für die Datenanalyse geeignetes Format -&gt; Datenanalyse</li>
+</ul></li>
+<li>Ethik
+<ul>
+<li>Grundregeln, später Sitzung dazu</li>
+</ul></li>
+</ul>
 </div>
 <div id="was-lernen-wir-was-nicht" class="section level2" number="1.2">
 <h2><span class="header-section-number">1.2</span> Was lernen wir, was nicht?</h2>
+<ul>
+<li>Grundstruktur des Web
+<ul>
+<li>HTML, XML</li>
+<li>Überblick zu anderen Bausteinen die wir in der Wildnis treffen, ohne zu tief hineinzugehen</li>
+</ul></li>
+<li>Einführung in R
+<ul>
+<li>Basics in R Studio</li>
+<li>Tidyverse
+<ul>
+<li>tidy data</li>
+<li>dplyr</li>
+<li>ggplot</li>
+<li>rvest</li>
+<li>evtl. stringr</li>
+</ul></li>
+</ul></li>
+<li>Scraping
+<ul>
+<li>Scrapen ganzer Seiten mit rvest</li>
+<li>CSS Selectors und Developement Tools zur Identifikation des Pfades einzelner Inhalte
+<ul>
+<li>Extraktion dieser Pfade mit rvest</li>
+</ul></li>
+<li>Evtl. gezieltes Auslesen von XML Inhalten</li>
+</ul></li>
+<li>Was nicht:
+<ul>
+<li>Umgang mit dynamischen Websites, javascript, Datenbankzugriffen usw. (hier nur grober Überblick was es alles gibt und das es Wege gibt damit umzugehen -&gt; Fortgeschrittene)</li>
+<li>Umgang mit Strings &amp; regular expressions (Hinweis dass sie nicht darum herumkommen wenn sie den Weg weitergehen möchten, kurzer Überblick dazu wenn Zeit reicht)</li>
+<li>Scrapen mit anderen packages oder Sprachen als R + rvest (evtl. Hinweis auf weitere verbreitete Möglichkeiten)</li>
+</ul></li>
+</ul>
 </div>
 <div id="technische-voraussetzungen" class="section level2" number="1.3">
 <h2><span class="header-section-number">1.3</span> Technische Voraussetzungen</h2>
+<ul>
+<li>R + R Studio Installation
+<ul>
+<li>Tutorial?</li>
+</ul></li>
+<li>Packages:
+<ul>
+<li>easy way: install.packages(“tidyverse”)</li>
+</ul></li>
+<li>ordentlicher Text Editor
+<ul>
+<li>Windows: Notepad ++</li>
+<li>Mac: ?</li>
+<li>Linux: Atom</li>
+</ul></li>
+</ul>
 
 </div>
 </div>
