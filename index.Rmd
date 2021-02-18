@@ -66,3 +66,6 @@ github-repo: webscraping-tures/webscraping-tures.github.io
   * Windows: Notepad ++
   * Mac: ?
   * Linux: Atom
+
+* Browser
+  * Chrome/Chromium (wegen der Developer Tools?)
