@@ -24,3 +24,8 @@ ajax
 sql
 apis
 regex
+html-struktur
+tags
+attribute
+spezielle-zeichen
+meta-raus

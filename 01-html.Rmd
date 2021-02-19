@@ -1,7 +1,42 @@
 # (PART) Basics {-}
 
-# Das Web & HTML {#html}
+# HTML als Grundbaustein des Web {#html}
 
-## Das Web
+* was passiert wenn wir eine url im browser aufrufen
+  * was öffnet sich? (oft/meist?) eine .html
+  * im fall dieser seite index.html (UP homepage bspw. das selbe)
+  * Der HTML code wird vom Browser interpretiert und visuell dargestellt
+  
+* HTML = hyper text markup language
+  * Begriff auseinandernehmen und erklären?
 
-## HTML
+## HTML Struktur
+
+### Tags
+
+* Hello World HTML
+  * \<html>
+  * \<head>
+    * \<title>
+  * \<body>
+  
+* weitere wichtige tags
+  * Foramtierung (inkl. \<br>)
+  * Struktur (\<p>, \<h1> usw)
+  * Listen
+  * Tabellen
+  
+### Attribute
+
+* generell
+* Bsp. \<a href="">
+  * =/= \<link>
+
+### Spezielle Zeichen
+
+* va. quotation, amersand, &nbsp;
+* wir erkennen sie generell an &..;
+
+### \<meta> (raus?)
+
+* was daran ist relevant für scraping?
