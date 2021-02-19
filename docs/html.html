@@ -78,12 +78,11 @@ Web Scraping mit R
 <li class="part"><span><b>I Basics</b></span></li>
 <li class="chapter" data-level="1" data-path="html.html"><a href="html.html"><i class="fa fa-check"></i><b>1</b> HTML als Grundbaustein des Web</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="html.html"><a href="html.html#html-struktur"><i class="fa fa-check"></i><b>1.1</b> HTML Struktur</a>
+<li class="chapter" data-level="1.1" data-path="html.html"><a href="html.html#html-tags"><i class="fa fa-check"></i><b>1.1</b> HTML Tags</a>
 <ul>
-<li class="chapter" data-level="1.1.1" data-path="html.html"><a href="html.html#tags"><i class="fa fa-check"></i><b>1.1.1</b> Tags</a></li>
-<li class="chapter" data-level="1.1.2" data-path="html.html"><a href="html.html#attribute"><i class="fa fa-check"></i><b>1.1.2</b> Attribute</a></li>
-<li class="chapter" data-level="1.1.3" data-path="html.html"><a href="html.html#spezielle-zeichen"><i class="fa fa-check"></i><b>1.1.3</b> Spezielle Zeichen</a></li>
-<li class="chapter" data-level="1.1.4" data-path="html.html"><a href="html.html#meta-raus"><i class="fa fa-check"></i><b>1.1.4</b> &lt;meta&gt; (raus?)</a></li>
+<li class="chapter" data-level="1.1.1" data-path="html.html"><a href="html.html#attribute"><i class="fa fa-check"></i><b>1.1.1</b> Attribute</a></li>
+<li class="chapter" data-level="1.1.2" data-path="html.html"><a href="html.html#spezielle-zeichen"><i class="fa fa-check"></i><b>1.1.2</b> Spezielle Zeichen</a></li>
+<li class="chapter" data-level="1.1.3" data-path="html.html"><a href="html.html#meta-raus"><i class="fa fa-check"></i><b>1.1.3</b> &lt;meta&gt; (raus?)</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>II R Basics &amp; Tidyverse</b></span></li>
@@ -143,25 +142,19 @@ Web Scraping mit R
             <section class="normal" id="section-">
 <div id="html" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> HTML als Grundbaustein des Web</h1>
+<p>Was passiert, wenn wir eine URL wie <a href="https://webscraping-tures.github.io" target="_blank">https://webscraping-tures.github.io</a> in einem Browser aufrufen? Wir bekommen zunächst einmal eine visuelle Darstellung der aufgerufenen Seite in unserem Browserfenster. Aus der Sicht des Nutzers einer Website, ist dies auch alles was wir wissen müssen. Unser Ziel - die Seite aufzurufen - ist an diesem Punkt bereits erreicht.</p>
+<p>Aus der Sicht des Web Scrapers, müssen wir aber verstehen, was im Hintergrund passiert.
+Die Links <a href="https://webscraping-tures.github.io" target="_blank">https://webscraping-tures.github.io</a> und <a href="https://webscraping-tures.github.io/index.html" target="_blank">https://webscraping-tures.github.io/index.html</a> sind im Ergebnis äquivalent. Denn tatsächlich wird in beiden Fällen eine HTML Datei aufgerufen, in welcher der Inhalt der Website in Form eines spezifischen Codes hinterlegt ist. Dieser Code wird von Ihrem Browser interpetiert und in eine visuelle Darstellung überführt, dem was sie aktuell vor sich sehen.</p>
+<p>Überzeugen Sie sich selbst. Mit einem Rechtsklick im Bereich dieses Texts und einem weiteren Klick auf “Seitenquelltext anzeigen” öffnet sich der HTML Code welcher dieser Seite zu Grunde liegt. Es ist an diesem Punkt völlig legitim, von der Flut aus ungewohnten Zeichen und Begriffen zunächst überfordert zu sein. Wer hätte gedacht, dass eine relativ einfache Website wie diese im Hintergrund so kompliziert sein kann? Aber die gute Nachricht ist, dass wir als Web Scraper nicht jedes Wort und Zeichen in einer HTML Datei verstehen müssen. Unser Ziel ist es die Teile einer Website zu identifizieren die für unsere Fragestellung relevant sind und diese gezielt aus dem HTML Code zu extrahieren. Dies ist möglicherweise nur eine einzelne Zeile aus einer HTML Datei mit tausenden von Zeilen. Müssen wir alle diese tausend Zeilen völlig verstehen? Nein, aber wir müssen die Struktur einer HTML Datei erfassen können, um diese eine Zeile an der wir interessiert sind auch identifizieren zu können. Bis dies soweit ist, haben wir noch ein gutes Stück Weg vor uns, am Ende dieses ersten Abschnitts werden Sie aber bereits ein grundlegendes Verständnis der Struktur und der Bestandteile eines HTML Dokuments haben und der Quelltext wird Ihnen bereits deutlich weniger “beeindruckend” erscheinen.</p>
+<div id="html-tags" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> HTML Tags</h2>
+<p>Die “Sprache” in der HTML Dateien verfasst sind, ist die <strong>Hypertext Markup Language</strong>, kurz HTML.</p>
 <ul>
-<li>was passiert wenn wir eine url im browser aufrufen
+<li><p>&lt;&gt;</p></li>
+<li><p>Inhalt der Tags</p></li>
+<li><p>Hello World HTML</p>
 <ul>
-<li>was öffnet sich? (oft/meist?) eine .html</li>
-<li>im fall dieser seite index.html (UP homepage bspw. das selbe)</li>
-<li>Der HTML code wird vom Browser interpretiert und visuell dargestellt</li>
-</ul></li>
-<li>HTML = hyper text markup language
-<ul>
-<li>Begriff auseinandernehmen und erklären?</li>
-</ul></li>
-</ul>
-<div id="html-struktur" class="section level2" number="1.1">
-<h2><span class="header-section-number">1.1</span> HTML Struktur</h2>
-<div id="tags" class="section level3" number="1.1.1">
-<h3><span class="header-section-number">1.1.1</span> Tags</h3>
-<ul>
-<li>Hello World HTML
-<ul>
+<li>&lt;!DOCTYPE html&gt;</li>
 <li>&lt;html&gt;</li>
 <li>&lt;head&gt;
 <ul>
@@ -169,17 +162,16 @@ Web Scraping mit R
 </ul></li>
 <li>&lt;body&gt;</li>
 </ul></li>
-<li>weitere wichtige tags
+<li><p>weitere wichtige tags</p>
 <ul>
-<li>Foramtierung (inkl. &lt;br&gt;)</li>
+<li>Formatierung (inkl. &lt;br&gt;)</li>
 <li>Struktur (&lt;p&gt;, &lt;h1&gt; usw)</li>
 <li>Listen</li>
 <li>Tabellen</li>
 </ul></li>
 </ul>
-</div>
-<div id="attribute" class="section level3" number="1.1.2">
-<h3><span class="header-section-number">1.1.2</span> Attribute</h3>
+<div id="attribute" class="section level3" number="1.1.1">
+<h3><span class="header-section-number">1.1.1</span> Attribute</h3>
 <ul>
 <li>generell</li>
 <li>Bsp. &lt;a href=""&gt;
@@ -188,15 +180,15 @@ Web Scraping mit R
 </ul></li>
 </ul>
 </div>
-<div id="spezielle-zeichen" class="section level3" number="1.1.3">
-<h3><span class="header-section-number">1.1.3</span> Spezielle Zeichen</h3>
+<div id="spezielle-zeichen" class="section level3" number="1.1.2">
+<h3><span class="header-section-number">1.1.2</span> Spezielle Zeichen</h3>
 <ul>
 <li>va. quotation, amersand,  </li>
 <li>wir erkennen sie generell an &amp;..;</li>
 </ul>
 </div>
-<div id="meta-raus" class="section level3" number="1.1.4">
-<h3><span class="header-section-number">1.1.4</span> &lt;meta&gt; (raus?)</h3>
+<div id="meta-raus" class="section level3" number="1.1.3">
+<h3><span class="header-section-number">1.1.3</span> &lt;meta&gt; (raus?)</h3>
 <ul>
 <li>was daran ist relevant für scraping?</li>
 </ul>

@@ -29,3 +29,4 @@ tags
 attribute
 spezielle-zeichen
 meta-raus
+html-tags
