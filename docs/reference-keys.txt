@@ -23,4 +23,3 @@ ajax
 sql
 apis
 regex
-dynamic

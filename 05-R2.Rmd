@@ -1,5 +1,0 @@
-# Transformation und Visualisierung im Tidyverse {#R2}
-
-## Transformation mit dplyr
-
-## Visualisierung mit ggplot
