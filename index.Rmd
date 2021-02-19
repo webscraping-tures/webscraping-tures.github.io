@@ -11,6 +11,8 @@ github-repo: webscraping-tures/webscraping-tures.github.io
 
 # Einführung {-}
 
+WIP!
+
 ## Was ist Web Scraping? {-}
 
 * Ziele
