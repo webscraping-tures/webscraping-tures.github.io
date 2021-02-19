@@ -1,7 +1,3 @@
 # (PART) R Basics & Tidyverse {-}
 
-# R Basics & Tidyverse Einführung {#R1}
-
-## R Basics
-
-## Tidyverse
+# R & R Studio {#R1}

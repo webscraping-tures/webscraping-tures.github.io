@@ -1,6 +1,6 @@
-# (PART) HTML {-}
+# (PART) Basics {-}
 
-# HTML {#html}
+# Das Web & HTML {#html}
 
 ## Das Web
 

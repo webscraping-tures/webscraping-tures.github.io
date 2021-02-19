@@ -1,5 +1,7 @@
-# Transformation und Visualisierung im Tidyverse {#R2}
+# Tidyverse
 
-## Transformation mit dplyr
+## Philosophie
 
-## Visualisierung mit ggplot
+## Tidy data
+
+## Pipe
