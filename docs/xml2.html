@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>8 Scraping von XML | Web Scraping mit R</title>
+  <meta name="description" content="8 Scraping von XML | Web Scraping mit R" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="8 Scraping von XML | Web Scraping mit R" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  <meta name="github-repo" content="webscraping-tures/webscraping-tures.github.io" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="8 Scraping von XML | Web Scraping mit R" />
+  
+  
+  
+
+<meta name="author" content="Jakob Tures" />
+
+
+<meta name="date" content="2021-02-19" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="projekt1.html"/>
+<link rel="next" href="projekt2.html"/>
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+Web Scraping mit R
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Einführung</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#was-ist-web-scraping"><i class="fa fa-check"></i>Was ist Web Scraping?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#was-lernen-wir-was-nicht"><i class="fa fa-check"></i>Was lernen wir, was nicht?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#technische-voraussetzungen"><i class="fa fa-check"></i>Technische Voraussetzungen</a></li>
+</ul></li>
+<li class="part"><span><b>I HTML</b></span></li>
+<li class="chapter" data-level="1" data-path="html.html"><a href="html.html"><i class="fa fa-check"></i><b>1</b> HTML</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="html.html"><a href="html.html#das-web"><i class="fa fa-check"></i><b>1.1</b> Das Web</a></li>
+<li class="chapter" data-level="1.2" data-path="html.html"><a href="html.html#html-1"><i class="fa fa-check"></i><b>1.2</b> HTML</a></li>
+</ul></li>
+<li class="part"><span><b>II R Basics &amp; Tidyverse</b></span></li>
+<li class="chapter" data-level="2" data-path="R1.html"><a href="R1.html"><i class="fa fa-check"></i><b>2</b> R Basics &amp; Tidyverse Einführung</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="R1.html"><a href="R1.html#r-basics"><i class="fa fa-check"></i><b>2.1</b> R Basics</a></li>
+<li class="chapter" data-level="2.2" data-path="R1.html"><a href="R1.html#tidyverse"><i class="fa fa-check"></i><b>2.2</b> Tidyverse</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="R2.html"><a href="R2.html"><i class="fa fa-check"></i><b>3</b> Transformation und Visualisierung im Tidyverse</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="R2.html"><a href="R2.html#transformation-mit-dplyr"><i class="fa fa-check"></i><b>3.1</b> Transformation mit dplyr</a></li>
+<li class="chapter" data-level="3.2" data-path="R2.html"><a href="R2.html#visualisierung-mit-ggplot"><i class="fa fa-check"></i><b>3.2</b> Visualisierung mit ggplot</a></li>
+</ul></li>
+<li class="part"><span><b>III Scraping</b></span></li>
+<li class="chapter" data-level="4" data-path="rvest1.html"><a href="rvest1.html"><i class="fa fa-check"></i><b>4</b> Erstes Scraping mit rvest</a></li>
+<li class="chapter" data-level="5" data-path="css.html"><a href="css.html"><i class="fa fa-check"></i><b>5</b> CSS selectors &amp; Developer Tools</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="css.html"><a href="css.html#css-selectors"><i class="fa fa-check"></i><b>5.1</b> CSS selectors</a></li>
+<li class="chapter" data-level="5.2" data-path="css.html"><a href="css.html#developer-tools"><i class="fa fa-check"></i><b>5.2</b> Developer Tools</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="rvest2.html"><a href="rvest2.html"><i class="fa fa-check"></i><b>6</b> Fortgeschrittenes Scraping mit rvest</a></li>
+<li class="chapter" data-level="7" data-path="projekt1.html"><a href="projekt1.html"><i class="fa fa-check"></i><b>7</b> Beispielprojekt HTML Scraping</a></li>
+<li class="chapter" data-level="8" data-path="xml2.html"><a href="xml2.html"><i class="fa fa-check"></i><b>8</b> Scraping von XML</a></li>
+<li class="chapter" data-level="9" data-path="projekt2.html"><a href="projekt2.html"><i class="fa fa-check"></i><b>9</b> Beispielprojekt XML Scraping</a></li>
+<li class="chapter" data-level="10" data-path="ethik.html"><a href="ethik.html"><i class="fa fa-check"></i><b>10</b> Ethik &amp; good practice</a></li>
+<li class="part"><span><b>IV Weiterführende Techniken</b></span></li>
+<li class="chapter" data-level="11" data-path="web.html"><a href="web.html"><i class="fa fa-check"></i><b>11</b> Weitere Formate im WWW</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="web.html"><a href="web.html#xml"><i class="fa fa-check"></i><b>11.1</b> XML</a></li>
+<li class="chapter" data-level="11.2" data-path="web.html"><a href="web.html#json"><i class="fa fa-check"></i><b>11.2</b> JSON</a></li>
+<li class="chapter" data-level="11.3" data-path="web.html"><a href="web.html#ajax"><i class="fa fa-check"></i><b>11.3</b> AJAX</a></li>
+<li class="chapter" data-level="11.4" data-path="web.html"><a href="web.html#sql"><i class="fa fa-check"></i><b>11.4</b> SQL</a></li>
+<li class="chapter" data-level="11.5" data-path="web.html"><a href="web.html#apis"><i class="fa fa-check"></i><b>11.5</b> APIs</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="regex.html"><a href="regex.html"><i class="fa fa-check"></i><b>12</b> Regular Expressions</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Web Scraping mit R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="xml2" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> Scraping von XML</h1>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="projekt1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="projekt2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/webscraping-tures/webscraping-tures.github.io/08-xml.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+}
+});
+});
+</script>
+
+</body>
+
+</html>
