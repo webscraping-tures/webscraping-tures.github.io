@@ -1,2 +1,10 @@
 book_filename: "webscraping-R"
 output_dir: "docs"
+language:
+  label:
+    fig: 'Abb. '
+    tab: 'Tab. '
+  ui:
+    edit: Edit
+    chapter_name: ''
+    appendix_name: ''

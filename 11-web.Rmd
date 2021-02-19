@@ -1,0 +1,13 @@
+# (PART) Weiterführende Techniken {-}
+
+# Weitere Formate im WWW {#web}
+
+## XML
+
+## JSON
+
+## AJAX
+
+## SQL
+
+## APIs

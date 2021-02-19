@@ -9,9 +9,9 @@ link-citations: yes
 github-repo: webscraping-tures/webscraping-tures.github.io
 ---
 
-# Einführung
+# Einführung {-}
 
-## Was ist Web Scraping?
+## Was ist Web Scraping? {-}
 
 * Ziele
   * Zugang zu Daten die wir auf klassischem Wege nicht bekommen könnten
@@ -27,7 +27,7 @@ github-repo: webscraping-tures/webscraping-tures.github.io
 * Ethik
   * Grundregeln, später Sitzung dazu
 
-## Was lernen wir, was nicht?
+## Was lernen wir, was nicht? {-}
 
 * Grundstruktur des Web
   * HTML, XML
@@ -54,7 +54,7 @@ github-repo: webscraping-tures/webscraping-tures.github.io
   * Scrapen mit anderen packages oder Sprachen als R + rvest (evtl. Hinweis auf weitere verbreitete Möglichkeiten)
 
 
-## Technische Voraussetzungen
+## Technische Voraussetzungen {-}
 
 * R + R Studio Installation
   * Tutorial?

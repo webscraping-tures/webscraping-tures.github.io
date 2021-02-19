@@ -1,4 +1,4 @@
-# (PART) Web {-}
+# (PART) HTML {-}
 
 # HTML {#html}
 

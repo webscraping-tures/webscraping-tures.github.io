@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Web Scraping mit R</title>
-  <meta name="description" content="Web Scraping mit R" />
+  <title>7 Beispielprojekt HTML Scraping | Web Scraping mit R</title>
+  <meta name="description" content="7 Beispielprojekt HTML Scraping | Web Scraping mit R" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Web Scraping mit R" />
+  <meta property="og:title" content="7 Beispielprojekt HTML Scraping | Web Scraping mit R" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="webscraping-tures/webscraping-tures.github.io" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Web Scraping mit R" />
+  <meta name="twitter:title" content="7 Beispielprojekt HTML Scraping | Web Scraping mit R" />
   
   
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="html.html"/>
+<link rel="prev" href="rvest2.html"/>
+<link rel="next" href="xml2.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -135,107 +135,17 @@ Web Scraping mit R
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Web Scraping mit R</h1>
-<p class="author"><em>Jakob Tures</em></p>
-<p class="date"><em>2021-02-19</em></p>
-</div>
-<div id="einführung" class="section level1 unnumbered">
-<h1>Einführung</h1>
-<div id="was-ist-web-scraping" class="section level2 unnumbered">
-<h2>Was ist Web Scraping?</h2>
-<ul>
-<li>Ziele
-<ul>
-<li>Zugang zu Daten die wir auf klassischem Wege nicht bekommen könnten</li>
-<li>Zugang zu neuen Formen von Daten die nur im Web denkbar sind (bspw. Kundenreviews, Nutzerverhalten)</li>
-<li>Was ist möglich: Beispiele Kriesel 3C</li>
-</ul></li>
-<li>Methoden
-<ul>
-<li>Identifikation für unsere Fragestellung relevanter Webinhalte</li>
-<li>Zugriff auf Webinhalte aus einer Programmiersprache heraus (R, Python, etc.)</li>
-<li>Extraktion der für unsere Fragestellung relevanten Teilinhalte der Seite</li>
-<li>Säuberung und Überführung in ein für die Datenanalyse geeignetes Format -&gt; Datenanalyse</li>
-</ul></li>
-<li>Ethik
-<ul>
-<li>Grundregeln, später Sitzung dazu</li>
-</ul></li>
-</ul>
-</div>
-<div id="was-lernen-wir-was-nicht" class="section level2 unnumbered">
-<h2>Was lernen wir, was nicht?</h2>
-<ul>
-<li>Grundstruktur des Web
-<ul>
-<li>HTML, XML</li>
-<li>Überblick zu anderen Bausteinen die wir in der Wildnis treffen, ohne zu tief hineinzugehen</li>
-</ul></li>
-<li>Einführung in R
-<ul>
-<li>Basics in R Studio</li>
-<li>Tidyverse
-<ul>
-<li>tidy data</li>
-<li>dplyr</li>
-<li>ggplot</li>
-<li>rvest</li>
-<li>evtl. stringr</li>
-</ul></li>
-</ul></li>
-<li>Scraping
-<ul>
-<li>Scrapen ganzer Seiten mit rvest</li>
-<li>CSS Selectors und Developement Tools zur Identifikation des Pfades einzelner Inhalte
-<ul>
-<li>Extraktion dieser Pfade mit rvest</li>
-</ul></li>
-<li>Evtl. gezieltes Auslesen von XML Inhalten</li>
-</ul></li>
-<li>Was nicht:
-<ul>
-<li>Umgang mit dynamischen Websites, javascript, Datenbankzugriffen usw. (hier nur grober Überblick was es alles gibt und das es Wege gibt damit umzugehen -&gt; Fortgeschrittene)</li>
-<li>Umgang mit Strings &amp; regular expressions (Hinweis dass sie nicht darum herumkommen wenn sie den Weg weitergehen möchten, kurzer Überblick dazu wenn Zeit reicht)</li>
-<li>Scrapen mit anderen packages oder Sprachen als R + rvest (evtl. Hinweis auf weitere verbreitete Möglichkeiten)</li>
-</ul></li>
-</ul>
-</div>
-<div id="technische-voraussetzungen" class="section level2 unnumbered">
-<h2>Technische Voraussetzungen</h2>
-<ul>
-<li>R + R Studio Installation
-<ul>
-<li>Tutorial?</li>
-</ul></li>
-<li>Packages:
-<ul>
-<li>easy way: install.packages(“tidyverse”)</li>
-</ul></li>
-<li>ordentlicher Text Editor
-<ul>
-<li>Windows: Notepad ++</li>
-<li>Mac: ?</li>
-<li>Linux: Atom</li>
-</ul></li>
-<li>Browser
-<ul>
-<li>Chrome/Chromium (wegen der Developer Tools?)</li>
-</ul></li>
-</ul>
+<div id="projekt1" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> Beispielprojekt HTML Scraping</h1>
 
 </div>
-</div>
-
-
-
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="html.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="rvest2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="xml2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -257,7 +167,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/webscraping-tures/webscraping-tures.github.io/index.Rmd",
+"link": "https://github.com/webscraping-tures/webscraping-tures.github.io/07-projekt.Rmd",
 "text": "Edit"
 },
 "history": {
