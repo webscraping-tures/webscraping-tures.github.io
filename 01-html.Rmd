@@ -2,7 +2,7 @@
 
 # HTML als Grundbaustein des Web {#html}
 
-Was passiert, wenn wir eine URL wie <https://webscraping-tures.github.io>{target="_blank"} in einem Browser aufrufen? Wir bekommen zunächst einmal eine visuelle Darstellung der aufgerufenen Seite in unserem Browserfenster. Aus der Sicht des Nutzers einer Website, ist dies auch alles was wir wissen müssen. Unser Ziel - die Seite aufzurufen - ist an diesem Punkt bereits erreicht. 
+Was passiert, wenn wir eine URL wie <https://webscraping-tures.github.io>{target="_blank"} in einem Browser aufrufen? Wir bekommen zunächst einmal eine visuelle Darstellung der aufgerufenen Seite in unserem Browserfenster. Aus der Sicht des Nutzers einer Website, ist dies auch alles was wir wissen müssen. Unser Ziel -- die Seite aufzurufen -- ist an diesem Punkt bereits erreicht. 
 
 Aus der Sicht des Web Scrapers, müssen wir aber verstehen, was im Hintergrund passiert. 
 Die Links <https://webscraping-tures.github.io>{target="_blank"} und <https://webscraping-tures.github.io/index.html>{target="_blank"} sind im Ergebnis äquivalent. Denn tatsächlich wird in beiden Fällen eine HTML Datei aufgerufen, in welcher der Inhalt der Website in Form eines spezifischen Codes hinterlegt ist. Dieser Code wird von Ihrem Browser interpetiert und in eine visuelle Darstellung überführt, dem was sie aktuell vor sich sehen.
@@ -13,27 +13,65 @@ Die Links <https://webscraping-tures.github.io>{target="_blank"} und <https://we
 
 ## HTML Tags
 
-Die "Sprache" in der HTML Dateien verfasst sind, ist die **Hypertext Markup Language**, kurz HTML. 
+Die "Sprache" in der HTML Dateien verfasst sind, ist die **Hypertext Markup Language**, kurz HTML. Die Grundbausteine dieser Sprache, die "Vokabeln", sind die sogenannten **Tags**. Begriffe die unter anderem dazu dienen, das HTML Dokument zu strukturieren, den Text zu formatieren, Links und Bilder einzufügen oder Listen und Tabellen zu erzeugen. Der Browser kennt die Bedeutung dieser Begriffe, kann sie interpretieren und die Website entsprechend der in den HTML Tags codierten Anweisungen visuell darstellen. Wie jede Sprache in der IT-Welt, folgt auch HTML dabei einer bestimmten "Grammatik", der sogenannten **Syntax**. Glücklicherweise, fällt diese im Falle von HTML sehr einfach aus. Die für uns zentralen Tags und Sytaxregeln, werden im Folgendne genauer betrachtet.
+
+Betrachten Sie folgendes Beispiel:
+
+```
+<b>Hello World!</b>
+```
+
+`<b>` ist ein Tag. Das b steht hier für *bold*, also fettgedruckt im Deutschen Sprachraum.
+Tags folgen stets dem selben Muster. Sie werden mit einem `<` begonnen, dann folgt der Name des Tags -- `b` -- und sie werden mit einem `>` beendet.
+Wichtig ist dabei, dass ein so geöffneter Tag im Normalfall auch erneut geschlossen werden muss. Dazu wird der selbe Tag erneut auf die selbe Art geschrieben wie der öffnende Tag, allerdings mit einem *forward slash* direkt vor dem Namen des Tags. In diesem Beispiel also, `</b>`. Alles was von öffnendem und schließendem Tag im HTML Dokument umfasst wird, wird entsprechend der Bedeutung des Tags vom Browser interpretiert.
+
+Mit diesem Wissen, könnten wir schon eine erste Idee entwickeln, was das obige Beispiel bewirkt. Der Tag `<b>` steht für *fettgedruckt* und öffnender und schließender Tag `<b>...</b>` umfassen den Text `Hello World!`. Dieser wird entsprechend der Bedeutung des Tags interpretiert, also als fettgedruckt dargestellt:
+
+<b>Hello World!</b>
 
 
-* \<>
+### hello_world.html
 
-* Inhalt der Tags
+Betrachten wir nun ein erstes vollständiges HTML Dokument:
 
-* Hello World HTML
-  * \<!DOCTYPE html>
-  * \<html>
-  * \<head>
-    * \<title>
-  * \<body>
+```
+<!DOCTYPE html>
 
+<html>
+  <head>
+    <title>Hello World!</title>
+  </head>
+  <body>
+    <b>Hello World!</b>
+  </body>
+</html>
+```
+
+Genau dieses Dokument können Sie unter <https://webscraping-tures.github.io/hello_world.html>{target="_blank"} selbst im Browser betrachten. Lassen Sie uns die einzelnen Bestandteile betrachten:
+
+Die erste Zeile, die *document type declaration*, `<!DOCTYPE html>` unterrichtet den Browser darüber, welche HTML Version in dem Dokument eingesetzt wurde. `<!DOCTYPE HTML>` steht dabei für den aktuellen Standard HTML5. Wurde eine ältere HTML Version verwendet, kann dies an dieser Stelle deklariert werden um eine korrekte visuelle Repräsentation -- trotz möglicher Veränderungen oder dem Wegfall bestimmter Funktionen im aktuellen Standard -- sicherzustellen. Aus Sicht des Web Scrapers spielt die HTML Version aber im Normalfall keine Rolle. Interessanterweise bildet der `<!DOCTYPE html>` Tag eine der wenigen Ausnahmen von der Regel, dass ein einmal geöffneter Tag auch wieder geschlossen werden muss. Dies ist hier nicht nötig.
+
+Der eigentliche Inhalt des HTML Dokuments beginnt in Zeile 3 mit dem `<html>` Tag. Dieser wird erst in der letzten Zeile wieder geschlossen und umfasst somit den gesamten Inhalt des Dokuments. Der Tag teilt dabei dem Browser mit, dass alles was durch ihn umschlossen wird, HTML ist. 
+
+Als nächstes folgt der Tag `<head>`. Alles was durch ihn umfasst wird, ist noch nicht Teil des Inhalts den wir im Browserfenster sehen. Hier werden in der Praxis vor allem Meta-Informationen hinterlegt -- mehr dazu unter \@ref(head) -- sowie erweiterte Funktionalitäten (JavaScript) und Designentscheidungen (Cascading Style Sheets -- CSS) definiert oder aus externen Quellen eingebunden. Die beiden letzten Punkte sollen uns in dieser Einführung in das Web Scraping vorerst nicht weiter ablenken, wir sollten aber Wissen, dass Verweise auf .js und .css Dateien im `<head>` Tag auftauchen können und wir diese zunächst einmal selbstbewusst ignorieren können.
+
+In unserem Beispiel umfasst der `<head>` Tag auschschließlich einen weiteren Tag namens `<title>`, welcher wiederum den Text `Hello World!` einschließt. Der `<title>` Tag bestimmt, was wir in der Titelleise unseres Browser sehen, hier *Hello World!*.
+
+Alles was der `<body>` Tag umfasst, beschreibt endlich den Inhalt, den wir im Browserfenster sehen können. In diesem einfachen Beispiel ist nur eine Zeile enthalten. Der bereits bekannte `<b>`Tag umfasst den Text `Hello World!` womit uns dieser fettgedruckt im Browserfenster dargestellt wird.
+
+Damit kennen Sie nun bereits die Grundstruktur jeder HTML Datei. 
+
+Noch eine Anmerkung zur technischen Seite: HTML Dokumente lassen sich grundsätzlich in jedem beliebigen Editor per Hand schreiben und müssen mit der Endung *.html* abgespeichert werden. Sie können dies testen indem Sie selbst einen beliebigen Texteditor starten, den obigen HTML Code kopieren, die Datei mit der Endung *.html* abspeichern und in einem Browser ihrer Wahl öffnen. Allerdings werden Websites heute in Normalfall nicht mehr per hand geschrieben da dies bei komplexeren Seiten nicht nur schwierig sondern auch sehr zeitintensiv würde. Eine vielzahl professioneller Tools und Unternehmen bieten inzwischen sehr viel effizientere Wege um Websites zu gestalten. So habe Ich die Seite die Sie gerade betrachten direkt in R Studio mit Hilfe des package "bookdown" verfasst, welches mir den Großteil der Layoutentscheidungen abnehmen konnte, so dass der Fokus meiner Arbeit auf den Inhalt der Seite gerichtet werden konnte.
+
+
+### Wichtige Tags
 * weitere wichtige tags
   * Formatierung (inkl. \<br>)
   * Struktur (\<p>, \<h1> usw)
   * Listen
   * Tabellen
   
-### Attribute
+### Attribute {#attribute}
 
 * generell
 * Bsp. \<a href="">
@@ -44,6 +82,6 @@ Die "Sprache" in der HTML Dateien verfasst sind, ist die **Hypertext Markup Lang
 * va. quotation, amersand, &nbsp;
 * wir erkennen sie generell an &..;
 
-### \<meta> (raus?)
+### \<head> {#head}
 
 * was daran ist relevant für scraping?

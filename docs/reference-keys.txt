@@ -1,6 +1,10 @@
 html
-das-web
-html-1
+html-tags
+hello_world.html
+wichtige-tags
+attribute
+spezielle-zeichen
+head
 R1
 tidyverse
 philosophie
@@ -24,9 +28,3 @@ ajax
 sql
 apis
 regex
-html-struktur
-tags
-attribute
-spezielle-zeichen
-meta-raus
-html-tags

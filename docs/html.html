@@ -24,7 +24,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2021-02-19" />
+<meta name="date" content="2021-02-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -80,9 +80,11 @@ Web Scraping mit R
 <ul>
 <li class="chapter" data-level="1.1" data-path="html.html"><a href="html.html#html-tags"><i class="fa fa-check"></i><b>1.1</b> HTML Tags</a>
 <ul>
-<li class="chapter" data-level="1.1.1" data-path="html.html"><a href="html.html#attribute"><i class="fa fa-check"></i><b>1.1.1</b> Attribute</a></li>
-<li class="chapter" data-level="1.1.2" data-path="html.html"><a href="html.html#spezielle-zeichen"><i class="fa fa-check"></i><b>1.1.2</b> Spezielle Zeichen</a></li>
-<li class="chapter" data-level="1.1.3" data-path="html.html"><a href="html.html#meta-raus"><i class="fa fa-check"></i><b>1.1.3</b> &lt;meta&gt; (raus?)</a></li>
+<li class="chapter" data-level="1.1.1" data-path="html.html"><a href="html.html#hello_world.html"><i class="fa fa-check"></i><b>1.1.1</b> hello_world.html</a></li>
+<li class="chapter" data-level="1.1.2" data-path="html.html"><a href="html.html#wichtige-tags"><i class="fa fa-check"></i><b>1.1.2</b> Wichtige Tags</a></li>
+<li class="chapter" data-level="1.1.3" data-path="html.html"><a href="html.html#attribute"><i class="fa fa-check"></i><b>1.1.3</b> Attribute</a></li>
+<li class="chapter" data-level="1.1.4" data-path="html.html"><a href="html.html#spezielle-zeichen"><i class="fa fa-check"></i><b>1.1.4</b> Spezielle Zeichen</a></li>
+<li class="chapter" data-level="1.1.5" data-path="html.html"><a href="html.html#head"><i class="fa fa-check"></i><b>1.1.5</b> &lt;head&gt;</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>II R Basics &amp; Tidyverse</b></span></li>
@@ -142,27 +144,46 @@ Web Scraping mit R
             <section class="normal" id="section-">
 <div id="html" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> HTML als Grundbaustein des Web</h1>
-<p>Was passiert, wenn wir eine URL wie <a href="https://webscraping-tures.github.io" target="_blank">https://webscraping-tures.github.io</a> in einem Browser aufrufen? Wir bekommen zunächst einmal eine visuelle Darstellung der aufgerufenen Seite in unserem Browserfenster. Aus der Sicht des Nutzers einer Website, ist dies auch alles was wir wissen müssen. Unser Ziel - die Seite aufzurufen - ist an diesem Punkt bereits erreicht.</p>
+<p>Was passiert, wenn wir eine URL wie <a href="https://webscraping-tures.github.io" target="_blank">https://webscraping-tures.github.io</a> in einem Browser aufrufen? Wir bekommen zunächst einmal eine visuelle Darstellung der aufgerufenen Seite in unserem Browserfenster. Aus der Sicht des Nutzers einer Website, ist dies auch alles was wir wissen müssen. Unser Ziel – die Seite aufzurufen – ist an diesem Punkt bereits erreicht.</p>
 <p>Aus der Sicht des Web Scrapers, müssen wir aber verstehen, was im Hintergrund passiert.
 Die Links <a href="https://webscraping-tures.github.io" target="_blank">https://webscraping-tures.github.io</a> und <a href="https://webscraping-tures.github.io/index.html" target="_blank">https://webscraping-tures.github.io/index.html</a> sind im Ergebnis äquivalent. Denn tatsächlich wird in beiden Fällen eine HTML Datei aufgerufen, in welcher der Inhalt der Website in Form eines spezifischen Codes hinterlegt ist. Dieser Code wird von Ihrem Browser interpetiert und in eine visuelle Darstellung überführt, dem was sie aktuell vor sich sehen.</p>
 <p>Überzeugen Sie sich selbst. Mit einem Rechtsklick im Bereich dieses Texts und einem weiteren Klick auf “Seitenquelltext anzeigen” öffnet sich der HTML Code welcher dieser Seite zu Grunde liegt. Es ist an diesem Punkt völlig legitim, von der Flut aus ungewohnten Zeichen und Begriffen zunächst überfordert zu sein. Wer hätte gedacht, dass eine relativ einfache Website wie diese im Hintergrund so kompliziert sein kann? Aber die gute Nachricht ist, dass wir als Web Scraper nicht jedes Wort und Zeichen in einer HTML Datei verstehen müssen. Unser Ziel ist es die Teile einer Website zu identifizieren die für unsere Fragestellung relevant sind und diese gezielt aus dem HTML Code zu extrahieren. Dies ist möglicherweise nur eine einzelne Zeile aus einer HTML Datei mit tausenden von Zeilen. Müssen wir alle diese tausend Zeilen völlig verstehen? Nein, aber wir müssen die Struktur einer HTML Datei erfassen können, um diese eine Zeile an der wir interessiert sind auch identifizieren zu können. Bis dies soweit ist, haben wir noch ein gutes Stück Weg vor uns, am Ende dieses ersten Abschnitts werden Sie aber bereits ein grundlegendes Verständnis der Struktur und der Bestandteile eines HTML Dokuments haben und der Quelltext wird Ihnen bereits deutlich weniger “beeindruckend” erscheinen.</p>
 <div id="html-tags" class="section level2" number="1.1">
 <h2><span class="header-section-number">1.1</span> HTML Tags</h2>
-<p>Die “Sprache” in der HTML Dateien verfasst sind, ist die <strong>Hypertext Markup Language</strong>, kurz HTML.</p>
+<p>Die “Sprache” in der HTML Dateien verfasst sind, ist die <strong>Hypertext Markup Language</strong>, kurz HTML. Die Grundbausteine dieser Sprache, die “Vokabeln”, sind die sogenannten <strong>Tags</strong>. Begriffe die unter anderem dazu dienen, das HTML Dokument zu strukturieren, den Text zu formatieren, Links und Bilder einzufügen oder Listen und Tabellen zu erzeugen. Der Browser kennt die Bedeutung dieser Begriffe, kann sie interpretieren und die Website entsprechend der in den HTML Tags codierten Anweisungen visuell darstellen. Wie jede Sprache in der IT-Welt, folgt auch HTML dabei einer bestimmten “Grammatik”, der sogenannten <strong>Syntax</strong>. Glücklicherweise, fällt diese im Falle von HTML sehr einfach aus. Die für uns zentralen Tags und Sytaxregeln, werden im Folgendne genauer betrachtet.</p>
+<p>Betrachten Sie folgendes Beispiel:</p>
+<pre><code>&lt;b&gt;Hello World!&lt;/b&gt;</code></pre>
+<p><code>&lt;b&gt;</code> ist ein Tag. Das b steht hier für <em>bold</em>, also fettgedruckt im Deutschen Sprachraum.
+Tags folgen stets dem selben Muster. Sie werden mit einem <code>&lt;</code> begonnen, dann folgt der Name des Tags – <code>b</code> – und sie werden mit einem <code>&gt;</code> beendet.
+Wichtig ist dabei, dass ein so geöffneter Tag im Normalfall auch erneut geschlossen werden muss. Dazu wird der selbe Tag erneut auf die selbe Art geschrieben wie der öffnende Tag, allerdings mit einem <em>forward slash</em> direkt vor dem Namen des Tags. In diesem Beispiel also, <code>&lt;/b&gt;</code>. Alles was von öffnendem und schließendem Tag im HTML Dokument umfasst wird, wird entsprechend der Bedeutung des Tags vom Browser interpretiert.</p>
+<p>Mit diesem Wissen, könnten wir schon eine erste Idee entwickeln, was das obige Beispiel bewirkt. Der Tag <code>&lt;b&gt;</code> steht für <em>fettgedruckt</em> und öffnender und schließender Tag <code>&lt;b&gt;...&lt;/b&gt;</code> umfassen den Text <code>Hello World!</code>. Dieser wird entsprechend der Bedeutung des Tags interpretiert, also als fettgedruckt dargestellt:</p>
+<p><b>Hello World!</b></p>
+<div id="hello_world.html" class="section level3" number="1.1.1">
+<h3><span class="header-section-number">1.1.1</span> hello_world.html</h3>
+<p>Betrachten wir nun ein erstes vollständiges HTML Dokument:</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Hello World!&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;b&gt;Hello World!&lt;/b&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<p>Genau dieses Dokument können Sie unter <a href="https://webscraping-tures.github.io/hello_world.html" target="_blank">https://webscraping-tures.github.io/hello_world.html</a> selbst im Browser betrachten. Lassen Sie uns die einzelnen Bestandteile betrachten:</p>
+<p>Die erste Zeile, die <em>document type declaration</em>, <code>&lt;!DOCTYPE html&gt;</code> unterrichtet den Browser darüber, welche HTML Version in dem Dokument eingesetzt wurde. <code>&lt;!DOCTYPE HTML&gt;</code> steht dabei für den aktuellen Standard HTML5. Wurde eine ältere HTML Version verwendet, kann dies an dieser Stelle deklariert werden um eine korrekte visuelle Repräsentation – trotz möglicher Veränderungen oder dem Wegfall bestimmter Funktionen im aktuellen Standard – sicherzustellen. Aus Sicht des Web Scrapers spielt die HTML Version aber im Normalfall keine Rolle. Interessanterweise bildet der <code>&lt;!DOCTYPE html&gt;</code> Tag eine der wenigen Ausnahmen von der Regel, dass ein einmal geöffneter Tag auch wieder geschlossen werden muss. Dies ist hier nicht nötig.</p>
+<p>Der eigentliche Inhalt des HTML Dokuments beginnt in Zeile 3 mit dem <code>&lt;html&gt;</code> Tag. Dieser wird erst in der letzten Zeile wieder geschlossen und umfasst somit den gesamten Inhalt des Dokuments. Der Tag teilt dabei dem Browser mit, dass alles was durch ihn umschlossen wird, HTML ist.</p>
+<p>Als nächstes folgt der Tag <code>&lt;head&gt;</code>. Alles was durch ihn umfasst wird, ist noch nicht Teil des Inhalts den wir im Browserfenster sehen. Hier werden in der Praxis vor allem Meta-Informationen hinterlegt – mehr dazu unter <a href="html.html#head">1.1.5</a> – sowie erweiterte Funktionalitäten (JavaScript) und Designentscheidungen (Cascading Style Sheets – CSS) definiert oder aus externen Quellen eingebunden. Die beiden letzten Punkte sollen uns in dieser Einführung in das Web Scraping vorerst nicht weiter ablenken, wir sollten aber Wissen, dass Verweise auf .js und .css Dateien im <code>&lt;head&gt;</code> Tag auftauchen können und wir diese zunächst einmal selbstbewusst ignorieren können.</p>
+<p>In unserem Beispiel umfasst der <code>&lt;head&gt;</code> Tag auschschließlich einen weiteren Tag namens <code>&lt;title&gt;</code>, welcher wiederum den Text <code>Hello World!</code> einschließt. Der <code>&lt;title&gt;</code> Tag bestimmt, was wir in der Titelleise unseres Browser sehen, hier <em>Hello World!</em>.</p>
+<p>Alles was der <code>&lt;body&gt;</code> Tag umfasst, beschreibt endlich den Inhalt, den wir im Browserfenster sehen können. In diesem einfachen Beispiel ist nur eine Zeile enthalten. Der bereits bekannte <code>&lt;b&gt;</code>Tag umfasst den Text <code>Hello World!</code> womit uns dieser fettgedruckt im Browserfenster dargestellt wird.</p>
+<p>Damit kennen Sie nun bereits die Grundstruktur jeder HTML Datei.</p>
+<p>Noch eine Anmerkung zur technischen Seite: HTML Dokumente lassen sich grundsätzlich in jedem beliebigen Editor per Hand schreiben und müssen mit der Endung <em>.html</em> abgespeichert werden. Sie können dies testen indem Sie selbst einen beliebigen Texteditor starten, den obigen HTML Code kopieren, die Datei mit der Endung <em>.html</em> abspeichern und in einem Browser ihrer Wahl öffnen. Allerdings werden Websites heute in Normalfall nicht mehr per hand geschrieben da dies bei komplexeren Seiten nicht nur schwierig sondern auch sehr zeitintensiv würde. Eine vielzahl professioneller Tools und Unternehmen bieten inzwischen sehr viel effizientere Wege um Websites zu gestalten. So habe Ich die Seite die Sie gerade betrachten direkt in R Studio mit Hilfe des package “bookdown” verfasst, welches mir den Großteil der Layoutentscheidungen abnehmen konnte, so dass der Fokus meiner Arbeit auf den Inhalt der Seite gerichtet werden konnte.</p>
+</div>
+<div id="wichtige-tags" class="section level3" number="1.1.2">
+<h3><span class="header-section-number">1.1.2</span> Wichtige Tags</h3>
 <ul>
-<li><p>&lt;&gt;</p></li>
-<li><p>Inhalt der Tags</p></li>
-<li><p>Hello World HTML</p>
-<ul>
-<li>&lt;!DOCTYPE html&gt;</li>
-<li>&lt;html&gt;</li>
-<li>&lt;head&gt;
-<ul>
-<li>&lt;title&gt;</li>
-</ul></li>
-<li>&lt;body&gt;</li>
-</ul></li>
-<li><p>weitere wichtige tags</p>
+<li>weitere wichtige tags
 <ul>
 <li>Formatierung (inkl. &lt;br&gt;)</li>
 <li>Struktur (&lt;p&gt;, &lt;h1&gt; usw)</li>
@@ -170,8 +191,9 @@ Die Links <a href="https://webscraping-tures.github.io" target="_blank">https://
 <li>Tabellen</li>
 </ul></li>
 </ul>
-<div id="attribute" class="section level3" number="1.1.1">
-<h3><span class="header-section-number">1.1.1</span> Attribute</h3>
+</div>
+<div id="attribute" class="section level3" number="1.1.3">
+<h3><span class="header-section-number">1.1.3</span> Attribute</h3>
 <ul>
 <li>generell</li>
 <li>Bsp. &lt;a href=""&gt;
@@ -180,15 +202,15 @@ Die Links <a href="https://webscraping-tures.github.io" target="_blank">https://
 </ul></li>
 </ul>
 </div>
-<div id="spezielle-zeichen" class="section level3" number="1.1.2">
-<h3><span class="header-section-number">1.1.2</span> Spezielle Zeichen</h3>
+<div id="spezielle-zeichen" class="section level3" number="1.1.4">
+<h3><span class="header-section-number">1.1.4</span> Spezielle Zeichen</h3>
 <ul>
 <li>va. quotation, amersand,  </li>
 <li>wir erkennen sie generell an &amp;..;</li>
 </ul>
 </div>
-<div id="meta-raus" class="section level3" number="1.1.3">
-<h3><span class="header-section-number">1.1.3</span> &lt;meta&gt; (raus?)</h3>
+<div id="head" class="section level3" number="1.1.5">
+<h3><span class="header-section-number">1.1.5</span> &lt;head&gt;</h3>
 <ul>
 <li>was daran ist relevant für scraping?</li>
 </ul>
