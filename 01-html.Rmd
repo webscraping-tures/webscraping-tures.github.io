@@ -270,17 +270,17 @@ Noch ein Hinweis, der Tag `<link>` ist nicht mit `<a>` zu verwechseln und dient 
 
 #### Bilder
 
-Bilder und Grafiken werden in HTML mit `<img>` eingebunden, ein weitere Tag der nicht explizit geschlossen werden muss. Damit der Browser auch weiß, welches Bild eingebunden werden soll, wird dies über das `src` (*source*) Attribut des Tags festgelegt. So bindet `<img src="webscraping-tures.github.io/docs/tures.png">` folgendes Bild ein:
+Bilder und Grafiken werden in HTML mit `<img>` eingebunden, ein weitere Tag der nicht explizit geschlossen werden muss. Damit der Browser auch weiß, welches Bild eingebunden werden soll, wird dies über das `src` (*source*) Attribut des Tags festgelegt. So bindet `<img src="webscraping-tures.github.io/tures.png">` folgendes Bild ein:
 
-<img src="webscraping-tures.github.io/docs/tures.png">
+<img src="webscraping-tures.github.io/tures.png">
 
-Über weitere Attribute ist es beispielsweise auch möglich, die Größe des Bildes in Pixeln anzupassen. `<img src="webscraping-tures.github.io/docs/tures.png" width="100" height="100">`
+Über weitere Attribute ist es beispielsweise auch möglich, die Größe des Bildes in Pixeln anzupassen. `<img src="webscraping-tures.github.io/tures.png" width="100" height="100">`
 
-<img src="webscraping-tures.github.io/docs/tures.png" width="100" height="100">
+<img src="webscraping-tures.github.io/tures.png" width="100" height="100">
 
-Bilder können auch mit Links kombiniert werden. So definiert `<a href="https://www.uni-potsdam.de/soziologie-methoden/mitarbeiter.php" target="_blank"><img src="webscraping-tures.github.io/docs/tures.png"></a>` das Bild als Link, womit ein Klick auf das Bild Sie zu dem angegebenen Link führt:
+Bilder können auch mit Links kombiniert werden. So definiert `<a href="https://www.uni-potsdam.de/soziologie-methoden/mitarbeiter.php" target="_blank"><img src="webscraping-tures.github.io/tures.png"></a>` das Bild als Link, womit ein Klick auf das Bild Sie zu dem angegebenen Link führt:
 
-<a href="https://www.uni-potsdam.de/soziologie-methoden/mitarbeiter.php" target="_blank"><img src="webscraping-tures.github.io/docs/tures.png"></a>
+<a href="https://www.uni-potsdam.de/soziologie-methoden/mitarbeiter.php" target="_blank"><img src="webscraping-tures.github.io/tures.png"></a>
 
 
 ### Spezielle Zeichen
