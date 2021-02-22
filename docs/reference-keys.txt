@@ -9,8 +9,7 @@ tabellen
 attribute
 links
 bilder
-spezielle-zeichen
-head
+entities
 R1
 tidyverse
 philosophie

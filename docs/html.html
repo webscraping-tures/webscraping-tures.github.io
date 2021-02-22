@@ -82,10 +82,14 @@ Web Scraping mit R
 <ul>
 <li class="chapter" data-level="1.1.1" data-path="html.html"><a href="html.html#hello_world.html"><i class="fa fa-check"></i><b>1.1.1</b> hello_world.html</a></li>
 <li class="chapter" data-level="1.1.2" data-path="html.html"><a href="html.html#wichtige-tags"><i class="fa fa-check"></i><b>1.1.2</b> Wichtige Tags</a></li>
-<li class="chapter" data-level="1.1.3" data-path="html.html"><a href="html.html#attribute"><i class="fa fa-check"></i><b>1.1.3</b> Attribute</a></li>
-<li class="chapter" data-level="1.1.4" data-path="html.html"><a href="html.html#spezielle-zeichen"><i class="fa fa-check"></i><b>1.1.4</b> Spezielle Zeichen</a></li>
-<li class="chapter" data-level="1.1.5" data-path="html.html"><a href="html.html#head"><i class="fa fa-check"></i><b>1.1.5</b> &lt;head&gt;</a></li>
 </ul></li>
+<li class="chapter" data-level="1.2" data-path="html.html"><a href="html.html#attribute"><i class="fa fa-check"></i><b>1.2</b> Attribute</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="html.html"><a href="html.html#links"><i class="fa fa-check"></i><b>1.2.1</b> Links</a></li>
+<li class="chapter" data-level="1.2.2" data-path="html.html"><a href="html.html#bilder"><i class="fa fa-check"></i><b>1.2.2</b> Bilder</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="html.html"><a href="html.html#entities"><i class="fa fa-check"></i><b>1.3</b> Entities</a></li>
+<li class="chapter" data-level="" data-path="html.html"><a href="html.html#weiterführende-literatur"><i class="fa fa-check"></i>Weiterführende Literatur</a></li>
 </ul></li>
 <li class="part"><span><b>II R Basics &amp; Tidyverse</b></span></li>
 <li class="chapter" data-level="2" data-path="R1.html"><a href="R1.html"><i class="fa fa-check"></i><b>2</b> R &amp; R Studio</a></li>
@@ -174,7 +178,7 @@ Wichtig ist dabei, dass ein so geöffneter Tag im Normalfall auch erneut geschlo
 <p>Die Interpretation des Browsers von diesem Dokument können Sie sich unter <a href="https://webscraping-tures.github.io/hello_world.html" target="_blank">https://webscraping-tures.github.io/hello_world.html</a> selbst ansehen. Lassen Sie uns die einzelnen Bestandteile des Codes betrachten:</p>
 <p>Die erste Zeile, die <em>document type declaration</em>, <code>&lt;!DOCTYPE html&gt;</code> unterrichtet den Browser darüber, welche HTML Version in dem Dokument eingesetzt wurde. <code>&lt;!DOCTYPE HTML&gt;</code> steht dabei für den aktuellen Standard HTML5. Wurde eine ältere HTML Version verwendet, kann dies an dieser Stelle deklariert werden um eine korrekte visuelle Repräsentation – trotz möglicher Veränderungen oder dem Wegfall bestimmter Funktionen im aktuellen Standard – sicherzustellen. Aus Sicht des Web Scrapers spielt die HTML Version aber im Normalfall keine Rolle. Interessanterweise bildet der <code>&lt;!DOCTYPE html&gt;</code> Tag eine der wenigen Ausnahmen von der Regel, dass ein einmal geöffneter Tag auch wieder geschlossen werden muss. Dies ist hier nicht nötig.</p>
 <p>Der eigentliche Inhalt des HTML Dokuments beginnt in Zeile 3 mit dem <code>&lt;html&gt;</code> Tag. Dieser wird erst in der letzten Zeile wieder geschlossen und umfasst somit den gesamten Inhalt des Dokuments. Der Tag teilt dabei dem Browser mit, dass alles was durch ihn umschlossen wird, HTML ist.</p>
-<p>Als nächstes folgt der Tag <code>&lt;head&gt;</code>. Alles was durch ihn umfasst wird, ist noch nicht Teil des Inhalts den wir im Browserfenster sehen. Hier werden in der Praxis vor allem Meta-Informationen hinterlegt – mehr dazu unter <a href="html.html#head">1.1.5</a> – sowie erweiterte Funktionalitäten (JavaScript) und Designentscheidungen (Cascading Style Sheets – CSS) definiert oder aus externen Quellen eingebunden. Die beiden letzten Punkte sollen uns in dieser Einführung in das Web Scraping vorerst nicht weiter ablenken, wir sollten aber Wissen, dass Verweise auf .js und .css Dateien im <code>&lt;head&gt;</code> Tag auftauchen können und wir diese zunächst einmal selbstbewusst ignorieren können.</p>
+<p>Als nächstes folgt der Tag <code>&lt;head&gt;</code>. Alles was durch ihn umfasst wird, ist noch nicht Teil des Inhalts den wir im Browserfenster sehen. Hier werden in der Praxis vor allem Meta-Informationen hinterlegt – mehr dazu unter <a href="#head"><strong>??</strong></a> – sowie erweiterte Funktionalitäten (JavaScript) und Designentscheidungen (Cascading Style Sheets – CSS) definiert oder aus externen Quellen eingebunden. Die beiden letzten Punkte sollen uns in dieser Einführung in das Web Scraping vorerst nicht weiter ablenken, wir sollten aber Wissen, dass Verweise auf .js und .css Dateien im <code>&lt;head&gt;</code> Tag auftauchen können und wir diese zunächst einmal selbstbewusst ignorieren können.</p>
 <p>In unserem Beispiel umfasst der <code>&lt;head&gt;</code> Tag auschschließlich einen weiteren Tag namens <code>&lt;title&gt;</code>, welcher wiederum den Text <code>Hello World!</code> einschließt. Der <code>&lt;title&gt;</code> Tag bestimmt, was wir in der Titelleise unseres Browser sehen, hier <em>Hello World!</em>.</p>
 <p>Alles was der <code>&lt;body&gt;</code> Tag umfasst, beschreibt endlich den Inhalt, den wir im Browserfenster sehen können. In diesem einfachen Beispiel ist nur eine Zeile enthalten. Der bereits bekannte <code>&lt;b&gt;</code>Tag umfasst den Text <code>Hello World!</code> womit uns dieser fettgedruckt im Browserfenster dargestellt wird.</p>
 <p>Damit kennen Sie nun bereits die Grundstruktur jeder HTML Datei.</p>
@@ -196,11 +200,10 @@ Wichtig ist dabei, dass ein so geöffneter Tag im Normalfall auch erneut geschlo
       &lt;h4&gt;Formatierung&lt;/h4&gt;
       &lt;h4&gt;Listen&lt;/h4&gt;
       &lt;h4&gt;Tabellen&lt;/h4&gt;
-    &lt;h3&gt;Attribute&lt;/h3&gt;
-      &lt;h4&gt;Links&lt;/h4&gt;
-      &lt;h4&gt;Bilder&lt;/h4&gt;
-    &lt;h3&gt;Spezielle Zeichen&lt;/h3&gt;
-    &lt;h3&gt;Scraping und der &quot;head&quot; Tag&lt;/h3&gt;</code></pre>
+  &lt;h2&gt;Attribute&lt;/h3&gt;
+    &lt;h3&gt;Links&lt;/h4&gt;
+    &lt;h3&gt;Bilder&lt;/h4&gt;
+  &lt;h2&gt;Entities&lt;/h3&gt;</code></pre>
 <p>Eine weitere häufig auftretende Form der Strukturierung eines HTML Dokuments sind die über <code>&lt;div&gt;</code> (<em>division</em>) und <code>&lt;span&gt;</code> definierten Gruppierungen. Beide Tags funktionieren grundsätzlich gleich, wobei sich <code>&lt;div&gt;</code> auf eine oder mehrere Zeilen und <code>&lt;span&gt;</code> auf einen Teil einer Zeile bezieht. Beides hat zunächst keinen direkten Einfluss auf die Darstellung der Website, wird aber häufig in Kombination mit in den <em>Cascading Style Sheets – CSS</em> definierten Klassen zur Anpassung der visuellen Interpretation angewandt. In Normalfall, kann uns auch hier egal sein, wie die CSS Klassen definiert sind und wie sie sich auf die Darstellung auswirken. Warum die Kombination aus <code>&lt;div&gt;</code> bzw. <code>&lt;span&gt;</code> und CSS Klassen häufig ein sehr praktischer Ansatzpunkt für unsere Web Scraping vorhaben sind und wie wir dies in unserer Arbeit ausnutzen können, lernen Sie im weiteren Verlauf dieses Seminars. Hier ein vereinfachtes Beispiel, wie beide Tags in HTML Code auftreten können:</p>
 <pre><code>&lt;div&gt;
   Dieser Satz ist Teil des div Tags.
@@ -375,12 +378,13 @@ italics
 </table>
 </div>
 </div>
-<div id="attribute" class="section level3" number="1.1.3">
-<h3><span class="header-section-number">1.1.3</span> Attribute</h3>
+</div>
+<div id="attribute" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Attribute</h2>
 <p>Viele HTML Tags können durch den Einsatz sogenannter <em>Attribute</em> in ihrer Funktionsweise und Darstellung weiter angepasst werden. Dabei ist die grundsätzliche Syntax: <code>&lt;tag attribut="value"&gt;...&lt;/tag&gt;</code>. Im öffnendem (nie im schließenden) Tag folgt auf den Namen des Tags der Name des Attributs <code>=</code> dem zuzuweisdenden Wert (<em>value</em>) in einfache oder doppelte Anführungszeichen eingefasst. IN HTML ist dabei <code>&lt;tag attribut="value"&gt;</code> ungleich <code>&lt;tag attribut = "value"&gt;</code>. Das Paar aus Attributsname und Wert muss ohne Leerzeichen mit einem <code>=</code> verbunden werden um richtig interpretiert zu werden.</p>
 <p>Eine Vielzahl von Tags kann mit einer Vielzahl von Attributen modifiziert werdern. Zwei der häufigsten und anschaulichsten Anwendungen sind aber das Einbinden von Links und Bildern, zwei weitere häufig anzutreffende HTML Tags.</p>
-<div id="links" class="section level4" number="1.1.3.1">
-<h4><span class="header-section-number">1.1.3.1</span> Links</h4>
+<div id="links" class="section level3" number="1.2.1">
+<h3><span class="header-section-number">1.2.1</span> Links</h3>
 <p>Links werden über den Tag <code>&lt;a&gt;</code> (<em>anchor</em>) eingebunden. Der erste intuitive Versuch <code>&lt;a&gt;Dies ist ein Link&lt;/a&gt;</code> bleibt leider erfolglos:</p>
 <p><a>Dies ist (k)ein Link</a></p>
 <p>Der Text wird zwar dargestellt und als Link markiert – also blau und unterstrichen –, führt aber notwendigerweise zu keinem Ziel, da in dem HTML Dokument nicht definiert wurde, was dieses Ziel sein soll. Hier kommt das erste Attribut ins Spiel. Mit <code>&lt;a href="url"&gt;</code> wird das Ziel des Links definiert. <code>href</code> steht dabei für <em>hypertext reference</em> und dessen zugewiesener Wert kann unter anderem eine Website, eine Email Adresse oder auch eine Datei sein. So führt <code>&lt;a href="webscraping-tures.github.io/html.html"&gt;Dies ist ein Link&lt;/a&gt;</code> zu der Seite die Sie gerade betrachten.</p>
@@ -390,8 +394,8 @@ italics
 <p>Links werden für uns als Web Scraper vor allem dann interessant, wenn wir von einer übergeordneten Seite die Links zu allen Unterseiten sammeln, um diese dann gezielt zu scrapen. Aber dazu später mehr.</p>
 <p>Noch ein Hinweis, der Tag <code>&lt;link&gt;</code> ist nicht mit <code>&lt;a&gt;</code> zu verwechseln und dient zur Einbindung externer Dateien, wie den bereits angesprochenen JavaScript oder CSS Dateien.</p>
 </div>
-<div id="bilder" class="section level4" number="1.1.3.2">
-<h4><span class="header-section-number">1.1.3.2</span> Bilder</h4>
+<div id="bilder" class="section level3" number="1.2.2">
+<h3><span class="header-section-number">1.2.2</span> Bilder</h3>
 <p>Bilder und Grafiken werden in HTML mit <code>&lt;img&gt;</code> eingebunden, ein weitere Tag der nicht explizit geschlossen werden muss. Damit der Browser auch weiß, welches Bild eingebunden werden soll, wird dies über das <code>src</code> (<em>source</em>) Attribut des Tags festgelegt. So bindet <code>&lt;img src="webscraping-tures.github.io/tures.png"&gt;</code> folgendes Bild ein:</p>
 <p><img src="webscraping-tures.github.io/tures.png"></p>
 <p>Über weitere Attribute ist es beispielsweise auch möglich, die Größe des Bildes in Pixeln anzupassen. <code>&lt;img src="webscraping-tures.github.io/tures.png" width="100" height="100"&gt;</code></p>
@@ -400,20 +404,27 @@ italics
 <p><a href="https://www.uni-potsdam.de/soziologie-methoden/mitarbeiter.php" target="_blank"><img src="webscraping-tures.github.io/tures.png"></a></p>
 </div>
 </div>
-<div id="spezielle-zeichen" class="section level3" number="1.1.4">
-<h3><span class="header-section-number">1.1.4</span> Spezielle Zeichen</h3>
-<ul>
-<li>va. quotation, amersand,  </li>
-<li>wir erkennen sie generell an &amp;..;</li>
-</ul>
+<div id="entities" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> Entities</h2>
+<p>Eine Reihe von Schriftzeichen sind für den HTML Code reserviert. So haben wir bereits gesehen, dass die Zeichen <code>&lt; &gt; "</code> Bestandteile des Codes sind um Tags sowie Werte von Attributen zu definieren. In vielen Fällen ist es inzwischen möglich, auch reservierte Zeichen direkt in einem Fließtext anzuwenden, uns werden im Web Scraping aber bis auf Weiteres regelmäßig sogenannte <em>entities</em> statt der eigentlichen Zeichen begegnen. Entities sind kodierte Repräsentationen bestimmter Zeichen. Diese werden stets mit <code>&amp;</code> eingeleitet und mit <code>;</code> beendet. Zwischen beiden Zeichen steht entweder der Name oder die Nummer der enitity.</p>
+<p>So steht beispielsweise <code>&amp;lt;</code> für <em>less than</em>, also <code>&lt;</code> und <code>&amp;gt;</code> für <em>greater than</em>, also <code>&gt;</code>.</p>
+<pre><code>Ein Text mit reservierten Zeichen wie &amp;lt; und &amp;gt; oder dem sogenannten &amp;quot;ampersand&amp;quot; &amp;amp;.`</code></pre>
+<p>Ein Text mit reservierten Zeichen wie &lt; und &gt; oder dem sogenannten “ampersand” &amp;.</p>
+<p>Sidenote: Wenn Sie wie ich an der Interessanten Herkunft des Begriffs <em>ampersand</em> interessiert sind, empfiehlt sich Wikipedia: <a href="https://en.wikipedia.org/wiki/Ampersand" target="_blank">https://en.wikipedia.org/wiki/Ampersand</a></p>
+<p><br></p>
+<p>Eine weitere entity die uns regelmäßig begegnen wird, ist <code>&amp;nbsp;</code> (<em>non-breaking space</em>), welches statt einem einfach Leerzeichen eingesetzt werden kann. <code>&amp;nbsp;</code> hat den Vorteil, dass dies zum Einen nie durch den Browser umgebrochen wird, zum Anderen ermöglicht es den Einsatz von mehr als einem Leerzeichen:</p>
+<pre><code>Mit einem    Leerzeichen dargestellt
+Mit vier&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Leerzeichen dargestellt</code></pre>
+<p>Mit einem Leerzeichen dargestellt</p>
+<p>Mit vier    Leerzeichen dargestellt</p>
+<p><br></p>
+<p>Eine Übersicht zu den gebräuchlichsten entities finden Sie hier: <a href="https://www.w3schools.com/html/html_entities.asp" target="_blank">https://www.w3schools.com/html/html_entities.asp</a></p>
+<p>Die entities aller Unicode Zeichen finden Sie hier: <a href="https://unicode-table.com/" target="_blank">https://unicode-table.com/</a></p>
 </div>
-<div id="head" class="section level3" number="1.1.5">
-<h3><span class="header-section-number">1.1.5</span> &lt;head&gt;</h3>
-<ul>
-<li>was daran ist relevant für scraping?</li>
-</ul>
+<div id="weiterführende-literatur" class="section level2 unnumbered">
+<h2>Weiterführende Literatur</h2>
+<p>Noch einzubauen</p>
 
-</div>
 </div>
 </div>
 

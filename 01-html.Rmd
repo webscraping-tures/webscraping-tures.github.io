@@ -85,11 +85,10 @@ Eine Möglichkeit den Inhalt weiter zu strukturieren, ist der Einsatz der maxima
       <h4>Formatierung</h4>
       <h4>Listen</h4>
       <h4>Tabellen</h4>
-    <h3>Attribute</h3>
-      <h4>Links</h4>
-      <h4>Bilder</h4>
-    <h3>Spezielle Zeichen</h3>
-    <h3>Scraping und der "head" Tag</h3>
+  <h2>Attribute</h3>
+    <h3>Links</h4>
+    <h3>Bilder</h4>
+  <h2>Entities</h3>
 ```
 
 Eine weitere häufig auftretende Form der Strukturierung eines HTML Dokuments sind die über `<div>` (*division*) und `<span>` definierten Gruppierungen. Beide Tags funktionieren grundsätzlich gleich, wobei sich `<div>` auf eine oder mehrere Zeilen und `<span>` auf einen Teil einer Zeile bezieht. Beides hat zunächst keinen direkten Einfluss auf die Darstellung der Website, wird aber häufig in Kombination mit in den *Cascading Style Sheets -- CSS* definierten Klassen zur Anpassung der visuellen Interpretation angewandt. In Normalfall, kann uns auch hier egal sein, wie die CSS Klassen definiert sind und wie sie sich auf die Darstellung auswirken. Warum die Kombination aus `<div>` bzw. `<span>` und CSS Klassen häufig ein sehr praktischer Ansatzpunkt für unsere Web Scraping vorhaben sind und wie wir dies in unserer Arbeit ausnutzen können, lernen Sie im weiteren Verlauf dieses Seminars. Hier ein vereinfachtes Beispiel, wie beide Tags in HTML Code auftreten können:
@@ -244,13 +243,13 @@ Dies wird ebenfalls dargestellt als:
   </tr>
 </table>
   
-### Attribute {#attribute}
+## Attribute {#attribute}
 
 Viele HTML Tags können durch den Einsatz sogenannter *Attribute* in ihrer Funktionsweise und Darstellung weiter angepasst werden. Dabei ist die grundsätzliche Syntax: `<tag attribut="value">...</tag>`. Im öffnendem (nie im schließenden) Tag folgt auf den Namen des Tags der Name des Attributs `=` dem zuzuweisdenden Wert (*value*) in einfache oder doppelte Anführungszeichen eingefasst. IN HTML ist dabei `<tag attribut="value">` ungleich `<tag attribut = "value">`. Das Paar aus Attributsname und Wert muss ohne Leerzeichen mit einem `=` verbunden werden um richtig interpretiert zu werden.
 
 Eine Vielzahl von Tags kann mit einer Vielzahl von Attributen modifiziert werdern. Zwei der häufigsten und anschaulichsten Anwendungen sind aber das Einbinden von Links und Bildern, zwei weitere häufig anzutreffende HTML Tags.
 
-#### Links
+### Links
 
 Links werden über den Tag `<a>` (*anchor*) eingebunden. Der erste intuitive Versuch `<a>Dies ist ein Link</a>` bleibt leider erfolglos:
 
@@ -268,7 +267,7 @@ Links werden für uns als Web Scraper vor allem dann interessant, wenn wir von e
 
 Noch ein Hinweis, der Tag `<link>` ist nicht mit `<a>` zu verwechseln und dient zur Einbindung externer Dateien, wie den bereits angesprochenen JavaScript oder CSS Dateien.
 
-#### Bilder
+### Bilder
 
 Bilder und Grafiken werden in HTML mit `<img>` eingebunden, ein weitere Tag der nicht explizit geschlossen werden muss. Damit der Browser auch weiß, welches Bild eingebunden werden soll, wird dies über das `src` (*source*) Attribut des Tags festgelegt. So bindet `<img src="webscraping-tures.github.io/tures.png">` folgendes Bild ein:
 
@@ -283,11 +282,40 @@ Bilder können auch mit Links kombiniert werden. So definiert `<a href="https://
 <a href="https://www.uni-potsdam.de/soziologie-methoden/mitarbeiter.php" target="_blank"><img src="webscraping-tures.github.io/tures.png"></a>
 
 
-### Spezielle Zeichen
+## Entities
 
-* va. quotation, amersand, &nbsp;
-* wir erkennen sie generell an &..;
+Eine Reihe von Schriftzeichen sind für den HTML Code reserviert. So haben wir bereits gesehen, dass die Zeichen `< > "` Bestandteile des Codes sind um Tags sowie Werte von Attributen zu definieren. In vielen Fällen ist es inzwischen möglich, auch reservierte Zeichen direkt in einem Fließtext anzuwenden, uns werden im Web Scraping aber bis auf Weiteres regelmäßig sogenannte *entities* statt der eigentlichen Zeichen begegnen. Entities sind kodierte Repräsentationen bestimmter Zeichen. Diese werden stets mit `&` eingeleitet und mit `;` beendet. Zwischen beiden Zeichen steht entweder der Name oder die Nummer der enitity. 
 
-### \<head> {#head}
+So steht beispielsweise `&lt;` für *less than*, also `<` und `&gt;` für *greater than*, also `>`.
 
-* was daran ist relevant für scraping?
+```
+Ein Text mit reservierten Zeichen wie &lt; und &gt; oder dem sogenannten &quot;ampersand&quot; &amp;.`
+```
+
+Ein Text mit reservierten Zeichen wie &lt; und &gt; oder dem sogenannten &quot;ampersand&quot; &amp;.
+
+Sidenote: Wenn Sie wie ich an der Interessanten Herkunft des Begriffs *ampersand* interessiert sind, empfiehlt sich Wikipedia: <https://en.wikipedia.org/wiki/Ampersand>{target="_blank"}
+
+<br>
+
+Eine weitere entity die uns regelmäßig begegnen wird, ist `&nbsp;` (*non-breaking space*), welches statt einem einfach Leerzeichen eingesetzt werden kann. `&nbsp;` hat den Vorteil, dass dies zum Einen nie durch den Browser umgebrochen wird, zum Anderen ermöglicht es den Einsatz von mehr als einem Leerzeichen:
+
+```
+Mit einem    Leerzeichen dargestellt
+Mit vier&nbsp;&nbsp;&nbsp;&nbsp;Leerzeichen dargestellt
+```
+Mit einem    Leerzeichen dargestellt
+
+Mit vier&nbsp;&nbsp;&nbsp;&nbsp;Leerzeichen dargestellt
+
+<br>
+
+Eine Übersicht zu den gebräuchlichsten entities finden Sie hier: <https://www.w3schools.com/html/html_entities.asp>{target="_blank"}
+
+Die entities aller Unicode Zeichen finden Sie hier: <https://unicode-table.com/>{target="_blank"}
+
+
+
+## Weiterführende Literatur {-}
+
+Noch einzubauen
