@@ -5,9 +5,9 @@
 Was passiert, wenn wir eine URL wie <https://webscraping-tures.github.io>{target="_blank"} in einem Browser aufrufen? Wir bekommen zunächst einmal eine visuelle Darstellung der aufgerufenen Seite in unserem Browserfenster. Aus der Sicht des Nutzers einer Website, ist dies auch alles was wir wissen müssen. Unser Ziel -- die Seite aufzurufen -- ist an diesem Punkt bereits erreicht. 
 
 Aus der Sicht des Web Scrapers, müssen wir aber verstehen, was im Hintergrund passiert. 
-Die Links <https://webscraping-tures.github.io>{target="_blank"} und <https://webscraping-tures.github.io/index.html>{target="_blank"} sind im Ergebnis äquivalent. Denn tatsächlich wird in beiden Fällen eine HTML Datei aufgerufen, in welcher der Inhalt der Website in Form eines spezifischen Codes hinterlegt ist. Dieser Code wird von Ihrem Browser interpetiert und in eine visuelle Darstellung überführt, dem was sie aktuell vor sich sehen.
+Die Links <https://webscraping-tures.github.io>{target="_blank"} und <https://webscraping-tures.github.io/index.html>{target="_blank"} sind im Ergebnis äquivalent. Denn tatsächlich wird in beiden Fällen die selbe HTML Datei aufgerufen, in welcher der Inhalt der Website in Form eines spezifischen Codes hinterlegt ist. Dieser Code wird von Ihrem Browser interpetiert und in eine visuelle Darstellung überführt, dem was Sie aktuell vor sich sehen.
 
-Überzeugen Sie sich selbst. Mit einem Rechtsklick im Bereich dieses Texts und einem weiteren Klick auf "Seitenquelltext anzeigen" öffnet sich der HTML Code welcher dieser Seite zu Grunde liegt. Es ist an diesem Punkt völlig legitim, von der Flut aus ungewohnten Zeichen und Begriffen zunächst überfordert zu sein. Wer hätte gedacht, dass eine relativ einfache Website wie diese im Hintergrund so kompliziert sein kann? Aber die gute Nachricht ist, dass wir als Web Scraper nicht jedes Wort und Zeichen in einer HTML Datei verstehen müssen. Unser Ziel ist es die Teile einer Website zu identifizieren die für unsere Fragestellung relevant sind und diese gezielt aus dem HTML Code zu extrahieren. Dies ist möglicherweise nur eine einzelne Zeile aus einer HTML Datei mit tausenden von Zeilen. Müssen wir alle diese tausend Zeilen völlig verstehen? Nein, aber wir müssen die Struktur einer HTML Datei erfassen können, um diese eine Zeile an der wir interessiert sind auch identifizieren zu können. Bis dies soweit ist, haben wir noch ein gutes Stück Weg vor uns, am Ende dieses ersten Abschnitts werden Sie aber bereits ein grundlegendes Verständnis der Struktur und der Bestandteile eines HTML Dokuments haben und der Quelltext wird Ihnen bereits deutlich weniger "beeindruckend" erscheinen.
+Überzeugen Sie sich selbst. Mit einem Rechtsklick im Bereich dieses Texts und einem weiteren Klick auf "Seitenquelltext anzeigen" öffnet sich der HTML Code welcher dieser Seite zu Grunde liegt. Es ist an diesem Punkt völlig legitim, von der Flut aus ungewohnten Zeichen und Begriffen zunächst überfordert zu sein. Wer hätte gedacht, dass eine relativ einfache Website wie diese im Hintergrund so kompliziert sein kann? Aber die gute Nachricht ist, dass wir als Web Scraper nicht jedes Wort und Zeichen in einer HTML Datei verstehen müssen. Unser Ziel ist es die Teile einer Website die für unsere Datensammlung relevant sind zu identifizieren und diese gezielt aus dem HTML Code zu extrahieren. Dies ist möglicherweise nur eine einzelne Zeile aus einer HTML Datei mit tausenden von Zeilen. Müssen wir alle diese tausend Zeilen völlig verstehen? Nein, aber wir müssen die Struktur einer HTML Datei erfassen können, um diese eine Zeile an der wir interessiert sind auch identifizieren zu können. Bis dies soweit ist, haben wir noch ein gutes Stück Weg vor uns, am Ende dieses ersten Abschnitts werden Sie aber bereits ein grundlegendes Verständnis der Struktur und der Bestandteile eines HTML Dokuments haben und der Quelltext wird Ihnen bereits deutlich weniger "beeindruckend" erscheinen.
   
 
 
@@ -47,7 +47,7 @@ Betrachten wir nun ein erstes vollständiges HTML Dokument:
 </html>
 ```
 
-Genau dieses Dokument können Sie unter <https://webscraping-tures.github.io/hello_world.html>{target="_blank"} selbst im Browser betrachten. Lassen Sie uns die einzelnen Bestandteile betrachten:
+Die Interpretation des Browsers von diesem Dokument können Sie sich unter <https://webscraping-tures.github.io/hello_world.html>{target="_blank"} selbst ansehen. Lassen Sie uns die einzelnen Bestandteile des Codes betrachten:
 
 Die erste Zeile, die *document type declaration*, `<!DOCTYPE html>` unterrichtet den Browser darüber, welche HTML Version in dem Dokument eingesetzt wurde. `<!DOCTYPE HTML>` steht dabei für den aktuellen Standard HTML5. Wurde eine ältere HTML Version verwendet, kann dies an dieser Stelle deklariert werden um eine korrekte visuelle Repräsentation -- trotz möglicher Veränderungen oder dem Wegfall bestimmter Funktionen im aktuellen Standard -- sicherzustellen. Aus Sicht des Web Scrapers spielt die HTML Version aber im Normalfall keine Rolle. Interessanterweise bildet der `<!DOCTYPE html>` Tag eine der wenigen Ausnahmen von der Regel, dass ein einmal geöffneter Tag auch wieder geschlossen werden muss. Dies ist hier nicht nötig.
 
@@ -59,23 +59,229 @@ In unserem Beispiel umfasst der `<head>` Tag auschschließlich einen weiteren Ta
 
 Alles was der `<body>` Tag umfasst, beschreibt endlich den Inhalt, den wir im Browserfenster sehen können. In diesem einfachen Beispiel ist nur eine Zeile enthalten. Der bereits bekannte `<b>`Tag umfasst den Text `Hello World!` womit uns dieser fettgedruckt im Browserfenster dargestellt wird.
 
-Damit kennen Sie nun bereits die Grundstruktur jeder HTML Datei. 
+Damit kennen Sie nun bereits die Grundstruktur jeder HTML Datei.
 
-Noch eine Anmerkung zur technischen Seite: HTML Dokumente lassen sich grundsätzlich in jedem beliebigen Editor per Hand schreiben und müssen mit der Endung *.html* abgespeichert werden. Sie können dies testen indem Sie selbst einen beliebigen Texteditor starten, den obigen HTML Code kopieren, die Datei mit der Endung *.html* abspeichern und in einem Browser ihrer Wahl öffnen. Allerdings werden Websites heute in Normalfall nicht mehr per hand geschrieben da dies bei komplexeren Seiten nicht nur schwierig sondern auch sehr zeitintensiv würde. Eine vielzahl professioneller Tools und Unternehmen bieten inzwischen sehr viel effizientere Wege um Websites zu gestalten. So habe Ich die Seite die Sie gerade betrachten direkt in R Studio mit Hilfe des package "bookdown" verfasst, welches mir den Großteil der Layoutentscheidungen abnehmen konnte, so dass der Fokus meiner Arbeit auf den Inhalt der Seite gerichtet werden konnte.
+Bei der Betrachtung des obigen Beispielcodes ist Ihnen möglicherweise aufgefallen, dass bestimmte Zeilen nach rechts eingerückt sind. Dies ist keine Vorraussetzung für funtionstüchtigen HTML Code, aber eine Konvention, die das schnelle Lesen und Erfassen vereinfacht. Dabei repräsentieren eingerückte Zeilen, die unterschiedlichen hierarschichen Ebenen des Codes. `<head>` ist hierarchisch `<html>`untergordnet und deshalb einfach eingerückt. `<title>`wiederum ist `<head>`untergeordnet und deshalb zweifach eingerückt. Auch ist durch die Schreibweise auf den ersten Blick ersichtlich, dass `<body>` zwar `<html>`aber nicht `<title>`untergeordnet ist, da `<body>`und `<title>` jeweils nur einfach eingerückt sind. Diese Konvention wird Ihnen häufig -- aber nicht immer -- in "realen" HTML Dokumenten im Internet begegnen.
+
+Noch eine Anmerkung zur technischen Seite: HTML Dokumente lassen sich grundsätzlich in jedem beliebigen Editor per Hand schreiben und müssen mit der Endung *.html* abgespeichert werden. Sie können dies testen indem Sie selbst einen beliebigen Texteditor starten, den obigen HTML Code kopieren, die Datei mit der Endung *.html* abspeichern und in einem Browser ihrer Wahl öffnen. Allerdings werden Websites heute in Normalfall nicht mehr per Hand geschrieben da dies bei komplexeren Seiten nicht nur schwierig sondern auch sehr zeitintensiv wäre. Eine vielzahl professioneller Tools bieten inzwischen sehr viel effizientere Wege um Websites zu gestalten. So habe Ich die Seite die Sie gerade betrachten direkt in R Studio mit Hilfe des package "bookdown" verfasst, welches mir den Großteil der Layoutentscheidungen abnehmen konnte, so dass der Fokus meiner Arbeit auf den Inhalt der Seite lag.
 
 
 ### Wichtige Tags
-* weitere wichtige tags
-  * Formatierung (inkl. \<br>)
-  * Struktur (\<p>, \<h1> usw)
-  * Listen
-  * Tabellen
+
+Wir können an dieser Stelle nicht alle in HTML verfügbaren Tags betrachten sondern beschränken uns zunächst auf diese, die uns sehr häufig begegnen werden und die für unsere ersten Web Scraping Projekte besonders relevant sein werden.
+
+#### Seitenstruktur
+
+Einen Tag der sich auf die Struktur der Seite bezieht, haben wir bereits weiter oben kennengelernt. Der `<body>` Tag teilt mit, dass alles was durch ihn umfasst wird, Teil des im Browserfenster dargestellten Inhalts ist.
+
+Eine Möglichkeit den Inhalt weiter zu strukturieren, ist der Einsatz der maximal sechs Ebenen von Überschriften, die HTML anbietet. Die Tags `<h1> <h2> ... <h6>` ermöglichen dies auf einfachem Wege. das `h` steht dabei für *header*. Der durch den Tag umfasste Text je nach Ebene der Überschrift automatisch nummeriert und in unterschiedlichen Schriftgrößen dargestellt. Als Beispiel sehen Sie hier die Struktur der Überschriften auf dieser Seite als HTML Code:
+
+```
+<h1>HTML als Grundbaustein des Web</h1>
+  <h2>HTML Tags</h2>
+    <h3>hello_world.html</h3>
+    <h3>Wichtige Tags</h3>
+      <h4>Seitenstruktur</h4>
+      <h4>Formatierung</h4>
+      <h4>Listen</h4>
+      <h4>Tabellen</h4>
+    <h3>Attribute</h3>
+      <h4>Links</h4>
+      <h4>Bilder</h4>
+    <h3>Spezielle Zeichen</h3>
+    <h3>Scraping und der "head" Tag</h3>
+```
+
+Eine weitere häufig auftretende Form der Strukturierung eines HTML Dokuments sind die über `<div>` (*division*) und `<span>` definierten Gruppierungen. Beide Tags funktionieren grundsätzlich gleich, wobei sich `<div>` auf eine oder mehrere Zeilen und `<span>` auf einen Teil einer Zeile bezieht. Beides hat zunächst keinen direkten Einfluss auf die Darstellung der Website, wird aber häufig in Kombination mit in den *Cascading Style Sheets -- CSS* definierten Klassen zur Anpassung der visuellen Interpretation angewandt. In Normalfall, kann uns auch hier egal sein, wie die CSS Klassen definiert sind und wie sie sich auf die Darstellung auswirken. Warum die Kombination aus `<div>` bzw. `<span>` und CSS Klassen häufig ein sehr praktischer Ansatzpunkt für unsere Web Scraping vorhaben sind und wie wir dies in unserer Arbeit ausnutzen können, lernen Sie im weiteren Verlauf dieses Seminars. Hier ein vereinfachtes Beispiel, wie beide Tags in HTML Code auftreten können:
+
+```
+<div>
+  Dieser Satz ist Teil des div Tags.
+  Dieser Satz ist Teil des div Tags, <span> während dieser Nebensatz Teil des div Tags und des span Tags ist </span>
+</div>
+Dieser Satz ist nicht Teil des div Tags.
+```
+
+#### Formatierung
+
+In HTML stehen eine Vielzahl von Tags zur Formatierung des angezeigten Texts zur Verfügung. Im Folgenden betrachten wir einige besonders häufig auftretende.
+
+Der `<p>` Tag definiert den umfassten Text als Absatz, im englischen *paragraph*, und wird entsprechend in der Darstellung automatisch mit einem Zeilenumbruch abgeschlossen.
+
+```
+<p>Dieser Satz ist Teil des Absatz. Ebenso wie dieser. Und dieser. </p>
+Dieser Satz ist nicht mehr Teil des Absatz.
+```
+Dies wird dargestellt als:
+
+<p>Dieser Satz ist Teil des Absatz. Ebenso wie dieser. Und dieser. </p>
+Dieser Satz ist nicht mehr Teil des Absatz.
+
+<br>
+
+Der Tag `<br>` (*break*) leiten einen Zeilenumbruch ein. Dieser Tag ist eine weitere Ausnahme der Regel, dass ein geöffneter Tag auch wieder geschlossen werden muss. In diesem Sonderfall steht die Variante mit öffnendem und schließendem Tag `<br></br>` auch für zwei Zeilenumbrüche, ist also nicht äquivalent zu `<br>`. Im Unterschied zu dem Zeilenumbruch der durch `<p>...</p>` am Ende des Absatz eingefügt wird, wird nach `<br>` kein weiterer Zeilenabstand eingefügt:
+
+```
+Hier kommt etwas Text, der nun umgebrochen wird.<br>
+Nach dem break Tag wird im Gegensatz zum paragraph Tag kein Zeilenabstand eingefügt.<br>
+Wird der break Tag auch explizit wieder geschlossen, werden zwei Zeilenumbrüche eingefügt.<br></br>
+Wie hier zu erkennen ist.
+```
+Dies wird dargestellt als:
+
+Hier kommt etwas Text, der nun umgebrochen wird.<br>
+Nach dem break Tag wird im Gegensatz zum paragraph Tag kein Zeilenabstand eingefügt.<br>
+Wird der break Tag auch explizit wieder geschlossen, werden zwei Zeilenumbrüche eingefügt.<br></br>
+Wie hier zu erkennen ist.
+
+<br>
+
+Das Schriftbild kann durch Tags wie das bereits bekannte `<b>` (*bold*) oder auch `<i>` (*italics*, also kursiv) ähnlich zu den bekannten Optionen in gängigen Textbearbeitungsprogrammen angepasst werden:
+
+```
+Diese Tags können genutzt werden um Wörter, Sätze und Abschnitte <b>fett</b> oder <i>kursiv</i> darzustellen.
+```
+Dies wird dargestellt als:
+
+Diese Tags können genutzt werden um Wörter, Sätze und Abschnitte <b>fett</b> oder <i>kursiv</i> darzustellen.
+
+
+
+#### Listen
+
+Die Darstellung in Listenform bildet ein sehr dankbares Scraping Ziel. Die beiden häufigsten Varianten sind dabei die ungeordenete Liste die durch `<ul>`(*unordered list*) eingeleitet wird sowie die geordnete Liste, `<ol>` (*unordered list*). Der öffnende und schließende Listen Tag umfasst dabei sets die gesamte Liste, während jedes einzelne Listenelement in beiden Varianten durch einen `<li>` Tag eingefasst ist. Dazu zwei kurze Beispiele:
+
+```
+<ul>
+  <li>Erstes ungeordnetes Element</li>
+  <li>Zweites ungeordnetes Element</li>
+  <li>Drittes ungeordnetes Element</li>
+</ul>
+```
+Dies wird dargestellt als:
+
+<ul>
+  <li>Erstes ungeordnetes Element</li>
+  <li>Zweites ungeordnetes Element</li>
+  <li>Drittes ungeordnetes Element</li>
+</ul>
+
+```
+<ol>
+  <li>Erstes geordnetes Element</li>
+  <li>Zweites geordnetes Element</li>
+  <li>Drittes geordnetes Element</li>
+</ol>
+```
+Dies wird dargestellt als:
+
+<ol>
+  <li>Erstes geordnetes Element</li>
+  <li>Zweites geordnetes Element</li>
+  <li>Drittes geordnetes Element</li>
+</ol>
+
+
+#### Tabellen
+
+HTML kann auch genutzt werden um -- ohne weitere Anpassungen der Darstellung über CSS zugegebenermaßen nicht besonders ansehnliche -- Tabellen darzustellen. Diese werden durch einen `<table>` Tag geöffnet und entsprechend geschlossen. Innerhalb der Tabelle werden Zeilen durch `<tr>...</tr>` definiert. Innerhalb der Zeilen können Tabellenüberschriften durch `<th>` (*table header*) und Zelleninhalte durch `<td>` (*table data*) bestimmt werden. Durch `<th>...</th>`und `<td>...</td>` umfasste Inhalte werden in ihrer Darstellung nicht nur unterschiedlich formatiert, aus Sicht des Web Scrapers ermöglichen uns diese Tags auch eine deutliche Unterscheidung der einzulesenden Tabelleninhalte. Hier ein einfaches Beispiel:
+
+```
+<table>
+  <tr> <th>#</th> <th>Tag</th> <th>Effekt</th> </tr>
+  <tr> <td>1</td> <td>"b"</td> <td>bold</td> </tr>
+  <tr> <td>1</td> <td>"i"</td> <td>italics</td> </tr>
+</table>
+```
+Dies wird dargestellt als:
+
+<table>
+  <tr> <th>#</th> <th>Tag</th> <th>Effekt</th> </tr>
+  <tr> <td>1</td> <td>"b"</td> <td>bold</td> </tr>
+  <tr> <td>1</td> <td>"i"</td> <td>italics</td> </tr>
+</table>
+
+<br>
+
+Die Formatierung in einer Art "Tabellenform" wie im obigen Beispiel ist nicht nötig, erhöht aber die intuitive Lesbarkeit. Tatsächlich ist folgende Schreibweise im Ergebnis äquivalent und in der Praxis häufiger anzutreffen:
+
+```
+<table>
+  <tr>
+    <th>#</th>
+    <th>Tag</th>
+    <th>Effekt</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>"b"</td>
+    <td>bold</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>"i"</td>
+    <td>italics</td>
+  </tr>
+</table>
+```
+Dies wird ebenfalls dargestellt als:
+
+<table>
+  <tr>
+    <th>#</th>
+    <th>Tag</th>
+    <th>Effekt</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>"b"</td>
+    <td>bold</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>"i"</td>
+    <td>italics</td>
+  </tr>
+</table>
   
 ### Attribute {#attribute}
 
-* generell
-* Bsp. \<a href="">
-  * =/= \<link>
+Viele HTML Tags können durch den Einsatz sogenannter *Attribute* in ihrer Funktionsweise und Darstellung weiter angepasst werden. Dabei ist die grundsätzliche Syntax: `<tag attribut="value">...</tag>`. Im öffnendem (nie im schließenden) Tag folgt auf den Namen des Tags der Name des Attributs `=` dem zuzuweisdenden Wert (*value*) in einfache oder doppelte Anführungszeichen eingefasst. IN HTML ist dabei `<tag attribut="value">` ungleich `<tag attribut = "value">`. Das Paar aus Attributsname und Wert muss ohne Leerzeichen mit einem `=` verbunden werden um richtig interpretiert zu werden.
+
+Eine Vielzahl von Tags kann mit einer Vielzahl von Attributen modifiziert werdern. Zwei der häufigsten und anschaulichsten Anwendungen sind aber das Einbinden von Links und Bildern, zwei weitere häufig anzutreffende HTML Tags.
+
+#### Links
+
+Links werden über den Tag `<a>` (*anchor*) eingebunden. Der erste intuitive Versuch `<a>Dies ist ein Link</a>` bleibt leider erfolglos:
+
+<a>Dies ist (k)ein Link</a>
+
+Der Text wird zwar dargestellt und als Link markiert -- also blau und unterstrichen --, führt aber notwendigerweise zu keinem Ziel, da in dem HTML Dokument nicht definiert wurde, was dieses Ziel sein soll. Hier kommt das erste Attribut ins Spiel. Mit `<a href="url">` wird das Ziel des Links definiert. `href` steht dabei für *hypertext reference* und dessen zugewiesener Wert kann unter anderem eine Website, eine Email Adresse oder auch eine Datei sein. So führt `<a href="webscraping-tures.github.io/html.html">Dies ist ein Link</a>` zu der Seite die Sie gerade betrachten.
+
+<a href="webscraping-tures.github.io/html.html">Dies ist ein Link</a>
+
+Ihnen wird dabei aufgefallen sein, dass sie nun wieder bis zu dieser Stelle scrollen mussten, um weiterzulesen. Etwas das mich in meiner täglichen Browsererfahrung regelmäßig nervt. Ein zweites Attribut kann hier Abhilfe schaffen. Mit `<a href="webscraping-tures.github.io/html.html" target="_blank">Dies ist ein Link</a>` weisen wir den Browser an, den Link in einem neuen tab zu öffnen. Der zugewiesene Wert von `target` ist hier `"_blank"`, was für einen neuen Tab steht, kann aber auch eine Reihe von anderen Werten annehmen.
+
+<a href="webscraping-tures.github.io/html.html" target="_blank">Dies ist ein Link</a>
+
+Links werden für uns als Web Scraper vor allem dann interessant, wenn wir von einer übergeordneten Seite die Links zu allen Unterseiten sammeln, um diese dann gezielt zu scrapen. Aber dazu später mehr.
+
+Noch ein Hinweis, der Tag `<link>` ist nicht mit `<a>` zu verwechseln und dient zur Einbindung externer Dateien, wie den bereits angesprochenen JavaScript oder CSS Dateien.
+
+#### Bilder
+
+Bilder und Grafiken werden in HTML mit `<img>` eingebunden, ein weitere Tag der nicht explizit geschlossen werden muss. Damit der Browser auch weiß, welches Bild eingebunden werden soll, wird dies über das `src` (*source*) Attribut des Tags festgelegt. So bindet `<img src="webscraping-tures.github.io/docs/tures.png">` folgendes Bild ein:
+
+<img src="webscraping-tures.github.io/docs/tures.png">
+
+Über weitere Attribute ist es beispielsweise auch möglich, die Größe des Bildes in Pixeln anzupassen. `<img src="webscraping-tures.github.io/docs/tures.png" width="100" height="100">`
+
+<img src="webscraping-tures.github.io/docs/tures.png" width="100" height="100">
+
+Bilder können auch mit Links kombiniert werden. So definiert `<a href="https://www.uni-potsdam.de/soziologie-methoden/mitarbeiter.php" target="_blank"><img src="webscraping-tures.github.io/docs/tures.png"></a>` das Bild als Link, womit ein Klick auf das Bild Sie zu dem angegebenen Link führt:
+
+<a href="https://www.uni-potsdam.de/soziologie-methoden/mitarbeiter.php" target="_blank"><img src="webscraping-tures.github.io/docs/tures.png"></a>
+
 
 ### Spezielle Zeichen
 

@@ -2,7 +2,13 @@ html
 html-tags
 hello_world.html
 wichtige-tags
+seitenstruktur
+formatierung
+listen
+tabellen
 attribute
+links
+bilder
 spezielle-zeichen
 head
 R1
@@ -18,9 +24,9 @@ rvest2
 R2
 transformation-mit-dplyr
 visualisierung-mit-ggplot
+ethik
 projekt1
 projekt2
-ethik
 web
 xml
 json
