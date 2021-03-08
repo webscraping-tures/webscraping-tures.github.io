@@ -3,33 +3,143 @@
 <html>
   <head>
     <title>Wahlbeteiligung Landtagswahlen</title>
+
+    <meta charset="UTF-8">
+    <meta name="author" content="Jakob Tures">
+    <meta name="description" content="Wahlbeteiligung der letzten Landtagswahl nach Bundesland">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+      .bundesland-odd {
+
+        background-color: AliceBlue;
+      }
+      .bundesland-even {
+        background-color: Beige;
+      }
+      .bundesland-name {
+        font-family: Arial, sans-serif;
+        font-weight: bold;
+      }
+      .wahljahr {
+        font-family: Arial, sans-serif;
+      }
+      .wahlbeteiligung {
+        font-family: Arial, sans-serif;
+        font-style: italic;
+      }
+      .quote {
+        margin: 50px;
+        font-family: Arial, sans-serif;
+      }
+      h3 {
+        font-family: Arial, sans-serif;
+      }
+    </style>
   </head>
+
   <body>
     <h3>Wahlbeteiligung bei der letzten Landtagswahl nach Bundesland:</h3>
-    <div class="bundesland">
+
+    <div class="bundesland-odd">
       <span class="bundesland-name">Baden-Württemberg</span>
       <span class="wahljahr">2016</span>:
       <span class="wahlbeteiligung">70.4</span>%
     </div>
 
-    <br>
-
-    <div class="bundesland">
+    <div class="bundesland-even">
       <span class="bundesland-name">Bayern</span>
       <span class="wahljahr">2018</span>:
       <span class="wahlbeteiligung">72.4</span>%
     </div>
 
-    <br>
-
-    <div class="bundesland">
+    <div class="bundesland-odd">
       <span class="bundesland-name">Berlin</span>
       <span class="wahljahr">2016</span>:
-      <span class="wahlbeteiligung">66.9%</span>%
+      <span class="wahlbeteiligung">66.9</span>%
     </div>
 
-    <br>
+    <div class="bundesland-even">
+      <span class="bundesland-name">Brandenburg</span>
+      <span class="wahljahr">2019</span>:
+      <span class="wahlbeteiligung">61.3</span>%
+    </div>
 
-    <span class="quote">Daten: https://www.wahlrecht.de/ergebnisse/index.htm (08.03.2021)</span>
+    <div class="bundesland-odd">
+      <span class="bundesland-name">Bremen</span>
+      <span class="wahljahr">2019</span>:
+      <span class="wahlbeteiligung">64.1</span>%
+    </div>
+
+    <div class="bundesland-even">
+      <span class="bundesland-name">Berlin</span>
+      <span class="wahljahr">2020</span>:
+      <span class="wahlbeteiligung">63.2</span>%
+    </div>
+
+    <div class="bundesland-odd">
+      <span class="bundesland-name">Hessen</span>
+      <span class="wahljahr">2018</span>:
+      <span class="wahlbeteiligung">67.3</span>%
+    </div>
+
+    <div class="bundesland-even">
+      <span class="bundesland-name">Mecklenburg-Vorpommern</span>
+      <span class="wahljahr">2016</span>:
+      <span class="wahlbeteiligung">61.6</span>%
+    </div>
+
+    <div class="bundesland-odd">
+      <span class="bundesland-name">Niedersachsen</span>
+      <span class="wahljahr">2017</span>:
+      <span class="wahlbeteiligung">63.1</span>%
+    </div>
+
+    <div class="bundesland-even">
+      <span class="bundesland-name">Nordrhein-Westfalen</span>
+      <span class="wahljahr">2017</span>:
+      <span class="wahlbeteiligung">65.2</span>%
+    </div>
+
+    <div class="bundesland-odd">
+      <span class="bundesland-name">Rheinland-Pfalz</span>
+      <span class="wahljahr">2016</span>:
+      <span class="wahlbeteiligung">70.4</span>%
+    </div>
+
+    <div class="bundesland-even">
+      <span class="bundesland-name">Saarland</span>
+      <span class="wahljahr">2017</span>:
+      <span class="wahlbeteiligung">69.7</span>%
+    </div>
+
+    <div class="bundesland-odd">
+      <span class="bundesland-name">Sachsen</span>
+      <span class="wahljahr">2019</span>:
+      <span class="wahlbeteiligung">66.6</span>%
+    </div>
+
+    <div class="bundesland-even">
+      <span class="bundesland-name">Sachsen-Anhalt</span>
+      <span class="wahljahr">2016</span>:
+      <span class="wahlbeteiligung">61.1</span>%
+    </div>
+
+    <div class="bundesland-odd">
+      <span class="bundesland-name">Schleswig-Holstein</span>
+      <span class="wahljahr">2017</span>:
+      <span class="wahlbeteiligung">64.2</span>%
+    </div>
+
+    <div class="bundesland-even">
+      <span class="bundesland-name">Thüringen</span>
+      <span class="wahljahr">2019</span>:
+      <span class="wahlbeteiligung">64.9</span>%
+    </div>
+
+    <div class="quote">Daten:
+      <a href="https://www.wahlrecht.de/ergebnisse/index.htm" target="_blank">
+        https://www.wahlrecht.de/ergebnisse/index.htm</a> (08.03.2021)
+    </div>
   </body>
 </html>
