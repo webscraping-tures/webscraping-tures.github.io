@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>11 Weitere Formate im WWW | Web Scraping mit R</title>
-  <meta name="description" content="11 Weitere Formate im WWW | Web Scraping mit R" />
+  <title>12 Weitere Formate im WWW | Web Scraping mit R</title>
+  <meta name="description" content="12 Weitere Formate im WWW | Web Scraping mit R" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="11 Weitere Formate im WWW | Web Scraping mit R" />
+  <meta property="og:title" content="12 Weitere Formate im WWW | Web Scraping mit R" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="webscraping-tures/webscraping-tures.github.io" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="11 Weitere Formate im WWW | Web Scraping mit R" />
+  <meta name="twitter:title" content="12 Weitere Formate im WWW | Web Scraping mit R" />
   
   
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2021-03-05" />
+<meta name="date" content="2021-03-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,6 +53,69 @@
 
 
 
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 </head>
 
@@ -100,32 +163,48 @@ Web Scraping mit R
 <li class="chapter" data-level="3.3" data-path="tidyverse.html"><a href="tidyverse.html#pipe"><i class="fa fa-check"></i><b>3.3</b> Pipe</a></li>
 </ul></li>
 <li class="part"><span><b>III Scraping</b></span></li>
-<li class="chapter" data-level="4" data-path="rvest1.html"><a href="rvest1.html"><i class="fa fa-check"></i><b>4</b> Erstes Scraping mit rvest</a></li>
-<li class="chapter" data-level="5" data-path="css.html"><a href="css.html"><i class="fa fa-check"></i><b>5</b> CSS selectors &amp; Developer Tools</a>
+<li class="chapter" data-level="4" data-path="rvest1.html"><a href="rvest1.html"><i class="fa fa-check"></i><b>4</b> Erstes Scraping mit rvest</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="css.html"><a href="css.html#css-selectors"><i class="fa fa-check"></i><b>5.1</b> CSS selectors</a></li>
-<li class="chapter" data-level="5.2" data-path="css.html"><a href="css.html#developer-tools"><i class="fa fa-check"></i><b>5.2</b> Developer Tools</a></li>
+<li class="chapter" data-level="4.1" data-path="rvest1.html"><a href="rvest1.html#das-rvest-package"><i class="fa fa-check"></i><b>4.1</b> Das rvest package</a></li>
+<li class="chapter" data-level="4.2" data-path="rvest1.html"><a href="rvest1.html#hello_world.html-1"><i class="fa fa-check"></i><b>4.2</b> hello_world.html</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="rvest1.html"><a href="rvest1.html#read_html"><i class="fa fa-check"></i><b>4.2.1</b> read_html()</a></li>
+<li class="chapter" data-level="4.2.2" data-path="rvest1.html"><a href="rvest1.html#html_nodes"><i class="fa fa-check"></i><b>4.2.2</b> html_nodes()</a></li>
+<li class="chapter" data-level="4.2.3" data-path="rvest1.html"><a href="rvest1.html#html_text"><i class="fa fa-check"></i><b>4.2.3</b> html_text()</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="rvest2.html"><a href="rvest2.html"><i class="fa fa-check"></i><b>6</b> Fortgeschrittenes Scraping mit rvest</a></li>
+<li class="chapter" data-level="4.3" data-path="rvest1.html"><a href="rvest1.html#countries-of-the-world"><i class="fa fa-check"></i><b>4.3</b> Countries of the World</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="rvest1.html"><a href="rvest1.html#ländernamen"><i class="fa fa-check"></i><b>4.3.1</b> Ländernamen</a></li>
+<li class="chapter" data-level="4.3.2" data-path="rvest1.html"><a href="rvest1.html#haupstädte-einwohnerzahl-und-fläche"><i class="fa fa-check"></i><b>4.3.2</b> Haupstädte, Einwohnerzahl und Fläche</a></li>
+<li class="chapter" data-level="4.3.3" data-path="rvest1.html"><a href="rvest1.html#zusammenführen-in-einem-tibble"><i class="fa fa-check"></i><b>4.3.3</b> Zusammenführen in einem Tibble</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html"><i class="fa fa-check"></i><b>5</b> CSS selectors &amp; Developer Tools</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#css"><i class="fa fa-check"></i><b>5.1</b> CSS selectors</a></li>
+<li class="chapter" data-level="5.2" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#developer-tools"><i class="fa fa-check"></i><b>5.2</b> Developer Tools</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="rvest2.html"><a href="rvest2.html"><i class="fa fa-check"></i><b>6</b> Fortgeschrittenes Scraping mit rvest 1</a></li>
+<li class="chapter" data-level="7" data-path="rvest3.html"><a href="rvest3.html"><i class="fa fa-check"></i><b>7</b> Fortgeschrittenes Scraping mit rvest 2</a></li>
 <li class="part"><span><b>IV Beispielprojekte</b></span></li>
-<li class="chapter" data-level="7" data-path="R2.html"><a href="R2.html"><i class="fa fa-check"></i><b>7</b> Transformation und Visualisierung im Tidyverse</a>
+<li class="chapter" data-level="8" data-path="R3.html"><a href="R3.html"><i class="fa fa-check"></i><b>8</b> Transformation und Visualisierung im Tidyverse</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="R2.html"><a href="R2.html#transformation-mit-dplyr"><i class="fa fa-check"></i><b>7.1</b> Transformation mit dplyr</a></li>
-<li class="chapter" data-level="7.2" data-path="R2.html"><a href="R2.html#visualisierung-mit-ggplot"><i class="fa fa-check"></i><b>7.2</b> Visualisierung mit ggplot</a></li>
+<li class="chapter" data-level="8.1" data-path="R3.html"><a href="R3.html#transformation-mit-dplyr"><i class="fa fa-check"></i><b>8.1</b> Transformation mit dplyr</a></li>
+<li class="chapter" data-level="8.2" data-path="R3.html"><a href="R3.html#visualisierung-mit-ggplot"><i class="fa fa-check"></i><b>8.2</b> Visualisierung mit ggplot</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="ethik.html"><a href="ethik.html"><i class="fa fa-check"></i><b>8</b> Ethik &amp; good practice</a></li>
-<li class="chapter" data-level="9" data-path="projekt1.html"><a href="projekt1.html"><i class="fa fa-check"></i><b>9</b> Beispielprojekt HTML Scraping</a></li>
-<li class="chapter" data-level="10" data-path="projekt2.html"><a href="projekt2.html"><i class="fa fa-check"></i><b>10</b> Beispielprojekt XML Scraping</a></li>
+<li class="chapter" data-level="9" data-path="ethik.html"><a href="ethik.html"><i class="fa fa-check"></i><b>9</b> Ethik &amp; good practice</a></li>
+<li class="chapter" data-level="10" data-path="projekt1.html"><a href="projekt1.html"><i class="fa fa-check"></i><b>10</b> Beispielprojekt 1</a></li>
+<li class="chapter" data-level="11" data-path="projekt2.html"><a href="projekt2.html"><i class="fa fa-check"></i><b>11</b> Beispielprojekt 2</a></li>
 <li class="part"><span><b>V Weiterführende Techniken</b></span></li>
-<li class="chapter" data-level="11" data-path="web.html"><a href="web.html"><i class="fa fa-check"></i><b>11</b> Weitere Formate im WWW</a>
+<li class="chapter" data-level="12" data-path="web.html"><a href="web.html"><i class="fa fa-check"></i><b>12</b> Weitere Formate im WWW</a>
 <ul>
-<li class="chapter" data-level="11.1" data-path="web.html"><a href="web.html#xml"><i class="fa fa-check"></i><b>11.1</b> XML</a></li>
-<li class="chapter" data-level="11.2" data-path="web.html"><a href="web.html#json"><i class="fa fa-check"></i><b>11.2</b> JSON</a></li>
-<li class="chapter" data-level="11.3" data-path="web.html"><a href="web.html#ajax"><i class="fa fa-check"></i><b>11.3</b> AJAX</a></li>
-<li class="chapter" data-level="11.4" data-path="web.html"><a href="web.html#sql"><i class="fa fa-check"></i><b>11.4</b> SQL</a></li>
-<li class="chapter" data-level="11.5" data-path="web.html"><a href="web.html#apis"><i class="fa fa-check"></i><b>11.5</b> APIs</a></li>
+<li class="chapter" data-level="12.1" data-path="web.html"><a href="web.html#xml"><i class="fa fa-check"></i><b>12.1</b> XML</a></li>
+<li class="chapter" data-level="12.2" data-path="web.html"><a href="web.html#json"><i class="fa fa-check"></i><b>12.2</b> JSON</a></li>
+<li class="chapter" data-level="12.3" data-path="web.html"><a href="web.html#ajax"><i class="fa fa-check"></i><b>12.3</b> AJAX</a></li>
+<li class="chapter" data-level="12.4" data-path="web.html"><a href="web.html#sql"><i class="fa fa-check"></i><b>12.4</b> SQL</a></li>
+<li class="chapter" data-level="12.5" data-path="web.html"><a href="web.html#apis"><i class="fa fa-check"></i><b>12.5</b> APIs</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="regex.html"><a href="regex.html"><i class="fa fa-check"></i><b>12</b> Regular Expressions</a></li>
+<li class="chapter" data-level="13" data-path="regex.html"><a href="regex.html"><i class="fa fa-check"></i><b>13</b> Regular Expressions</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -146,22 +225,22 @@ Web Scraping mit R
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="web" class="section level1" number="11">
-<h1><span class="header-section-number">11</span> Weitere Formate im WWW</h1>
-<div id="xml" class="section level2" number="11.1">
-<h2><span class="header-section-number">11.1</span> XML</h2>
+<div id="web" class="section level1" number="12">
+<h1><span class="header-section-number">12</span> Weitere Formate im WWW</h1>
+<div id="xml" class="section level2" number="12.1">
+<h2><span class="header-section-number">12.1</span> XML</h2>
 </div>
-<div id="json" class="section level2" number="11.2">
-<h2><span class="header-section-number">11.2</span> JSON</h2>
+<div id="json" class="section level2" number="12.2">
+<h2><span class="header-section-number">12.2</span> JSON</h2>
 </div>
-<div id="ajax" class="section level2" number="11.3">
-<h2><span class="header-section-number">11.3</span> AJAX</h2>
+<div id="ajax" class="section level2" number="12.3">
+<h2><span class="header-section-number">12.3</span> AJAX</h2>
 </div>
-<div id="sql" class="section level2" number="11.4">
-<h2><span class="header-section-number">11.4</span> SQL</h2>
+<div id="sql" class="section level2" number="12.4">
+<h2><span class="header-section-number">12.4</span> SQL</h2>
 </div>
-<div id="apis" class="section level2" number="11.5">
-<h2><span class="header-section-number">11.5</span> APIs</h2>
+<div id="apis" class="section level2" number="12.5">
+<h2><span class="header-section-number">12.5</span> APIs</h2>
 
 </div>
 </div>
@@ -193,7 +272,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/webscraping-tures/webscraping-tures.github.io/11-web.Rmd",
+"link": "https://github.com/webscraping-tures/webscraping-tures.github.io/12-web.Rmd",
 "text": "Edit"
 },
 "history": {
