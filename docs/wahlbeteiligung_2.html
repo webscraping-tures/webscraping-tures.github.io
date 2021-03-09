@@ -1,0 +1,176 @@
+<!DOCTYPE HTML>
+
+<html>
+  <head>
+    <title>Wahlbeteiligung Landtagswahlen</title>
+
+    <meta charset="UTF-8">
+    <meta name="author" content="Jakob Tures">
+    <meta name="description" content="Wahlbeteiligung der letzten Landtagswahl nach Bundesland">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+      .bundesland-odd {
+        background-color: AliceBlue;
+      }
+      .bundesland-even {
+        background-color: Beige;
+      }
+      .bundesland-name {
+        font-family: Arial, sans-serif;
+        font-weight: bold;
+      }
+      .wahljahr {
+        font-family: Arial, sans-serif;
+      }
+      .wahlbeteiligung {
+        font-family: Arial, sans-serif;
+        font-style: italic;
+      }
+      .quote {
+        margin: 50px;
+        font-family: Arial, sans-serif;
+      }
+      h3 {
+        font-family: Arial, sans-serif;
+      }
+      img {
+        vertical-align: middle;
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h3>Wahlbeteiligung bei der letzten Landtagswahl nach Bundesland:</h3>
+    <div id="daten">
+      <div class="bundesland-odd">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Flag_of_Baden-W%C3%BCrttemberg_%28state%2C_greater_arms%29.svg/200px-Flag_of_Baden-W%C3%BCrttemberg_%28state%2C_greater_arms%29.svg.png" width="50" heigth="30" id="bw">
+        <span class="bundesland-name" id="bw">Baden-Württemberg</span>
+        <span class="wahljahr">2016</span>:
+        <span class="wahlbeteiligung">70.4</span>%
+      </div>
+  
+      <div class="bundesland-even">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Flag_of_Bavaria_%28lozengy%29.svg/200px-Flag_of_Bavaria_%28lozengy%29.svg.png" width="50" heigth="30" id="by">
+        <span class="bundesland-name" id="by">Bayern</span>
+        <span class="wahljahr">2018</span>:
+        <span class="wahlbeteiligung">72.4</span>%
+      </div>
+  
+      <div class="bundesland-odd">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Flag_of_Berlin.svg/200px-Flag_of_Berlin.svg.png" width="50" heigth="30" id="be">
+        <span class="bundesland-name" id="be">Berlin</span>
+        <span class="wahljahr">2016</span>:
+        <span class="wahlbeteiligung">66.9</span>%
+      </div>
+  
+      <div class="bundesland-even">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Flag_of_Brandenburg.svg/200px-Flag_of_Brandenburg.svg.png" width="50" heigth="30" id="bb">
+        <span class="bundesland-name" id="bb">Brandenburg</span>
+        <span class="wahljahr">2019</span>:
+        <span class="wahlbeteiligung">61.3</span>%
+      </div>
+  
+      <div class="bundesland-odd">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Flag_of_Bremen_%28middle_arms%29.svg/200px-Flag_of_Bremen_%28middle_arms%29.svg.png" width="50" heigth="30" id="hb">
+        <span class="bundesland-name" id="hb">Bremen</span>
+        <span class="wahljahr">2019</span>:
+        <span class="wahlbeteiligung">64.1</span>%
+      </div>
+  
+      <div class="bundesland-even">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Flag_of_Hamburg.svg/200px-Flag_of_Hamburg.svg.png" width="50" heigth="30" id="HH">
+        <span class="bundesland-name" id="HH">Hamburg</span>
+        <span class="wahljahr">2020</span>:
+        <span class="wahlbeteiligung">63.2</span>%
+      </div>
+  
+      <div class="bundesland-odd">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Flag_of_Hesse_%28state%29.svg/200px-Flag_of_Hesse_%28state%29.svg.png" width="50" heigth="30" id="he">
+        <span class="bundesland-name" id="he">Hessen</span>
+        <span class="wahljahr">2018</span>:
+        <span class="wahlbeteiligung">67.3</span>%
+      </div>
+  
+      <div class="bundesland-even">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Flag_of_Mecklenburg-Western_Pomerania_%28state%29.svg/200px-Flag_of_Mecklenburg-Western_Pomerania_%28state%29.svg.png" width="50" heigth="30" id="mv">
+        <span class="bundesland-name" id="mv">Mecklenburg-Vorpommern</span>
+        <span class="wahljahr">2016</span>:
+        <span class="wahlbeteiligung">61.6</span>%
+      </div>
+  
+      <div class="bundesland-odd">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Flag_of_Lower_Saxony.svg/200px-Flag_of_Lower_Saxony.svg.png" width="50" heigth="30" id="ni">
+        <span class="bundesland-name" id="ni">Niedersachsen</span>
+        <span class="wahljahr">2017</span>:
+        <span class="wahlbeteiligung">63.1</span>%
+      </div>
+  
+      <div class="bundesland-even">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Flag_of_North_Rhine-Westphalia_%28state%29.svg/200px-Flag_of_North_Rhine-Westphalia_%28state%29.svg.png" width="50" heigth="30" id="nw">
+        <span class="bundesland-name" id="nw">Nordrhein-Westfalen</span>
+        <span class="wahljahr">2017</span>:
+        <span class="wahlbeteiligung">65.2</span>%
+      </div>
+  
+      <div class="bundesland-odd">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Flag_of_Rhineland-Palatinate.svg/200px-Flag_of_Rhineland-Palatinate.svg.png" width="50" heigth="30" id="rp">
+        <span class="bundesland-name" id="rp">Rheinland-Pfalz</span>
+        <span class="wahljahr">2016</span>:
+        <span class="wahlbeteiligung">70.4</span>%
+      </div>
+  
+      <div class="bundesland-even">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Flag_of_Saarland.svg/200px-Flag_of_Saarland.svg.png" width="50" heigth="30" id="sl">
+        <span class="bundesland-name" id="sl">Saarland</span>
+        <span class="wahljahr">2017</span>:
+        <span class="wahlbeteiligung">69.7</span>%
+      </div>
+  
+      <div class="bundesland-odd">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Flag_of_Saxony_%28state%29.svg/200px-Flag_of_Saxony_%28state%29.svg.png" width="50" heigth="30" id="sn">
+        <span class="bundesland-name" id="sn">Sachsen</span>
+        <span class="wahljahr">2019</span>:
+        <span class="wahlbeteiligung">66.6</span>%
+      </div>
+  
+      <div class="bundesland-even">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Flag_of_Saxony-Anhalt_%28state%29.svg/200px-Flag_of_Saxony-Anhalt_%28state%29.svg.png" width="50" heigth="30" id="st">
+        <span class="bundesland-name" id="st">Sachsen-Anhalt</span>
+        <span class="wahljahr">2016</span>:
+        <span class="wahlbeteiligung">61.1</span>%
+      </div>
+  
+      <div class="bundesland-odd">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Flag_of_Schleswig-Holstein_%28state%29.svg/200px-Flag_of_Schleswig-Holstein_%28state%29.svg.png" width="50" heigth="30" id="sh">
+        <span class="bundesland-name" id="sh">Schleswig-Holstein</span>
+        <span class="wahljahr">2017</span>:
+        <span class="wahlbeteiligung">64.2</span>%
+      </div>
+  
+      <div class="bundesland-even">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Flag_of_Thuringia_%28state%29.svg/200px-Flag_of_Thuringia_%28state%29.svg.png" width="50" heigth="30" id="th">
+        <span class="bundesland-name" id="th">Thüringen</span>
+        <span class="wahljahr">2019</span>:
+        <span class="wahlbeteiligung">64.9</span>%
+      </div>
+    </div>
+    
+    <div class="quote">
+      Daten: 
+      <a href="https://www.wahlrecht.de/ergebnisse/index.htm" target="_blank">
+        https://www.wahlrecht.de/ergebnisse/index.htm</a> (08.03.2021)
+      <br>
+      Flaggen: 
+      <a href="https://de.wikipedia.org/wiki/Flaggen_und_Wappen_der_L%C3%A4nder_der_Bundesrepublik_Deutschland" target"_blank">
+        https://de.wikipedia.org/wiki/Flaggen_und_Wappen_der_L%C3%A4nder_der_Bundesrepublik_Deutschland</a> (09.03.2021)
+    </div>
+    
+    <div>
+      <a href="https://webscraping-tures.github.io/css-selectors-developer-tools.html" target="_blank">
+        Zurück</a> zur Kursseite
+    </div>
+  </body>
+</html>
