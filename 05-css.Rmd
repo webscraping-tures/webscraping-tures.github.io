@@ -505,21 +505,30 @@ Wählen wir ein Element in "Elements" aus, wird dieses auch in der Darstellung i
 Browserfenster markiert.
 
 ``` {r, echo = FALSE, fig.retina = 1}
-include_graphics(c("wdt/wdt_02a.png", "wdt/wdt_02b.png"))
+include_graphics("wdt/wdt_02a.png")
+```
+
+``` {r, echo = FALSE, fig.retina = 1}
+include_graphics("wdt/wdt_02b.png")
 ```
 
 Auch können wir den "Inspector" aktivieren und Elemente direkt im Browserfenster 
-per Klick auswählen. Dann wird wiederum der korrespondierende Eintrag im 
-"Elements" Reiter ausgewählt.
+per Klick auswählen. 
 
 ``` {r, echo = FALSE, fig.retina = 1}
 include_graphics("wdt/wdt_03.png")
 ```
 
 ``` {r, echo = FALSE, fig.retina = 1}
-include_graphics(c("wdt/wdt_04a.png", "wdt/wdt_04b.png"))
+include_graphics("wdt/wdt_04a.png")
 ```
 
+So wird wiederum der korrespondierende Eintrag im 
+"Elements" Reiter ausgewählt.
+
+``` {r, echo = FALSE, fig.retina = 1}
+include_graphics("wdt/wdt_04b.png")
+```
 Das untere Ende des "Elements" Reiters, zeigt uns den zu dem ausgewählten 
 Element gehörenden vollen CSS Selector.
 
