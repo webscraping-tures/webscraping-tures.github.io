@@ -529,6 +529,7 @@ So wird wiederum der korrespondierende Eintrag im
 ``` {r, echo = FALSE, fig.retina = 1}
 include_graphics("wdt/wdt_04b.png")
 ```
+
 Das untere Ende des "Elements" Reiters, zeigt uns den zu dem ausgewählten 
 Element gehörenden vollen CSS Selector.
 
