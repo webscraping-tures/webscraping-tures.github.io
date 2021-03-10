@@ -1,3 +1,7 @@
 # (PART) R Basics & Tidyverse {-}
 
+``` {r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
 # R & R Studio {#R1}

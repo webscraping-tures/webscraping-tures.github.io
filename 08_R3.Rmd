@@ -1,5 +1,9 @@
 # (PART) Beispielprojekte {-}
 
+``` {r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
 # Transformation und Visualisierung im Tidyverse {#R3}
 
 ## Transformation mit dplyr

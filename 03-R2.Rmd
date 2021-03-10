@@ -1,5 +1,9 @@
 # Tidyverse
 
+``` {r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
 ## Philosophie
 
 ## Tidy data

@@ -1,1 +1,5 @@
 # Fortgeschrittenes Scraping mit rvest 1 {#rvest2}
+
+``` {r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
