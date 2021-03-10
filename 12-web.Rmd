@@ -1,5 +1,9 @@
 # (PART) Weiterführende Techniken {-}
 
+``` {r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
 # Weitere Formate im WWW {#web}
 
 ## XML

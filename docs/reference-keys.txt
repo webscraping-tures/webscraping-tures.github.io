@@ -28,6 +28,14 @@ haupstädte-einwohnerzahl-und-fläche
 zusammenführen-in-einem-tibble
 css-selectors-developer-tools
 css
+klassen
+ids
+attribute-1
+hierachieebenen
+descendant
+childparent
+siblings
+weitere-selektoren
 developer-tools
 rvest2
 rvest3
