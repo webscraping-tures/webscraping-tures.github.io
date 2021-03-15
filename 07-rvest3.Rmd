@@ -1,5 +1,12 @@
-# Fortgeschrittenes Scraping mit rvest 2 {#rvest3}
+# Scraping mehrseitiger Websites {#rvest3}
 
 ``` {r, include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
 ```
+
+## Indexseiten
+
+
+
+
+## Pagination
