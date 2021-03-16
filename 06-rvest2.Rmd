@@ -389,9 +389,8 @@ Standard ebenfalls "GET" genutzt.
 Das zweite für uns interessante Attribut, ist `action="CMD"`. 
 Dies legt fest, welche Aktion ausgelöst werden soll 
 nachdem das Formular übermittelt wurde. Oft ist der Wert von `action=` der
-Name einer Datei auf dem Server, an welche die Daten gesendet werden sollen.
-In diesem Beispiel handelt es sich nicht um eine Datei. Stattdessen wir ein
-Befehl übermittelt, den der Server verstehen kann.
+Name einer Datei auf dem Server, an welche die Daten gesendet werden sollen und
+welche dann eine dynamisch erzeugte HTML-Seite zurück an den Nutzer sendet.
 
 Betrachten wir nun die Elemente des Formulars. Hierzu kann die rvest Funktion
 `html_form()` hilfreich sein.
