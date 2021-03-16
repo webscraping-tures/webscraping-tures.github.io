@@ -24,7 +24,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2021-03-15" />
+<meta name="date" content="2021-03-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -604,9 +604,8 @@ Standard ebenfalls “GET” genutzt.</p>
 <p>Das zweite für uns interessante Attribut, ist <code>action="CMD"</code>.
 Dies legt fest, welche Aktion ausgelöst werden soll
 nachdem das Formular übermittelt wurde. Oft ist der Wert von <code>action=</code> der
-Name einer Datei auf dem Server, an welche die Daten gesendet werden sollen.
-In diesem Beispiel handelt es sich nicht um eine Datei. Stattdessen wir ein
-Befehl übermittelt, den der Server verstehen kann.</p>
+Name einer Datei auf dem Server, an welche die Daten gesendet werden sollen und
+welche dann eine dynamisch erzeugte HTML-Seite zurück an den Nutzer sendet.</p>
 <p>Betrachten wir nun die Elemente des Formulars. Hierzu kann die rvest Funktion
 <code>html_form()</code> hilfreich sein.</p>
 <div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="rvest2.html#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;https://opac.ub.uni-potsdam.de/&quot;</span> <span class="sc">%&gt;%</span> </span>
