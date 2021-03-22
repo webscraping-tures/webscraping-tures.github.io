@@ -459,23 +459,21 @@ anderem auch die Auswahl von "ancestors", also von höheren Hierarchieebenen,
 ausgehend von einer niedrigeren. Der Preis für die höhere Flexibilität ist aber
 auch eine oft längere und etwas kompliziertere Syntax. In den meisten Fällen, 
 werden Ihnen die CSS Selectors völlig ausreichen. Und falls Sie irgendwann an 
-einen Punkt stoßen, an denen sie nicht mehr ausreichen um ihr Scraping Ziel zu 
+einen Punkt stoßen, an denen sie nicht mehr ausreichen, um ihr Scraping Ziel zu 
 erreichen, sind sie bereits so geübt im Umgang mit den CSS Selectors, dass Ihnen
 der Umstieg auf XPath sehr leicht fallen wird. Auf den Seiten der W3, finden sie
 dann eine passende Einführung: 
 <https://www.w3schools.com/xml/xpath_intro.asp>{target="_blank"}
 
-
-
-
 ## Developer Tools
 ``` {r, include = FALSE}
 library(knitr)
 ```
-Das Erkennen der HTML-Struktur und das identifizieren von funktionstüchtigen 
-Selektoren, kann auf komplexen Websites sehr schwer sein, vor allem dann, wenn 
-der HTML-Code nicht so übersichtlich formatiert ist, wie in unserem Beispiel. 
-Hier kann es hilfreich sein, die in modernen Browsern integrierten 
+
+Das Erkennen der HTML-Struktur und das Identifizieren von funktionstüchtigen
+Selektoren kann auf komplexen Websites sehr schwer sein, vor allem wenn der
+HTML-Code nicht so übersichtlich formatiert ist, wie in unserem Beispiel.  Hier
+kann es hilfreich sein, die in modernen Browsern integrierten
 *Web Developer Tools* zu verwenden.
 
 Auf den folgenden Screenshots, sehen Sie die Anwendung in Chromium für Linux auf
@@ -484,7 +482,7 @@ Chrome, Firefox oder Edge nahezu identisch. In allen Fälllen öffnen sie die
 Developer Tools durch einen Rechtsklick im Browserfenster und dann der Auswahl
 "Untersuchen" bzw. "Inspect".
 
-Je nach Einstellung öffnen sich die devloper tools in einem horizontal oder 
+Je nach Einstellung öffnen sich die Developer Tools in einem horizontal oder 
 vertikal abgetrennten Bereich des Browsers. Wir sehen hier eine Vielzahl von 
 Reitern, für diese Einführung konzentrieren wir uns aber rein auf den Reiter 
 "Elements". Dieser zeigt uns den HTML-Code in seiner hierarchischen Struktur und
@@ -533,8 +531,8 @@ include_graphics("wdt/wdt_05.png")
 Mit einem Rechtsklick auf ein Element und der Auswahl von "Copy" -> 
 "Copy selector", können wir uns außerdem einen CSS Selector in den 
 Zwischenspeicher holen, den wir dann in R Studio mit STRG+V einfügen können. 
-Für das oben ausgewählte Element, also dem Ländernamen für Baden-Württemberg, 
-bekommen wir den Selector "#bw". In diesem Fall ist dieser Kurze Selector 
+Für das oben ausgewählte Element, also den Ländernamen für Baden-Württemberg, 
+bekommen wir den Selector "#bw". In diesem Fall ist dieser kurze Selector 
 ausreichend, um das Element eindeutig zu identifizieren. Ich empfehle aber, 
 wie oben ausgeführt, die Konstruktion von eindeutigeren und besser 
 nachvollziehbaren Selektoren. Der von den Developer Tools erstellte Selector, 
@@ -542,14 +540,14 @@ sowie vor allem die Darstellung des vollen Pfads im "Elements" Reiter, können
 jedoch bei der Konstruktion dieser sehr hilfreich sein und ermöglichen ein 
 schnelles Erfassen der Struktur einer Website.
 
-Auch haben wir so zwar erfahren, wie wir den namen für Baden-Württemberg 
-auswählen, aber beispielsweise nicht, wie wir alle Namen der Bundesländer 
-selektieren können. Aber auch hier können die Developer Tools hilfreich sein. 
-Eine Herangehensweise wäre es, mehrere der Namenselemente nacheinander 
-auszuwählen und zu vergleichen, wie sich der volle CSS-Selector verändert. 
-Identifizieren wir darüber Gemeinsamkeiten und Unterschiede zwischen den 
-Namenselemente, kann uns dies Ansatzpunkte geben um unseren eigenen Selector zu
-formulieren. Eine weitere Möglichkeit wäre es, statt der integrierten Developer
-Tools, die Erweiterung *SelectorGadget* zu nutzen. Diese ermöglicht unter
-anderem die Auswahl mehrere Elemente gleichzeitig. Informationen zur Nutzung 
-finden Sie unter: <https://selectorgadget.com/>{target="_blank"}
+Auch haben wir so zwar erfahren, wie wir den Namen für Baden-Württemberg
+auswählen, aber beispielsweise nicht, wie wir alle Namen der Bundesländer
+selektieren können. Aber auch hier können die Developer Tools hilfreich sein.
+Eine Herangehensweise wäre es, mehrere der Namenselemente nacheinander
+auszuwählen und zu vergleichen, wie sich der volle CSS-Selector verändert.
+Identifizieren wir darüber Gemeinsamkeiten und Unterschiede zwischen den
+Namenselementen, kann uns dies Ansatzpunkte geben, um unseren eigenen Selector
+zu formulieren. Eine weitere Möglichkeit wäre es, statt der integrierten
+Developer Tools, die Erweiterung *SelectorGadget* zu nutzen. Diese ermöglicht
+unter anderem die Auswahl mehrere Elemente gleichzeitig. Informationen zur
+Nutzung finden Sie unter: <https://selectorgadget.com/>{target="_blank"}
