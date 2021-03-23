@@ -95,7 +95,7 @@ in der Form `"tag"`, selektiert alle HTML-Tags des angegebenen Namens. Möchten
 wir also den `<title>` Tag extrahieren, können wir dies so erreichen:
 
 ``` {r}
-node_title <- html_nodes(hello_world, css="title")
+node_title <- html_nodes(hello_world, css = "title")
 node_title
 ```
 
@@ -104,7 +104,7 @@ wäre es eine Möglichkeit den kompletten `<body>` Tag zu selektieren, da ja in
 diesem Fall kein anderer Text auf der Seite dargestellt wird.
 
 ``` {r}
-node_body <- html_nodes(hello_world, css="body")
+node_body <- html_nodes(hello_world, css = "body")
 node_body
 ```
 
@@ -114,7 +114,7 @@ beides nicht. Effizienter wäre es direkt den `<b>` Tag, der den Text umschließ
 zu selektieren.
 
 ``` {r}
-node_b <- html_nodes(hello_world, css="b")
+node_b <- html_nodes(hello_world, css = "b")
 node_b
 ```
 
@@ -147,10 +147,10 @@ html_text(node_body)
 Wir sehen, dass die Funktion praktischerweise die `<b>` Tags, an denen wir nicht
 interessiert waren, für uns entfernt hat. Es bleiben aber die Zeilenumbrüche
 sowie mehrere Leerzeichen, sogenannter *whitespace*. Beides lässt sich mit dem
-Argument `trim=TRUE` entfernen.
+Argument `trim = TRUE` entfernen.
 
 ``` {r}
-html_text(node_body, trim=TRUE)
+html_text(node_body, trim = TRUE)
 ```
 
 ## Countries of the World
@@ -202,7 +202,7 @@ Andorra bezogen sind. Betrachten wir diese genauer:
 Die gesamten Informationen zu Andorra sind von einem `<div>` Tag
 umschlossen. Als Erinnerung: ein `<div>` definiert eine Gruppierung von Code
 über mehrere Zeilen hinweg. In der Webdesign-Praxis, werden diese Gruppierungen
-vor allem dazu genutzt, um über das Argument `class=` dem folgenden Code einen
+vor allem dazu genutzt, um über das Argument `class = ` dem folgenden Code einen
 bestimmten CSS Style zuzuweisen, beispielsweise um das Schriftbild
 festzulegen. Wie die Stile definiert sind, kann uns aus der Web Scraping
 Perspektive in der Regel egal sein. Wir müssen nur wissen, dass wir diese
@@ -231,10 +231,10 @@ Namen der Länder darzustellen. Damit können wir den `<h3>` Tag als *CSS Select
 nutzen, um analog zum ersten Beispiel den umschlossenen Text auszulesen.
 
 ``` {r}
-node_country <- html_nodes(website, css="h3")
-text_country <- html_text(node_country, trim=TRUE)
+node_country <- html_nodes(website, css = "h3")
+text_country <- html_text(node_country, trim = TRUE)
 
-head(text_country, n=10)
+head(text_country, n = 10)
 ```
 
 Das Ergebnis sieht vielversprechend aus. Da die Struktur des Codeblocks für
@@ -251,8 +251,8 @@ Spätestens an dieser Stelle sollten wir uns nochmals Gedanken zur Lesbarkeit un
 Struktur unseres R-Codes machen. Betrachten wir den vorangegangenen Codeblock:
 
 ``` {r, eval = FALSE}
-node_country <- html_nodes(website, css="h3")
-text_country <- html_text(node_country, trim=TRUE)
+node_country <- html_nodes(website, css = "h3")
+text_country <- html_text(node_country, trim = TRUE)
 ```
 
 Wie wir gesehen haben, erreichen wir damit unser Ziel. Wir haben aber dazu auch
@@ -264,10 +264,10 @@ gleichzeitig intuitiveren und leichter verständlichen Code.
 
 ``` {r}
 country <- website %>% 
-  html_nodes(css="h3") %>% 
-  html_text(trim=TRUE)
+  html_nodes(css = "h3") %>% 
+  html_text(trim = TRUE)
 
-head(country, n=10)
+head(country, n = 10)
 ```
 
 Zur Erinnerung: Die Pipe gibt das Ergebnis eines Arbeitschritts an die nächste
@@ -333,9 +333,9 @@ indem wir den `<span>` Tag als Selector nutzen.
 
 ``` {r}
 website %>% 
-  html_nodes(css="span") %>% 
+  html_nodes(css = "span") %>% 
   html_text() %>% 
-  head(n=10)
+  head(n = 10)
 ```
 
 Wir bekommen so zwar die Namen der Hauptstädte, aber auch die Einwohnerzahl und
@@ -352,20 +352,20 @@ Syntax `.Klassenname` nutzen. Um also alle `<span>` auszuwählen, die die Klasse
 
 ``` {r}
 capital <- website %>% 
-  html_nodes(css="span.country-capital") %>% 
+  html_nodes(css = "span.country-capital") %>% 
   html_text()
 
-  head(capital, n=10)
+  head(capital, n = 10)
 ```
 
 Dies können wir analog für die Einwohnerzahl mit der Klasse `country-population` wiederholen.
 
 ``` {r}
 population <- website %>% 
-  html_nodes(css="span.country-population") %>% 
+  html_nodes(css = "span.country-population") %>% 
   html_text()
 
-  head(population, n=10)
+  head(population, n = 10)
 ```
 
 Betrachten wir den so erzeugten Vektor genauer, sehen wir, dass es sich dabei um
@@ -454,17 +454,17 @@ website <- "https://scrapethissite.com/pages/simple/" %>%
 
 countries_2 <- tibble(
   Land = website %>%
-    html_nodes(css="h3") %>% 
-    html_text(trim=TRUE),
+    html_nodes(css = "h3") %>% 
+    html_text(trim = TRUE),
   Hauptstadt = website %>% 
-    html_nodes(css="span.country-capital") %>% 
+    html_nodes(css = "span.country-capital") %>% 
     html_text(),
-  Bevoelkerung=website %>% 
-    html_nodes(css="span.country-population") %>% 
+  Bevoelkerung = website %>% 
+    html_nodes(css = "span.country-population") %>% 
     html_text() %>% 
     as.numeric(),
   Flaeche = website %>% 
-    html_nodes(css="span.country-area") %>% 
+    html_nodes(css = "span.country-area") %>% 
     html_text() %>% 
     as.numeric()
 )
