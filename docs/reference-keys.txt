@@ -50,7 +50,12 @@ manipulation-des-queries-und-scrapen-des-ergebnis
 weiterführende-quellen
 rvest3
 indexseiten
+scrapen-des-index
+map
+scrapen-der-unterseiten
 pagination
+der-query-1
+scrapen-der-unterseiten-1
 R3
 transformation-mit-dplyr
 visualisierung-mit-ggplot

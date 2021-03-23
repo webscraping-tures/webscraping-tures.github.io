@@ -24,7 +24,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2021-03-16" />
+<meta name="date" content="2021-03-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -215,8 +215,17 @@ Web Scraping mit R
 </ul></li>
 <li class="chapter" data-level="7" data-path="rvest3.html"><a href="rvest3.html"><i class="fa fa-check"></i><b>7</b> Scraping mehrseitiger Websites</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="rvest3.html"><a href="rvest3.html#indexseiten"><i class="fa fa-check"></i><b>7.1</b> Indexseiten</a></li>
-<li class="chapter" data-level="7.2" data-path="rvest3.html"><a href="rvest3.html#pagination"><i class="fa fa-check"></i><b>7.2</b> Pagination</a></li>
+<li class="chapter" data-level="7.1" data-path="rvest3.html"><a href="rvest3.html#indexseiten"><i class="fa fa-check"></i><b>7.1</b> Indexseiten</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="rvest3.html"><a href="rvest3.html#scrapen-des-index"><i class="fa fa-check"></i><b>7.1.1</b> Scrapen des Index</a></li>
+<li class="chapter" data-level="7.1.2" data-path="rvest3.html"><a href="rvest3.html#map"><i class="fa fa-check"></i><b>7.1.2</b> map()</a></li>
+<li class="chapter" data-level="7.1.3" data-path="rvest3.html"><a href="rvest3.html#scrapen-der-unterseiten"><i class="fa fa-check"></i><b>7.1.3</b> Scrapen der Unterseiten</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="rvest3.html"><a href="rvest3.html#pagination"><i class="fa fa-check"></i><b>7.2</b> Pagination</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="rvest3.html"><a href="rvest3.html#der-query-1"><i class="fa fa-check"></i><b>7.2.1</b> Der Query</a></li>
+<li class="chapter" data-level="7.2.2" data-path="rvest3.html"><a href="rvest3.html#scrapen-der-unterseiten-1"><i class="fa fa-check"></i><b>7.2.2</b> Scrapen der Unterseiten</a></li>
+</ul></li>
 </ul></li>
 <li class="part"><span><b>IV Beispielprojekte</b></span></li>
 <li class="chapter" data-level="8" data-path="R3.html"><a href="R3.html"><i class="fa fa-check"></i><b>8</b> Transformation und Visualisierung im Tidyverse</a>
@@ -267,7 +276,7 @@ gestaltet:</p>
 <p>Der <code>&lt;table&gt;</code> Tag umfasst die gesamte Tabelle.
 Zeilen werden durch <code>&lt;tr&gt;</code> definiert, Spaltenüberschriften mit <code>&lt;th&gt;</code> und
 Zellen mit <code>&lt;td&gt;</code>.</p>
-<p>Bevor mit dem Scraping beginnen, laden wir wie immer die nötigen packages:</p>
+<p>Bevor wir mit dem Scraping beginnen, laden wir wie immer die nötigen packages:</p>
 <div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="rvest2.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb67-2"><a href="rvest2.html#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span></code></pre></div>
 <div id="tabelle-mit-css-selectors-aus-wikipedia" class="section level3" number="6.1.1">
@@ -280,8 +289,8 @@ findet sich auch eine Tabelle mit CSS Selectors. Diese ist unser Scraping Ziel.<
 <p>Betrachten wir den Quellcode und suchen – STRG+F – nach “&lt;table”, erkennen
 wir, dass diese Seite eine Vielzahl von HTML-Tabellen enthält. Dazu gehören
 nicht ausschließlich die auf den ersten Blick als “klassische” Tabellen zu
-erkennenden Elemente sondern unter anderem auch die “Infoboxen” am rechten
-oberen rand des Artikels oder die ausklappbaren Auflistungen weiterführender
+erkennenden Elemente, sondern unter anderem auch die “Infoboxen” am rechten
+oberen Rand des Artikels oder die ausklappbaren Auflistungen weiterführender
 Links am unteren Ende. Wenn Sie dies genauer betrachten möchten, können die
 Web Developer Tools hier sehr hilfreich sein.</p>
 <p>Statt einfach alle <code>&lt;table&gt;</code> nodes der Seite zu selektieren, könnte eine
@@ -303,17 +312,15 @@ sein, statt <code>html_nodes()</code> die Funktion <code>html_node()</code> zu n
 <span id="cb69-10"><a href="rvest2.html#cb69-10" aria-hidden="true" tabindex="-1"></a><span class="do">## {html_node}</span></span>
 <span id="cb69-11"><a href="rvest2.html#cb69-11" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;table class=&quot;wikitable&quot;&gt;</span></span>
 <span id="cb69-12"><a href="rvest2.html#cb69-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;tbody&gt;\n&lt;tr&gt;\n&lt;th&gt;Pattern&lt;/th&gt;\n&lt;th&gt;Matches&lt;/th&gt;\n&lt;th&gt;First defined&lt;br&gt;i ...</span></span></code></pre></div>
-<p>Der Unterschied besteht vor allem darin, was die Funktion uns “zurückgibt”.
-Dies ist erkennbar an dem Eintrag innerhalb der geschweiften Klammern im Output.
-Im ersten Fall, bekommen wir eine Liste von HTML Elementen
-– ein “xml_nodeset” –, auch wenn diese Liste, wie hier, nur aus einem Eintrag
-besteht.
-<code>html_node()</code> gibt uns direkt das HTML Element – “html_node” – als
-Ergebnis der Funktion.
-Warum ist dies relevant? In vielen Fällen kann es einfacher sein direkt mit
-dem HTML-Element statt einer Liste von HTML Elementen zu arbeiten,
-beispielsweise bei der Überführung von Tabellen in Data Frames und Tibbles, aber
-dazu später mehr.</p>
+<p>Der Unterschied besteht vor allem in der Ausgabe der Funktion. Dies ist
+erkennbar an dem Eintrag innerhalb der geschweiften Klammern im Output. Im
+ersten Fall, bekommen wir eine Liste von HTML Elementen – ein “xml_nodeset” –,
+auch wenn diese Liste, wie hier, nur aus einem Eintrag besteht. <code>html_node()</code>
+gibt uns direkt das HTML Element – “html_node” – als Ergebnis der Funktion.
+Warum ist dies relevant? In vielen Fällen kann es einfacher sein direkt mit dem
+HTML-Element statt einer Liste von HTML Elementen zu arbeiten, beispielsweise
+bei der Überführung von Tabellen in Data Frames und Tibbles, aber dazu später
+mehr.</p>
 <p>Um nun die so ausgewählte Tabelle auszulesen, müssen wir nur noch die Funktion
 <code>html_table()</code> auf unser Element anwenden.</p>
 <div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="rvest2.html#cb70-1" aria-hidden="true" tabindex="-1"></a>css_table_df <span class="ot">&lt;-</span> node <span class="sc">%&gt;%</span> </span>
@@ -336,7 +343,7 @@ dazu später mehr.</p>
 <span id="cb70-18"><a href="rvest2.html#cb70-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 2                         1</span></span>
 <span id="cb70-19"><a href="rvest2.html#cb70-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 3                         1</span></span>
 <span id="cb70-20"><a href="rvest2.html#cb70-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 4                         1</span></span></code></pre></div>
-<p>Das Ergebnis ist ein Data Frame der die gescrapten Inhalte der HTML-Tabelle
+<p>Das Ergebnis ist ein Data Frame, der die gescrapten Inhalte der HTML-Tabelle
 enthält und dabei die in den <code>&lt;th&gt;</code> Tags hinterlegten Spaltennamen für die
 Spalten des Data Frames übernimmt.
 Durch die sehr langen Zellen in der Spalte “Matches”, ist der Output der R
@@ -361,7 +368,7 @@ Um einen Data Frame in einen Tibble umzuwandeln, können wir die Funktion
 </div>
 <div id="scrapen-mehrerer-tabellen" class="section level3" number="6.1.2">
 <h3><span class="header-section-number">6.1.2</span> Scrapen mehrerer Tabellen</h3>
-<p>Es könnte auch unser Scraping Ziel sein, nicht nur die erste sondern alle vier
+<p>Es könnte auch unser Scraping Ziel sein, nicht nur die erste, sondern alle vier
 inhaltlichen Tabellen des Wikipedia Artikels zu scrapen. Betrachten wir die vier
 Tabellen im Quellcode und/oder den WDTs, zeigt sich, dass sie alle die Klasse
 <code>"wikitable"</code> tragen. Damit können wir sie leicht selektieren. Hierbei bitte
@@ -374,14 +381,15 @@ Elemente benötigen.</p>
 <p>Das Ergebnis ist eine Liste von vier Data Frames, welche jeweils eine der vier
 Tabellen enthalten. Möchten wir einen Einzelnen der Data Frames aus der Liste
 auswählen um ihn beispielsweise in ein neues Objekt zu überführen, sind wir auf
-das sogenannte <em>subsetting</em> angewiesen.</p>
-<p>Grundsätzlich bestehen in R zwei Möglichkeiten des subsettings von Listen.
-<code>liste[#]</code> und <code>liste[[#]]</code>. Der für uns relevanteste Unterschied besteht darin,
-was für eine Art Objekt R an uns zurückgibt. Im ersten Fall wird uns immer eine
-Liste zurückgegeben, auch wenn diese Möglicherweise nur aus einem Element
-besteht. Die Nutzung doppelter eckiger Klammern, gibt uns hingegen ein einzelnes
-Element direkt zurück. Der Unterschied ist also ähnlich zu dem zwischen
-<code>html_nodes()</code> und <code>html_node()</code>.</p>
+<em>subsetting</em> angewiesen, welches wir bereits aus der Einführung in R kennen.</p>
+<p>Zur Erinnerung: es bestehen in R grundsätzlich zwei Möglichkeiten des
+subsettings von Listen. <code>liste[#]</code> und <code>liste[[#]]</code>. Der für uns
+relevanteste Unterschied besteht darin, was für eine Art Objekt R an
+uns zurückgibt. Im ersten Fall wird uns immer eine Liste
+zurückgegeben, auch wenn diese Möglicherweise nur aus einem Element
+besteht. Die Nutzung doppelter eckiger Klammern, gibt uns hingegen ein
+einzelnes Element direkt zurück. Der Unterschied ist also ähnlich zu
+dem zwischen <code>html_nodes()</code> und <code>html_node()</code>.</p>
 <p>Haben wir das Ziel beispielsweise den dritten Data Frame aus der Liste mit vier
 Data Frames auszuwählen, welches subsetting müssten wir nutzen?</p>
 <div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="rvest2.html#cb73-1" aria-hidden="true" tabindex="-1"></a>tables[<span class="dv">3</span>] <span class="sc">%&gt;%</span> </span>
@@ -396,14 +404,11 @@ Data Frames auszuwählen, welches subsetting müssten wir nutzen?</p>
 <span id="cb73-10"><a href="rvest2.html#cb73-10" aria-hidden="true" tabindex="-1"></a><span class="do">## &#39;data.frame&#39;:    7 obs. of  2 variables:</span></span>
 <span id="cb73-11"><a href="rvest2.html#cb73-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ Selectors  : chr  &quot;h1 {color: white;}&quot; &quot;p em {color: green;}&quot; &quot;.grape {color: red;}&quot; &quot;p.bright {color: blue;}&quot; ...</span></span>
 <span id="cb73-12"><a href="rvest2.html#cb73-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ Specificity: chr  &quot;0, 0, 0, 1&quot; &quot;0, 0, 0, 2&quot; &quot;0, 0, 1, 0&quot; &quot;0, 0, 1, 1&quot; ...</span></span></code></pre></div>
-<p>Die Funktion <code>str()</code> zeigt uns die interne Struktur eines R Objekts an. Der
-eigentliche Inhalt wird dabei verkürzt dargestellt, was die Übersichtlichkeit
-erhöht und den Fokus auf die uns hier interessierende Struktur lenkt.
-Im ersten Fall sehen wir, dass wir eine Liste der Länge 1 haben, welche einen
-Data Frame mit 7 Zeilen und 2 Variablen enthält, sowie weitere Informationen
-zu diesen Variablen.
-Im zweiten Fall bekommen wir den Data Frame direkt, also nicht mehr als Element
-einer Liste. Wir müssen also <code>liste[[]]</code> nutzen um direkt einen einzelneen
+<p>Im ersten Fall sehen wir, dass wir eine Liste der Länge 1 haben,
+welche einen Data Frame mit 7 Zeilen und 2 Variablen enthält, sowie
+weitere Informationen zu diesen Variablen. Im zweiten Fall bekommen
+wir den Data Frame direkt, also nicht mehr als Element einer
+Liste. Wir müssen also <code>liste[[]]</code> nutzen um direkt einen einzelnen
 Data Frame aus einer Liste von Data Frames auswählen zu können.</p>
 <p>Sind wir stattdessen an einer Auswahl mehrerer Elemente aus einer Liste
 interessiert, ist dies nur mit <code>liste[]</code> möglich. Statt ein Element mit einer
@@ -469,14 +474,13 @@ zunächst den Quellcode der ersten beiden Zeilen:</p>
   &lt;td&gt;2018&lt;/td&gt;
 &lt;/tr&gt;</code></pre>
 <p>Für Baden-Württemberg sehen wir, dass die dritte Spalte zwar im Quellcode
-angelegt ist, es sich aber kein Inhalt in dieser Zelle befindet. Dies hätte
+angelegt ist, sich aber kein Inhalt in dieser Zelle befindet. Dies hätte
 <code>html_table()</code> auch ohne <code>fill = TRUE</code> einlesen können und die Zelle mit einem
-<code>NA</code> gefüllt.
-Im Gegensatz dazu, fehlt für Bayern die Zelle komplett. Das bedeutet die zweite
-Zeile der Tabelle besteht nur aus zwei Spalten während der Rest der Tabelle drei
-Spalten hat. Dies ist das Problem, auf welches uns die Fehlermeldung hingewiesen
-hat. Im Ergebnis konnte R in beiden Fällen den richtigen Schluss ziehen und die
-Zelle in beiden Zeilen mit einem <code>NA</code> füllen.</p>
+<code>NA</code> gefüllt. Im Gegensatz dazu fehlt für Bayern die Zelle komplett. Das
+bedeutet, die zweite Zeile der Tabelle besteht nur aus zwei Spalten, während der
+Rest der Tabelle drei Spalten hat. Dies ist das Problem, auf welches uns die
+Fehlermeldung hingewiesen hat. Im Ergebnis konnte R in beiden Fällen den
+richtigen Schluss ziehen und die Zelle in beiden Zeilen mit einem <code>NA</code> füllen.</p>
 <p>Betrachten wir aber auch die dritte und vierte Zeile im Quellcode:</p>
 <pre><code>&lt;tr&gt;
   &lt;td&gt;Berlin&lt;/td&gt;
@@ -489,26 +493,26 @@ Zelle in beiden Zeilen mit einem <code>NA</code> füllen.</p>
   &lt;td&gt;61.3&lt;/td&gt;
 &lt;/tr&gt;</code></pre>
 <p>Hier fehlt in beiden Fällen die zweite Spalte. Im ersten Fall ist sie angelegt
-aber leer, im zweiten existiert sie nicht.
-Mit dem ersten Fall kann <code>html_table()</code> erneut
-problemlos umgehen. für Brandenburg stößt die Funktion aber an ihre Grenzen.
-Wir als menschliche Betrachter erkennen schnell, dass die letzte Landtagswahl in
-Brandenburg nicht im Jahr 61.3 stattfand, und dies also die Wahlbeteiligung sein
-muss. R kann dies nicht so einfach unterscheiden und nimmt 61.3 als Wert für die
-Spalte “Wahljahr” und setzt für “Wahlbeteiligung” ein <code>NA</code> ein.</p>
+aber leer, im zweiten existiert sie nicht. Mit dem ersten Fall kann
+<code>html_table()</code> erneut problemlos umgehen. Für Brandenburg stößt die Funktion
+aber an ihre Grenzen. Wir als menschliche Betrachter erkennen schnell, dass die
+letzte Landtagswahl in Brandenburg nicht im Jahr 61.3 stattfand und dies also
+die Wahlbeteiligung sein muss. R kann dies nicht so einfach unterscheiden und
+nimmt 61.3 als Wert für die Spalte “Wahljahr” und setzt für “Wahlbeteiligung”
+ein <code>NA</code> ein.</p>
 <p>Was tun? Zunächst einmal, sollten wir uns darüber bewusst sein, dass solche
 Probleme existieren. Wenn <code>html_table()</code>diese Fehlermeldung ausgibt, sollten wir
 also nicht einfach <code>fill = TRUE</code> setzen, sondern versuchen herauszufinden, warum
-das Problem besteht und ob die Option es automatisch beheben zu lassen uns auch
-tatsächlich zum Ziel führt. Ist dies nicht der Fall, könnte ein Lösungsansatz
-sein, eine eigene “Extraktorfunktion” zu schreiben, welche die Probleme direkt
-während des Scrapings behebt. Dies ist aber eine eher fortgeschrittene Methode
-und außerhalb des in dieser Einführung machbaren. Wir können aber immerhin die
-entstandenen Probleme im Nachhinein korrigieren.</p>
+das Problem besteht und ob die Option, es automatisch beheben zu lassen, uns
+auch tatsächlich zum Ziel führt. Ist dies nicht der Fall, könnte ein
+Lösungsansatz sein, eine eigene “Extraktorfunktion” zu schreiben, welche die
+Probleme direkt während des Scrapings behebt. Dies ist aber eine eher
+fortgeschrittene Methode und außerhalb des in dieser Einführung machbaren. Wir
+können aber immerhin die entstandenen Probleme im Nachhinein korrigieren.</p>
 <p>Unser Problem liegt ausschließlich in Zeile Vier. Deren zweite Spalte muss in die
 dritte verschoben werden und die zweite dann selbst als <code>NA</code> gesetzt werden.
-Dazu benötigen wir erneut subsetting. Im Falle eines Data Frames, müssen wir
-dabei die Zeile und die Spalte in der Form <code>df[zeile, spalte]</code> angeben um eine
+Dazu benötigen wir erneut subsetting. Im Falle eines Data Frames müssen wir
+dabei die Zeile und die Spalte in der Form <code>df[zeile, spalte]</code> angeben, um eine
 Zelle auszuwählen. So können wir R sagen: “Schreibe in Zelle Drei den Inhalt von
 Zelle Zwei, und dann schreibe in Zelle Zwei <code>NA</code>”</p>
 <div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="rvest2.html#cb79-1" aria-hidden="true" tabindex="-1"></a>wahlbet[<span class="dv">4</span>, <span class="dv">3</span>] <span class="ot">&lt;-</span> wahlbet[<span class="dv">4</span>, <span class="dv">2</span>]</span>
@@ -525,18 +529,18 @@ Zelle Zwei, und dann schreibe in Zelle Zwei <code>NA</code>”</p>
 </div>
 <div id="dynamische-websites" class="section level2" number="6.2">
 <h2><span class="header-section-number">6.2</span> Dynamische Websites</h2>
-<p>In der “Realität” des modernen Internets, werden wir immer häufiger auf
+<p>In der “Realität” des modernen Internets werden wir immer häufiger auf
 Websites stoßen, die nicht mehr ausschließlich auf statischen HTML-Dateien
 basieren, sondern Inhalte dynamisch generieren. Dies kennen Sie
 beispielsweise in Form von Timelines in Social Media Angeboten die dynamisch
 auf Basis Ihres Nutzerprofils generiert werden. Andere Websites generieren
 die dargestellten Inhalte möglicherweise mit <em>JavaScript</em> Funktionen oder als
 Reaktion auf Eingaben in HTML-Formularen.</p>
-<p>In vielen dieser Fälle, reicht es aus Web Scraping Perspektive nicht mehr aus,
+<p>In vielen dieser Fälle reicht es aus Web Scraping Perspektive nicht mehr aus,
 eine HTML-Seite einzulesen und die gesuchten Daten zu extrahieren, da diese
 im HTML-Quellcode oft nicht enthalten sind, sondern dynamisch im Hintergrund
 geladen werden. Die gute Nachricht ist, dass es auch hier meist Möglichkeiten
-gibt, die Informationen trotzdem Scrapen zu können.</p>
+gibt, die Informationen trotzdem scrapen zu können.</p>
 <p>Möglicherweise bietet der Betreiber einer Seite oder eines Services eine <em>API</em>
 (Application Programming Interface) an. In diesem Fall können wir uns für einen
 Zugang zu dieser Schnittstelle registrieren und erhalten dann Zugang zu den
@@ -545,8 +549,8 @@ Fällen können wir eventuell in den eingebetteten Scripts identifizieren, wie u
 aus welcher Datenbank die Informationen geladen werden und diese direkt
 ansteuern. Oder wir nutzen den <em>Selenium WebDriver</em> um ein Browserfenster
 “fernzusteuern” und das zu Scrapen, was der Browser “sieht”.</p>
-<p>Die schlechte Nachricht ist, dass es sich bei all diesen Ansätzen um
-fortgeschrittene Methoden handelt, die den Umfang dieser Einführung übersteigen.</p>
+<p>Bei all diesen Ansätzen handelt es sich allerdings um fortgeschrittene Methoden,
+die den Umfang dieser Einführung übersteigen.</p>
 <p>In den Fällen, in denen auf Basis der Eingaben in ein Formular eine HTML-Datei
 dynamisch erzeugt wird, können wir diese aber mit den bereits bekannten
 Methoden auslesen.</p>
@@ -555,19 +559,19 @@ Methoden auslesen.</p>
 <p>Lassen Sie uns als Beispiel den OPAC Katalog der Universitätsbibliothek
 Potsdam <a href="https://opac.ub.uni-potsdam.de/" target="_blank">https://opac.ub.uni-potsdam.de/</a>
 zunächst im Browser betrachten.</p>
-<p>Geben wir in das Suchfeld den Begriff “test” ein und Klicken auf Suche, zeigt
+<p>Geben wir in das Suchfeld den Begriff “test” ein und klicken auf Suche, zeigt
 uns das Browserfenster die Ergebnisse der Suchanfrage. Was uns hier aber
 eigentlich interessiert ist die Adressleiste des Browsers. Statt der URL
 “<a href="https://opac.ub.uni-potsdam.de/" class="uri">https://opac.ub.uni-potsdam.de/</a>”, steht dort nun eine deutlich längere URL in
 der Form:
 “<a href="https://opac.ub.uni-potsdam.de/DB=1/CMD?ACT=SRCHA&amp;IKT=1016&amp;SRT=YOP&amp;TRM=test" class="uri">https://opac.ub.uni-potsdam.de/DB=1/CMD?ACT=SRCHA&amp;IKT=1016&amp;SRT=YOP&amp;TRM=test</a>”.
 Der erste Teil ist offensichtlich weiterhin die URL der aufgerufenen Website,
-nennen wir dies Base-URL. An das Ende der URL wurde aber der Teil
-“CMD?ACT=SRCHA&amp;IKT=1016&amp;SRT=YOP&amp;TRM=test” angehangen. Dies ist der <em>HTML-Query</em>
+nennen wir dies die Base-URL. An das Ende der URL wurde aber der Teil
+“CMD?ACT=SRCHA&amp;IKT=1016&amp;SRT=YOP&amp;TRM=test” angehangen. Dies ist der <em>HTML-Query</em>,
 an dem wir hier interessiert sind. Zwischen Base-URL und Query befinden sich
-noch ein oder mehrere Bestandteile die sich in diesem Fall auch je nach
-ihrem Browser unterscheiden können. Diese sind für die eigentliche Suchanfrage
-aber auch irrelevant. Die verkürzte URL:
+noch ein oder mehrere Bestandteile, die sich in diesem Fall auch je nach ihrem
+Browser unterscheiden können. Diese sind für die eigentliche Suchanfrage aber
+auch irrelevant. Die verkürzte URL:
 “<a href="https://opac.ub.uni-potsdam.de/CMD?ACT=SRCHA&amp;IKT=1016&amp;SRT=YOP&amp;TRM=test" class="uri">https://opac.ub.uni-potsdam.de/CMD?ACT=SRCHA&amp;IKT=1016&amp;SRT=YOP&amp;TRM=test</a>” führt
 zu dem selben Ergebnis.</p>
 <p>Ein Query ist eine Anfrage, in der Daten aus einem HTML-Formular an den Server
@@ -580,18 +584,17 @@ erstellen zu lassen und diese auszulesen.</p>
 </div>
 <div id="html-formulare" class="section level3" number="6.2.2">
 <h3><span class="header-section-number">6.2.2</span> HTML-Formulare</h3>
-<p>Dazu müssen wir zunächst einen Blick
-in den HTML-Code des Suchformulars werfen. Um dies nachvollziehen zu können,
-sollten Sie sich den Quellcode der Seite anzeigen lassen und nach “&lt;form”
-suchen oder die WDTs nutzen um das Formular und seine Bestandteile zu
-betrachten.</p>
+<p>Dazu müssen wir zunächst einen Blick in den HTML-Code des Suchformulars
+werfen. Um dies nachvollziehen zu können, sollten Sie sich den Quellcode der
+Seite anzeigen lassen und nach “&lt;form” suchen oder die WDTs nutzen, um das
+Formular und seine Bestandteile zu betrachten.</p>
 <pre><code>&lt;form action=&quot;CMD&quot;
       class=&quot;form&quot;
       name=&quot;SearchForm&quot;
       method=&quot;GET&quot;&gt;
   ...
 &lt;/form&gt;</code></pre>
-<p>HTML-Formulare werden durch den <code>&lt;form&gt;</code> Tag umfasst. Innerhalb des Tags, können
+<p>HTML-Formulare werden durch den <code>&lt;form&gt;</code> Tag umfasst. Innerhalb des Tags können
 ein oder mehrere Formular-Elemente wie Texteingabefelder, Drop-Down
 Optionslisten, Buttons usw. platziert werden.</p>
 <p><code>&lt;form&gt;</code> selbst trägt in diesem Beispiel eine Reihe von Attributen. Interessant
@@ -620,13 +623,13 @@ welche dann eine dynamisch erzeugte HTML-Seite zurück an den Nutzer sendet.</p>
 <span id="cb81-10"><a href="rvest2.html#cb81-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;input text&gt; &#39;TRM&#39;: </span></span>
 <span id="cb81-11"><a href="rvest2.html#cb81-11" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;input submit&gt; &#39;&#39;:  Suchen</span></span></code></pre></div>
 <p>Der Output zeigt uns in der ersten Zeile nochmals die Werte für <code>method=</code> und
-<code>action=</code>, sowie den Namen des Formulars.
-Die weiteren sechs Zeilen zeigen, dass das Formular aus drei <code>&lt;select&gt;</code> sowie
-drei <code>&lt;input&gt;</code> Elementen besteht, die Namen dieser Elemente, sowie der
-Standardwert der beim Übermitteln des Formulars gesendet wird, solange kein
-anderer Wert ausgewählt oder eingegeben wurde.</p>
+<code>action=</code> sowie den Namen des Formulars. Die weiteren sechs Zeilen zeigen, dass
+das Formular aus drei <code>&lt;select&gt;</code> sowie drei <code>&lt;input&gt;</code> Elementen besteht. Wir
+sehen außerdem die Namen dieser Elemente sowie den Standardwert, der beim
+Übermitteln des Formulars gesendet wird, solange kein anderer Wert ausgewählt
+oder eingegeben wurde.</p>
 <p>Schauen wir uns einige dieser Elemente an.
-<code>&lt;select&gt;</code> Elemente sind Drop-Down Listen mit Optionen die ausgewählt werden
+<code>&lt;select&gt;</code> Elemente sind Drop-Down Listen mit Optionen, die ausgewählt werden
 können. Dies ist der Quellcode für das erste <code>&lt;select&gt;</code> Element unseres
 Beispiels:</p>
 <pre><code>&lt;select name=&quot;ACT&quot;&gt;
@@ -635,7 +638,7 @@ Beispiels:</p>
   &lt;OPTION value=&quot;BRWS&quot;&gt;Index bl&amp;auml;ttern
 &lt;/select&gt;</code></pre>
 <p>Das Attribut <code>name="ACT"</code> legt den Namen des Elements fest. Dieser wird bei der
-Übermittlung der Formulardaten über den Query genutzt. Über die ’<option><code>Tags,  werden die auswählbaren Optionen, also die Drop-Down Liste, definiert.</code>&lt;value=""&gt;<code>steht dabei für den von Formular übermittelten Wert. Dem Nutzer angezeigt wird der auf den Tag folgende Text. Als Standardwert wird entweder der erste Wert der Liste genutzt, oder wie hier eine Option mit dem Attribut</code>selected` explizit als Standard festgelegt.</p>
+Übermittlung der Formulardaten über den Query genutzt. Über die ’<option><code>Tags,  werden die auswählbaren Optionen, also die Drop-Down Liste, definiert.</code>&lt;value=""&gt;<code>steht dabei für den von Formular übermittelten Wert. Den Nutzer:innen wird der auf den Tag folgende Text angezeigt. Als Standardwert wird entweder der erste Wert der Liste genutzt oder wie hier eine Option mit dem Attribut</code>selected` explizit als Standard festgelegt.</p>
 <p>Die drei weiteren Elemente sind <code>&lt;input&gt;</code> Tags. Eingabefelder, deren
 spezifischer Typ über das Attribut<code>type=""</code> festgelegt wird.
 Dies können beispielsweise Textboxen (<code>type="text"</code>) oder Checkboxes
@@ -670,7 +673,7 @@ Quellcode oder die WDTs nachvollziehen. Als Wert des <code>&lt;input type="text"
 dem Namen “TRM” wird der in das Feld eingegebene Text übermittelt. Hier “test”.</p>
 <p>Der Server empfängt so die Formulardaten, kann auf Basis des <code>action=""</code>
 Attributes, hier “CMD”, nachvollziehen, wie die Daten verarbeitet werden sollen
-und konstruiert dementsprechend die Website die er an uns zurücksendet und die
+und konstruiert dementsprechend die Website, die er an uns zurücksendet und die
 in unserem Browser dargestellt wird.</p>
 </div>
 <div id="manipulation-des-queries-und-scrapen-des-ergebnis" class="section level3" number="6.2.4">
@@ -706,7 +709,7 @@ der Suchbegriff auf “web scraping”. Dabei ist wichtig zu beachten, dass im Q
 keine Leerzeichen auftauchen dürfen und diese beim Absenden des Formulars durch
 “+” ersetzt werden. Statt “web scraping” müssen wir also den String
 “web+scraping” nutzen.</p>
-<p>Als Beispielanwendung, können wir nun den Server eine “UND” Suche zu dem Begriff
+<p>Als Beispielanwendung können wir nun dem Server eine “UND” Suche zu dem Begriff
 “web scraping” durchführen lassen, die vom Server generierte HTML-Seite auslesen
 und die dargestellten 10 Titel extrahieren.</p>
 <div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="rvest2.html#cb87-1" aria-hidden="true" tabindex="-1"></a>base_url <span class="ot">&lt;-</span> <span class="st">&quot;https://opac.ub.uni-potsdam.de/&quot;</span></span>
@@ -741,7 +744,7 @@ dargestellt. Der <code>&lt;table&gt;</code> Tag hat dabei die Attribut-Wert Komb
 <span id="cb88-17"><a href="rvest2.html#cb88-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 NA        4 &quot;Automate the boring stuff with Python : practical program… NA   </span></span>
 <span id="cb88-18"><a href="rvest2.html#cb88-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 NA       NA &quot;&quot;                                                          NA   </span></span>
 <span id="cb88-19"><a href="rvest2.html#cb88-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 NA        5 &quot;Spotify teardown : inside the black box of streaming musi… NA</span></span></code></pre></div>
-<p>Dies hat zwar funktioniert, wir sehen aber , dass die Tabelle vor allem aus
+<p>Dies hat zwar funktioniert, wir sehen aber, dass die Tabelle vor allem aus
 leeren Zeilen und Zellen besteht. Diese sind auf der Website unsichtbar, werden
 aber zur Formatierung der Darstellung genutzt. Statt die Tabelle nun
 nachträglich zu reparieren, macht es mehr Sinn, gezielt nur die Zellen zu
@@ -764,10 +767,9 @@ konstruieren.</p>
 <h3><span class="header-section-number">6.2.5</span> Weiterführende Quellen</h3>
 <p>Um diese Informationen weiter zu verarbeiten und beispielsweise in Daten zu
 Autor, Titel, Jahr usw. zu trennen, sind erweiterte Kenntnisse im Umgang mit
-Strings notwendig, die leider über das in dieser Einführung abbildbare
-hinausgehen. Eine gute erste Übersicht finden sie im Kapitel “Strings” aus
-“R for Data Science” von Wickham und Grolemund:
-<a href="https://r4ds.had.co.nz/strings.html" target="_blank">https://r4ds.had.co.nz/strings.html</a></p>
+Strings notwendig, die leider über diese Einführung hinausgehen. Eine gute erste
+Übersicht finden sie im Kapitel “Strings” aus “R for Data Science” von Wickham
+und Grolemund: <a href="https://r4ds.had.co.nz/strings.html" target="_blank">https://r4ds.had.co.nz/strings.html</a></p>
 <p>Dazu sei auch der passende “Cheat Sheet” empfohlen:
 <a href="https://raw.githubusercontent.com/rstudio/cheatsheets/master/strings.pdf" target="_blank">https://raw.githubusercontent.com/rstudio/cheatsheets/master/strings.pdf</a></p>
 
