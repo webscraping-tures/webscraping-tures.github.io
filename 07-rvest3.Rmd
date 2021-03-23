@@ -6,7 +6,15 @@ knitr::opts_chunk$set(collapse = TRUE)
 
 ## Indexseiten
 
+### Scrapen des Index
 
+### map()
+
+### Scrapen der Unterseiten
 
 
 ## Pagination
+
+### Der Query
+
+### Scrapen der Unterseiten

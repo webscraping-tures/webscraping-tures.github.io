@@ -24,7 +24,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2021-03-16" />
+<meta name="date" content="2021-03-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -215,8 +215,17 @@ Web Scraping mit R
 </ul></li>
 <li class="chapter" data-level="7" data-path="rvest3.html"><a href="rvest3.html"><i class="fa fa-check"></i><b>7</b> Scraping mehrseitiger Websites</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="rvest3.html"><a href="rvest3.html#indexseiten"><i class="fa fa-check"></i><b>7.1</b> Indexseiten</a></li>
-<li class="chapter" data-level="7.2" data-path="rvest3.html"><a href="rvest3.html#pagination"><i class="fa fa-check"></i><b>7.2</b> Pagination</a></li>
+<li class="chapter" data-level="7.1" data-path="rvest3.html"><a href="rvest3.html#indexseiten"><i class="fa fa-check"></i><b>7.1</b> Indexseiten</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="rvest3.html"><a href="rvest3.html#scrapen-des-index"><i class="fa fa-check"></i><b>7.1.1</b> Scrapen des Index</a></li>
+<li class="chapter" data-level="7.1.2" data-path="rvest3.html"><a href="rvest3.html#map"><i class="fa fa-check"></i><b>7.1.2</b> map()</a></li>
+<li class="chapter" data-level="7.1.3" data-path="rvest3.html"><a href="rvest3.html#scrapen-der-unterseiten"><i class="fa fa-check"></i><b>7.1.3</b> Scrapen der Unterseiten</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="rvest3.html"><a href="rvest3.html#pagination"><i class="fa fa-check"></i><b>7.2</b> Pagination</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="rvest3.html"><a href="rvest3.html#der-query-1"><i class="fa fa-check"></i><b>7.2.1</b> Der Query</a></li>
+<li class="chapter" data-level="7.2.2" data-path="rvest3.html"><a href="rvest3.html#scrapen-der-unterseiten-1"><i class="fa fa-check"></i><b>7.2.2</b> Scrapen der Unterseiten</a></li>
+</ul></li>
 </ul></li>
 <li class="part"><span><b>IV Beispielprojekte</b></span></li>
 <li class="chapter" data-level="8" data-path="R3.html"><a href="R3.html"><i class="fa fa-check"></i><b>8</b> Transformation und Visualisierung im Tidyverse</a>
@@ -255,16 +264,16 @@ Web Scraping mit R
 kennengelernt. Diese werden im Webdesign eigentlich dazu genutzt, um einzelne
 Elemente einer Website auszuwählen und einen CSS Style auf diese anzuwenden,
 also die Darstellung der Elemente zu definieren. Sie wurden also nicht im
-Hinblick auf Web Scraping Anwendungen entwickelt, wir können sie uns aber
+Hinblick auf Web Scraping Anwendungen entwickelt. Wir können sie uns aber
 trotzdem zu Nutze machen, denn auch wir möchten einzelne Elemente einer Website
 auswählen, um diese gezielt zu extrahieren.</p>
-<p>CSS Selectors kommen in rvest als Argument der Funktion <code>read_html()</code> zum
-Einsatz. Als zweites Argument, das erste legt fest auf welche Daten die Funktion
-angewandt werden soll, geben wir einen Selector in der Form <code>css = "selector"</code>
-an. Dieser bestimmt welche Elemente des HTML-Code wir extrahieren möchten.
-Wichtig ist dabei, dass immer der gesamte Selector – unabhängig davon aus wie
-vielen einzelnen Teilen dieser besteht – von doppelten Anführungszeichen
-eingefasst ist.</p>
+<p>CSS Selectors kommen in rvest als Argument der Funktion <code>read_html()</code>
+zum Einsatz. Als zweites Argument – das erste legt fest, auf welche
+Daten die Funktion angewandt werden soll – geben wir einen Selector
+in der Form <code>css = "selector"</code> an. Dieser bestimmt welche Elemente des
+HTML-Codes wir extrahieren möchten. Wichtig ist dabei, dass immer der
+gesamte Selector – unabhängig davon, aus wie vielen einzelnen Teilen
+dieser besteht – als String an das Argument übergeben wird.</p>
 <p>Zur Veranschaulichung, werden die CSS Selectors im Folgenden auf die Website
 <a href="https://webscraping-tures.github.io/wahlbeteiligung_2.html" target="_blank">https://webscraping-tures.github.io/wahlbeteiligung_2.html</a>
 angewandt. Den Quellcode können sie auf dem bekannten Weg einsehen. Zunächst
@@ -312,20 +321,13 @@ diese Website sind beide Schreibweisen im Ergebnis äquivalent, da alle Elemente
 denen die Klasse <code>"bundsland-name"</code> zugewiesen wurde auch <code>&lt;span&gt;</code> Tags sind.
 Dies muss aber nicht immer so sein. Unterschiedliche Tags mit unterschiedlichen
 Inhalten können in der Praxis durchaus die selbe Klasse haben.</p>
-<p>Grundsätzlich sollten wir uns beim konstruieren von CSS Selectors von zwei
-Fragen leiten lassen. Wie viele Bestandteile benötigen wir um unser Ziel zu
-erreichen? Und, wie gut ist der Selector lesbar? Die erste Frage ist dabei
-leitend. Wenn wir unser Ziel ein bestimmtes Element auszuwählen mit einem
-Selector nicht erreichen können, ist dieser noch nicht einsetzbar und muss
-überarbeitet werden. Haben wir einen funktionstüchtigen Selector, sollten wir
-uns aber auch Gedanken zur Lesbarkeit machen. Möchten wir unseren R Code an
-andere Menschen weitergeben, sollte dieser so klar geschrieben sein, dass er für
-Andere nachvollziehbar ist. Aber auch wenn wir selbst in einer Woche oder einem
-Monat nochmal in unseren Code schauen, kann es hilfreich sein einen möglichst
-klaren Selector zu lesen, denn wir können uns vermutlich nicht mehr an die
-Details des HTML-Quellcodes erinnnern. Dabei bedeutet Lesbarkeit auch, eine
-Balance zwischen Länge und Klarheit des Selectors zu erreichen.
-Zur Veranschaulichung:</p>
+<p>Grundsätzlich ist das Konstruieren von CSS Selectors immer ein Balanceakt
+zwischen Funktionalität und Lesbarkeit. Der Selector sollte genau nur die
+Elemente auswählen, an denen wir interessiert sind, und gleichzeitig
+verständlich sein. Letzteres ist vor allem wichtig, wenn Andere – oder man
+selbst einige Wochen später – den Code lesen. Dabei bedeutet Lesbarkeit auch,
+eine Balance zwischen Länge und Klarheit des Selectors zu erreichen.</p>
+<p>Zur Veranschaulichung:</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="css-selectors-developer-tools.html#cb44-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
 <span id="cb44-2"><a href="css-selectors-developer-tools.html#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;body &gt; div#daten &gt; div[class^=bundesland-] &gt; span.bundesland-name&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb44-3"><a href="css-selectors-developer-tools.html#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">2</span>)</span>
@@ -346,9 +348,8 @@ entscheiden.</p>
 <p>Ein weiteres häufig auftretendes Attribut in HTML-Elementen, ist die <code>id</code>. Diese
 identifizieren einzelne HTML-Elemente mit einem eindeutigen zugewiesenen Namen.
 Diese werden unter anderem zu gestalterischen Zwecken, im Rahmen von Scripts zur
-dynamischen Gestaltung von Websites oder in HTML-Formularen eingesetzt. Uns
-interessiert dabei vor allem, dass wir sie nutzen können um einzelne Elemente
-gezielt zu extrahieren.</p>
+dynamischen Gestaltung von Websites oder in HTML-Formularen eingesetzt. Wir
+können auch sie nutzen können um einzelne Elemente gezielt zu extrahieren.</p>
 <p>In unserem Beispiel, hat der <code>&lt;span&gt;</code> Tag, welcher den Namen eines jeden
 Bundeslandes umfasst, eine id, welche das Land mit einem zweistelligen Kürzel
 identifiziert:</p>
@@ -394,16 +395,16 @@ Selector anwenden, <code>"id=hh"</code> wird nicht funktionieren.</p>
 <div id="attribute-1" class="section level3" number="5.1.3">
 <h3><span class="header-section-number">5.1.3</span> Attribute</h3>
 <p>ID und Class sind Attribute von HTML-Tags. Da beide im Webdesign besonders
-relvant sind, existieren die oben vorgestllten <em>shortcuts</em> um diese schnell
+relvant sind, existieren die oben vorgestellten <em>shortcuts</em>, um diese schnell
 auszuwählen. Wir können aber alle in einem HTML-Code auftretenden Attribute zur
 Auswahl von Elementen nutzen. Der zugehörige CSS Selector wird als
 <code>element[attribute]</code> geschrieben.</p>
-<p>In unterem Bereich unserer Beispiel HTML, finden sich drei Links – <code>&lt;a&gt;</code> –
-diese haben neben <code>href="url"</code> - der verlinkten Seite, noch das Attribut
+<p>Im unteren Bereich unseres Beispiel HTML Codes, finden sich drei Links <code>&lt;a&gt;</code>
+diese haben neben <code>href="url"</code> – der verlinkten Seite – noch das Attribut
 <code>target_""</code> dieses legt fest, wie sich der Link öffnen soll. Der Wert <code>"_blank"</code>
 öffnet den Link einem neuen Browsertab, <code>"_self"</code> im aktiven Tab. Für den
 zweiten Link ist kein <code>target=""</code> Attribut festgelegt. Um in unserem Beispiel
-alle <code>&lt;a&gt;</code> Tags auszuwählen die ein <code>target</code> Attribut haben, also den ersten und
+alle <code>&lt;a&gt;</code> Tags auszuwählen, die ein <code>target</code> Attribut haben, also den ersten und
 dritten, könnte man wie folgt vorgehen:</p>
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="css-selectors-developer-tools.html#cb51-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
 <span id="cb51-2"><a href="css-selectors-developer-tools.html#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;a[target]&quot;</span>)</span>
@@ -411,23 +412,23 @@ dritten, könnte man wie folgt vorgehen:</p>
 <span id="cb51-4"><a href="css-selectors-developer-tools.html#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;a href=&quot;https://www.wahlrecht.de/ergebnisse/index.htm&quot; target=&quot;_blank&quot;&gt;\ ...</span></span>
 <span id="cb51-5"><a href="css-selectors-developer-tools.html#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;a href=&quot;https://webscraping-tures.github.io/css-selectors-developer-tool ...</span></span></code></pre></div>
 <p>Mit <code>"element[attribute='value']"</code> ist es möglich, nur Attribute mit einem
-bestimmten Wert auszuwählen. Dabei ist zu beachten, dass value in einfache
-Anführungszeichen eingefasst ist. Sie haben ja bereits gesehen, dass die Werte
-von HTML-Attributen im Quelltext stets von doppelten Anführungszeichen
-umschlossen sind. Da wir die doppelten Anführungszeichen schon nutzen um Beginn
-und Ende unseres CSS Selectors zu definieren, können wir diese nicht nochmals
-innerhalb des Selectors selbst nutzen. Stattdessen, verwenden wir einfache
-Anführungszeichen um den Wert des Attributs zu definieren. Dies ist eine
-Konvention die in vielen R Kontexten Anwendung findet. Innerhalb doppelter
-Anführungszeichen nutzen wir einfache, innerhalb einfacher doppelte, um mehrere
-Ebenen von Anführunszeichen realisieren zu können.</p>
+bestimmten Wert auszuwählen. Dabei ist zu beachten, dass <em>value</em> in einfache
+Anführungszeichen eingefasst ist. Die Schreibweise
+<code>"element[attribute="value"]"</code> würde in die beiden Strings
+<code>"element[attribute="</code> und <code>"]"</code> und das Objekt <code>value</code> geteilt werden, was in
+dieser Kombination von R nicht interpretiert werden kann. Stattdessen, verwenden
+wir einfache Anführungszeichen, um den Wert des Attributs zu definieren. Dies
+ist eine Konvention, die in vielen Programmierkontexten Anwendung
+findet. Innerhalb doppelter Anführungszeichen nutzen wir einfache, innerhalb
+einfacher doppelte, um mehrere Ebenen von Anführunszeichen realisieren zu
+können.</p>
 <p>Möchten wir nur den Link auswählen, der sich in einem neuen Tab öffnet:</p>
 <div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="css-selectors-developer-tools.html#cb52-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
 <span id="cb52-2"><a href="css-selectors-developer-tools.html#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;a[target=&#39;_blank&#39;]&quot;</span>)</span>
 <span id="cb52-3"><a href="css-selectors-developer-tools.html#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (1)}</span></span>
 <span id="cb52-4"><a href="css-selectors-developer-tools.html#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;a href=&quot;https://www.wahlrecht.de/ergebnisse/index.htm&quot; target=&quot;_blank&quot;&gt;\ ...</span></span></code></pre></div>
 <p>Dies lässt sich weiter modifizieren, in dem wir angeben dass der Wert eines
-Attributs einem bestimmten Anfang – <code>"element[attribute^='anfang']"</code> – oder
+Attributs einen bestimmten Anfang – <code>"element[attribute^='anfang']"</code> – oder
 ein bestimmtes Ende – <code>"element[attribute$='ende']"</code> – haben, oder einen
 bestimmten Teilbegriff enthalten soll – <code>"element[attribute*='teilbegriff']"</code>.
 So könnten wir die Links anhand des Beginns, des Endes oder einem beliebigen
@@ -452,12 +453,12 @@ Bestandteil der dem <code>href=""</code> Attribut zugewiesenen URL auswählen.</
 <p>Wir können uns die Hierarchie einer HTML-Struktur analog zu einem
 Familienstammbaum vorstellen. Eine vereinfachte Darstellung unserer
 Beispielseite als Stammbaum, könnte so aussehen:</p>
-<div id="htmlwidget-2444f39a0d9672ea4eec" style="width:100%;height:500px;" class="echarts4r html-widget"></div>
-<script type="application/json" data-for="htmlwidget-2444f39a0d9672ea4eec">{"x":{"theme":"","tl":false,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"series":[{"type":"tree","data":[{"name":"<html>","children":[{"name":"<head>","children":[{"name":"<title>"},{"name":"<meta>"},{"name":"<style>"}]},{"name":"<body>","children":[{"name":"<span class=\"titel\">","children":[{"name":"<h3>"}]},{"name":"<div id=\"daten\">","children":[{"name":"<div class=\"bundesland-odd\">","children":[{"name":"<img>"},{"name":"<span class=\"bundesland-name\">"},{"name":"<span class=\"wahljahr\">"},{"name":"<span class=\"wahlbeteiligung\">"}]},{"name":"<div class=\"bundesland-even\">","children":[{"name":"<img>"},{"name":"<span class=\"bundesland-name\">"},{"name":"<span class=\"wahljahr\">"},{"name":"<span class=\"wahlbeteiligung\">"}]}]},{"name":"<div class=\"quote\">","children":[{"name":"<a>"}]},{"name":"<div>","children":[{"name":"<a>"}]}]}]}],"initialTreeDepth":1}],"title":[{"text":"HTML Struktur - wahlbeteiligung_2.html"}]},"dispose":true},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-511aa7e5d657f42c318a" style="width:100%;height:500px;" class="echarts4r html-widget"></div>
+<script type="application/json" data-for="htmlwidget-511aa7e5d657f42c318a">{"x":{"theme":"","tl":false,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"series":[{"type":"tree","data":[{"name":"<html>","children":[{"name":"<head>","children":[{"name":"<title>"},{"name":"<meta>"},{"name":"<style>"}]},{"name":"<body>","children":[{"name":"<span class=\"titel\">","children":[{"name":"<h3>"}]},{"name":"<div id=\"daten\">","children":[{"name":"<div class=\"bundesland-odd\">","children":[{"name":"<img>"},{"name":"<span class=\"bundesland-name\">"},{"name":"<span class=\"wahljahr\">"},{"name":"<span class=\"wahlbeteiligung\">"}]},{"name":"<div class=\"bundesland-even\">","children":[{"name":"<img>"},{"name":"<span class=\"bundesland-name\">"},{"name":"<span class=\"wahljahr\">"},{"name":"<span class=\"wahlbeteiligung\">"}]}]},{"name":"<div class=\"quote\">","children":[{"name":"<a>"}]},{"name":"<div>","children":[{"name":"<a>"}]}]}]}],"initialTreeDepth":1}],"title":[{"text":"HTML Struktur - wahlbeteiligung_2.html"}]},"dispose":true},"evals":[],"jsHooks":[]}</script>
 <p>Per Klick auf die Elemente des Stammbaums, können sie die Hierarchiebenen ein-
 und ausklappen. Klicken Sie sich einmal durch die verschiedenen Ebenen und
 vergleichen Sie dies mit dem HTML-Quellcode der Seite. Wenn Sie damit fertig
-sind, schlage ich vor<code>&lt;head&gt;</code>einzuklappen und in <code>&lt;body&gt;</code> nur <code>&lt;div id="daten"&gt;</code>
+sind, schlage ich vor<code>&lt;head&gt;</code> einzuklappen und in <code>&lt;body&gt;</code> nur <code>&lt;div id="daten"&gt;</code>
 und auf der nächst niedrigeren Ebene den ersten <code>&lt;div&gt;</code> auszuklappen. Damit
 sollten Sie alles sehen, was wir im Folgenden benötigen.</p>
 <p>Mit der Metapher des Stammbaums und den dazugehörigen Begriffen “descendant”,
@@ -465,7 +466,7 @@ sollten Sie alles sehen, was wir im Folgenden benötigen.</p>
 fortgeschritteneren Selector Konzepte zu verstehen.</p>
 <div id="descendant" class="section level4" number="5.1.4.1">
 <h4><span class="header-section-number">5.1.4.1</span> Descendant</h4>
-<p>Wenn Element A ein “descendant” von Element B ist, bedeutet dies dass A von B
+<p>Wenn Element A ein “descendant” von Element B ist, bedeutet dies, dass A von B
 über beliebig viele Generationen “abstammt”. Dies kann eine Generation – also
 eine direkte Kind-Eltern Beziehung – oder beliebig viele Generationen – also
 Enkel und Großeltern mit beliebig vielen “Ur” Präfixen – sein. Im Selector
@@ -483,12 +484,12 @@ schreiben wir dies als <code>"B A"</code>.</p>
 <span id="cb54-9"><a href="css-selectors-developer-tools.html#cb54-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [5] &lt;span class=&quot;wahljahr&quot;&gt;2018&lt;/span&gt;</span></span>
 <span id="cb54-10"><a href="css-selectors-developer-tools.html#cb54-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [6] &lt;span class=&quot;wahlbeteiligung&quot;&gt;72.4&lt;/span&gt;</span></span></code></pre></div>
 <p>Dabei ist zu beachten, dass wir mit CSS Selectors immer nur jüngere Generationen
-auswählen können. Wir können also beispielsweise nicht Die Großeltern der Enkel
-auswählen indem wir den Selector “herumdrehen”. Um die Großeltern – also
+auswählen können. Wir können also beispielsweise nicht die Großeltern der Enkel
+auswählen, indem wir den Selector “herumdrehen”. Um die Großeltern – also
 <code>&lt;div id="daten"&gt;</code> auszuwählen, müssten wir betrachten, von welchem Element
 diese abstammen, also beispielsweise <code>&lt;body&gt;</code>.</p>
 <p>Die CSS Selectors sind nicht darauf beschränkt das Verhältnis von zwei
-Generationen abzubilden. Ein längerer Selector der vier Generationen beinhaltet
+Generationen abzubilden. Ein längerer Selector, der vier Generationen beinhaltet
 und zum selben Ergebnis führt könne so aussehen:</p>
 <div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="css-selectors-developer-tools.html#cb55-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
 <span id="cb55-2"><a href="css-selectors-developer-tools.html#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;body div#daten div span&quot;</span>) <span class="sc">%&gt;%</span> </span>
@@ -511,10 +512,10 @@ würde <code>"div#daten &gt; span"</code> hier nicht zum gewünschten Ziel führ
 Tags sind aber direkte Kinder der <code>&lt;div&gt;</code> mit den Klassen <code>"bundesland-odd"</code>
 bzw. <code>"bundesland-even"</code>. Da es keine weitere direkte Kind-Eltern Beziehung von
 <code>&lt;span&gt;</code> und <code>&lt;div&gt;</code> Tags in unserem Beispiel gibt, wäre der Selector
-<code>"div &gt; span"</code> bereits ausreichend. Ich denke, wir könnten aber expliziter
-werden um weniger fehleranfälligen Code zu schreiben. Beide <code>&lt;div&gt;</code> Tags ähneln
-sich darin, dass ihre Klassen mit <code>"bundesland"</code> beginnen und wir wissen ja
-bereits, wie wir dies ausnutzen können:</p>
+<code>"div &gt; span"</code> bereits ausreichend. Wir könnten aber expliziter werden, um
+weniger fehleranfälligen Code zu schreiben. Beide <code>&lt;div&gt;</code> Tags ähneln sich
+darin, dass ihre Klassen mit <code>"bundesland"</code> beginnen und wir wissen ja bereits,
+wie wir dies ausnutzen können:</p>
 <div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="css-selectors-developer-tools.html#cb56-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
 <span id="cb56-2"><a href="css-selectors-developer-tools.html#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;div[class^=&#39;bundesland&#39;] &gt; span&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb56-3"><a href="css-selectors-developer-tools.html#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">6</span>)</span>
@@ -527,7 +528,7 @@ bereits, wie wir dies ausnutzen können:</p>
 <span id="cb56-10"><a href="css-selectors-developer-tools.html#cb56-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [6] &lt;span class=&quot;wahlbeteiligung&quot;&gt;72.4&lt;/span&gt;</span></span></code></pre></div>
 <p>Möchten wie nicht alle Kinder auswählen, sondern nur bestimmte, besteht eine
 Reihe von Möglichkeiten.</p>
-<p><code>":first-child"</code> wählt das erste Kind eines Elements aus.</p>
+<p><code>":first-child"</code> wählt das erste Kind eines Elements aus:</p>
 <div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="css-selectors-developer-tools.html#cb57-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
 <span id="cb57-2"><a href="css-selectors-developer-tools.html#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;div[class^=&#39;bundesland&#39;] &gt; :first-child&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb57-3"><a href="css-selectors-developer-tools.html#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">2</span>)</span>
@@ -546,11 +547,10 @@ kombinieren wir <code>"span"</code> und <code>"nth-child(n)"</code></p>
 <span id="cb58-4"><a href="css-selectors-developer-tools.html#cb58-4" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (2)}</span></span>
 <span id="cb58-5"><a href="css-selectors-developer-tools.html#cb58-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;bundesland-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</span></span>
 <span id="cb58-6"><a href="css-selectors-developer-tools.html#cb58-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;bundesland-name&quot; id=&quot;by&quot;&gt;Bayern&lt;/span&gt;</span></span></code></pre></div>
-<p>Wir möchten also alle <code>&lt;span&gt;</code> selektieren die das zweite Kind von <code>&lt;div&gt;</code> deren
-Klassen mit <code>"bundesland"</code> beginnen sind.</p>
-<p>Möchten wir nur das letzte Kind selektieren, könnten wir dies mit
-<code>"span:nth-child(4)"</code> selektieren, oder wir nutzen eine Abkürzung und wenden
-<code>":last-child"</code> an.</p>
+<p>Wir möchten also alle <code>&lt;span&gt;</code> selektieren, die das zweite Kind von <code>&lt;div&gt;</code>, deren
+Klassen mit <code>"bundesland"</code> beginnen, sind.</p>
+<p>Möchten wir nur das letzte Kind selektieren, könnten wir dies mit <code>:last-child</code>
+tun:</p>
 <div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="css-selectors-developer-tools.html#cb59-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
 <span id="cb59-2"><a href="css-selectors-developer-tools.html#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;div[class^=&#39;bundesland&#39;] &gt; span:last-child&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb59-3"><a href="css-selectors-developer-tools.html#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">2</span>)</span>
@@ -561,7 +561,7 @@ Klassen mit <code>"bundesland"</code> beginnen sind.</p>
 <div id="siblings" class="section level4" number="5.1.4.3">
 <h4><span class="header-section-number">5.1.4.3</span> Sibling(s)</h4>
 <p>Die gemeinsamen Kinder eines Eltern-Elements, lassen sich im Rahmen der Metapher
-des Stammbaums als Geschwister sehen. Auf der untersten Hierarchieebene, haben
+des Stammbaums als Geschwister sehen. Auf der untersten Hierarchieebene haben
 wir in unserem Beispiel also pro Bundesland vier Geschwister. Einen <code>&lt;img&gt;</code> und
 drei <code>&lt;span&gt;</code> Tags. Der Selector <code>"Element-A ~ Element-B"</code> wählt dabei alle
 Geschwister B aus, die auf Geschwister A folgen.</p>
@@ -682,7 +682,7 @@ anderem auch die Auswahl von “ancestors”, also von höheren Hierarchieebenen
 ausgehend von einer niedrigeren. Der Preis für die höhere Flexibilität ist aber
 auch eine oft längere und etwas kompliziertere Syntax. In den meisten Fällen,
 werden Ihnen die CSS Selectors völlig ausreichen. Und falls Sie irgendwann an
-einen Punkt stoßen, an denen sie nicht mehr ausreichen um ihr Scraping Ziel zu
+einen Punkt stoßen, an denen sie nicht mehr ausreichen, um ihr Scraping Ziel zu
 erreichen, sind sie bereits so geübt im Umgang mit den CSS Selectors, dass Ihnen
 der Umstieg auf XPath sehr leicht fallen wird. Auf den Seiten der W3, finden sie
 dann eine passende Einführung:
@@ -691,17 +691,17 @@ dann eine passende Einführung:
 </div>
 <div id="developer-tools" class="section level2" number="5.2">
 <h2><span class="header-section-number">5.2</span> Developer Tools</h2>
-<p>Das Erkennen der HTML-Struktur und das identifizieren von funktionstüchtigen
-Selektoren, kann auf komplexen Websites sehr schwer sein, vor allem dann, wenn
-der HTML-Code nicht so übersichtlich formatiert ist, wie in unserem Beispiel.
-Hier kann es hilfreich sein, die in modernen Browsern integrierten
+<p>Das Erkennen der HTML-Struktur und das Identifizieren von funktionstüchtigen
+Selektoren kann auf komplexen Websites sehr schwer sein, vor allem wenn der
+HTML-Code nicht so übersichtlich formatiert ist, wie in unserem Beispiel. Hier
+kann es hilfreich sein, die in modernen Browsern integrierten
 <em>Web Developer Tools</em> zu verwenden.</p>
 <p>Auf den folgenden Screenshots, sehen Sie die Anwendung in Chromium für Linux auf
 unsere laufende Beispielseite. Das Vorgehen ist aber in anderen Browsern wie
 Chrome, Firefox oder Edge nahezu identisch. In allen Fälllen öffnen sie die
 Developer Tools durch einen Rechtsklick im Browserfenster und dann der Auswahl
 “Untersuchen” bzw. “Inspect”.</p>
-<p>Je nach Einstellung öffnen sich die devloper tools in einem horizontal oder
+<p>Je nach Einstellung öffnen sich die Developer Tools in einem horizontal oder
 vertikal abgetrennten Bereich des Browsers. Wir sehen hier eine Vielzahl von
 Reitern, für diese Einführung konzentrieren wir uns aber rein auf den Reiter
 “Elements”. Dieser zeigt uns den HTML-Code in seiner hierarchischen Struktur und
@@ -724,25 +724,25 @@ Element gehörenden vollen CSS Selector.</p>
 <p>Mit einem Rechtsklick auf ein Element und der Auswahl von “Copy” -&gt;
 “Copy selector”, können wir uns außerdem einen CSS Selector in den
 Zwischenspeicher holen, den wir dann in R Studio mit STRG+V einfügen können.
-Für das oben ausgewählte Element, also dem Ländernamen für Baden-Württemberg,
-bekommen wir den Selector “#bw”. In diesem Fall ist dieser Kurze Selector
+Für das oben ausgewählte Element, also den Ländernamen für Baden-Württemberg,
+bekommen wir den Selector “#bw”. In diesem Fall ist dieser kurze Selector
 ausreichend, um das Element eindeutig zu identifizieren. Ich empfehle aber,
 wie oben ausgeführt, die Konstruktion von eindeutigeren und besser
 nachvollziehbaren Selektoren. Der von den Developer Tools erstellte Selector,
 sowie vor allem die Darstellung des vollen Pfads im “Elements” Reiter, können
 jedoch bei der Konstruktion dieser sehr hilfreich sein und ermöglichen ein
 schnelles Erfassen der Struktur einer Website.</p>
-<p>Auch haben wir so zwar erfahren, wie wir den namen für Baden-Württemberg
+<p>Auch haben wir so zwar erfahren, wie wir den Namen für Baden-Württemberg
 auswählen, aber beispielsweise nicht, wie wir alle Namen der Bundesländer
 selektieren können. Aber auch hier können die Developer Tools hilfreich sein.
 Eine Herangehensweise wäre es, mehrere der Namenselemente nacheinander
 auszuwählen und zu vergleichen, wie sich der volle CSS-Selector verändert.
 Identifizieren wir darüber Gemeinsamkeiten und Unterschiede zwischen den
-Namenselemente, kann uns dies Ansatzpunkte geben um unseren eigenen Selector zu
-formulieren. Eine weitere Möglichkeit wäre es, statt der integrierten Developer
-Tools, die Erweiterung <em>SelectorGadget</em> zu nutzen. Diese ermöglicht unter
-anderem die Auswahl mehrere Elemente gleichzeitig. Informationen zur Nutzung
-finden Sie unter: <a href="https://selectorgadget.com/" target="_blank">https://selectorgadget.com/</a></p>
+Namenselementen, kann uns dies Ansatzpunkte geben, um unseren eigenen Selector
+zu formulieren. Eine weitere Möglichkeit wäre es, statt der integrierten
+Developer Tools, die Erweiterung <em>SelectorGadget</em> zu nutzen. Diese ermöglicht
+unter anderem die Auswahl mehrere Elemente gleichzeitig. Informationen zur
+Nutzung finden Sie unter: <a href="https://selectorgadget.com/" target="_blank">https://selectorgadget.com/</a></p>
 
 </div>
 </div>

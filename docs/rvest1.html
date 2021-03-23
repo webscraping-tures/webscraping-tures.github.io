@@ -24,7 +24,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2021-03-16" />
+<meta name="date" content="2021-03-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -215,8 +215,17 @@ Web Scraping mit R
 </ul></li>
 <li class="chapter" data-level="7" data-path="rvest3.html"><a href="rvest3.html"><i class="fa fa-check"></i><b>7</b> Scraping mehrseitiger Websites</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="rvest3.html"><a href="rvest3.html#indexseiten"><i class="fa fa-check"></i><b>7.1</b> Indexseiten</a></li>
-<li class="chapter" data-level="7.2" data-path="rvest3.html"><a href="rvest3.html#pagination"><i class="fa fa-check"></i><b>7.2</b> Pagination</a></li>
+<li class="chapter" data-level="7.1" data-path="rvest3.html"><a href="rvest3.html#indexseiten"><i class="fa fa-check"></i><b>7.1</b> Indexseiten</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="rvest3.html"><a href="rvest3.html#scrapen-des-index"><i class="fa fa-check"></i><b>7.1.1</b> Scrapen des Index</a></li>
+<li class="chapter" data-level="7.1.2" data-path="rvest3.html"><a href="rvest3.html#map"><i class="fa fa-check"></i><b>7.1.2</b> map()</a></li>
+<li class="chapter" data-level="7.1.3" data-path="rvest3.html"><a href="rvest3.html#scrapen-der-unterseiten"><i class="fa fa-check"></i><b>7.1.3</b> Scrapen der Unterseiten</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="rvest3.html"><a href="rvest3.html#pagination"><i class="fa fa-check"></i><b>7.2</b> Pagination</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="rvest3.html"><a href="rvest3.html#der-query-1"><i class="fa fa-check"></i><b>7.2.1</b> Der Query</a></li>
+<li class="chapter" data-level="7.2.2" data-path="rvest3.html"><a href="rvest3.html#scrapen-der-unterseiten-1"><i class="fa fa-check"></i><b>7.2.2</b> Scrapen der Unterseiten</a></li>
+</ul></li>
 </ul></li>
 <li class="part"><span><b>IV Beispielprojekte</b></span></li>
 <li class="chapter" data-level="8" data-path="R3.html"><a href="R3.html"><i class="fa fa-check"></i><b>8</b> Transformation und Visualisierung im Tidyverse</a>
@@ -328,14 +337,14 @@ Werkzeug der Wahl machen.</p>
 genauer behandeln und beschränken uns zunächst auf die Grundlagen. Ein Selector
 in der Form <code>"tag"</code>, selektiert alle HTML-Tags des angegebenen Namens. Möchten
 wir also den <code>&lt;title&gt;</code> Tag extrahieren, können wir dies so erreichen:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="rvest1.html#cb17-1" aria-hidden="true" tabindex="-1"></a>node_title <span class="ot">&lt;-</span> <span class="fu">html_nodes</span>(hello_world, <span class="at">css=</span><span class="st">&quot;title&quot;</span>)</span>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="rvest1.html#cb17-1" aria-hidden="true" tabindex="-1"></a>node_title <span class="ot">&lt;-</span> <span class="fu">html_nodes</span>(hello_world, <span class="at">css =</span> <span class="st">&quot;title&quot;</span>)</span>
 <span id="cb17-2"><a href="rvest1.html#cb17-2" aria-hidden="true" tabindex="-1"></a>node_title</span>
 <span id="cb17-3"><a href="rvest1.html#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (1)}</span></span>
 <span id="cb17-4"><a href="rvest1.html#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;title&gt;Hello World!&lt;/title&gt;</span></span></code></pre></div>
 <p>Möchten wir den auf der Website dargestellten Text <strong>Hello World!</strong> extrahieren,
 wäre es eine Möglichkeit den kompletten <code>&lt;body&gt;</code> Tag zu selektieren, da ja in
 diesem Fall kein anderer Text auf der Seite dargestellt wird.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="rvest1.html#cb18-1" aria-hidden="true" tabindex="-1"></a>node_body <span class="ot">&lt;-</span> <span class="fu">html_nodes</span>(hello_world, <span class="at">css=</span><span class="st">&quot;body&quot;</span>)</span>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="rvest1.html#cb18-1" aria-hidden="true" tabindex="-1"></a>node_body <span class="ot">&lt;-</span> <span class="fu">html_nodes</span>(hello_world, <span class="at">css =</span> <span class="st">&quot;body&quot;</span>)</span>
 <span id="cb18-2"><a href="rvest1.html#cb18-2" aria-hidden="true" tabindex="-1"></a>node_body</span>
 <span id="cb18-3"><a href="rvest1.html#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (1)}</span></span>
 <span id="cb18-4"><a href="rvest1.html#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;body&gt;\n    &lt;b&gt;Hello World!&lt;/b&gt;\n  &lt;/body&gt;</span></span></code></pre></div>
@@ -343,7 +352,7 @@ diesem Fall kein anderer Text auf der Seite dargestellt wird.</p>
 sowie mehrere Zeilenumbrüche (<code>\n</code>) mit extrahiert und benötigen eigentlich
 beides nicht. Effizienter wäre es direkt den <code>&lt;b&gt;</code> Tag, der den Text umschließt
 zu selektieren.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="rvest1.html#cb19-1" aria-hidden="true" tabindex="-1"></a>node_b <span class="ot">&lt;-</span> <span class="fu">html_nodes</span>(hello_world, <span class="at">css=</span><span class="st">&quot;b&quot;</span>)</span>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="rvest1.html#cb19-1" aria-hidden="true" tabindex="-1"></a>node_b <span class="ot">&lt;-</span> <span class="fu">html_nodes</span>(hello_world, <span class="at">css =</span> <span class="st">&quot;b&quot;</span>)</span>
 <span id="cb19-2"><a href="rvest1.html#cb19-2" aria-hidden="true" tabindex="-1"></a>node_b</span>
 <span id="cb19-3"><a href="rvest1.html#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (1)}</span></span>
 <span id="cb19-4"><a href="rvest1.html#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;b&gt;Hello World!&lt;/b&gt;</span></span></code></pre></div>
@@ -370,8 +379,8 @@ enthält. Auch hier können wir den reinen Text extrahieren.</p>
 <p>Wir sehen, dass die Funktion praktischerweise die <code>&lt;b&gt;</code> Tags, an denen wir nicht
 interessiert waren, für uns entfernt hat. Es bleiben aber die Zeilenumbrüche
 sowie mehrere Leerzeichen, sogenannter <em>whitespace</em>. Beides lässt sich mit dem
-Argument <code>trim=TRUE</code> entfernen.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="rvest1.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">html_text</span>(node_body, <span class="at">trim=</span><span class="cn">TRUE</span>)</span>
+Argument <code>trim = TRUE</code> entfernen.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="rvest1.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">html_text</span>(node_body, <span class="at">trim =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb22-2"><a href="rvest1.html#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Hello World!&quot;</span></span></code></pre></div>
 </div>
 </div>
@@ -425,7 +434,7 @@ Andorra bezogen sind. Betrachten wir diese genauer:</p>
 <p>Die gesamten Informationen zu Andorra sind von einem <code>&lt;div&gt;</code> Tag
 umschlossen. Als Erinnerung: ein <code>&lt;div&gt;</code> definiert eine Gruppierung von Code
 über mehrere Zeilen hinweg. In der Webdesign-Praxis, werden diese Gruppierungen
-vor allem dazu genutzt, um über das Argument <code>class=</code> dem folgenden Code einen
+vor allem dazu genutzt, um über das Argument <code>class =</code> dem folgenden Code einen
 bestimmten CSS Style zuzuweisen, beispielsweise um das Schriftbild
 festzulegen. Wie die Stile definiert sind, kann uns aus der Web Scraping
 Perspektive in der Regel egal sein. Wir müssen nur wissen, dass wir diese
@@ -446,10 +455,10 @@ Grafiken nicht interessiert sind, können wir dies ignorieren.</p>
 <p>Auf dieser Website werden alle <code>&lt;h3&gt;</code> Tags ausschließlich dazu genutzt, die
 Namen der Länder darzustellen. Damit können wir den <code>&lt;h3&gt;</code> Tag als <em>CSS Selector</em>
 nutzen, um analog zum ersten Beispiel den umschlossenen Text auszulesen.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="rvest1.html#cb26-1" aria-hidden="true" tabindex="-1"></a>node_country <span class="ot">&lt;-</span> <span class="fu">html_nodes</span>(website, <span class="at">css=</span><span class="st">&quot;h3&quot;</span>)</span>
-<span id="cb26-2"><a href="rvest1.html#cb26-2" aria-hidden="true" tabindex="-1"></a>text_country <span class="ot">&lt;-</span> <span class="fu">html_text</span>(node_country, <span class="at">trim=</span><span class="cn">TRUE</span>)</span>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="rvest1.html#cb26-1" aria-hidden="true" tabindex="-1"></a>node_country <span class="ot">&lt;-</span> <span class="fu">html_nodes</span>(website, <span class="at">css =</span> <span class="st">&quot;h3&quot;</span>)</span>
+<span id="cb26-2"><a href="rvest1.html#cb26-2" aria-hidden="true" tabindex="-1"></a>text_country <span class="ot">&lt;-</span> <span class="fu">html_text</span>(node_country, <span class="at">trim =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb26-3"><a href="rvest1.html#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-4"><a href="rvest1.html#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(text_country, <span class="at">n=</span><span class="dv">10</span>)</span>
+<span id="cb26-4"><a href="rvest1.html#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(text_country, <span class="at">n =</span> <span class="dv">10</span>)</span>
 <span id="cb26-5"><a href="rvest1.html#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] &quot;Andorra&quot;              &quot;United Arab Emirates&quot; &quot;Afghanistan&quot;         </span></span>
 <span id="cb26-6"><a href="rvest1.html#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  [4] &quot;Antigua and Barbuda&quot;  &quot;Anguilla&quot;             &quot;Albania&quot;             </span></span>
 <span id="cb26-7"><a href="rvest1.html#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7] &quot;Armenia&quot;              &quot;Angola&quot;               &quot;Antarctica&quot;          </span></span>
@@ -465,8 +474,8 @@ Einträgen, beginnend mit dem ersten, auflisten zu lassen.</p>
 <h4><span class="header-section-number">4.3.1.1</span> Die Pipe %&gt;%</h4>
 <p>Spätestens an dieser Stelle sollten wir uns nochmals Gedanken zur Lesbarkeit und
 Struktur unseres R-Codes machen. Betrachten wir den vorangegangenen Codeblock:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="rvest1.html#cb27-1" aria-hidden="true" tabindex="-1"></a>node_country <span class="ot">&lt;-</span> <span class="fu">html_nodes</span>(website, <span class="at">css=</span><span class="st">&quot;h3&quot;</span>)</span>
-<span id="cb27-2"><a href="rvest1.html#cb27-2" aria-hidden="true" tabindex="-1"></a>text_country <span class="ot">&lt;-</span> <span class="fu">html_text</span>(node_country, <span class="at">trim=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="rvest1.html#cb27-1" aria-hidden="true" tabindex="-1"></a>node_country <span class="ot">&lt;-</span> <span class="fu">html_nodes</span>(website, <span class="at">css =</span> <span class="st">&quot;h3&quot;</span>)</span>
+<span id="cb27-2"><a href="rvest1.html#cb27-2" aria-hidden="true" tabindex="-1"></a>text_country <span class="ot">&lt;-</span> <span class="fu">html_text</span>(node_country, <span class="at">trim =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>Wie wir gesehen haben, erreichen wir damit unser Ziel. Wir haben aber dazu auch
 das Objekt <code>node_country</code> erstellt um den ersten Arbeitsschritt – das Auslesen
 der <code>&lt;h3&gt;</code> Tags – zwischenzuspeichern. Dieses Objekt werden wir nie wieder
@@ -474,10 +483,10 @@ benötigen. Nutzen wir stattdessen die bereits vorgestellte Pipe <code>%&gt;%</c
 die Notwendigkeit des Zwischenspeicherns von Teilergebnissen und wir schreiben
 gleichzeitig intuitiveren und leichter verständlichen Code.</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="rvest1.html#cb28-1" aria-hidden="true" tabindex="-1"></a>country <span class="ot">&lt;-</span> website <span class="sc">%&gt;%</span> </span>
-<span id="cb28-2"><a href="rvest1.html#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css=</span><span class="st">&quot;h3&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb28-3"><a href="rvest1.html#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>(<span class="at">trim=</span><span class="cn">TRUE</span>)</span>
+<span id="cb28-2"><a href="rvest1.html#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;h3&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-3"><a href="rvest1.html#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>(<span class="at">trim =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb28-4"><a href="rvest1.html#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-5"><a href="rvest1.html#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(country, <span class="at">n=</span><span class="dv">10</span>)</span>
+<span id="cb28-5"><a href="rvest1.html#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(country, <span class="at">n =</span> <span class="dv">10</span>)</span>
 <span id="cb28-6"><a href="rvest1.html#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] &quot;Andorra&quot;              &quot;United Arab Emirates&quot; &quot;Afghanistan&quot;         </span></span>
 <span id="cb28-7"><a href="rvest1.html#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  [4] &quot;Antigua and Barbuda&quot;  &quot;Anguilla&quot;             &quot;Albania&quot;             </span></span>
 <span id="cb28-8"><a href="rvest1.html#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7] &quot;Armenia&quot;              &quot;Angola&quot;               &quot;Antarctica&quot;          </span></span>
@@ -534,9 +543,9 @@ allerdings nicht über mehrere Zeilen hinweg sondern für eine, oder wie hier
 einen Teil einer Zeile. Versuchen wir also die Namen der Haupstädte auszulesen,
 indem wir den <code>&lt;span&gt;</code> Tag als Selector nutzen.</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="rvest1.html#cb31-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
-<span id="cb31-2"><a href="rvest1.html#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css=</span><span class="st">&quot;span&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-2"><a href="rvest1.html#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;span&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb31-3"><a href="rvest1.html#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb31-4"><a href="rvest1.html#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n=</span><span class="dv">10</span>)</span>
+<span id="cb31-4"><a href="rvest1.html#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
 <span id="cb31-5"><a href="rvest1.html#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] &quot;Andorra la Vella&quot; &quot;84000&quot;            &quot;468.0&quot;            &quot;Abu Dhabi&quot;       </span></span>
 <span id="cb31-6"><a href="rvest1.html#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  [5] &quot;4975593&quot;          &quot;82880.0&quot;          &quot;Kabul&quot;            &quot;29121286&quot;        </span></span>
 <span id="cb31-7"><a href="rvest1.html#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  [9] &quot;647500.0&quot;         &quot;St. John&#39;s&quot;</span></span></code></pre></div>
@@ -552,19 +561,19 @@ die Klasse <code>"country-capital"</code> zugewiesen. Diese Klasse können wir m
 Syntax <code>.Klassenname</code> nutzen. Um also alle <code>&lt;span&gt;</code> auszuwählen, die die Klasse
 <code>"country-capital"</code> haben, können wir wie folgend vorgehen:</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="rvest1.html#cb32-1" aria-hidden="true" tabindex="-1"></a>capital <span class="ot">&lt;-</span> website <span class="sc">%&gt;%</span> </span>
-<span id="cb32-2"><a href="rvest1.html#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css=</span><span class="st">&quot;span.country-capital&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-2"><a href="rvest1.html#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;span.country-capital&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb32-3"><a href="rvest1.html#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>()</span>
 <span id="cb32-4"><a href="rvest1.html#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-5"><a href="rvest1.html#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(capital, <span class="at">n=</span><span class="dv">10</span>)</span>
+<span id="cb32-5"><a href="rvest1.html#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(capital, <span class="at">n =</span> <span class="dv">10</span>)</span>
 <span id="cb32-6"><a href="rvest1.html#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] &quot;Andorra la Vella&quot; &quot;Abu Dhabi&quot;        &quot;Kabul&quot;            &quot;St. John&#39;s&quot;      </span></span>
 <span id="cb32-7"><a href="rvest1.html#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  [5] &quot;The Valley&quot;       &quot;Tirana&quot;           &quot;Yerevan&quot;          &quot;Luanda&quot;          </span></span>
 <span id="cb32-8"><a href="rvest1.html#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  [9] &quot;None&quot;             &quot;Buenos Aires&quot;</span></span></code></pre></div>
 <p>Dies können wir analog für die Einwohnerzahl mit der Klasse <code>country-population</code> wiederholen.</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="rvest1.html#cb33-1" aria-hidden="true" tabindex="-1"></a>population <span class="ot">&lt;-</span> website <span class="sc">%&gt;%</span> </span>
-<span id="cb33-2"><a href="rvest1.html#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css=</span><span class="st">&quot;span.country-population&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-2"><a href="rvest1.html#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;span.country-population&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb33-3"><a href="rvest1.html#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>()</span>
 <span id="cb33-4"><a href="rvest1.html#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-5"><a href="rvest1.html#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(population, <span class="at">n=</span><span class="dv">10</span>)</span>
+<span id="cb33-5"><a href="rvest1.html#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(population, <span class="at">n =</span> <span class="dv">10</span>)</span>
 <span id="cb33-6"><a href="rvest1.html#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] &quot;84000&quot;    &quot;4975593&quot;  &quot;29121286&quot; &quot;86754&quot;    &quot;13254&quot;    &quot;2986952&quot; </span></span>
 <span id="cb33-7"><a href="rvest1.html#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7] &quot;2968000&quot;  &quot;13068161&quot; &quot;0&quot;        &quot;41343201&quot;</span></span></code></pre></div>
 <p>Betrachten wir den so erzeugten Vektor genauer, sehen wir, dass es sich dabei um
@@ -649,17 +658,17 @@ Scraping Prozess in relativ wenigen Zeilen abgeschlossen werden kann.</p>
 <span id="cb40-3"><a href="rvest1.html#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb40-4"><a href="rvest1.html#cb40-4" aria-hidden="true" tabindex="-1"></a>countries_2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
 <span id="cb40-5"><a href="rvest1.html#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Land =</span> website <span class="sc">%&gt;%</span></span>
-<span id="cb40-6"><a href="rvest1.html#cb40-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_nodes</span>(<span class="at">css=</span><span class="st">&quot;h3&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb40-7"><a href="rvest1.html#cb40-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text</span>(<span class="at">trim=</span><span class="cn">TRUE</span>),</span>
+<span id="cb40-6"><a href="rvest1.html#cb40-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;h3&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb40-7"><a href="rvest1.html#cb40-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text</span>(<span class="at">trim =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb40-8"><a href="rvest1.html#cb40-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">Hauptstadt =</span> website <span class="sc">%&gt;%</span> </span>
-<span id="cb40-9"><a href="rvest1.html#cb40-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_nodes</span>(<span class="at">css=</span><span class="st">&quot;span.country-capital&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb40-9"><a href="rvest1.html#cb40-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;span.country-capital&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb40-10"><a href="rvest1.html#cb40-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text</span>(),</span>
-<span id="cb40-11"><a href="rvest1.html#cb40-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">Bevoelkerung=</span>website <span class="sc">%&gt;%</span> </span>
-<span id="cb40-12"><a href="rvest1.html#cb40-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_nodes</span>(<span class="at">css=</span><span class="st">&quot;span.country-population&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb40-11"><a href="rvest1.html#cb40-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">Bevoelkerung =</span> website <span class="sc">%&gt;%</span> </span>
+<span id="cb40-12"><a href="rvest1.html#cb40-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;span.country-population&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb40-13"><a href="rvest1.html#cb40-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb40-14"><a href="rvest1.html#cb40-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.numeric</span>(),</span>
 <span id="cb40-15"><a href="rvest1.html#cb40-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">Flaeche =</span> website <span class="sc">%&gt;%</span> </span>
-<span id="cb40-16"><a href="rvest1.html#cb40-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_nodes</span>(<span class="at">css=</span><span class="st">&quot;span.country-area&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb40-16"><a href="rvest1.html#cb40-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;span.country-area&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb40-17"><a href="rvest1.html#cb40-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb40-18"><a href="rvest1.html#cb40-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.numeric</span>()</span>
 <span id="cb40-19"><a href="rvest1.html#cb40-19" aria-hidden="true" tabindex="-1"></a>)</span>
