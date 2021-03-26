@@ -51,7 +51,7 @@ weiterführende-quellen
 rvest3
 indexseiten
 scrapen-des-index
-map
+iteration-mit-map
 scrapen-der-unterseiten
 pagination
 der-query-1

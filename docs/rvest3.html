@@ -24,7 +24,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2021-03-23" />
+<meta name="date" content="2021-03-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -218,7 +218,7 @@ Web Scraping mit R
 <li class="chapter" data-level="7.1" data-path="rvest3.html"><a href="rvest3.html#indexseiten"><i class="fa fa-check"></i><b>7.1</b> Indexseiten</a>
 <ul>
 <li class="chapter" data-level="7.1.1" data-path="rvest3.html"><a href="rvest3.html#scrapen-des-index"><i class="fa fa-check"></i><b>7.1.1</b> Scrapen des Index</a></li>
-<li class="chapter" data-level="7.1.2" data-path="rvest3.html"><a href="rvest3.html#map"><i class="fa fa-check"></i><b>7.1.2</b> map()</a></li>
+<li class="chapter" data-level="7.1.2" data-path="rvest3.html"><a href="rvest3.html#iteration-mit-map"><i class="fa fa-check"></i><b>7.1.2</b> Iteration mit map()</a></li>
 <li class="chapter" data-level="7.1.3" data-path="rvest3.html"><a href="rvest3.html#scrapen-der-unterseiten"><i class="fa fa-check"></i><b>7.1.3</b> Scrapen der Unterseiten</a></li>
 </ul></li>
 <li class="chapter" data-level="7.2" data-path="rvest3.html"><a href="rvest3.html#pagination"><i class="fa fa-check"></i><b>7.2</b> Pagination</a>
@@ -258,25 +258,474 @@ Web Scraping mit R
             <section class="normal" id="section-">
 <div id="rvest3" class="section level1" number="7">
 <h1><span class="header-section-number">7</span> Scraping mehrseitiger Websites</h1>
+<p>In vielen Fällen, möchten wir nicht den Inhalt einer einzelnen Website scrapen,
+sondern mehrere Unterseiten in einem Arbeitsschritt. In dieser Sitzung
+betrachten wir zwei häufig auftretende Varianten. Indexseiten und Pagination.</p>
 <div id="indexseiten" class="section level2" number="7.1">
 <h2><span class="header-section-number">7.1</span> Indexseiten</h2>
+<p>Eine Indexseite meint in diesem Verständnis, eine Website auf der Links zu den
+diversen Unterseiten aufgelistet sind. Dies können wir uns als eine Art
+Inhaltsverzeichnis vorstellen.</p>
+<p>Als Beispiel soll die Website zu den tidyverse packages dienen:
+<a href="https://www.tidyverse.org/packages/" target="_&quot;blank&quot;">https://www.tidyverse.org/packages/</a>.
+Unter dem Punkt “Core tidyverse” sind die acht packages gelistet, welche in R
+mit <code>library(tidyverse)</code> geladen werden. Neben Namen und Icon ist jeweils eine
+kurze Beschreibung des package sowie ein weiterführender Link Teil der Liste.</p>
+<p>Betrachten wir eine der Unterseiten zu den core packages. Da diese alle gleich
+aufgebaut sind, können Sie als Beispiel ein beliebiges package wählen.
+Es könnte unser Scraping-Ziel sein, eine Tabelle mit den namen der core packages,
+den aktuellen Versionsnummer, und den Links zu CRAN und dem passenden Kapitel
+in “R for Data Science” von Hadley und Wickham zu erstellen. Inzwischen haben
+wir alle Werkzeuge um diese Daten aus den Websiten zu extrahieren. Wir könnten
+nun also “per Hand” die einzelnen Unterseiten scrapen und die Daten
+zusammenführen. Praktischer wäre es aber doch, könnten wir ausgehend von der
+Indexseite alle acht Unterseiten und die jeweils enthaltenen Daten von Interesse
+in einem Arbeitsschritt scrapen. Genau dies, betrachten wir im Weiteren.</p>
+<p>Noch eine kurze Anmerkung zu CRAN: Es handelt sich um das “Comprehensive R
+Archive Network”. Dies haben Sie schon bei der Installation von R kennengelernt,
+es werden aber auf dieser Website auch die diversen R packages, die zugehörige
+Dokumentation sowie diverse Informationen “gehostet”. Wenn Sie ein package
+direkt aus RStudio installieren, greift dieses auf CRAN zurück um das package
+und die zugehörigen Dateien zu findne und herunterzuladen.</p>
 <div id="scrapen-des-index" class="section level3" number="7.1.1">
 <h3><span class="header-section-number">7.1.1</span> Scrapen des Index</h3>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="rvest3.html#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb90-2"><a href="rvest3.html#cb90-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span></code></pre></div>
+<p>Als ersten Schritt, müssen wir die Links zu den Unterseiten aus dem Quellcode
+der Indexseite extrahieren. Dazu laden wir wie immer, die Website herunter und
+lesen sie ein.</p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="rvest3.html#cb91-1" aria-hidden="true" tabindex="-1"></a>website <span class="ot">&lt;-</span> <span class="st">&quot;https://www.tidyverse.org/packages/&quot;</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb91-2"><a href="rvest3.html#cb91-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_html</span>()</span></code></pre></div>
+<p>Die Links sind in diesem Fall zweifach im Quellcode hinterlegt. Einmal ist das
+Bild des Icons verlinkt, einmal der Name des Packages. Sie können dies
+inzwischen im Quellcode und/oder mit den WDTs selbst nachvollziehen.
+Wir benötigen jeden einzelnen Link jedoch auch nur einmal. Eine Möglichkeit von
+mehreren, diese zu selektieren, könnte es sein die <code>&lt;a&gt;</code> Tags auszuwhäen die
+direkt auf die einzelnen <code>&lt;div class="package"&gt;</code> Tags folgen.</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="rvest3.html#cb92-1" aria-hidden="true" tabindex="-1"></a>a_nodes <span class="ot">&lt;-</span> website <span class="sc">%&gt;%</span> </span>
+<span id="cb92-2"><a href="rvest3.html#cb92-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;div.package &gt; a&quot;</span>)</span>
+<span id="cb92-3"><a href="rvest3.html#cb92-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-4"><a href="rvest3.html#cb92-4" aria-hidden="true" tabindex="-1"></a>a_nodes</span>
+<span id="cb92-5"><a href="rvest3.html#cb92-5" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (8)}</span></span>
+<span id="cb92-6"><a href="rvest3.html#cb92-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;a href=&quot;https://ggplot2.tidyverse.org/&quot; target=&quot;_blank&quot;&gt;\n    &lt;img class ...</span></span>
+<span id="cb92-7"><a href="rvest3.html#cb92-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;a href=&quot;https://dplyr.tidyverse.org/&quot; target=&quot;_blank&quot;&gt;\n    &lt;img class=&quot; ...</span></span>
+<span id="cb92-8"><a href="rvest3.html#cb92-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [3] &lt;a href=&quot;https://tidyr.tidyverse.org/&quot; target=&quot;_blank&quot;&gt;\n    &lt;img class=&quot; ...</span></span>
+<span id="cb92-9"><a href="rvest3.html#cb92-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [4] &lt;a href=&quot;https://readr.tidyverse.org/&quot; target=&quot;_blank&quot;&gt;\n    &lt;img class=&quot; ...</span></span>
+<span id="cb92-10"><a href="rvest3.html#cb92-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [5] &lt;a href=&quot;https://purrr.tidyverse.org/&quot; target=&quot;_blank&quot;&gt;\n    &lt;img class=&quot; ...</span></span>
+<span id="cb92-11"><a href="rvest3.html#cb92-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [6] &lt;a href=&quot;https://tibble.tidyverse.org/&quot; target=&quot;_blank&quot;&gt;\n    &lt;img class= ...</span></span>
+<span id="cb92-12"><a href="rvest3.html#cb92-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [7] &lt;a href=&quot;https://stringr.tidyverse.org/&quot; target=&quot;_blank&quot;&gt;\n    &lt;img class ...</span></span>
+<span id="cb92-13"><a href="rvest3.html#cb92-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [8] &lt;a href=&quot;https://forcats.tidyverse.org/&quot; target=&quot;_blank&quot;&gt;\n    &lt;img class ...</span></span></code></pre></div>
+<p>Da wir die reinen URLs benötigen um im Folgenden die Unterseiten auslesen zu
+können, sollten wir nun die Werte der <code>href=""</code> Attribute extrahieren.</p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="rvest3.html#cb93-1" aria-hidden="true" tabindex="-1"></a>links <span class="ot">&lt;-</span> a_nodes <span class="sc">%&gt;%</span></span>
+<span id="cb93-2"><a href="rvest3.html#cb93-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_attr</span>(<span class="at">name =</span> <span class="st">&quot;href&quot;</span>)</span>
+<span id="cb93-3"><a href="rvest3.html#cb93-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-4"><a href="rvest3.html#cb93-4" aria-hidden="true" tabindex="-1"></a>links</span>
+<span id="cb93-5"><a href="rvest3.html#cb93-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;https://ggplot2.tidyverse.org/&quot; &quot;https://dplyr.tidyverse.org/&quot;  </span></span>
+<span id="cb93-6"><a href="rvest3.html#cb93-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [3] &quot;https://tidyr.tidyverse.org/&quot;   &quot;https://readr.tidyverse.org/&quot;  </span></span>
+<span id="cb93-7"><a href="rvest3.html#cb93-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [5] &quot;https://purrr.tidyverse.org/&quot;   &quot;https://tibble.tidyverse.org/&quot; </span></span>
+<span id="cb93-8"><a href="rvest3.html#cb93-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [7] &quot;https://stringr.tidyverse.org/&quot; &quot;https://forcats.tidyverse.org/&quot;</span></span></code></pre></div>
 </div>
-<div id="map" class="section level3" number="7.1.2">
-<h3><span class="header-section-number">7.1.2</span> map()</h3>
+<div id="iteration-mit-map" class="section level3" number="7.1.2">
+<h3><span class="header-section-number">7.1.2</span> Iteration mit map()</h3>
+<p>Bevor mit dem Einlesen der Unterseiten und dem Etxrahieren beginnen, müssen wir
+uns Gedanken dazu machen, wie wir R dazu bringen können diese Arbeitsschritte
+automatisch nacheinander auf mehrere URLs anzuwenden.
+Eine Möglichkeit aus base R wäre es, einen “For Loop” anzuwenden. Ich möchte
+Ihnen hier jedoch die <code>map()</code> Funktion aus dem tidyverse package <em>purrr</em>
+vorstellen. Diese folgen der grundsätzlichen Logik des tidyverse, lassen sich
+problemlos in Pipes einbinden und haben eine kurze und intuitiv verständliche
+Syntax.</p>
+<p>Die Funktion <code>map()</code> nimmt einen Vektor oder eine Liste als Input, wendet eine
+im zweiten Argument spezifizierte Funktion auf jedes der Elemente des Input an
+und gibt uns eine Liste mit den Ergebnissen der angewandten Funktion zurück.</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="rvest3.html#cb94-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.28</span>, <span class="fl">1.46</span>, <span class="fl">1.64</span>, <span class="fl">1.82</span>)</span>
+<span id="cb94-2"><a href="rvest3.html#cb94-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb94-3"><a href="rvest3.html#cb94-3" aria-hidden="true" tabindex="-1"></a><span class="fu">map</span>(x, round)</span>
+<span id="cb94-4"><a href="rvest3.html#cb94-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [[1]]</span></span>
+<span id="cb94-5"><a href="rvest3.html#cb94-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
+<span id="cb94-6"><a href="rvest3.html#cb94-6" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb94-7"><a href="rvest3.html#cb94-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [[2]]</span></span>
+<span id="cb94-8"><a href="rvest3.html#cb94-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
+<span id="cb94-9"><a href="rvest3.html#cb94-9" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb94-10"><a href="rvest3.html#cb94-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [[3]]</span></span>
+<span id="cb94-11"><a href="rvest3.html#cb94-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span>
+<span id="cb94-12"><a href="rvest3.html#cb94-12" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb94-13"><a href="rvest3.html#cb94-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [[4]]</span></span>
+<span id="cb94-14"><a href="rvest3.html#cb94-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2</span></span></code></pre></div>
+<p>Für jedes Element des numerischen Vektors <code>x</code>, wendet <code>map()</code> einzeln die
+Funktion <code>round()</code> an. <code>round()</code> macht das, was der Name vermuten lässt, und
+rundet den Input auf oder ab, je nach Zahlenwert. Als Ergebnis, gibt <code>map()</code>
+eine Liste aus.</p>
+<p>Möchten wir, einen Vektor als Output haben, können wir je nach gewünschtem Typ
+– Logical, Integer, Double oder Character – spezifische Varianten der Map
+Funktionen anwenden. Dazu ein Zitat aus der Hilfe zu <code>?map</code>:</p>
+<blockquote>
+<p>“map_lgl(), map_int(), map_dbl() and map_chr() return an atomic vector of the
+indicated type (or die trying).”</p>
+</blockquote>
+<p>Möchten wir als beispielsweise für das obige Beispiel einen numerischen Vektor
+statt einer Liste als Output haben, können wir <code>map_dbl()</code> nutzen:</p>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="rvest3.html#cb95-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.28</span>, <span class="fl">1.46</span>, <span class="fl">1.64</span>, <span class="fl">1.82</span>)</span>
+<span id="cb95-2"><a href="rvest3.html#cb95-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-3"><a href="rvest3.html#cb95-3" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(x, round)</span>
+<span id="cb95-4"><a href="rvest3.html#cb95-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1 1 2 2</span></span></code></pre></div>
+<p>Oder für einen Character-Vektor, <code>map_chr()</code>. Die hier angewandte Funktion
+<code>toupper()</code> gibt den Input als Goßbuchstaben aus.</p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="rvest3.html#cb96-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;abc&quot;</span>, <span class="st">&quot;def&quot;</span>, <span class="st">&quot;gah&quot;</span>)</span>
+<span id="cb96-2"><a href="rvest3.html#cb96-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-3"><a href="rvest3.html#cb96-3" aria-hidden="true" tabindex="-1"></a><span class="fu">map_chr</span>(x, toupper)</span>
+<span id="cb96-4"><a href="rvest3.html#cb96-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;ABC&quot; &quot;DEF&quot; &quot;GAH&quot;</span></span></code></pre></div>
+<p>Möchten wir weitere Argumente der angewandten Funktion verändern, werden diese
+nach dem Namen der Funktion aufgezählt. Hier wird die Anzahl der
+Nachkommastellen auf die gerundet werden soll von dem Standardwert 0 auf 1
+gesetzt.</p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="rvest3.html#cb97-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.28</span>, <span class="fl">1.46</span>, <span class="fl">1.64</span>, <span class="fl">1.82</span>)</span>
+<span id="cb97-2"><a href="rvest3.html#cb97-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-3"><a href="rvest3.html#cb97-3" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(x, round, <span class="at">digits =</span> <span class="dv">1</span>)</span>
+<span id="cb97-4"><a href="rvest3.html#cb97-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1.3 1.5 1.6 1.8</span></span></code></pre></div>
+<p>Damit haben wir einen Überblick zur Iteration mit <code>map()</code> dies kann aber
+notwendigerweise nur eine erste Einführung sein. Für eine weitergehende
+Einführung zu For Loops und den Map Funktionen empfiehlt sich das Kapitel zu
+“Iteration” aus “R for Data Science”:
+<a href="https://r4ds.had.co.nz/iteration.html" target="_blank">https://r4ds.had.co.nz/iteration.html</a></p>
 </div>
 <div id="scrapen-der-unterseiten" class="section level3" number="7.1.3">
 <h3><span class="header-section-number">7.1.3</span> Scrapen der Unterseiten</h3>
+<p>Wir können nun, <code>map()</code> nutzen um alle Unterseiten in einem Schritt einzulesen.
+Als Input geben wir den Character Vector, welche die URLs der Unterseiten
+enthält an und als anzuwendende Funktion die bekannte <code>read_html()</code>. Für jede
+der acht URLs wird also nacheinander die Funktion auf die jeweilige URL
+angewandt. Als Output bekommen wir eine Liste der acht ausgelesenen Unterseiten.</p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="rvest3.html#cb98-1" aria-hidden="true" tabindex="-1"></a>pages <span class="ot">&lt;-</span> links <span class="sc">%&gt;%</span> </span>
+<span id="cb98-2"><a href="rvest3.html#cb98-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(read_html)</span></code></pre></div>
+<p>Betrachten wir die Unterseiten im Browser, können wir feststellen, dass die
+HTML-Struktur im Bezug auf die uns interessierenden Informationen – Name,
+Versionsnummer und CRAN sowie “R for Data Science” Links – für jede Unterseite
+identisch ist. Wir können also für jede dieser, die Daten über die selben CSS
+Selectors extrahieren.</p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="rvest3.html#cb99-1" aria-hidden="true" tabindex="-1"></a>pages <span class="sc">%&gt;%</span> </span>
+<span id="cb99-2"><a href="rvest3.html#cb99-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(html_node, <span class="at">css =</span> <span class="st">&quot;a.navbar-brand&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb99-3"><a href="rvest3.html#cb99-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_chr</span>(html_text)</span>
+<span id="cb99-4"><a href="rvest3.html#cb99-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;ggplot2&quot; &quot;dplyr&quot;   &quot;tidyr&quot;   &quot;readr&quot;   &quot;purrr&quot;   &quot;tibble&quot;  &quot;stringr&quot;</span></span>
+<span id="cb99-5"><a href="rvest3.html#cb99-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [8] &quot;forcats&quot;</span></span></code></pre></div>
+<p>Der Name des packages wird in der Menüleiste im oberen Abschnitt der Seiten
+dargestellt. Dieser wird von einem <code>&lt;a&gt;</code> Tag umschlossen. Für
+<a href="https://ggplot2.tidyverse.org/" target="_blank">https://ggplot2.tidyverse.org/</a> ist dies beispielsweise:
+<code>&lt;a class="navbar-brand" href="index.html"&gt;ggplot2&lt;/a&gt;</code>. Wir können also auf
+einfachem Weg einen Selector konstruieren, eine Möglichkeit ist der hier
+genutzte.</p>
+<p>Was passiert nun im Detail in dem dargestellten Code?
+Der Input ist die zuvor erstellte Liste mit den acht eingelesenen Websites.
+In der zweiten Zeile wird durch die Nutzung von <code>map()</code> auf jede der
+eingelesenen Seiten die Funktion <code>html_node()</code> mit dem Argument
+<code>css = "a.navbar-brand"</code> angewandt. Für jede der acht Seiten, wird also
+nacheinander der entsprechende HTML-node ausgewählt. Diese werden durch die Pipe
+in die dritte Zeile weitergegebe, in der erneut über jeden node iteriert wird,
+diesmal die Ihnen bekannt Funktion <code>html_text()</code>. Für jeden der acht
+selektierten Nodes wird also der zwischen Start- und End-Tag befindliche Text
+extrahiert. Da hier <code>map_chr()</code> genutzt wird, wird ein Character Vector als
+Output zurückgegeben.</p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="rvest3.html#cb100-1" aria-hidden="true" tabindex="-1"></a>pages <span class="sc">%&gt;%</span> </span>
+<span id="cb100-2"><a href="rvest3.html#cb100-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(html_node, <span class="at">css =</span> <span class="st">&quot;span.version.version-default&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb100-3"><a href="rvest3.html#cb100-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_chr</span>(html_text)</span>
+<span id="cb100-4"><a href="rvest3.html#cb100-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;3.3.2&quot;      &quot;1.0.5&quot;      &quot;1.1.3&quot;      &quot;1.4.0&quot;      &quot;0.3.4&quot;     </span></span>
+<span id="cb100-5"><a href="rvest3.html#cb100-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [6] &quot;3.1.0&quot;      &quot;1.4.0.9000&quot; &quot;0.5.1&quot;</span></span></code></pre></div>
+<p>Die Extration der aktuellen Versionsnummer der packages, funktioniert auf dem
+selben Weg. Diese sind für ggplot2 in folgendem tag enthalten:
+<code>&lt;span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version"&gt;3.3.2&lt;/span&gt;</code>.
+Auch dieser lässt sich einfach selektieren, wir sehen aber ein interessantes
+Detail. Und zwar enthält der Klassenname hier ein Leerzeichen. Dies steht dafür,
+dass der <code>&lt;span&gt;</code> Tag sowohl die Klasse <code>version</code> als auch <code>version-default</code>
+trägt. Dies können wir selektieren indem wir beide Klassennamen im Selector mit
+einem <code>.</code> an <code>span</code> anhängen. Streng genommen, müssen wir dies hier aber nicht
+tun. Beide Klassennamen für sich, reichen hier zur Selektion aus, da sie an
+keiner weiteren Stelle auf der Website auftauchen. Im Sinne von möglichst
+expliziten CSS Selectors, würde ich trotzdem beide Klassennamen nutzen, dies
+ist aber auch “Geschmackssache”.</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="rvest3.html#cb101-1" aria-hidden="true" tabindex="-1"></a>pages <span class="sc">%&gt;%</span> </span>
+<span id="cb101-2"><a href="rvest3.html#cb101-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(html_node, <span class="at">css =</span> <span class="st">&quot;ul.list-unstyled &gt; li:nth-child(1) &gt; a&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb101-3"><a href="rvest3.html#cb101-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_chr</span>(html_attr, <span class="at">name =</span> <span class="st">&quot;href&quot;</span>)</span>
+<span id="cb101-4"><a href="rvest3.html#cb101-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;https://cloud.r-project.org/package=ggplot2&quot;</span></span>
+<span id="cb101-5"><a href="rvest3.html#cb101-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &quot;https://cloud.r-project.org/package=dplyr&quot;  </span></span>
+<span id="cb101-6"><a href="rvest3.html#cb101-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [3] &quot;https://cloud.r-project.org/package=tidyr&quot;  </span></span>
+<span id="cb101-7"><a href="rvest3.html#cb101-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [4] &quot;https://cloud.r-project.org/package=readr&quot;  </span></span>
+<span id="cb101-8"><a href="rvest3.html#cb101-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [5] &quot;https://cloud.r-project.org/package=purrr&quot;  </span></span>
+<span id="cb101-9"><a href="rvest3.html#cb101-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [6] &quot;https://cloud.r-project.org/package=tibble&quot; </span></span>
+<span id="cb101-10"><a href="rvest3.html#cb101-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [7] &quot;https://cloud.r-project.org/package=stringr&quot;</span></span>
+<span id="cb101-11"><a href="rvest3.html#cb101-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [8] &quot;https://cloud.r-project.org/package=forcats&quot;</span></span>
+<span id="cb101-12"><a href="rvest3.html#cb101-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-13"><a href="rvest3.html#cb101-13" aria-hidden="true" tabindex="-1"></a>pages <span class="sc">%&gt;%</span> </span>
+<span id="cb101-14"><a href="rvest3.html#cb101-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(html_node, <span class="at">css =</span> <span class="st">&quot;ul.list-unstyled &gt; li:nth-child(4) &gt; a&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb101-15"><a href="rvest3.html#cb101-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_chr</span>(html_attr, <span class="at">name =</span> <span class="st">&quot;href&quot;</span>)</span>
+<span id="cb101-16"><a href="rvest3.html#cb101-16" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;https://r4ds.had.co.nz/data-visualisation.html&quot;</span></span>
+<span id="cb101-17"><a href="rvest3.html#cb101-17" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &quot;http://r4ds.had.co.nz/transform.html&quot;          </span></span>
+<span id="cb101-18"><a href="rvest3.html#cb101-18" aria-hidden="true" tabindex="-1"></a><span class="do">## [3] &quot;https://r4ds.had.co.nz/tidy-data.html&quot;         </span></span>
+<span id="cb101-19"><a href="rvest3.html#cb101-19" aria-hidden="true" tabindex="-1"></a><span class="do">## [4] &quot;http://r4ds.had.co.nz/data-import.html&quot;        </span></span>
+<span id="cb101-20"><a href="rvest3.html#cb101-20" aria-hidden="true" tabindex="-1"></a><span class="do">## [5] &quot;http://r4ds.had.co.nz/iteration.html&quot;          </span></span>
+<span id="cb101-21"><a href="rvest3.html#cb101-21" aria-hidden="true" tabindex="-1"></a><span class="do">## [6] &quot;https://r4ds.had.co.nz/tibbles.html&quot;           </span></span>
+<span id="cb101-22"><a href="rvest3.html#cb101-22" aria-hidden="true" tabindex="-1"></a><span class="do">## [7] &quot;http://r4ds.had.co.nz/strings.html&quot;            </span></span>
+<span id="cb101-23"><a href="rvest3.html#cb101-23" aria-hidden="true" tabindex="-1"></a><span class="do">## [8] &quot;http://r4ds.had.co.nz/factors.html&quot;</span></span></code></pre></div>
+<p>Auch die Extraktion der Links, erfolgt nach dem selben Grundprinzip. Der
+Selector wird etwas komplizierter, lässt sich unter Nutzung der WDTs aber gut
+nachvollziehen. Wir selektieren die <code>&lt;a&gt;</code> Tags des ersten beziehungsweise
+vierten <code>&lt;li&gt;</code> Kinds der ungeordneten Liste der Klasse <code>list-unstyled</code>.
+Hier wenden wir jeweils die Funktion <code>html_attr()</code> mit dem Argument
+<code>name = "href"</code> auf die acht selektierten Nodes an um die Daten von Interesse
+zu erhalten, die URL der Links.</p>
+<p>Sind wir nur an dem Endergebnis interessiert, können wir die Extraktion der
+Daten der Unterseiten auch direkt während der Erstellung eines Tibbles
+durchführen:</p>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="rvest3.html#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb102-2"><a href="rvest3.html#cb102-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> pages <span class="sc">%&gt;%</span> </span>
+<span id="cb102-3"><a href="rvest3.html#cb102-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(html_node, <span class="at">css =</span> <span class="st">&quot;a.navbar-brand&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb102-4"><a href="rvest3.html#cb102-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map_chr</span>(html_text),</span>
+<span id="cb102-5"><a href="rvest3.html#cb102-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">version =</span> pages <span class="sc">%&gt;%</span> </span>
+<span id="cb102-6"><a href="rvest3.html#cb102-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(html_node, <span class="at">css =</span> <span class="st">&quot;span.version.version-default&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb102-7"><a href="rvest3.html#cb102-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map_chr</span>(html_text),</span>
+<span id="cb102-8"><a href="rvest3.html#cb102-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">CRAN =</span> pages <span class="sc">%&gt;%</span> </span>
+<span id="cb102-9"><a href="rvest3.html#cb102-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(html_node, <span class="at">css =</span> <span class="st">&quot;ul.list-unstyled &gt; li:nth-child(1) &gt; a&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb102-10"><a href="rvest3.html#cb102-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map_chr</span>(html_attr, <span class="at">name =</span> <span class="st">&quot;href&quot;</span>),</span>
+<span id="cb102-11"><a href="rvest3.html#cb102-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">Learn =</span> pages <span class="sc">%&gt;%</span> </span>
+<span id="cb102-12"><a href="rvest3.html#cb102-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(html_node, <span class="at">css =</span> <span class="st">&quot;ul.list-unstyled &gt; li:nth-child(4) &gt; a&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb102-13"><a href="rvest3.html#cb102-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map_chr</span>(html_attr, <span class="at">name =</span> <span class="st">&quot;href&quot;</span>)</span>
+<span id="cb102-14"><a href="rvest3.html#cb102-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb102-15"><a href="rvest3.html#cb102-15" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 8 x 4</span></span>
+<span id="cb102-16"><a href="rvest3.html#cb102-16" aria-hidden="true" tabindex="-1"></a><span class="do">##   name    version   CRAN                          Learn                         </span></span>
+<span id="cb102-17"><a href="rvest3.html#cb102-17" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;                         &lt;chr&gt;                         </span></span>
+<span id="cb102-18"><a href="rvest3.html#cb102-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 ggplot2 3.3.2     https://cloud.r-project.org/… https://r4ds.had.co.nz/data-v…</span></span>
+<span id="cb102-19"><a href="rvest3.html#cb102-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 dplyr   1.0.5     https://cloud.r-project.org/… http://r4ds.had.co.nz/transfo…</span></span>
+<span id="cb102-20"><a href="rvest3.html#cb102-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 tidyr   1.1.3     https://cloud.r-project.org/… https://r4ds.had.co.nz/tidy-d…</span></span>
+<span id="cb102-21"><a href="rvest3.html#cb102-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 readr   1.4.0     https://cloud.r-project.org/… http://r4ds.had.co.nz/data-im…</span></span>
+<span id="cb102-22"><a href="rvest3.html#cb102-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 purrr   0.3.4     https://cloud.r-project.org/… http://r4ds.had.co.nz/iterati…</span></span>
+<span id="cb102-23"><a href="rvest3.html#cb102-23" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 tibble  3.1.0     https://cloud.r-project.org/… https://r4ds.had.co.nz/tibble…</span></span>
+<span id="cb102-24"><a href="rvest3.html#cb102-24" aria-hidden="true" tabindex="-1"></a><span class="do">## 7 stringr 1.4.0.90… https://cloud.r-project.org/… http://r4ds.had.co.nz/strings…</span></span>
+<span id="cb102-25"><a href="rvest3.html#cb102-25" aria-hidden="true" tabindex="-1"></a><span class="do">## 8 forcats 0.5.1     https://cloud.r-project.org/… http://r4ds.had.co.nz/factors…</span></span></code></pre></div>
 </div>
 </div>
 <div id="pagination" class="section level2" number="7.2">
 <h2><span class="header-section-number">7.2</span> Pagination</h2>
+<p>Eine weitere häufig auftretende Form der Unterteilung einer Website in mehrere
+Unterseiten, ist <em>Pagination</em>. Dies kennen Sie alle aus dem Alltag im Internet.
+Wir geben einen Suchbegriff bei Google ein und bekommen Resultate die über
+mehrere Seiten aufgeteilt sind. Diese sind über die numerierten Links sowie die
+Vorwärts-/Rückwärtspfeile am unteren Ende des Browserinhalts zugänglich und
+navigierbar. Dies ist “Pagination in action” und begegnet uns in vergleichbaren
+Varianten auf vielen Websites.</p>
+<p>Im Pressemitteilungsarchiv der Website des Landtags Brandenburg wird ebenfalls
+Pagination genutzt um die Mitteilungen über mehrere Unterseiten zu verteilen.
+Zur Veranschaulichung des Scrapings einer solchen Website, können wir
+beispielsweise das Ziel verfolgen, das Datum, den Titel und den weiterführenden
+Link für alle Pressemitteilungen aus 2020 zu Scrapen und in einem Tibble
+zusammenzufassen.</p>
+<p>Die Website finden Sie unter:
+<a href="https://www.landtag.brandenburg.de/de/aktuelles/presse/pressemitteilungsarchiv/archiv_pressemitteilungen_2020/980521" target="_blank">https://www.landtag.brandenburg.de/de/aktuelles/presse/pressemitteilungsarchiv/archiv_pressemitteilungen_2020/980521</a></p>
 <div id="der-query-1" class="section level3" number="7.2.1">
 <h3><span class="header-section-number">7.2.1</span> Der Query</h3>
+<p>Betrachten wir die Seite zunächst im Browser und untersuchen was passiert, wenn
+wir uns durch die Unterseiten klicken. Wählen wir die zweite Unterseite aus,
+verändert sich die URL im Browserfenster. Wir sehen, dass das Ende der URL von
+“980521” zu “980521?skip=15” erweitert wird. Es wird also ein Query an den
+Server geschickt und die entsprechende Unterseite zurückgesendet und
+dargestellt. Auf der dritten Unterseite ändert sich der Query wiederum zu
+“980521?skip=30”.</p>
+<p>Was könnte nun “skip=15” bedeuten? Betrachten wir die Auflistung der
+Pressemitteilungen, sehen wir, dass auf jeder Unterseite genau 15 Mitteilungen
+dargestellt werden. Wir können also davon ausgehen, dass “skip=15” dem Server
+die Anweisung gibt, die ersten 15 Mitteilungen zu überspringen und somit die
+Einträge 16-30 darzustellen. “skip=30” überspringt dann die ersten 30 und so
+weiter. Das Prinzip lässt sich weiter bestätigen, indem wir testen was “skip=0”
+auslöst. So wird wieder die erste Unterseite dargestellt. “980521” ist also
+eigentlich äquivalent zu “980521?skip=0”.</p>
+<p>Damit wissen wir bereits, dass wir dazu in der Lage sein werden, die URLs direkt
+aus Rstudio zu manipulieren und so die Unterseiten zu Scrapen.</p>
 </div>
 <div id="scrapen-der-unterseiten-1" class="section level3" number="7.2.2">
 <h3><span class="header-section-number">7.2.2</span> Scrapen der Unterseiten</h3>
+<p>Bevor wir damit beginnen, alle Pressemitteilungen zu scrapen, müssen wir
+zunächst herausfinden, wie viele Unterseiten vorhanden sind. Der einfachste Weg
+wäre es, dies per Auge zu machen. Wir sehen ja im Browser, dass die höchste
+auswählbare Unterseite die “12” ist. Wir können dies aber auch im Scraping
+Prozess selbst herausfinden. Dies hat mehrere Vorteile. Eventuell möchten wir
+ja nicht nur die Mitteilungen aus 2020 scrapen sondern die mehrerer oder aller
+Jahre. Dazu müssten wir für jedes Jahr im Browser prüfen, wie viele Unterseiten
+vorhanden sind und dies entsprechend anpassen. Extrahieren wir die Seitenzahl
+im R Code, lässt sich dieser einfach auf andere Jahre mir abweichenden
+Seitenzahlen generalisieren. Wäre es hingegen das Ziel die Mitteilungen aus
+2021 zu scrapen, müssten wir bei jeder Wiederholung des Vorgangs im Laufe des
+Jahres erneut prüfen, ob sich die Seitenzahl verändert hat. Durch die Extraktion
+im Code, entfällt dieser Schritt und wir können das Script regelmäßig mit
+minimalem Aufwand ausführen und dabei sicher sein, dass es funktional bleibt.</p>
+<p>Die Links zu den Unterseiten, sind im HTML-Code in einer ungeordneten Liste
+(<code>&lt;ul&gt;</code>) enthalten. Das vorletzte Listenelement <code>&lt;li&gt;</code> enthält dabei die
+Seitenzahl der letzten Seite, hier “12”. Bitte beachten Sie, dass das letzte
+Listenelement der “Vorwärts” Button ist. Mit diesen Informationen können wir
+einen Selector konstruieren und die Seitenzahl extrahieren.</p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="rvest3.html#cb103-1" aria-hidden="true" tabindex="-1"></a>website <span class="ot">&lt;-</span> <span class="st">&quot;https://www.landtag.brandenburg.de/de/aktuelles/presse/pressemitteilungsarchiv/archiv_pressemitteilungen_2020/980521&quot;</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb103-2"><a href="rvest3.html#cb103-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_html</span>()</span>
+<span id="cb103-3"><a href="rvest3.html#cb103-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb103-4"><a href="rvest3.html#cb103-4" aria-hidden="true" tabindex="-1"></a>max <span class="ot">&lt;-</span> website <span class="sc">%&gt;%</span> </span>
+<span id="cb103-5"><a href="rvest3.html#cb103-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_node</span>(<span class="at">css =</span> <span class="st">&quot;ul.pagination.pagination-sm &gt; li:nth-last-child(2)&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb103-6"><a href="rvest3.html#cb103-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb103-7"><a href="rvest3.html#cb103-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.numeric</span>()</span></code></pre></div>
+<p>In der letzten Zeile des oben stehenden Codes, sehen sie die Funktion
+<code>as.numeric()</code>. <code>html_text()</code> gibt uns stets einen Character Vector zurück.
+Da wir aber den Wert als Zahl benötigen, um in R damit rechnen zu können,
+müssen wir diesen noch in eine Zahl umwandeln. Dies erledigt <code>as.numeric()</code>.</p>
+<p>Nun können wir damit beginnen, die Links zu allen Unterseiten direkt in unserem
+R Script zu konstruieren. Dazu benötigen wir zwei Komponenten die wir im
+Anschluss zu den URLs kombinieren können. Zunächst müssen wir den
+unveränderlichen Teil der URL definieren, die base URL. Dies ist in diesem
+Fall die komplette URL bis “?skip=” inklusive. Zusätzlich benötigen wir die
+Werte die nach “?skip=” eingefügt werden. Diese können wir einfach berechen.
+Jede Unterseite enthält 15 Pressemitteilungen. Wir können also die Nummer der
+Unterseite mit 15 multiplizieren, müssen dann aber nochmals 15 subtrahieren, da
+die 15 auf dieser Seite dargestellten Mittelungen nicht geskipped werden sollen.
+Für Seite 1 berechnen wir also: <span class="math inline">\(1 * 15 - 15 = 0\)</span>, für Seite 2:
+<span class="math inline">\(2 * 15 - 15 = 15\)</span> und so weiter. Um dies in einem Schritt für alle Unterseiten
+zu erledigen, können wir mit <code>1:max * 15 - 15</code> R anweisen, die Berechnung für
+alle Zahlen von 1 bis zum Maximalwert – den wir zuvor in dem Objekt <code>max</code>
+gespeichert haben – zu wiederholen. <code>:</code> steht dabei für “von-bis”. So erhalten
+wir einen numerischen Vektor mit den Werten für “?skip=”. Im dritten Schritt
+können wir die base URL und die berechneten Werte mit <code>str_c()</code> zu vollständigen
+URLs kombinieren und diese im vierten Schritt mit <code>map()</code> auslesen.</p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="rvest3.html#cb104-1" aria-hidden="true" tabindex="-1"></a>base_url <span class="ot">&lt;-</span> <span class="st">&quot;https://www.landtag.brandenburg.de/de/aktuelles/presse/pressemitteilungsarchiv/archiv_pressemitteilungen_2020/980521?skip=&quot;</span></span>
+<span id="cb104-2"><a href="rvest3.html#cb104-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb104-3"><a href="rvest3.html#cb104-3" aria-hidden="true" tabindex="-1"></a>skips <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>max <span class="sc">*</span> <span class="dv">15</span> <span class="sc">-</span> <span class="dv">15</span></span>
+<span id="cb104-4"><a href="rvest3.html#cb104-4" aria-hidden="true" tabindex="-1"></a>skips </span>
+<span id="cb104-5"><a href="rvest3.html#cb104-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]   0  15  30  45  60  75  90 105 120 135 150 165</span></span>
+<span id="cb104-6"><a href="rvest3.html#cb104-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb104-7"><a href="rvest3.html#cb104-7" aria-hidden="true" tabindex="-1"></a>links <span class="ot">&lt;-</span> <span class="fu">str_c</span>(base_url, skips)</span>
+<span id="cb104-8"><a href="rvest3.html#cb104-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb104-9"><a href="rvest3.html#cb104-9" aria-hidden="true" tabindex="-1"></a>pages <span class="ot">&lt;-</span> links <span class="sc">%&gt;%</span> </span>
+<span id="cb104-10"><a href="rvest3.html#cb104-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(read_html)</span></code></pre></div>
+<p>Nun können wir die uns interessierenden Daten extrahieren. Beginnen wir mit dem
+Datum der Pressemitteilung. Dieses wird durch einen <code>&lt;p&gt;</code> Tag der Klasse <code>date</code>
+umschlossen. Mit <code>map()</code> selektieren wir zunächst die entsprechenden Nodes und
+im nächsten Schritt den Text dieser Nodes. Da das Resultat an diesem Punkt eine
+Liste von Listen ist, und dies in der weiteren Bearbeitung unnötig kompliziert
+wäre, können wir die Liste durch <code>unlist()</code> auflösen und erhalten einen
+Character Vektor als Output.</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="rvest3.html#cb105-1" aria-hidden="true" tabindex="-1"></a>pages <span class="sc">%&gt;%</span> </span>
+<span id="cb105-2"><a href="rvest3.html#cb105-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(html_nodes, <span class="at">css =</span> <span class="st">&quot;p.date&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb105-3"><a href="rvest3.html#cb105-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(html_text) <span class="sc">%&gt;%</span> </span>
+<span id="cb105-4"><a href="rvest3.html#cb105-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb105-5"><a href="rvest3.html#cb105-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span>
+<span id="cb105-6"><a href="rvest3.html#cb105-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;30.12.2020&quot; &quot;17.12.2020&quot; &quot;11.12.2020&quot; &quot;10.12.2020&quot; &quot;04.12.2020&quot;</span></span></code></pre></div>
+<p>Wir können aber noch einen Schritt weitergehen und die Daten als Vektor des Typs
+“Date” speichern. Dies könnte für potentielle weitere Analysen von Vorteil sein.
+Das tidyverse package <code>lubridate</code> ermöglicht es auf einfache Weise
+Datumsangaben aus Character oder numerischen Vektoren in das “Date” Format
+umzuwandeln. Das package ist nicht Teil des core tidyverse und muss
+dementsprechend explizit geladen werden. Unter anderem bietet es eine Reihe
+von Funktionen in der Form <code>dmy()</code>, <code>mdy</code>, <code>ymd()</code> und so weiter an. <code>d</code> steht
+dabei für “day”, <code>m</code> für “month” und <code>y</code> für “year”. Mit der Reihenfolge in der
+die Buchstaben im Funktionsnamen auftauchen, teilen wir R mit, welches Format
+die Daten haben, die wir das “Date” Format umwandeln möchten. Auf der Website
+des Landtags, sind die Datumsangaben in der in Deutschland typischen Form
+Tag.Monat.Jahr verfasst. Wir nutzen also die Funktion <code>dmy()</code>. Wären sie
+beispielsweise in der in den USA typischen Form Monat.Tag.Jahr abgelegt,
+müssten wir entsprechend <code>mdy()</code> nutzen. Dabei ist es irrelevant ob die
+Bestandteile des Datums mit “.”, “/”, “-” oder Leerzeichen getrennt sind. Selbst
+ausgeschriebene oder abgekürzte Monatsnamen kann lubridate verarbeiten.</p>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="rvest3.html#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb106-2"><a href="rvest3.html#cb106-2" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb106-3"><a href="rvest3.html#cb106-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Attaching package: &#39;lubridate&#39;</span></span>
+<span id="cb106-4"><a href="rvest3.html#cb106-4" aria-hidden="true" tabindex="-1"></a><span class="do">## The following objects are masked from &#39;package:base&#39;:</span></span>
+<span id="cb106-5"><a href="rvest3.html#cb106-5" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb106-6"><a href="rvest3.html#cb106-6" aria-hidden="true" tabindex="-1"></a><span class="do">##     date, intersect, setdiff, union</span></span>
+<span id="cb106-7"><a href="rvest3.html#cb106-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb106-8"><a href="rvest3.html#cb106-8" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> pages <span class="sc">%&gt;%</span> </span>
+<span id="cb106-9"><a href="rvest3.html#cb106-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(html_nodes, <span class="at">css =</span> <span class="st">&quot;p.date&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb106-10"><a href="rvest3.html#cb106-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(html_text) <span class="sc">%&gt;%</span> </span>
+<span id="cb106-11"><a href="rvest3.html#cb106-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb106-12"><a href="rvest3.html#cb106-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dmy</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb106-13"><a href="rvest3.html#cb106-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
+<p>Mehr zum Umgang mit Datums- und Zeitangaben in R sowie den weiteren
+Möglichkeiten die lubridate eröffnet, finden sie im entsprechenden Kapitel in
+“R for Data Science”:
+<a href="https://r4ds.had.co.nz/dates-and-times.html" target="_blank">https://r4ds.had.co.nz/dates-and-times.html</a></p>
+<p>Als nächstes können wir die Titel der Pressemitteilungen extrahieren.
+Inzwischen werden Sie dazu in der Lage sein den Code und den CSS Selector dazu
+selbst nachzuvollziehen.</p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="rvest3.html#cb107-1" aria-hidden="true" tabindex="-1"></a>pages <span class="sc">%&gt;%</span> </span>
+<span id="cb107-2"><a href="rvest3.html#cb107-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(html_nodes, <span class="at">css =</span> <span class="st">&quot;p.result-name&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb107-3"><a href="rvest3.html#cb107-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(html_text, <span class="at">trim =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb107-4"><a href="rvest3.html#cb107-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb107-5"><a href="rvest3.html#cb107-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span>
+<span id="cb107-6"><a href="rvest3.html#cb107-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Zum Tode von Paul-Heinz Dittrich&quot;                                                                               </span></span>
+<span id="cb107-7"><a href="rvest3.html#cb107-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &quot;Symbol für Zusammenhalt auch in schwierigen Zeiten: Parlament und Regierung erhalten Fotocollage zu Erntekronen&quot;</span></span>
+<span id="cb107-8"><a href="rvest3.html#cb107-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [3] &quot;Termine des Landtages Brandenburg in der Zeit vom 12. bis 20. Dezember 2020&quot;                                    </span></span>
+<span id="cb107-9"><a href="rvest3.html#cb107-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [4] &quot;Hinweise für Medien zu den Plenarsitzungen des Landtages vom 15. bis 18. Dezember 2020&quot;                         </span></span>
+<span id="cb107-10"><a href="rvest3.html#cb107-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [5] &quot;Termine des Landtages Brandenburg in der Zeit vom 7. bis 13. Dezember 2020&quot;</span></span></code></pre></div>
+<p>Als letztes folgen die Links zu den einzelnen Mitteilungen. Auch hier passiert
+zunächst nichts überraschendes mehr.</p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="rvest3.html#cb108-1" aria-hidden="true" tabindex="-1"></a>pages <span class="sc">%&gt;%</span> </span>
+<span id="cb108-2"><a href="rvest3.html#cb108-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(html_nodes, <span class="at">css =</span> <span class="st">&quot;li.ce.ce-teaser &gt; a&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb108-3"><a href="rvest3.html#cb108-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(html_attr, <span class="at">name =</span> <span class="st">&quot;href&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb108-4"><a href="rvest3.html#cb108-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb108-5"><a href="rvest3.html#cb108-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span>
+<span id="cb108-6"><a href="rvest3.html#cb108-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;/de/meldungenzum_tode_von_paul-heinz_dittrich/980480?_referer=980521&quot;                                                                                </span></span>
+<span id="cb108-7"><a href="rvest3.html#cb108-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &quot;/de/meldungensymbol_fuer_zusammenhalt_auch_in_schwierigen_zeiten:_parlament_und_regierung_erhalten_fotocollage_zu_erntekronen/979730?_referer=980521&quot;</span></span>
+<span id="cb108-8"><a href="rvest3.html#cb108-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [3] &quot;/de/meldungentermine_des_landtages_brandenburg_in_der_zeit_vom_12._bis_20._dezember_2020/978690?_referer=980521&quot;                                     </span></span>
+<span id="cb108-9"><a href="rvest3.html#cb108-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [4] &quot;/de/meldungenhinweise_fuer_medien_zu_den_plenarsitzungen_des_landtages_vom_15._bis_18._dezember_2020/976366?_referer=980521&quot;                         </span></span>
+<span id="cb108-10"><a href="rvest3.html#cb108-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [5] &quot;/de/meldungentermine_des_landtages_brandenburg_in_der_zeit_vom_7._bis_13._dezember_2020/974725?_referer=980521&quot;</span></span></code></pre></div>
+<p>Aber, die im HTML-Code hinterlegten Links, beschreiben nur einen Teil der
+vollständigen URL. Wir könnten nun also erneut mit <code>str_c()</code> die vollständigen
+URLs konstruieren. Dazu benötigen wir jedoch noch ein neues Konzept.
+Die Pipe gibt das Ergebnis eines Arbeitsschritts an die nächste Zeile weiter.
+Nutzen wir <code>str_c()</code> innerhalb der Pipe, bekommt diese also den extrahierten
+Endteil der URLs als erstes Argument weitergegeben.
+<code>str_c("https://www.landtag.brandenburg.de")</code> würde also dazu führen, das der
+Endteil der URL, vor “<a href="https://www.landtag.brandenburg.de" class="uri">https://www.landtag.brandenburg.de</a>” angehangen wird.
+Wie möchten aber logischerweise, dass dies anders herum geschieht. Dazu müssen
+wir <code>str_c()</code> mitteilen, dass die durch die Pipe weitergegebenen Daten als
+zweites Argument genutzt werden. Dies können wir durch <code>.</code> erreichen. <code>.</code> steht
+für die durch die Pipe weitergegebenen Daten. So können wir die URLs korrekt
+kombinieren:</p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="rvest3.html#cb109-1" aria-hidden="true" tabindex="-1"></a>pages <span class="sc">%&gt;%</span> </span>
+<span id="cb109-2"><a href="rvest3.html#cb109-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(html_nodes, <span class="at">css =</span> <span class="st">&quot;li.ce.ce-teaser &gt; a&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb109-3"><a href="rvest3.html#cb109-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(html_attr, <span class="at">name =</span> <span class="st">&quot;href&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb109-4"><a href="rvest3.html#cb109-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb109-5"><a href="rvest3.html#cb109-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_c</span>(<span class="st">&quot;https://www.landtag.brandenburg.de&quot;</span>, .) <span class="sc">%&gt;%</span> </span>
+<span id="cb109-6"><a href="rvest3.html#cb109-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span>
+<span id="cb109-7"><a href="rvest3.html#cb109-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;https://www.landtag.brandenburg.de/de/meldungenzum_tode_von_paul-heinz_dittrich/980480?_referer=980521&quot;                                                                                </span></span>
+<span id="cb109-8"><a href="rvest3.html#cb109-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &quot;https://www.landtag.brandenburg.de/de/meldungensymbol_fuer_zusammenhalt_auch_in_schwierigen_zeiten:_parlament_und_regierung_erhalten_fotocollage_zu_erntekronen/979730?_referer=980521&quot;</span></span>
+<span id="cb109-9"><a href="rvest3.html#cb109-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [3] &quot;https://www.landtag.brandenburg.de/de/meldungentermine_des_landtages_brandenburg_in_der_zeit_vom_12._bis_20._dezember_2020/978690?_referer=980521&quot;                                     </span></span>
+<span id="cb109-10"><a href="rvest3.html#cb109-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [4] &quot;https://www.landtag.brandenburg.de/de/meldungenhinweise_fuer_medien_zu_den_plenarsitzungen_des_landtages_vom_15._bis_18._dezember_2020/976366?_referer=980521&quot;                         </span></span>
+<span id="cb109-11"><a href="rvest3.html#cb109-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [5] &quot;https://www.landtag.brandenburg.de/de/meldungentermine_des_landtages_brandenburg_in_der_zeit_vom_7._bis_13._dezember_2020/974725?_referer=980521&quot;</span></span></code></pre></div>
+<p>Wie immer, können wir die komplette Extraktion der Daten auch während der
+Konstruktion eines Tibbles durchführen:</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="rvest3.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb110-2"><a href="rvest3.html#cb110-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">date =</span> pages <span class="sc">%&gt;%</span> </span>
+<span id="cb110-3"><a href="rvest3.html#cb110-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(html_nodes, <span class="at">css =</span> <span class="st">&quot;p.date&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb110-4"><a href="rvest3.html#cb110-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(html_text) <span class="sc">%&gt;%</span> </span>
+<span id="cb110-5"><a href="rvest3.html#cb110-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unlist</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb110-6"><a href="rvest3.html#cb110-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">dmy</span>(),</span>
+<span id="cb110-7"><a href="rvest3.html#cb110-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> pages <span class="sc">%&gt;%</span> </span>
+<span id="cb110-8"><a href="rvest3.html#cb110-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(html_nodes, <span class="at">css =</span> <span class="st">&quot;p.result-name&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb110-9"><a href="rvest3.html#cb110-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(html_text, <span class="at">trim =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb110-10"><a href="rvest3.html#cb110-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unlist</span>(),</span>
+<span id="cb110-11"><a href="rvest3.html#cb110-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">link =</span> pages <span class="sc">%&gt;%</span> </span>
+<span id="cb110-12"><a href="rvest3.html#cb110-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(html_nodes, <span class="at">css =</span> <span class="st">&quot;li.ce.ce-teaser &gt; a&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb110-13"><a href="rvest3.html#cb110-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(html_attr, <span class="at">name =</span> <span class="st">&quot;href&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb110-14"><a href="rvest3.html#cb110-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unlist</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb110-15"><a href="rvest3.html#cb110-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_c</span>(<span class="st">&quot;https://www.landtag.brandenburg.de&quot;</span>, .)</span>
+<span id="cb110-16"><a href="rvest3.html#cb110-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb110-17"><a href="rvest3.html#cb110-17" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 175 x 3</span></span>
+<span id="cb110-18"><a href="rvest3.html#cb110-18" aria-hidden="true" tabindex="-1"></a><span class="do">##    date       name                              link                            </span></span>
+<span id="cb110-19"><a href="rvest3.html#cb110-19" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;date&gt;     &lt;chr&gt;                             &lt;chr&gt;                           </span></span>
+<span id="cb110-20"><a href="rvest3.html#cb110-20" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 2020-12-30 Zum Tode von Paul-Heinz Dittrich  https://www.landtag.brandenburg…</span></span>
+<span id="cb110-21"><a href="rvest3.html#cb110-21" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 2020-12-17 Symbol für Zusammenhalt auch in … https://www.landtag.brandenburg…</span></span>
+<span id="cb110-22"><a href="rvest3.html#cb110-22" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 2020-12-11 Termine des Landtages Brandenbur… https://www.landtag.brandenburg…</span></span>
+<span id="cb110-23"><a href="rvest3.html#cb110-23" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 2020-12-10 Hinweise für Medien zu den Plena… https://www.landtag.brandenburg…</span></span>
+<span id="cb110-24"><a href="rvest3.html#cb110-24" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 2020-12-04 Termine des Landtages Brandenbur… https://www.landtag.brandenburg…</span></span>
+<span id="cb110-25"><a href="rvest3.html#cb110-25" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 2020-11-27 Termine des Landtages Brandenbur… https://www.landtag.brandenburg…</span></span>
+<span id="cb110-26"><a href="rvest3.html#cb110-26" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 2020-11-25 UN-Women-Flagge weht im Innenhof… https://www.landtag.brandenburg…</span></span>
+<span id="cb110-27"><a href="rvest3.html#cb110-27" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 2020-11-23 Hinweise für Medien zur Sondersi… https://www.landtag.brandenburg…</span></span>
+<span id="cb110-28"><a href="rvest3.html#cb110-28" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 2020-11-23 Attikafiguren von Perseus und An… https://www.landtag.brandenburg…</span></span>
+<span id="cb110-29"><a href="rvest3.html#cb110-29" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 2020-11-20 Termine des Landtages Brandenbur… https://www.landtag.brandenburg…</span></span>
+<span id="cb110-30"><a href="rvest3.html#cb110-30" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 165 more rows</span></span></code></pre></div>
 
 </div>
 </div>
@@ -332,6 +781,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>
