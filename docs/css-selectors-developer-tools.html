@@ -24,7 +24,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2021-03-23" />
+<meta name="date" content="2021-03-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -218,7 +218,7 @@ Web Scraping mit R
 <li class="chapter" data-level="7.1" data-path="rvest3.html"><a href="rvest3.html#indexseiten"><i class="fa fa-check"></i><b>7.1</b> Indexseiten</a>
 <ul>
 <li class="chapter" data-level="7.1.1" data-path="rvest3.html"><a href="rvest3.html#scrapen-des-index"><i class="fa fa-check"></i><b>7.1.1</b> Scrapen des Index</a></li>
-<li class="chapter" data-level="7.1.2" data-path="rvest3.html"><a href="rvest3.html#map"><i class="fa fa-check"></i><b>7.1.2</b> map()</a></li>
+<li class="chapter" data-level="7.1.2" data-path="rvest3.html"><a href="rvest3.html#iteration-mit-map"><i class="fa fa-check"></i><b>7.1.2</b> Iteration mit map()</a></li>
 <li class="chapter" data-level="7.1.3" data-path="rvest3.html"><a href="rvest3.html#scrapen-der-unterseiten"><i class="fa fa-check"></i><b>7.1.3</b> Scrapen der Unterseiten</a></li>
 </ul></li>
 <li class="chapter" data-level="7.2" data-path="rvest3.html"><a href="rvest3.html#pagination"><i class="fa fa-check"></i><b>7.2</b> Pagination</a>
@@ -453,8 +453,8 @@ Bestandteil der dem <code>href=""</code> Attribut zugewiesenen URL auswählen.</
 <p>Wir können uns die Hierarchie einer HTML-Struktur analog zu einem
 Familienstammbaum vorstellen. Eine vereinfachte Darstellung unserer
 Beispielseite als Stammbaum, könnte so aussehen:</p>
-<div id="htmlwidget-511aa7e5d657f42c318a" style="width:100%;height:500px;" class="echarts4r html-widget"></div>
-<script type="application/json" data-for="htmlwidget-511aa7e5d657f42c318a">{"x":{"theme":"","tl":false,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"series":[{"type":"tree","data":[{"name":"<html>","children":[{"name":"<head>","children":[{"name":"<title>"},{"name":"<meta>"},{"name":"<style>"}]},{"name":"<body>","children":[{"name":"<span class=\"titel\">","children":[{"name":"<h3>"}]},{"name":"<div id=\"daten\">","children":[{"name":"<div class=\"bundesland-odd\">","children":[{"name":"<img>"},{"name":"<span class=\"bundesland-name\">"},{"name":"<span class=\"wahljahr\">"},{"name":"<span class=\"wahlbeteiligung\">"}]},{"name":"<div class=\"bundesland-even\">","children":[{"name":"<img>"},{"name":"<span class=\"bundesland-name\">"},{"name":"<span class=\"wahljahr\">"},{"name":"<span class=\"wahlbeteiligung\">"}]}]},{"name":"<div class=\"quote\">","children":[{"name":"<a>"}]},{"name":"<div>","children":[{"name":"<a>"}]}]}]}],"initialTreeDepth":1}],"title":[{"text":"HTML Struktur - wahlbeteiligung_2.html"}]},"dispose":true},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-f6e9247af68699adc592" style="width:100%;height:500px;" class="echarts4r html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f6e9247af68699adc592">{"x":{"theme":"","tl":false,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"series":[{"type":"tree","data":[{"name":"<html>","children":[{"name":"<head>","children":[{"name":"<title>"},{"name":"<meta>"},{"name":"<style>"}]},{"name":"<body>","children":[{"name":"<span class=\"titel\">","children":[{"name":"<h3>"}]},{"name":"<div id=\"daten\">","children":[{"name":"<div class=\"bundesland-odd\">","children":[{"name":"<img>"},{"name":"<span class=\"bundesland-name\">"},{"name":"<span class=\"wahljahr\">"},{"name":"<span class=\"wahlbeteiligung\">"}]},{"name":"<div class=\"bundesland-even\">","children":[{"name":"<img>"},{"name":"<span class=\"bundesland-name\">"},{"name":"<span class=\"wahljahr\">"},{"name":"<span class=\"wahlbeteiligung\">"}]}]},{"name":"<div class=\"quote\">","children":[{"name":"<a>"}]},{"name":"<div>","children":[{"name":"<a>"}]}]}]}],"initialTreeDepth":1}],"title":[{"text":"HTML Struktur - wahlbeteiligung_2.html"}]},"dispose":true},"evals":[],"jsHooks":[]}</script>
 <p>Per Klick auf die Elemente des Stammbaums, können sie die Hierarchiebenen ein-
 und ausklappen. Klicken Sie sich einmal durch die verschiedenen Ebenen und
 vergleichen Sie dies mit dem HTML-Quellcode der Seite. Wenn Sie damit fertig
@@ -794,6 +794,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

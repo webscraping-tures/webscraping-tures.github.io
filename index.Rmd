@@ -71,3 +71,4 @@ WIP!
 
 * Browser
   * Chrome/Chromium (wegen der Developer Tools?)
+  * Notwendige Einstellungen? i.e. Darstellung voller URLs
