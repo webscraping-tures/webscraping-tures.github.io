@@ -3,9 +3,22 @@
 ``` {r, include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
 ```
+## RStudio Workflow
+
+## Settings?
+
+## Packages in general
+
+### namespaces
+
+### help/vignettes
 
 ## Philosophie
 
 ## Tidy data
 
 ## Pipe
+
+
+
+cheat sheets

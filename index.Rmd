@@ -58,12 +58,8 @@ WIP!
 
 ## Technische Voraussetzungen {-}
 
-* R + R Studio Installation
-  * Tutorial?
+* R + R Studio
 
-* Packages:
-  * easy way: install.packages("tidyverse")
-  
 * ordentlicher Text Editor
   * Windows: Notepad ++
   * Mac: ?
@@ -72,3 +68,9 @@ WIP!
 * Browser
   * Chrome/Chromium (wegen der Developer Tools?)
   * Notwendige Einstellungen? i.e. Darstellung voller URLs
+  
+## Conventions
+
+* Inline code and Code blocks
+
+* Code is copyable but use sparely (writing is important)
