@@ -1,0 +1,132 @@
+<!DOCTYPE HTML>
+
+<html>
+  <head>
+    <title>Wahlbeteiligung Landtagswahlen</title>
+
+    <meta charset="UTF-8">
+    <meta name="author" content="Jakob Tures">
+    <meta name="description" content="Wahlbeteiligung der letzten Landtagswahl nach Bundesland">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+      .bundesland {
+	  font-family: Arial, sans-serif;
+          font-weight: bold;
+      }
+      .quote {
+          margin: 50px;
+          font-family: Arial, sans-serif;
+      }
+      .titel {
+          font-family: Arial, sans-serif;
+      }
+      img {
+          vertical-align: middle;
+          margin-top: 10px;
+          margin-bottom: 10px;
+	  border: 1px solid #000000;
+      }
+    </style>
+  </head>
+
+  <body>
+    <span class="titel"><h3>Wahlbeteiligung bei der letzten Landtagswahl nach Bundesland:</h3></span>
+    <div id="links">
+      <div>
+        <img id="bw" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Flag_of_Baden-W%C3%BCrttemberg_%28state%2C_greater_arms%29.svg/200px-Flag_of_Baden-W%C3%BCrttemberg_%28state%2C_greater_arms%29.svg.png" width="50" heigth="30">
+        <a href="https://webscraping-tures.github.io/wahlbeteiligung-bw.html" target="_blank" class="bundesland" id="bw">Baden-Württemberg</a>
+      </div>
+  
+      <div>
+        <img id="by" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Flag_of_Bavaria_%28lozengy%29.svg/200px-Flag_of_Bavaria_%28lozengy%29.svg.png" width="50" heigth="30">
+        <a href="https://webscraping-tures.github.io/wahlbeteiligung-by.html" target="_blank" class="bundesland" id="by">Bayern</a>
+      </div>
+  
+      <div>
+        <img id="be" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Flag_of_Berlin.svg/200px-Flag_of_Berlin.svg.png" width="50" heigth="30">
+        <a href="https://webscraping-tures.github.io/wahlbeteiligung-be.html" target="_blank" class="bundesland" id="be">Berlin</a>
+      </div>
+  
+      <div>
+        <img id="bb" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Flag_of_Brandenburg.svg/200px-Flag_of_Brandenburg.svg.png" width="50" heigth="30">
+        <a href="https://webscraping-tures.github.io/wahlbeteiligung-bb.html" target="_blank" class="bundesland" id="bb">Brandenburg</a>
+      </div>
+  
+      <div>
+        <img id="hb" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Flag_of_Bremen_%28middle_arms%29.svg/200px-Flag_of_Bremen_%28middle_arms%29.svg.png" width="50" heigth="30">
+        <a href="https://webscraping-tures.github.io/wahlbeteiligung-hb.html" target="_blank" class="bundesland" id="hb">Bremen</a>
+      </div>
+  
+      <div>
+        <img id="hh" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Flag_of_Hamburg.svg/200px-Flag_of_Hamburg.svg.png" width="50" heigth="30">
+        <a href="https://webscraping-tures.github.io/wahlbeteiligung-hh.html" target="_blank" class="bundesland" id="hh">Hamburg</a>
+      </div>
+  
+      <div>
+        <img id="he" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Flag_of_Hesse_%28state%29.svg/200px-Flag_of_Hesse_%28state%29.svg.png" width="50" heigth="30">
+        <a href="https://webscraping-tures.github.io/wahlbeteiligung-he.html" target="_blank" class="bundesland" id="he">Hessen</a>
+      </div>
+  
+      <div>
+        <img id="mv" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Flag_of_Mecklenburg-Western_Pomerania_%28state%29.svg/200px-Flag_of_Mecklenburg-Western_Pomerania_%28state%29.svg.png" width="50" heigth="30">
+        <a href="https://webscraping-tures.github.io/wahlbeteiligung-mv.html" target="_blank" class="bundesland" id="mv">Mecklenburg-Vorpommern</a>
+      </div>
+  
+      <div>
+        <img id="ni" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Flag_of_Lower_Saxony.svg/200px-Flag_of_Lower_Saxony.svg.png" width="50" heigth="30">
+        <a href="https://webscraping-tures.github.io/wahlbeteiligung-ni.html" target="_blank" class="bundesland" id="ni">Niedersachsen</a>
+      </div>
+  
+      <div>
+        <img id="nw" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Flag_of_North_Rhine-Westphalia_%28state%29.svg/200px-Flag_of_North_Rhine-Westphalia_%28state%29.svg.png" width="50" heigth="30">
+        <a href="https://webscraping-tures.github.io/wahlbeteiligung-nw.html" target="_blank" class="bundesland" id="nw">Nordrhein-Westfalen</a>
+      </div>
+  
+      <div>
+        <img id="rp" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Flag_of_Rhineland-Palatinate.svg/200px-Flag_of_Rhineland-Palatinate.svg.png" width="50" heigth="30">
+        <a href="https://webscraping-tures.github.io/wahlbeteiligung-rp.html" target="_blank" class="bundesland" id="rp">Rheinland-Pfalz</a>
+      </div>
+  
+      <div>
+        <img id="sl" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Flag_of_Saarland.svg/200px-Flag_of_Saarland.svg.png" width="50" heigth="30">
+        <a href="https://webscraping-tures.github.io/wahlbeteiligung-sl.html" target="_blank" class="bundesland" id="sl">Saarland</a>
+      </div>
+  
+      <div>
+        <img id="sn" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Flag_of_Saxony_%28state%29.svg/200px-Flag_of_Saxony_%28state%29.svg.png" width="50" heigth="30">
+        <a href="https://webscraping-tures.github.io/wahlbeteiligung-sn.html" target="_blank" class="bundesland" id="sn">Sachsen</a>
+      </div>
+  
+      <div>
+        <img id="st" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Flag_of_Saxony-Anhalt_%28state%29.svg/200px-Flag_of_Saxony-Anhalt_%28state%29.svg.png" width="50" heigth="30">
+        <a href="https://webscraping-tures.github.io/wahlbeteiligung-st.html" target="_blank" class="bundesland" id="st">Sachsen-Anhalt</a>
+      </div>
+  
+      <div>
+        <img id="sh" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Flag_of_Schleswig-Holstein_%28state%29.svg/200px-Flag_of_Schleswig-Holstein_%28state%29.svg.png" width="50" heigth="30">
+        <a href="https://webscraping-tures.github.io/wahlbeteiligung-sh.html" target="_blank" class="bundesland" id="sh">Schleswig-Holstein</a>
+      </div>
+  
+      <div>
+        <img id="th" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Flag_of_Thuringia_%28state%29.svg/200px-Flag_of_Thuringia_%28state%29.svg.png" width="50" heigth="30">
+        <a href="https://webscraping-tures.github.io/wahlbeteiligung-th.html" target="_blank" class="bundesland" id="th">Thüringen</a>
+      </div>
+    </div>
+    
+    <div class="quote">
+      Daten: 
+      <a href="https://www.wahlrecht.de/ergebnisse/index.htm" target="_blank">
+        https://www.wahlrecht.de/ergebnisse/index.htm</a> (08.03.2021)
+      <br>
+      Flaggen: 
+      <a href="https://de.wikipedia.org/wiki/Flaggen_und_Wappen_der_L%C3%A4nder_der_Bundesrepublik_Deutschland">
+        https://de.wikipedia.org/wiki/Flaggen_und_Wappen_der_L%C3%A4nder_der_Bundesrepublik_Deutschland</a> (09.03.2021)
+    </div>
+    
+    <div>
+      <a href="https://webscraping-tures.github.io/css-selectors-developer-tools.html" target="_self">
+        Zurück</a> zur Kursseite
+    </div>
+  </body>
+</html>
