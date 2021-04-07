@@ -201,7 +201,7 @@ v
 
 If we want to access certain elements of a vector, we have to use subsetting.
 This is achieved by adding square brackets to the objects name, containing
-the position of the element in it's vector. So, to access the first or third 
+the position of the element in its vector. So, to access the first or third 
 element, we can write:
 
 ``` {r}

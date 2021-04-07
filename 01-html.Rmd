@@ -1,82 +1,83 @@
 # (PART) Basics {-}
 
-# HTML als Grundbaustein des Web {#html}
+# HTML as a cornerstone of the internet {#html}
 
-Was passiert, wenn wir eine URL wie 
-<https://webscraping-tures.github.io>{target="_blank"} in einem Browser
-aufrufen? Wir bekommen zunächst einmal eine visuelle Darstellung der
-aufgerufenen Seite in unserem Browserfenster. Aus der Sicht des Nutzers einer
-Website, ist dies auch alles was wir wissen müssen. Unser Ziel -- die Seite
-aufzurufen -- ist an diesem Punkt bereits erreicht. 
+What happens when we call up a URL such as 
+<https://webscraping-tures.github.io>{target="_blank"}
+in a browser? We will get a visualisation of the page in our browser window.
+From the perspective of the user of a website, this is everything we need to 
+know. Our goal -- calling up the website -- has already been reached at this 
+point.
 
-Aus der Sicht des Web Scrapers, müssen wir aber verstehen, was im Hintergrund
-passiert. 
-Der Link <https://webscraping-tures.github.io>{target="_blank"} macht nichts
-anderes, als eine HTML-Datei aufzurufen, in welcher der Inhalt der Website in 
-Form eines spezifischen Codes hinterlegt ist. Dieser Code wird von Ihrem Browser
-interpetiert und in eine visuelle Darstellung überführt, welche Sie aktuell vor
-sich sehen.
+From the perspective of a web scraper, we need to understand however, what is
+happening behind the scenes. The link 
+<https://webscraping-tures.github.io>{target="_blank"} does nothing but call up
+an HTML-file in which the content of the website is recorded in form of a 
+specific code. This code is then interpreted by your browser and translated into
+a visual representation, which you are finding yourselves in front of now.
 
-Überzeugen Sie sich selbst. Mit einem Rechtsklick im Bereich dieses Texts und 
-einem weiteren Klick auf "Seitenquelltext anzeigen" öffnet sich der HTML-Code, 
-welcher dieser Seite zu Grunde liegt. Es ist an diesem Punkt völlig legitim, von
-der Flut aus ungewohnten Zeichen und Begriffen zunächst überfordert zu sein. Wer
-hätte gedacht, dass eine relativ einfache Website wie diese im Hintergrund so
-kompliziert sein kann? Aber die gute Nachricht ist, dass wir für's Web Scraping
-nicht jedes Wort und Zeichen in einer HTML Datei verstehen müssen. Unser Ziel
-ist es die Teile einer Website, die für unsere Datensammlung relevant sind zu 
-identifizieren und diese gezielt aus dem HTML-Code zu extrahieren. Dies ist 
-möglicherweise nur eine einzelne Zeile aus einer HTML Datei mit tausenden von 
-Zeilen. Müssen wir alle diese tausend Zeilen völlig verstehen? Nein, aber wir 
-müssen die Struktur einer HTML Datei erfassen können, um diese eine Zeile, an 
-der wir interessiert sind, auch identifizieren zu können. Bis zu diesem Punkt 
-haben wir noch ein gutes Stück Weg vor uns. Am Ende dieses ersten Abschnitts 
-werden Sie aber bereits ein grundlegendes Verständnis der Struktur und der 
-Bestandteile eines HTML-Dokuments haben und der Quelltext wird Ihnen bereits 
-deutlich weniger "beeindruckend" erscheinen.
-  
+Try it yourself. With a right-click into this area of the text and a further
+click on “View page source”, the HTML-code that the website is based on, is 
+shown. At this point it is completely legitimate to be overwhelmed by the flood
+of unfamiliar symbols and terminology. Who would have thought that a relatively
+simple website such as this one, can be so complex and complicated on the 
+backend?
+
+But the good news is that we do not need to be able to understand every word and
+every symbol in an HTML file.
+Our goal is identifying the parts of a website that are relevant for our data
+collection and extract them precisely from the HTML-code. This can possibly be 
+only a single line of code in an HTML-file with thousands of lines of code. Do 
+we need to understand every single line? No, but we have to be able to 
+understand the structure of an HTML-file to be able to identify that one line 
+that is of interest to us. Until we reach this point, we still have a ways to 
+go. 
+
+At the end of this first section, you will have a basic understanding of the
+structure and components of an HTML document and the source code will already 
+seem way less intimidating.
 
 
 ## HTML-Tags
 
-Die "Sprache", in der HTML-Dateien verfasst sind, ist die
-**Hypertext Markup Language**, kurz HTML. Die Grundbausteine dieser Sprache, die
-"Vokabeln", sind die sogenannten **Tags**. Begriffe die unter anderem dazu
-dienen, das HTML-Dokument zu strukturieren, den Text zu formatieren, Links und
-Bilder einzufügen oder Listen und Tabellen zu erzeugen. Der Browser kennt die 
-Bedeutung dieser Begriffe, kann sie interpretieren und die Website entsprechend 
-der in den HTML-Tags codierten Anweisungen visuell darstellen. Wie jede Sprache 
-in der IT-Welt, folgt auch HTML dabei einer bestimmten "Grammatik", der 
-sogenannten **Syntax**. Glücklicherweise, fällt diese im Falle von HTML sehr
-einfach aus. Die für uns zentralen Tags und Syntaxregeln werden im Folgenden 
-genauer betrachtet.
+The “language” that HTML-files have been written in, is the 
+**Hypertext Markup Language**, HTML for short. The basics of this language are 
+the so-called **Tags** or the “vocabulary”. These terms are used to structure 
+the HTML-document, format it, insert links and images or create lists and
+tables. The browser knows the meaning of these key phrases, can interpret
+them and present the website visually according to the coded HTML-Tags. As with
+any language in the IT-world, HTML also follows certain rules or “grammar” or
+**Syntax**.
 
-Betrachten Sie folgendes Beispiel:
+Fortunately for us, in the case of HTML this syntax is rather simple. In the
+following we will take a closer look at the tags and syntax rules that are
+important to us.
+
+Contemplate the following example:
 
 ```
 <b>Hello World!</b>
 ```
 
-`<b>` ist ein Tag. Das b steht hier für *bold*, auf deutsch fettgedruckt.
-Tags folgen stets dem selben Muster. Sie werden mit einem `<` begonnen, dann 
-folgt der Name des Tags -- `b` -- und sie werden mit einem `>` beendet.
-Wichtig ist dabei, dass ein so geöffneter Tag im Normalfall auch geschlossen 
-werden muss. Dazu wird der selbe Tag nochmals mit einem *forward slash* 
-geschrieben, in diesem Beispiel also, `</b>`. Alles was von öffnendem und 
-schließendem Tag im HTML-Dokument umfasst wird, wird entsprechend der Bedeutung
-des Tags vom Browser interpretiert.
+`<b>` is a tag. The b stands for *bold*. Tags always follow the same pattern. 
+They begin with a `<`, followed by the name of the tag -- `b` -- and end with a
+`>`. It is important to note that an opened tag will need to be closed as well,
+under normal circumstances. To do this, the same tag is written again with a 
+*forward slash*, `</b>` in our case. Everything that is contained within the 
+opening and closing tag in an HTML-document will be interpreted according to the
+meaning of the tag. 
 
-Mit diesem Wissen verstehen wir, was das obige Beispiel bewirkt. Der Tag `<b>` 
-steht für *fettgedruckt* und öffnender und schließender Tag `<b>...</b>`
-umfassen den Text `Hello World!`. Dieser wird entsprechend der Bedeutung des 
-Tags interpretiert, also als fettgedruckt dargestellt:
+With this knowledge we understand what will happen with our example. The tag 
+`<b>` means bold, and the opening and closing tag `<b>…</b>` include the text
+`Hello World!`. The text will be interpreted according to the tag, which means
+in bold:
 
 <b>Hello World!</b>
 
 
 ### hello_world.html
 
-Betrachten wir nun ein erstes vollständiges HTML-Dokument:
+Let us have a look at a full HTML-document now:
 
 ```
 <!DOCTYPE html>
@@ -90,269 +91,257 @@ Betrachten wir nun ein erstes vollständiges HTML-Dokument:
   </body>
 </html>
 ```
+The interpretation of this document by the browser can be seen under
+<https://webscraping-tures.github.io/hello_world.html>{target="_blank"}.
+Let us take a look at the single elements of the code:
 
-Die Interpretation des Browsers von diesem Dokument können Sie sich unter 
-<https://webscraping-tures.github.io/hello_world.html>{target="_blank"} selbst
-ansehen. Lassen Sie uns die einzelnen Bestandteile des Codes betrachten:
+The first line, the *document type declaration*, `<!DOCTYPE html>`, informs the
+browser, which version of HTML is being used in the document. `<!DOCTYPE html>`
+stands for the current HTML5 standard. This is the place to declare if an older
+version of HTML was used, to ensure the most accurate visual representation --
+in spite of possible changes or the omission of certain standards in the current
+version. From the point of view of a web-scraper the HTML-version does not
+necessarily play a massive role. Interestingly enough, the tag `<!DOCTYPE html>`
+is one of the few exceptions from the rule that a once-opened tag has to be 
+closed again; it is not necessary here.
 
-Die erste Zeile, die *document type declaration*, `<!DOCTYPE html>` informiert 
-den Browser darüber, welche HTML-Version in dem Dokument eingesetzt wurde.
-`<!DOCTYPE HTML>` steht dabei für den aktuellen Standard HTML5. Wurde eine 
-ältere HTML Version verwendet, kann dies an dieser Stelle deklariert werden, 
-um eine korrekte visuelle Repräsentation -- trotz möglicher Veränderungen oder 
-dem Wegfall bestimmter Funktionen im aktuellen Standard -- sicherzustellen. Aus
-Sicht des Web Scrapers spielt die HTML-Version aber im Normalfall keine Rolle. 
-Interessanterweise bildet der `<!DOCTYPE html>` Tag eine der wenigen Ausnahmen 
-von der Regel, dass ein einmal geöffneter Tag auch wieder geschlossen werden
-muss. Dies ist hier nicht nötig.
+The actual content of the HTML-document only starts in line 3 with the `<html>`
+tag. This will only be closed in the last line and thus contains the total 
+contents of the document. So the tag tells the browser that all it encompasses, 
+is HTML.
 
-Der eigentliche Inhalt des HTML-Dokuments beginnt in Zeile 3 mit dem `<html>` 
-Tag. Dieser wird erst in der letzten Zeile wieder geschlossen und umfasst somit 
-den gesamten Inhalt des Dokuments. Der Tag teilt dabei dem Browser mit, dass 
-alles was durch ihn umschlossen wird, HTML ist. 
+Next is the tag `<head>`. What we see the tag encompassing here, is not what we
+see in the browser window yet. What this means in practice is that here we 
+mainly find meta-information, advanced functionality (JavaScript) and 
+definitions of design choices (Cascading Style Sheets – CSS). This should not
+distract us too much in this introduction into web scraping, but we should be 
+aware that references to .js and .css files can appear in the `<head>` tag.
 
-Als nächstes folgt der Tag `<head>`. Alles, was durch ihn umfasst wird, ist noch
-nicht Teil des Inhalts den wir im Browserfenster sehen. Hier werden in der 
-Praxis vor allem Meta-Informationen hinterlegt sowie erweiterte Funktionalitäten 
-(JavaScript) und Designentscheidungen (Cascading Style Sheets -- CSS) definiert
-oder aus externen Quellen eingebunden. Diese Punkte sollen uns in dieser 
-Einführung in das Web Scraping vorerst nicht weiter ablenken, wir sollten aber
-wissen, dass Verweise auf .js und .css Dateien im `<head>` Tag auftauchen 
-können.
+In our example the `<head>` tag exclusively contains another tag called 
+`<title>`, which in turn contains the text `Hello World!`.
+The `<title>` tag determines what we will see in the title bar of our browser. 
+In this case *Hello World!*
 
-In unserem Beispiel umfasst der `<head>` Tag auschschließlich einen weiteren Tag 
-namens `<title>`, welcher wiederum den Text `Hello World!` einschließt. Der 
-`<title>` Tag bestimmt, was wir in der Titelleise unseres Browser sehen, in 
-diesem Fall *Hello World!*.
+Finally, everything that the `<body>` tag includes, describes the content we can
+see in the browser window. In this simple example, only one line is included. 
+The already known `<b>` tag includes the text `Hello World!`, which it displays
+in bold for us to see in the browser window.
 
-Alles was der `<body>` Tag umfasst, beschreibt endlich den Inhalt, den wir im 
-Browserfenster sehen können. In diesem einfachen Beispiel ist nur eine Zeile 
-enthalten. Der bereits bekannte `<b>`Tag umfasst den Text `Hello World!`, 
-wodurch uns dieser fettgedruckt im Browserfenster dargestellt wird.
+So now you already know the basic structure of any HTML file.
 
-Damit kennen Sie nun bereits die Grundstruktur jeder HTML Datei.
+While looking at the sample code above, you may have noticed that certain lines 
+are indented to the right. This is not a requirement for functional HTML code, 
+but a convention that makes it easier for reading and understanding. Indented 
+lines represent the different hierarchical levels of the code. `<head>` is
+hierarchically subordinate to `<html>` and therefore single indented. `<title>`,
+in turn, is subordinate to `<head>` and therefore doubly indented. By writing it
+this way, it is also obvious at a first glance that `<body>` is subordinate to
+`<html>` but not to `<title>`, since `<body>` and `<title>` are each only single
+indented. You will often -- but not always -- encounter this convention in "real"
+HTML documents on the Internet.
 
-Bei der Betrachtung des obigen Beispielcodes ist Ihnen möglicherweise 
-aufgefallen, dass bestimmte Zeilen nach rechts eingerückt sind. Dies ist keine 
-Vorraussetzung für funtionstüchtigen HTML Code, aber eine Konvention, die das 
-schnelle Lesen und Erfassen vereinfacht. Dabei repräsentieren eingerückte 
-Zeilen, die unterschiedlichen hierarschichen Ebenen des Codes. `<head>` ist 
-hierarchisch `<html>`untergordnet und deshalb einfach eingerückt. `<title>` 
-wiederum ist `<head>`untergeordnet und deshalb zweifach eingerückt. Auch ist 
-durch die Schreibweise auf den ersten Blick ersichtlich, dass `<body>` zwar 
-`<html>`aber nicht `<title>`untergeordnet ist, da `<body>`und `<title>` jeweils
-nur einfach eingerückt sind. Diese Konvention wird Ihnen häufig -- aber nicht
-immer -- in "realen" HTML-Dokumenten im Internet begegnen.
-
-Noch eine Anmerkung zur technischen Seite: HTML-Dokumente lassen sich 
-grundsätzlich in jedem beliebigen Editor per Hand schreiben und müssen mit der 
-Endung *.html* abgespeichert werden. Sie können dies testen, indem Sie selbst 
-einen beliebigen Texteditor starten, den obigen HTML Code kopieren, die Datei 
-mit der Endung *.html* abspeichern und in einem Browser ihrer Wahl öffnen. 
-Allerdings werden Websites heutzutage aufgrund ihrer Komplexität im Normalfall 
-nicht mehr per Hand geschrieben. Eine Vielzahl professioneller Tools bieten 
-inzwischen sehr viel effizientere Wege, um Websites zu gestalten. Die Seite, 
-welche Sie gerade betrachten, wurde beispielsweise direkt in R Studio mit Hilfe 
-des Packages "bookdown" verfasst, welches den Großteil der Layoutentscheidungen
-automatisiert.
+One more note on the technical side: HTML documents can basically be written by
+hand in any editor and must be saved with the extension *.html*. You can test 
+this by starting any text editor yourself, copying the HTML code above, saving
+the file with the extension *.html* and opening it in a browser of your choice.
+However, due to their complexity, websites are not usually written by hand 
+nowadays. A variety of professional tools now offer much more efficient ways to
+design websites. For example, the page you are looking at was written directly 
+in RStudio using the "bookdown" package, which automates most of the layout
+decisions.
 
 
-### Wichtige Tags
+### Important tags
 
-Wir können an dieser Stelle nicht alle in HTML verfügbaren Tags betrachten, 
-sondern beschränken uns zunächst auf solche, die uns sehr häufig begegnen und 
-die für unsere ersten Web Scraping Projekte besonders relevant sein werden.
+We cannot look at all the tags available in HTML at this point, but will 
+initially limit ourselves to those that we encounter very frequently and that 
+will be particularly relevant for our first web scraping projects.
 
-#### Seitenstruktur
 
-Einen Tag der sich auf die Struktur der Seite bezieht, haben wir bereits weiter
-oben kennengelernt. Der `<body>` Tag teilt mit, dass alles was durch ihn umfasst
-wird, Teil des im Browserfenster dargestellten Inhalts ist.
+#### Page structure
 
-Eine Möglichkeit den Inhalt weiter zu strukturieren, ist der Einsatz der maximal
-sechs Ebenen von Überschriften, die HTML anbietet. Die Tags `<h1> <h2> ... <h6>` 
-ermöglichen dies auf einfachem Wege. das `h` steht dabei für *header*. Der durch
-den Tag umfasste Text wird je nach Ebene der Überschrift automatisch nummeriert 
-und in unterschiedlichen Schriftgrößen dargestellt. Als Beispiel sehen Sie hier
-die Struktur der Überschriften auf dieser Seite als HTML Code:
+One tag that relates to the structure of the page, we have already met above. 
+The `<body>` tag communicates that everything encompassed by it is part of the 
+content displayed in the browser window.
+
+One way to further structure the content is to use the maximum of six levels of 
+headings that HTML offers. The tags `<h1> <h2> ... <h6>` allow this in a simple
+way. The `h` stands for header. The text encompassed by the tag is automatically
+numbered and displayed in different font sizes depending on the level of the
+heading. As an example, you can see the structure of the headings on this page
+as HTML code:
 
 ```
-<h1>HTML als Grundbaustein des Web</h1>
-  <h2>HTML Tags</h2>
+<h1>HTML as a cornerstone of the internet</h1>
+  <h2>HTML-Tags</h2>
     <h3>hello_world.html</h3>
-    <h3>Wichtige Tags</h3>
-      <h4>Seitenstruktur</h4>
-      <h4>Formatierung</h4>
-      <h4>Listen</h4>
-      <h4>Tabellen</h4>
-  <h2>Attribute</h3>
+    <h3>Important tags</h3>
+      <h4>Page structure</h4>
+      <h4>Formatting</h4>
+      <h4>Lists</h4>
+      <h4>Tables</h4>
+  <h2>Attributes</h3>
     <h3>Links</h4>
-    <h3>Bilder</h4>
+    <h3>Images</h4>
   <h2>Entities</h3>
 ```
 
-Eine weitere häufig auftretende Form der Strukturierung eines HTML-Dokuments 
-sind die über `<div>` (*division*) und `<span>` definierten Gruppierungen. Beide
-Tags funktionieren grundsätzlich gleich, wobei sich `<div>` auf eine oder 
-mehrere Zeilen und `<span>` auf einen Teil einer Zeile bezieht. Beides hat 
-zunächst keinen direkten Einfluss auf die Darstellung der Website, wird aber 
-häufig in Kombination mit in den *Cascading Style Sheets -- CSS* definierten 
-Klassen zur Anpassung der visuellen Interpretation angewandt. Im Normalfall kann
-uns auch hier egal sein, wie die CSS-Klassen definiert sind und wie sie sich auf
-die Darstellung auswirken. Warum die Kombination aus `<div>` bzw. `<span>` und 
-CSS-Klassen häufig ein sehr praktischer Ansatzpunkt für unsere Web Scraping 
-Vorhaben sind und wie wir dies in unserer Arbeit ausnutzen können, lernen Sie im
-weiteren Verlauf dieses Seminars. Hier ein vereinfachtes Beispiel, wie beide 
-Tags in HTML Code auftreten können:
+Another frequently occurring form of structuring in HTML documents, are the
+groupings defined via `<div>` (*division*) and `<span>`. Both tags basically 
+work the same way, with `<div>` referring to one or more lines and `<span>` 
+referring to one line or part of a line. Neither have any direct effect on the
+display of the website at first, but they are often applied in combination with
+classes that are defined in *Cascading Style Sheets -- CSS*, to adjust the 
+visual interpretation. Normally, we do not care about how the CSS classes are 
+defined and how they affect rendering. You will learn later in this seminar why 
+the combination of `<div>` or `<span>` and CSS classes are often a very 
+practical starting point for our web scraping endeavours and how we can exploit 
+this in our work. Here is a simplified example of how both tags can appear in
+HTML code:
 
 ```
 <div>
-  Dieser Satz ist Teil des div Tags.
-  Dieser Satz ist Teil des div Tags, 
-  <span> während dieser Nebensatz Teil des div Tags und des span Tags ist </span>
+  This sentence is part of the div tag.
+  This sentence is part of the div tag, 
+  <span> while this sentence is part of the div and the span Tags. </span>
 </div>
-Dieser Satz ist nicht Teil des div Tags.
+This sentence is not part of the div tag.
 ```
 
-#### Formatierung
+#### Formatting
 
-In HTML stehen eine Vielzahl von Tags zur Formatierung des angezeigten Texts zur
-Verfügung. Im Folgenden betrachten wir einige besonders häufig auftretende.
+HTML provides a variety of tags for formatting the displayed text. In the 
+following we will look at some of the most common ones.
 
-Der `<p>` Tag definiert den umfassten Text als Absatz (*paragraph*) und wird 
-entsprechend in der Darstellung automatisch mit einem Zeilenumbruch 
-abgeschlossen.
+The `<p>` tag defines the enclosed text as a *paragraph* and is accordingly 
+automatically terminated in the display with a line break.
 
 ```
-<p>Dieser Satz ist Teil des Absatz. Ebenso wie dieser. Und dieser. </p>
-Dieser Satz ist nicht mehr Teil des Absatz.
+<p>This sentence is part of the paragraph. So is this. And this one.</p>
+This sentence is not part of the paragraph.
 ```
-Dies wird dargestellt als:
+This is represented as:
 
-<p>Dieser Satz ist Teil des Absatz. Ebenso wie dieser. Und dieser. </p>
+<p>This sentence is part of the paragraph. So is this. And this one.</p>
 Dieser Satz ist nicht mehr Teil des Absatz.
 
 <br>
 
-Der Tag `<br>` (*break*) leiten einen Zeilenumbruch ein. Dieser Tag ist eine 
-weitere Ausnahme der Regel, dass ein geöffneter Tag auch wieder geschlossen 
-werden muss. In diesem Sonderfall steht die Variante mit öffnendem und 
-schließendem Tag `<br></br>` auch für zwei Zeilenumbrüche, ist also nicht 
-äquivalent zu `<br>`. Im Unterschied zu dem Zeilenumbruch der durch `<p>...</p>`
-am Ende des Absatz eingefügt wird, wird nach `<br>` kein weiterer Zeilenabstand 
-eingefügt:
+The tag `<br>` introduces a line break. This tag is another exception to the 
+rule that an opened tag must also be closed again. In this special case, using 
+opening and closing tags `<br></br>` stands for two line breaks, so it is not 
+equivalent to `<br>`. Unlike the line break inserted by `<p>...</p>` at the end
+of the paragraph, no further spacing is inserted after `<br>`:
+
 
 ```
-Hier kommt etwas Text, der nun umgebrochen wird.<br>
-Nach dem break Tag wird im Gegensatz zum paragraph Tag kein Zeilenabstand eingefügt.<br>
-Wird der break Tag auch explizit wieder geschlossen, werden zwei Zeilenumbrüche eingefügt.<br></br>
-Wie hier zu erkennen ist.
+Here comes some text, which is now broken up in two lines.<br>
+After the break tag, in contrast to the paragraph tag, no line spacing is inserted.<br>
+If the break tag is also explicitly closed again, two line breaks are inserted.<br></br>.
+As can be seen here.
 ```
-Dies wird dargestellt als:
 
-Hier kommt etwas Text, der nun umgebrochen wird.<br>
-Nach dem break Tag wird im Gegensatz zum paragraph Tag kein Zeilenabstand 
-eingefügt.<br>
-Wird der break Tag auch explizit wieder geschlossen, werden zwei Zeilenumbrüche 
-eingefügt.<br></br>
-Wie hier zu erkennen ist.
+This is represented as:
 
-
-
-Das Schriftbild kann durch Tags wie das bereits bekannte `<b>` (*bold*) oder 
-auch `<i>` (*italics*, also kursiv) ähnlich zu den bekannten Optionen in 
-gängigen Textbearbeitungsprogrammen angepasst werden:
-
-```
-Diese Tags können genutzt werden um Wörter, Sätze und Abschnitte <b>fett</b> oder <i>kursiv</i> darzustellen.
-```
-Dies wird dargestellt als:
-
-Diese Tags können genutzt werden um Wörter, Sätze und Abschnitte <b>fett</b> 
-oder <i>kursiv</i> darzustellen.
+Here comes some text, which is now broken up in two lines.<br>
+After the break tag, in contrast to the paragraph tag, no line spacing is inserted.<br>
+If the break tag is also explicitly closed again, two line breaks are inserted.<br></br>.
+As can be seen here.
 
 <br>
 
-#### Listen
+The typeface can be adjusted by tags like the already known `<b>` (*bold*) or 
+`<i>` (*italics*) similar to the known options in common text editing programs:
 
-Die Darstellung in Listenform bildet ein sehr dankbares Scraping Ziel. Die 
-beiden häufigsten Varianten sind dabei die ungeordenete Liste, die durch `<ul>` 
-(*unordered list*) eingeleitet wird, sowie die geordnete Liste, `<ol>` 
-(*ordered list*). Der öffnende und schließende Listen-Tag umfasst dabei sets die
-gesamte Liste, während jedes einzelne Listenelement in beiden Varianten durch 
-einen `<li>` Tag eingefasst ist. Dazu zwei kurze Beispiele:
+```
+These tags can be used to render words, sentences and paragraphs <b>bold</b> or <i>italic</i>.
+```
+
+This is represented as:
+
+These tags can be used to render words, sentences and paragraphs <b>bold</b> or <i>italic</i>.
+
+<br>
+
+
+#### Lists
+
+We will often encounter lists in HTML documents. The two most common variants 
+being the *unordered list*, introduced by `<ul>`, and the *ordered list*, 
+`<ol>`. The opening and closing list-tag covers the entire list, while each 
+individual list element is enclosed by a `<li>` tag in both variants. Here are
+two short examples:
 
 ```
 <ul>
-  <li>Erstes ungeordnetes Element</li>
-  <li>Zweites ungeordnetes Element</li>
-  <li>Drittes ungeordnetes Element</li>
+  <li>First unordered list element</li>
+  <li>Second unordered list element</li>
+  <li>Third unordered list element</li>
 </ul>
 ```
-Dies wird dargestellt als:
+This is represented as:
 
 <ul>
-  <li>Erstes ungeordnetes Element</li>
-  <li>Zweites ungeordnetes Element</li>
-  <li>Drittes ungeordnetes Element</li>
+  <li>First unordered list element</li>
+  <li>Second unordered list element</li>
+  <li>Third unordered list element</li>
 </ul>
 
 ```
 <ol>
-  <li>Erstes geordnetes Element</li>
-  <li>Zweites geordnetes Element</li>
-  <li>Drittes geordnetes Element</li>
+  <li>First ordered list element</li>
+  <li>Second ordered list element</li>
+  <li>Third ordered list element</li>
 </ol>
 ```
-Dies wird dargestellt als:
+This is represented as:
 
 <ol>
-  <li>Erstes geordnetes Element</li>
-  <li>Zweites geordnetes Element</li>
-  <li>Drittes geordnetes Element</li>
+  <li>First ordered list element</li>
+  <li>Second ordered list element</li>
+  <li>Third ordered list element</li>
 </ol>
 
 
-#### Tabellen
+#### Tables
 
-HTML kann auch genutzt werden um -- ohne weitere Anpassungen der Darstellung 
-über CSS zugegebenermaßen nicht besonders ansehnliche -- Tabellen darzustellen.
-Diese werden durch einen `<table>` Tag geöffnet und entsprechend geschlossen. 
-Innerhalb der Tabelle werden Zeilen durch `<tr>...</tr>` (*table row*) 
-definiert. Innerhalb der Zeilen können Tabellenüberschriften durch `<th>` 
-(*table header*) und Zelleninhalte durch `<td>` (*table data*) bestimmt werden. 
-Durch `<th>...</th>`und `<td>...</td>` umfasste Inhalte werden in ihrer 
-Darstellung nicht nur unterschiedlich formatiert, aus Sicht des Web Scrapers 
-ermöglichen uns diese Tags auch eine deutliche Unterscheidung der einzulesenden 
-Tabelleninhalte. Hier ein einfaches Beispiel:
+HTML can also be used to display tables, without further adjustments of the 
+display via CSS admittedly not very attractive tables. These are opened by a 
+`<table>` tag and closed accordingly. Within the table, lines are defined by 
+`<tr>...</tr>` (*table row*). Within the line, table headers can be defined by 
+`<th>` (*table header*) and cell contents by `<td>` (*table data*). Content 
+encompassed by `<th>...</th>` and `<td>...</td>` are not only formatted 
+differently in their presentation, from the web scraper's point of view, these 
+tags also allow us to clearly distinguish the table content to be read. Here is 
+a simple example:
 
 ```
 <table>
-  <tr> <th>#</th> <th>Tag</th> <th>Effekt</th> </tr>
+  <tr> <th>#</th> <th>Tag</th> <th>Effect</th> </tr>
   <tr> <td>1</td> <td>"b"</td> <td>bold</td> </tr>
   <tr> <td>2</td> <td>"i"</td> <td>italics</td> </tr>
 </table>
 ```
-Dies wird dargestellt als:
+This is displayed as:
 
 <table>
-  <tr> <th>#</th> <th>Tag</th> <th>Effekt</th> </tr>
+  <tr> <th>#</th> <th>Tag</th> <th>Effect</th> </tr>
   <tr> <td>1</td> <td>"b"</td> <td>bold</td> </tr>
   <tr> <td>2</td> <td>"i"</td> <td>italics</td> </tr>
 </table>
 
 <br>
 
-Die Formatierung in einer Art "Tabellenform" wie im obigen Beispiel ist nicht 
-nötig, erhöht aber die intuitive Lesbarkeit. Tatsächlich ist folgende 
-Schreibweise im Ergebnis äquivalent und in der Praxis häufiger anzutreffen:
+Formatting the HTML code in a kind of "table form" as in the example above is 
+not necessary but increases intuitive readability. In fact, the following manner
+of writing it, is equivalent in result and actually more common in practice:
 
 ```
 <table>
   <tr>
     <th>#</th>
     <th>Tag</th>
-    <th>Effekt</th>
+    <th>Effect</th>
   </tr>
   <tr>
     <td>1</td>
@@ -366,13 +355,14 @@ Schreibweise im Ergebnis äquivalent und in der Praxis häufiger anzutreffen:
   </tr>
 </table>
 ```
-Dies wird ebenfalls dargestellt als:
+
+This will also be displayed as:
 
 <table>
   <tr>
     <th>#</th>
     <th>Tag</th>
-    <th>Effekt</th>
+    <th>Effect</th>
   </tr>
   <tr>
     <td>1</td>
@@ -385,80 +375,80 @@ Dies wird ebenfalls dargestellt als:
     <td>italics</td>
   </tr>
 </table>
-  
-## Attribute {#attribute}
 
-Viele HTML-Tags können durch den Einsatz sogenannter *Attribute* in ihrer 
-Funktionsweise und Darstellung weiter angepasst werden. Dabei ist die 
-grundsätzliche Syntax: `<tag attribute="value">...</tag>`. Im öffnendem (nie im 
-schließenden) Tag folgt auf den Namen des Tags der Name des Attributs `=` dem 
-zuzuweisdenden Wert (*value*) in einfache oder doppelte Anführungszeichen 
-eingefasst. IN HTML ist dabei `<tag attribute="value">` ungleich 
-`<tag attribute = "value">`. Das Paar aus Attributsname und Wert muss ohne 
-Leerzeichen mit einem `=` verbunden werden um richtig interpretiert zu werden.
 
-Eine Vielzahl von Tags kann mit einer Vielzahl von Attributen modifiziert 
-werden. Zwei der häufigsten und anschaulichsten Anwendungen sind das Einbinden 
-von Links und Bildern, zwei weitere häufig anzutreffende HTML Tags.
+## Attributes {#attribute}
+
+Many HTML tags can be further adapted in their functionality and presentation by
+using so-called *attributes*. The basic syntax is: 
+`<tag attribute="value">...</tag>`. In the opening (never in the closing) tag, 
+the name of the tag is followed by the name of the attribute `=` the *value* to
+be assigned, enclosed in single or double inverted commas. In HTML, 
+`<tag attribute="value">` is not equal to `<tag attribute = "value">`. The pair
+of attribute name and value must be connected with a `=` without spaces in order
+to be interpreted correctly.
+
+A variety of tags can be modified with a multitude of attributes. Two of the
+most common and illustrative applications are the inclusion of links and images,
+two other frequently encountered HTML tags.
+
 
 ### Links
 
-Links werden über den Tag `<a>` (*anchor*) eingebunden. Der erste intuitive 
-Versuch `<a>Dies ist ein Link</a>` bleibt leider erfolglos:
+Links are included using the `<a>` (*anchor*) tag. The first intuitive attempt 
+`<a>This is a link</a>` is unfortunately unsuccessful:
 
-<a>Dies ist (k)ein Link</a>
+<a>This is (not) a link</a>
 
-Der Text wird zwar dargestellt und als Link markiert -- also blau und 
-unterstrichen --, führt aber notwendigerweise zu keinem Ziel, da in dem 
-HTML-Dokument nicht definiert wurde, was dieses Ziel sein soll. Hier kommt das 
-erste Attribut ins Spiel. Mit `<a href="url">` wird das Ziel des Links 
-definiert. `href` steht dabei für *hypertext reference* und dessen zugewiesener
-Wert kann unter anderem eine Website, eine Email Adresse oder auch eine Datei
-sein. So führt 
-`<a href="webscraping-tures.github.io/html.html">Dies ist ein Link</a>` zu der
-Seite die Sie gerade betrachten.
+Although the text is displayed and marked as a link -- i.e. blue and underlined 
+-- it does not lead to any destination, since it was not defined in the HTML
+document what this destination should be. This is where the first attribute 
+comes into play. With `<a href="url">` the target of the link is defined. 
+`href` stands for *hypertext reference* and its assigned value can be, among
+other things, a website, an email address or even a file. For example, 
+`<a href="webscraping-tures.github.io/html.html">This is a link</a>` links to 
+the page you are viewing.
 
-<a href="webscraping-tures.github.io/html.html">Dies ist ein Link</a>
+<a href="webscraping-tures.github.io/html.html">This is a link</a>
 
-Ihnen wird dabei aufgefallen sein, dass sie nun wieder bis zu dieser Stelle 
-scrollen mussten, um weiterzulesen. Ein zweites Attribut kann hier Abhilfe
-schaffen. Mit 
-`<a href="webscraping-tures.github.io/html.html" target="_blank">Dies ist ein Link</a>` 
-weisen wir den Browser an, den Link in einem neuen tab zu öffnen. Der 
-zugewiesene Wert von `target` ist hier `"_blank"`, was für einen neuen Tab 
-steht, kann aber auch eine Reihe von anderen Werten annehmen.
+You may have noticed that you had to scroll to this point again to continue 
+reading. A second attribute can remedy this. With 
+`<a href="webscraping-tures.github.io/html.html" target="_blank">This is a link</a>`
+we instruct the browser to open the link in a new tab. The assigned value of 
+target here is "_blank", which stands for a new tab, but it can also take on a 
+number of other values.
 
-<a href="webscraping-tures.github.io/html.html" target="_blank">Dies ist ein 
-Link</a>
+<a href="webscraping-tures.github.io/html.html" target="_blank">This is a link</a>
 
-Links werden für uns beim Web Scraping vor allem dann interessant, wenn wir von
-einer übergeordneten Seite die Links zu allen Unterseiten sammeln, um diese dann
-gezielt zu scrapen. Aber dazu später mehr.
+Links are of particular interest to us in web scraping when we collect links to
+all sub-pages from a parent page in order to scrape them specifically. But more
+about that later.
 
-Noch ein Hinweis, der Tag `<link>` ist nicht mit `<a>` zu verwechseln und dient
-zur Einbindung externer Dateien, wie den bereits angesprochenen JavaScript oder
-CSS Dateien.
+One more note: the `<link>` tag is not to be confused with `<a>` and is used to
+integrate external files, such as the JavaScript or CSS files already mentioned.
 
-### Bilder
 
-Bilder und Grafiken werden in HTML mit `<img>` eingebunden, ein weitere Tag der
-nicht explizit geschlossen werden muss. Damit der Browser auch weiß, welches 
-Bild eingebunden werden soll, wird dies über das `src` (*source*) Attribut des 
-Tags festgelegt. So bindet `<img src="webscraping-tures.github.io/Rlogo.png">` 
-folgendes Bild ein:
+### Images
+
+Images and graphics are integrated in HTML with `<img>`, another tag that does
+not have to be explicitly closed. So that the browser knows which image is to be 
+included, this is specified via the `src` (*source*) attribute of the tag. Thus
+`<img src="webscraping-tures.github.io/Rlogo.png">` includes the following
+image:
 
 <img src="webscraping-tures.github.io/Rlogo.png">
 
-Über weitere Attribute ist es beispielsweise auch möglich, die Größe des Bildes 
-in Pixeln anzupassen. 
+Using further attributes, it is also possible, for example, to adjust the size 
+of the image in pixels. 
 `<img src="webscraping-tures.github.io/Rlogo.png" width="100" height="100">`
+leads to a resized display of the image.
 
 <img src="webscraping-tures.github.io/Rlogo.png" width="100" height="100">
 
-Bilder können auch mit Links kombiniert werden. So definiert 
+Images can also be combined with links. So 
 `<a href="https://www.r-project.org/" target="_blank"><img src="webscraping-tures.github.io/Rlogo.png"></a>`
-das Bild als Link, womit ein Klick auf das Bild Sie zu dem angegebenen Link 
-führt:
+defines the image as a link, where a click on the image takes you to the 
+specified link:
 
 <a href="https://www.r-project.org/" target="_blank">
 <img src="webscraping-tures.github.io/Rlogo.png">
@@ -467,55 +457,47 @@ führt:
 
 ## Entities
 
-Eine Reihe von Schriftzeichen sind für den HTML-Code reserviert. So haben wir 
-bereits gesehen, dass die Zeichen `< > "` Bestandteile des Codes sind um Tags 
-sowie Werte von Attributen zu definieren. In vielen Fällen ist es inzwischen 
-möglich, auch reservierte Zeichen direkt in einem Fließtext anzuwenden. Uns 
-werden im Web Scraping aber bis auf Weiteres regelmäßig sogenannte *entities* 
-statt der eigentlichen Zeichen begegnen. Entities sind kodierte Repräsentationen 
-bestimmter Zeichen. Diese werden stets mit `&` eingeleitet und mit `;` beendet. 
-Zwischen beiden Zeichen steht entweder der Name oder die Nummer der enitity. 
+A number of characters are reserved for the HTML code. We have already seen that
+the characters `< > "` are part of the code to define tags and values of 
+attributes. In many cases, more current HTML versions allow for the usage of
+reserved characters directly in continuous text. For the time being, however, we
+will regularly encounter so-called *entities* instead of the actual characters 
+in web scraping. Entities are coded representations of certain characters. They 
+are always introduced with `&` and ended with `;`. Between the two characters is
+either the name or the number of the entity.
 
-So steht beispielsweise `&lt;` für *less than*, also `<` und `&gt;` für 
-*greater than*, also `>`.
+For example, `&lt;` stands for *less than*, i.e. `<` and `&gt;` for 
+*greater than*, i.e. `>`.
 
 ```
-Ein Text mit reservierten Zeichen wie &lt; und &gt; oder dem sogenannten &quot;ampersand&quot; &amp;.`
+A text with reserved characters like &lt; und &gt; or the so-called &quot;ampersand&quot; &amp;.
 ```
+Is displayed as:
 
-Ein Text mit reservierten Zeichen wie &lt; und &gt; 
-oder dem sogenannten &quot;ampersand&quot; &amp;.
+A text with reserved characters like &lt; und &gt; or the so-called &quot;ampersand&quot; &amp;.
 
-Sidenote: Falls Sie an der Herkunft des Begriffs *ampersand* interessiert sind, 
-empfiehlt sich Wikipedia: 
+Sidenote: If you are interested in the origin of the term ampersand, I recommend
+its Wikipedia article, which makes for an interesting read: 
 <https://en.wikipedia.org/wiki/Ampersand>{target="_blank"}
 
 <br>
 
-Eine weitere entity die uns regelmäßig begegnen wird, ist `&nbsp;` 
-(*non-breaking space*), welches statt einem einfach Leerzeichen eingesetzt 
-werden kann. `&nbsp;` hat den Vorteil, dass dies zum Einen nie durch den Browser 
-umgebrochen wird, zum Anderen ermöglicht es den Einsatz von mehr als einem 
-Leerzeichen:
+Another entity we will encounter regularly is `&nbsp;` (*non-breaking space*), 
+which can be used instead of a simple space. The advantage of this is that there
+is never a line break in the browser, and it allows the use of more than one
+space:
 
 ```
-Mit einem    Leerzeichen dargestellt
-Mit vier&nbsp;&nbsp;&nbsp;&nbsp;Leerzeichen dargestellt
+Displayed with one    space
+Displayed with four&nbsp;&nbsp;&nbsp;&nbsp;spaces
 ```
-Mit einem    Leerzeichen dargestellt
-
-Mit vier&nbsp;&nbsp;&nbsp;&nbsp;Leerzeichen dargestellt
+Displayed with one    space<br>
+Displayed with four&nbsp;&nbsp;&nbsp;&nbsp;spaces
 
 <br>
 
-Eine Übersicht zu den gebräuchlichsten entities finden Sie hier: 
+An overview of the most common entities can be found here:
 <https://www.w3schools.com/html/html_entities.asp>{target="_blank"}
 
-Die entities aller Unicode Zeichen finden Sie hier: 
+The entities of all Unicode characters can be found here:
 <https://unicode-table.com/>{target="_blank"}
-
-
-
-## Weiterführende Literatur {-}
-
-Noch einzubauen

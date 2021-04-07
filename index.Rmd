@@ -74,3 +74,9 @@ WIP!
 * Inline code and Code blocks
 
 * Code is copyable but use sparely (writing is important)
+
+Acknowledgement
+
+Colophon?
+sessioninfo::session_info()
+but need to load all packages here to make them show up?

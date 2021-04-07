@@ -5,26 +5,25 @@ knitr::opts_chunk$set(collapse = TRUE)
 ```
 
 ## CSS selectors {#css}
-In dem vorangegangenen Abschnitt, haben Sie bereits die ersten CSS Selectors 
-kennengelernt. Diese werden im Webdesign eigentlich dazu genutzt, um einzelne 
-Elemente einer Website auszuwählen und einen CSS Style auf diese anzuwenden, 
-also die Darstellung der Elemente zu definieren. Sie wurden also nicht im 
-Hinblick auf Web Scraping Anwendungen entwickelt. Wir können sie uns aber 
-trotzdem zu Nutze machen, denn auch wir möchten einzelne Elemente einer Website
-auswählen, um diese gezielt zu extrahieren.
 
-CSS Selectors kommen in rvest als Argument der Funktion `read_html()`
-zum Einsatz. Als zweites Argument -- das erste legt fest, auf welche
-Daten die Funktion angewandt werden soll -- geben wir einen Selector
-in der Form `css = "selector"` an. Dieser bestimmt welche Elemente des
-HTML-Codes wir extrahieren möchten.  Wichtig ist dabei, dass immer der
-gesamte Selector -- unabhängig davon, aus wie vielen einzelnen Teilen
-dieser besteht -- als String an das Argument übergeben wird.
+In the previous section, you already got to know the first CSS Selectors. These 
+are actually used in web design to select individual elements of a website and 
+apply a CSS style to them, i.e. to define the display of the elements. So they
+were not developed with web scraping applications in mind, yet we can still make
+use of them, because we also want to select individual elements of a website in 
+order to extract them.
 
-Zur Veranschaulichung, werden die CSS Selectors im Folgenden auf die Website 
+CSS Selectors are used in rvest as an argument of the `read_html()` function. 
+As a second argument -- the first one determines which data the function should
+be applied to --we specify a selector in the form `css = "selector"`. This
+determines which elements of the HTML code we want to extract. It is important
+here that the entire selector -- regardless of how many individual parts it
+consists of -- is always passed along as a string to the argument.
+
+In the following, the CSS Selectors are applied to the website
 <https://webscraping-tures.github.io/wahlbeteiligung_2.html>{target="_blank"}
-angewandt. Den Quellcode können sie auf dem bekannten Weg einsehen. Zunächst 
-laden wir das rvest package und lesen die Website ein.
+for illustration. You can view the source code the usual way. Firstly, we load
+the rvest package and parse the website.
 
 ``` {r}
 library(rvest)
@@ -33,10 +32,10 @@ website <- "https://webscraping-tures.github.io/wahlbeteiligung_2.html" %>%
   read_html()
 ```
 
-Den einfachsten Selector haben wir bereits kennengelernt. `"Tag"` wählt alle 
-Vorkommnisse des angegebenen HTML-Tags aus. So können wir beispielsweise den 
-Titel der Website -- im Tag `<title>` oder die im Browserfenster dargestellte 
-Überschrift -- `<h3>` -- auswählen.
+We have already learned about the simplest selector. `"Tag"` selects all
+occurrences of the specified HTML tag. For example, we can select the title of
+the website -- in the `<title>` tag -- or the heading displayed in the browser 
+window -- in  `<h3>`.
 
 ``` {r}
 website %>% 
@@ -46,10 +45,11 @@ website %>%
   html_nodes(css = "h3")
 ```
 
-### Klassen
-Auch den Selector für das Argument `class` -- `".class"` -- haben wir bereits 
-im vorangegangenen Abschnitt kennengelernt. Alle `<span>` tags der Klasse 
-`"bundesland-name`" können wir wie folgt auswählen:
+### Classes
+
+We also got to know the selector for the argument `class` -- `".class"` -- in 
+the previous section. We can select all `<span>` tags of the class 
+`"bundesland-name"` as follows:
 
 ``` {r}
 website %>% 
@@ -62,22 +62,21 @@ website %>%
   head(n = 2)
 ```
 
-Die erste Variante des Selectors sagt, 
-*wähle alle Elemente der Klasse `"bundesland-name"` aus*. Die zweite Variante 
-sagt, *wähle alle `<span>` elemente der Klasse `"bundesland-name"` aus. Für 
-diese Website sind beide Schreibweisen im Ergebnis äquivalent, da alle Elemente,
-denen die Klasse `"bundsland-name"` zugewiesen wurde auch `<span>` Tags sind. 
-Dies muss aber nicht immer so sein. Unterschiedliche Tags mit unterschiedlichen 
-Inhalten können in der Praxis durchaus die selbe Klasse haben. 
+The first variation of the selector says, 
+*select all elements of the class `"bundesland-name"`*. The second variation 
+says, *select all <span> elements of the class `"bundesland-name"`*. For this 
+website, both variations are equivalent in result, since all elements assigned 
+the class `"bundesland-name"` are also `<span>` tags. However, this does not 
+always have to be the case. Different tags with different content may very well
+have the same class in practice.
 
-Grundsätzlich ist das Konstruieren von CSS Selectors immer ein Balanceakt
-zwischen Funktionalität und Lesbarkeit. Der Selector sollte genau nur die
-Elemente auswählen, an denen wir interessiert sind, und gleichzeitig
-verständlich sein. Letzteres ist vor allem wichtig, wenn Andere -- oder man
-selbst einige Wochen später -- den Code lesen. Dabei bedeutet Lesbarkeit auch,
-eine Balance zwischen Länge und Klarheit des Selectors zu erreichen.
+Basically, constructing CSS selectors is always a balancing act between 
+functionality and readability. The selector should select exactly only the 
+elements we are interested in, and at the same time be understandable. The 
+latter is especially important when others -- or you yourself a few weeks later
+-- read the code. Readability also means achieving a balance between length and clarity of the selector.
 
-Zur Veranschaulichung:
+To illustrate:
 
 ``` {r}
 website %>% 
@@ -85,70 +84,68 @@ website %>%
   head(n = 2)
 ```
 
-Dies ist der volle Pfad durch die hierarchische HTML-Struktur, welcher uns zu 
-dem oben bereits gesehenen Ergebnis führt. Diesen müssen sie jetzt noch nicht 
-voll verstehen. Sie sehen aber, dass der Selector lang und kompliziert werden 
-kann, und hier handelt es sich um eine sehr einfach gestaltete Website. Für 
-mich, ist der Selector `"span.bundesland-name"` eine gute Wahl, da er ermöglicht
-unser Ziel zu erreichen und dabei eine für mich angenehme Balance zwischen Kürze
-und Lesbarkeit hat. Dies müssen sie aber im Einzelfall für sich selbst
-entscheiden.
+This is the full path through the hierarchical HTML structure, which leads us to
+the result already seen above. You don't need to fully understand this one yet. 
+But you can see that the selector can get long and complicated, and here we are
+dealing with a very simply designed website. For me, the selector
+`"span.bundesland-name"` is a good choice, because it allows us to reach our 
+goal and has a balance between brevity and readability that is pleasant for me.
+But you must decide this for yourself in each individual case.
 
 ### IDs
 
-Ein weiteres häufig auftretendes Attribut in HTML-Elementen, ist die `id`. Diese
-identifizieren einzelne HTML-Elemente mit einem eindeutigen zugewiesenen Namen.
-Diese werden unter anderem zu gestalterischen Zwecken, im Rahmen von Scripts zur
-dynamischen Gestaltung von Websites oder in HTML-Formularen eingesetzt. Wir
-können auch sie nutzen können um einzelne Elemente gezielt zu extrahieren.
+Another common attribute in HTML elements, is the `id`. These identify 
+individual HTML elements with a unique assigned name. Among other things, these
+are used for design purposes, as part of scripts for the dynamic design of
+websites or in HTML forms. We can also use them to extract individual elements
+specifically.
 
-In unserem Beispiel, hat der `<span>` Tag, welcher den Namen eines jeden 
-Bundeslandes umfasst, eine id, welche das Land mit einem zweistelligen Kürzel 
-identifiziert:
+In our example, the `<span>` tag, which includes the name of each state, has an
+id that identifies the state with a two-character abbreviation:
 
 ```
 <span class="bundesland-name" id="bw">Baden-Württemberg</span>
 ```
 
-Der Selector für IDs wird als `"#id"` geschrieben.
+The selector for IDs is being written as `"#id"`.
 
 ``` {r}
 website %>% 
   html_nodes(css = "#bw")
 ```
 
-In diesem Fall haben wir aber mehr ausgewählt, als wir wollten. Denn auch der 
-`<img>` Tag, welcher die Flaggen der Bundesländer darstellt, hat das Attribut 
-`id="bw"`. Dies verstößt zwar strenggenommen gegen die HTML-Regeln, aber auch 
-dies ist Realität. Wir können uns nicht darauf verlassen, dass die Ersteller 
-einer Website immer sauberen HTML-Code verfassen und müssen somit auch mit 
-"Regelverstößen" und unerwarteten Strukturen umgehen können. 
+In this case, however, we have selected more than we wanted. Because the `<img>` 
+tag, which represents the flags of the federal states, has the attribute 
+`id="bw"` as well. Strictly speaking, this is against the HTML rules, but this 
+is also a reality. We can't rely on the creators of a website to always write
+clean HTML code, so we have to be able to deal with "rule violations" and 
+unexpected structures.
 
-Die Lösung ist an dieser Stelle die Kombination von ID und Element im Selector, 
-in der Form `Element#id`.
+The solution at this point is the combination of ID and tag in the selector,
+in the form `"tag#id"`.
 
 ``` {r}
 website %>% 
   html_nodes(css = "span#bw")
 ```
 
-Auch eine Kombination mit dem Klassenattribut ist möglich.
+A combination with the class attribute is also possible.
 
 ``` {r}
 website %>% 
   html_nodes(css = "span.bundesland-name#bw")
 ```
 
-Generell ist zu beachten, dass die CSS Selectors *case-sensitive* sind. Das 
-bedeutet, dass wir auf Groß- und Kleinschreibung achten müssen. Im Eintrag für 
-Hamburg, ist der Name der id groß geschrieben:
+In general, it should be noted that the CSS selectors are *case-sensitive*. 
+This means that we also need to be case sensitive. In the entry for Hamburg, the
+name of the id is capitalized:
 
 ```
 <span class="bundesland-name" id="HH">Hamburg</span>
 ```
 
-Möchten wir dieses Element extrahieren, müssen wir diese Schreibweise auch im 
-Selector anwenden, `"id=hh"` wird nicht funktionieren.
+If we want to extract this element, we have to use this way of writing in the
+selector as well, `"#hh"` will not work.
 
 ``` {r}
 website %>% 
@@ -158,52 +155,47 @@ website %>%
   html_nodes(css = "span#HH")
 ```
 
-### Attribute
+### Attributes
 
-ID und Class sind Attribute von HTML-Tags. Da beide im Webdesign besonders 
-relvant sind, existieren die oben vorgestellten *shortcuts*, um diese schnell 
-auszuwählen. Wir können aber alle in einem HTML-Code auftretenden Attribute zur
-Auswahl von Elementen nutzen. Der zugehörige CSS Selector wird als 
-`element[attribute]` geschrieben. 
+ID and Class are attributes of HTML tags. Since both are particularly relevant 
+in web design, the shortcuts presented above exist to select them quickly. 
+However, we can use all attributes occurring in an HTML code to select elements. 
+The corresponding CSS selector is written as `tag[attribute]`.
 
-Im unteren Bereich unseres Beispiel HTML Codes, finden sich drei Links `<a>`
-diese haben neben `href="url"` -- der verlinkten Seite -- noch das Attribut
-`target_""` dieses legt fest, wie sich der Link öffnen soll. Der Wert `"_blank"`
-öffnet den Link einem neuen Browsertab, `"_self"` im aktiven Tab. Für den
-zweiten Link ist kein `target=""` Attribut festgelegt. Um in unserem Beispiel
-alle `<a>` Tags auszuwählen, die ein `target` Attribut haben, also den ersten und
-dritten, könnte man wie folgt vorgehen:
+At the bottom of our example HTML code, there are three `<a>` tags. These have,
+in addition to `href="url"` -- the linked page -- the attribute `target_=""`. 
+This specifies how the link should open. The value `"_blank"` opens the link in
+a new browser tab, `"_self"` in the active tab. For the second link no 
+`target=""` attribute is set. In our example, to select all `<a>` tags that have
+a `target` attribute, i.e. the first and third, we could proceed as follows:
 
 ``` {r}
 website %>% 
   html_nodes(css = "a[target]")
 ```
 
-Mit `"element[attribute='value']"` ist es möglich, nur Attribute mit einem
-bestimmten Wert auszuwählen. Dabei ist zu beachten, dass *value* in einfache
-Anführungszeichen eingefasst ist. Die Schreibweise
-`"element[attribute="value"]"` würde in die beiden Strings
-`"element[attribute="` und `"]"` und das Objekt `value` geteilt werden, was in
-dieser Kombination von R nicht interpretiert werden kann. Stattdessen, verwenden
-wir einfache Anführungszeichen, um den Wert des Attributs zu definieren. Dies
-ist eine Konvention, die in vielen Programmierkontexten Anwendung
-findet. Innerhalb doppelter Anführungszeichen nutzen wir einfache, innerhalb
-einfacher doppelte, um mehrere Ebenen von Anführunszeichen realisieren zu
-können.
+With `"element[attribute='value']"` it is possible to select only attributes 
+with a certain value. Note that the value is enclosed in single quotes. The 
+manner of writing `"element[attribute="value"]"` would be split into the two
+strings `"element[attribute="` and `"]"` and the R object `value`, which cannot
+be interpreted by R in this combination. Instead, we use single quotes to define
+the value of the attribute. This is a convention used in many programming 
+contexts. Inside “ we use ‘, inside ‘ we use “ to be able to realize multiple 
+levels of quotes.
 
-Möchten wir nur den Link auswählen, der sich in einem neuen Tab öffnet:
+If we want to select only the link that opens in a new tab:
 
 ``` {r}
 website %>% 
   html_nodes(css = "a[target='_blank']")
 ```
 
-Dies lässt sich weiter modifizieren, in dem wir angeben dass der Wert eines 
-Attributs einen bestimmten Anfang -- `"element[attribute^='anfang']"` -- oder 
-ein bestimmtes Ende -- `"element[attribute$='ende']"` -- haben, oder einen 
-bestimmten Teilbegriff enthalten soll -- `"element[attribute*='teilbegriff']"`. 
-So könnten wir die Links anhand des Beginns, des Endes oder einem beliebigen 
-Bestandteil der dem `href=""` Attribut zugewiesenen URL auswählen.
+This can be further modified by specifying that the value of an attribute should
+have a certain beginning -- `"element[attribute^='beginning']"` -- a certain end
+-- `"element[attribute$='end']"` -- or contain a certain partial term --
+`"element[attribute*='partial term']"`. Thus, we could select the links based on
+the beginning, the end, or any part of the URL assigned to the `href=""` 
+attribute.
 
 ``` {r}
 website %>% 
@@ -217,11 +209,11 @@ website %>%
 ```
 
 
-### Hierachieebenen
+### Hierarchy levels
 
-Wir können uns die Hierarchie einer HTML-Struktur analog zu einem 
-Familienstammbaum vorstellen. Eine vereinfachte Darstellung unserer 
-Beispielseite als Stammbaum, könnte so aussehen:
+We can think of the hierarchy of an HTML structure as analogous to a family 
+tree. A simplified representation of our example page as a family tree could 
+look like this:
 
 ``` {r echo = FALSE}
 library(echarts4r)
@@ -255,30 +247,30 @@ html_tree <- tibble(
 html_tree %>% 
   e_charts() %>% 
   e_tree(initialTreeDepth = 1) %>% 
-  e_title("HTML Struktur - wahlbeteiligung_2.html")
+  e_title("HTML Hierarchy - wahlbeteiligung_2.html")
 ```
 
-Per Klick auf die Elemente des Stammbaums, können sie die Hierarchiebenen ein- 
-und ausklappen. Klicken Sie sich einmal durch die verschiedenen Ebenen und 
-vergleichen Sie dies mit dem HTML-Quellcode der Seite. Wenn Sie damit fertig 
-sind, schlage ich vor`<head>` einzuklappen und in `<body>` nur `<div id="daten">`
-und auf der nächst niedrigeren Ebene den ersten `<div>` auszuklappen. Damit 
-sollten Sie alles sehen, was wir im Folgenden benötigen.
+By clicking on the elements of the family tree, you can expand and collapse the
+hierarchy levels. Click once through the different levels and compare this with
+the HTML source code of the page. When you're done with that, I suggest
+collapsing `<head>` and expanding only `<div id="daten">` in `<body>` and the
+first `<div>` at the next level down. With that, you should see everything we
+need below.
 
-Mit der Metapher des Stammbaums und den dazugehörigen Begriffen "descendant", 
-"child/parent" und "sibling", sollte es uns leichter fallen, die folgenden etwas
-fortgeschritteneren Selector Konzepte zu verstehen.
+With the metaphor of the family tree and the associated terms "descendant",
+"child/parent", and "sibling", we should have an easier time understanding the
+slightly more advanced Selector concepts that follow.
 
 #### Descendant
 
-Wenn Element A ein "descendant" von Element B ist, bedeutet dies, dass A von B 
-über beliebig viele Generationen "abstammt". Dies kann eine Generation -- also 
-eine direkte Kind-Eltern Beziehung -- oder beliebig viele Generationen -- also 
-Enkel und Großeltern mit beliebig vielen "Ur" Präfixen -- sein. Im Selector 
-schreiben wir dies als `"B A"`.
+If element A is a "descendant" of element B, this means that A "descended" from
+B over any number of generations. This can be one generation -- i.e. a direct
+child-parent relationship; it can also be any number of generations -- i.e.
+grandchildren and grandparents with any number of "grand" prefixes. In the 
+selector, we write this as `"B A"`.
 
-Möchten wir beispielsweise alle `<span>` Tags auswählen die von dem Tag 
-`<div id="daten">` abstammen, also eine Enkel-Großeltern Beziehung:
+For example, if we want to select all `<span>` tags that descend from the
+`<div id="daten">` tag -- that is, a grandchild-grandparent relationship:
 
 ``` {r}
 website %>% 
@@ -286,15 +278,15 @@ website %>%
   head(n = 6)
 ```
 
-Dabei ist zu beachten, dass wir mit CSS Selectors immer nur jüngere Generationen
-auswählen können. Wir können also beispielsweise nicht die Großeltern der Enkel 
-auswählen, indem wir den Selector "herumdrehen". Um die Großeltern -- also 
-`<div id="daten">` auszuwählen, müssten wir betrachten, von welchem Element 
-diese abstammen, also beispielsweise `<body>`.
+It should be noted that we can only select younger generations with CSS 
+Selectors. So, for example, we can't select the grandparents of the 
+grandchildren by "flipping" the selector around. To select the grandparents --
+i.e. `<div id="daten">`, we would need to look at which element they descended 
+from, for example `<body>`.
 
-Die CSS Selectors sind nicht darauf beschränkt das Verhältnis von zwei
-Generationen abzubilden. Ein längerer Selector, der vier Generationen beinhaltet
-und zum selben Ergebnis führt könne so aussehen:
+CSS selectors are not limited to mapping the relationship of two generations. 
+A longer selector containing four generations and leading to the same result 
+could look like this:
 
 ``` {r}
 website %>% 
@@ -305,18 +297,17 @@ website %>%
 
 #### Child/Parent
 
-Möchten wir statt Abstammungen über beliebig viele Generationen hinweg, direkte
-Kind-Eltern Beziehungen definieren, können wir dies mit Selectors in der Form
-`"B > A"` durchführen. Dies bedeutet, A ist ein direkts Kind von B. Da die zuvor
-ausgewählten `<span>` Tags keine direkten Kinder von `<div id="daten">` sind,
-würde `"div#daten > span"` hier nicht zum gewünschten Ziel führen. Die `<span>`
-Tags sind aber direkte Kinder der `<div>` mit den Klassen `"bundesland-odd"`
-bzw. `"bundesland-even"`. Da es keine weitere direkte Kind-Eltern Beziehung von
-`<span>` und `<div>` Tags in unserem Beispiel gibt, wäre der Selector
-`"div > span"` bereits ausreichend. Wir könnten aber expliziter werden, um
-weniger fehleranfälligen Code zu schreiben. Beide `<div>` Tags ähneln sich
-darin, dass ihre Klassen mit `"bundesland"` beginnen und wir wissen ja bereits,
-wie wir dies ausnutzen können:
+If we want to define direct child-parent relationships instead of lineages 
+across any number of generations, we can do this with selectors in the form 
+`"B > A"`. This means A is a direct child of B. Since the `<span>` tags selected
+earlier are not direct children of `<div id="daten">`, `"div#daten > span"` would 
+not achieve the desired goal here. However, the `<span>` tags are direct 
+children of `<div>` with classes `"bundesland-odd"` and `"bundesland-even"`
+respectively. Since there is no other direct child-parent relationship of 
+`<span>` and `<div>` tags in our example, the selector `"div > span"` would 
+already be sufficient. However, we could become more explicit to write less
+error-prone code. Both `<div>` tags are similar in that their classes start with
+`"state"` and we already know how to exploit this:
 
 ``` {r}
 website %>% 
@@ -324,10 +315,10 @@ website %>%
   head(n = 6)
 ```
 
-Möchten wie nicht alle Kinder auswählen, sondern nur bestimmte, besteht eine 
-Reihe von Möglichkeiten.
+If we do not want to select all children, but only certain ones, there are a 
+number of options.
 
-`":first-child"` wählt das erste Kind eines Elements aus:
+`":first-child"` selects the first child of an element:
 
 ``` {r}
 website %>% 
@@ -335,12 +326,11 @@ website %>%
   head(n = 2)
 ```
 
-Dies sind jedoch nicht die `<span>` sondern die `<img>` Tags , wie uns auch ein 
-schneller Blick in den Stammbaum nochmals vergegenwärtigt. Mit `":nth-child(n)"`
-können wir nochmals genauer bestimmen, an welchem Kind -- gezählt in der 
-Reihenfolge in der sie im HTML-Code auftauchen -- wir interessiert sind. Um 
-nochmals klarer zu machen, dass wir nur an `<span>` Kindern interessiert sind, 
-kombinieren wir `"span"` und `"nth-child(n)"`
+However, these are not the `<span>` but the `<img>` tags, as a quick look at the
+family tree reminds us again. With `":nth-child(n)"` we can again specify more
+precisely which child -- counted in the order in which they appear in the HTML 
+code -- we are interested in. To make it clearer again that we are only 
+interested in `<span>` children, we combine `"span"` and `"nth-child(n)"`:
 
 ``` {r}
 website %>% 
@@ -348,11 +338,11 @@ website %>%
   head(n = 2)
 ```
 
-Wir möchten also alle `<span>` selektieren, die das zweite Kind von `<div>`, deren 
-Klassen mit `"bundesland"` beginnen, sind.
+So we want to select all `<span>` tags that are the second child of the `<div>`
+tags whose classes start with `"state"`.
 
-Möchten wir nur das letzte Kind selektieren, könnten wir dies mit `:last-child`
-tun:
+If we would like to select only the last child, we could do this with
+`:last-child`:
 
 ``` {r}
 website %>% 
@@ -362,11 +352,11 @@ website %>%
 
 #### Sibling(s)
 
-Die gemeinsamen Kinder eines Eltern-Elements, lassen sich im Rahmen der Metapher
-des Stammbaums als Geschwister sehen. Auf der untersten Hierarchieebene haben 
-wir in unserem Beispiel also pro Bundesland vier Geschwister. Einen `<img>` und
-drei `<span>` Tags. Der Selector `"Element-A ~ Element-B"` wählt dabei alle 
-Geschwister B aus, die auf Geschwister A folgen.
+The common children of a parent element can be seen as siblings within the 
+metaphor of the family tree. On the lowest hierarchical level, we thus have four
+siblings per federal state in our example. One `<img>` and three `<span>` tags.
+The selector `"Element-A ~ Element-B"` selects all siblings B that follow 
+sibling A:
 
 ``` {r}
 website %>% 
@@ -378,12 +368,12 @@ website %>%
   head(n = 6)
 ```
 
-Das Ergebnis bei beiden Schreibweisen ist identisch. Hätten wir in unserem 
-Beispiel `<span>` Tags die auf `<img>` Tags folgen auch an anderen Stellen im 
-HTML-Code, wäre die zweite Variante aber nicht mehr explizit genug.
+The result for both notations is identical. If we had `<span>` tags that follow
+`<img>` tags in other places in the HTML code in our example, the second variant
+would no longer be explicit enough.
 
-Der Selector `"Element-A + Element-B"` funktioniert analog, wählt aber nur das 
-Geschwisterkind B aus, das direkt auf Geschwister A folgt.
+The selector `"Element-A + Element-B"` works in the same way, but only selects
+the sibling B that follows directly after sibling A:
 
 ``` {r}
 website %>% 
@@ -395,12 +385,12 @@ website %>%
   head(n = 2)
 ```
 
-Weiter einschränken lässt sich die Selektion der Geschwister mit 
-`"element:first-of-type"`, `"element:nth-of-type(n)"` und 
-`"element:last-of-type"`. So lassen sich das erste, n-te und letzte 
-Geschwisterkind eines bestimmten Typs auswählen. Die Geschwister werden also
-nach der Art des Elements unterschieden, womit unsere Stammbaum Metapher langsam
-etwas überstrapaziert ist.
+The selection of siblings can be further restricted with 
+`"element:first-of-type"`, `"element:nth-of-type(n)"` and 
+`"element:last-of-type"`. In this way, the first, nth and last sibling of a 
+certain type can be selected. The siblings are thus differentiated according to
+the type of element, with which our family tree metaphor is being somewhat 
+overused.
 
 ``` {r}
 website %>% 
@@ -417,10 +407,10 @@ website %>%
 ```
 
 
-### Weitere Selektoren
+### Further selectors
 
-Die wildcard `"*"` wählt alle Elemente aus. So können wir beispielsweise auch 
-auf folgendem Weg, alle Kinder eines Elements selektieren:
+The wildcard `"*"` selects all elements. For example, we can also select all 
+children of an element in the following way:
 
 ``` {r}
 website %>% 
@@ -428,10 +418,9 @@ website %>%
   head(n = 8)
 ```
 
-Möchten wir bestimmte Elemente bei der Selektion ausschließen, ist dies mit 
-`":not(selector)"` möglich. Hier werden alle Elemente ausgewählt, außer denen 
-die wir so explizit augeschlossen haben. Beispielsweise alle Kinder, außer den 
-`<img>` Elementen:
+If we want to exclude certain elements from the selection, this is possible with
+`":not(selector)"`. Here, all elements are selected, except those that we have
+explicitly excluded. For example, all children except the `<img>` elements:
 
 ``` {r}
 website %>% 
@@ -439,9 +428,8 @@ website %>%
   head(n = 6)
 ```
 
-Mit `"selector-A, selector-B"` lassen sich mehrere Selektoren mit "und" 
-verknüpfen. So wird es beispielsweise möglich, zwei `<span>` Klassen in einem 
-Schritt zu selektieren:
+With `"selector-A, selector-B"`, several selectors can be linked with "and/or".
+This makes it possible, for example, to select two `<span>` classes in one step:
 
 ``` {r}
 website %>% 
@@ -449,20 +437,19 @@ website %>%
   head(n = 4)
 ```
 
-Sie kennen jetzt die im Web Scraping gebräuchlisten Selektoren. Eine Übersicht 
-zu diesen und allen weiteren CSS Selectors, findet sich auf den Seiten der W3: 
+You now know the selectors most commonly used in web scraping. An overview of 
+these and all other CSS selectors can be found on the W3 pages:
 <https://www.w3schools.com/cssref/css_selectors.asp>{target="_blank"}
 
-Neben CSS Selectors gibt es mit *XPath* eine weitere Möglichkeit Elemente einer
-HTML-Seite auszuwählen. Diese Methode ist noch etwas flexibler und erlaubt unter
-anderem auch die Auswahl von "ancestors", also von höheren Hierarchieebenen, 
-ausgehend von einer niedrigeren. Der Preis für die höhere Flexibilität ist aber
-auch eine oft längere und etwas kompliziertere Syntax. In den meisten Fällen, 
-werden Ihnen die CSS Selectors völlig ausreichen. Und falls Sie irgendwann an 
-einen Punkt stoßen, an denen sie nicht mehr ausreichen, um ihr Scraping Ziel zu 
-erreichen, sind sie bereits so geübt im Umgang mit den CSS Selectors, dass Ihnen
-der Umstieg auf XPath sehr leicht fallen wird. Auf den Seiten der W3, finden sie
-dann eine passende Einführung: 
+In addition to CSS selectors, there is another way to select elements of an HTML 
+page: *XPath*. This method is even more flexible and allows, among other things,
+the selection of "ancestors", i.e. higher hierarchical levels, starting from a 
+lower one. The price for the higher flexibility, however, is an often longer and
+somewhat more complicated syntax. In most cases, the CSS selectors will suffice. 
+And if at some point you reach a point where they are no longer sufficient to
+achieve your scraping goal, you will already be so proficient in using the CSS
+selectors that you will find it very easy to switch to XPath. On the pages of 
+the W3, you will find a suitable introduction.:
 <https://www.w3schools.com/xml/xpath_intro.asp>{target="_blank"}
 
 ## Developer Tools
@@ -470,30 +457,28 @@ dann eine passende Einführung:
 library(knitr)
 ```
 
-Das Erkennen der HTML-Struktur und das Identifizieren von funktionstüchtigen
-Selektoren kann auf komplexen Websites sehr schwer sein, vor allem wenn der
-HTML-Code nicht so übersichtlich formatiert ist, wie in unserem Beispiel.  Hier
-kann es hilfreich sein, die in modernen Browsern integrierten
-*Web Developer Tools* zu verwenden.
+Recognising the HTML structure and identifying functional selectors can be very
+difficult on complex websites, especially if the HTML code is not as clearly 
+formatted as in our example. This is where it can be helpful to use the 
+*web developer tools* built into modern browsers.
 
-Auf den folgenden Screenshots, sehen Sie die Anwendung in Chromium für Linux auf
-unsere laufende Beispielseite. Das Vorgehen ist aber in anderen Browsern wie 
-Chrome, Firefox oder Edge nahezu identisch. In allen Fälllen öffnen sie die 
-Developer Tools durch einen Rechtsklick im Browserfenster und dann der Auswahl
-"Untersuchen" bzw. "Inspect".
+On the following screenshots, you can see the application in Chromium for Linux
+on our running example page. However, the procedure is almost identical in other
+browsers such as Chrome, Firefox or Edge. In all cases, open the Developer Tools
+by right-clicking in the browser window and then selecting "Inspect Element".
 
-Je nach Einstellung öffnen sich die Developer Tools in einem horizontal oder 
-vertikal abgetrennten Bereich des Browsers. Wir sehen hier eine Vielzahl von 
-Reitern, für diese Einführung konzentrieren wir uns aber rein auf den Reiter 
-"Elements". Dieser zeigt uns den HTML-Code in seiner hierarchischen Struktur und
-erlaubt einzelne Elemente ein- und auszuklappen.
+Depending on the setting, the Developer Tools open in a horizontally or 
+vertically separated area of the browser. We see a variety of tabs here, but for
+this introduction we will concentrate purely on the "Elements" tab. This shows 
+us the HTML code in its hierarchical structure and allows us to expand and c
+ollapse individual elements.
 
 ``` {r, echo = FALSE, fig.retina = 1}
 include_graphics("wdt/wdt_01.png")
 ```
 
-Wählen wir ein Element in "Elements" aus, wird dieses auch in der Darstellung im
-Browserfenster markiert.
+If we select an element in "Elements", it will also be marked in the display in
+the browser window.
 
 ``` {r, echo = FALSE, fig.retina = 1}
 include_graphics("wdt/wdt_02a.png")
@@ -503,8 +488,8 @@ include_graphics("wdt/wdt_02a.png")
 include_graphics("wdt/wdt_02b.png")
 ```
 
-Auch können wir den "Inspector" aktivieren und Elemente direkt im Browserfenster 
-per Klick auswählen. 
+We can also activate the "Inspector" and select elements directly in the browser
+window by clicking on it.
 
 ``` {r, echo = FALSE, fig.retina = 1}
 include_graphics("wdt/wdt_03.png")
@@ -514,40 +499,36 @@ include_graphics("wdt/wdt_03.png")
 include_graphics("wdt/wdt_04a.png")
 ```
 
-So wird wiederum der korrespondierende Eintrag im 
-"Elements" Reiter ausgewählt.
+This in turn selects the corresponding entry in the "Elements" tab.
 
 ``` {r, echo = FALSE, fig.retina = 1}
 include_graphics("wdt/wdt_04b.png")
 ```
 
-Das untere Ende des "Elements" Reiters, zeigt uns den zu dem ausgewählten 
-Element gehörenden vollen CSS Selector.
+The bottom of the "elements" tab, shows us the full CSS selector belonging to 
+the selected element.
 
 ``` {r, echo = FALSE, fig.retina = 1}
 include_graphics("wdt/wdt_05.png")
 ```
 
-Mit einem Rechtsklick auf ein Element und der Auswahl von "Copy" -> 
-"Copy selector", können wir uns außerdem einen CSS Selector in den 
-Zwischenspeicher holen, den wir dann in R Studio mit STRG+V einfügen können. 
-Für das oben ausgewählte Element, also den Ländernamen für Baden-Württemberg, 
-bekommen wir den Selector "#bw". In diesem Fall ist dieser kurze Selector 
-ausreichend, um das Element eindeutig zu identifizieren. Ich empfehle aber, 
-wie oben ausgeführt, die Konstruktion von eindeutigeren und besser 
-nachvollziehbaren Selektoren. Der von den Developer Tools erstellte Selector, 
-sowie vor allem die Darstellung des vollen Pfads im "Elements" Reiter, können 
-jedoch bei der Konstruktion dieser sehr hilfreich sein und ermöglichen ein 
-schnelles Erfassen der Struktur einer Website.
+By right-clicking on an element and selecting "Copy" -> "Copy selector", we can
+also get a CSS selector in the clipboard, which we can then paste into RStudio
+with CTRL+V. For the element selected above, i.e. the state name for
+Baden-Württemberg, we get the selector `"#bw"`. In this case, this short 
+selector is sufficient to uniquely identify the element. However, as explained
+above, I recommend the construction of more unique and comprehensible selectors.
+However, the selector created by the Developer Tools, and especially the display
+of the full path in the "Elements" tab, can be very helpful in constructing 
+these and allow us to quickly grasp the structure of a website.
 
-Auch haben wir so zwar erfahren, wie wir den Namen für Baden-Württemberg
-auswählen, aber beispielsweise nicht, wie wir alle Namen der Bundesländer
-selektieren können. Aber auch hier können die Developer Tools hilfreich sein.
-Eine Herangehensweise wäre es, mehrere der Namenselemente nacheinander
-auszuwählen und zu vergleichen, wie sich der volle CSS-Selector verändert.
-Identifizieren wir darüber Gemeinsamkeiten und Unterschiede zwischen den
-Namenselementen, kann uns dies Ansatzpunkte geben, um unseren eigenen Selector
-zu formulieren. Eine weitere Möglichkeit wäre es, statt der integrierten
-Developer Tools, die Erweiterung *SelectorGadget* zu nutzen. Diese ermöglicht
-unter anderem die Auswahl mehrere Elemente gleichzeitig. Informationen zur
-Nutzung finden Sie unter: <https://selectorgadget.com/>{target="_blank"}
+Also, although we learned how to select the name for Baden-Württemberg, we did
+not learn, for example, how to select all the names of the federal states. But 
+here, too, the developer tools can be helpful. One approach would be to select 
+several of the name elements one after the other and compare how the full CSS
+selector changes. If we identify similarities and differences between the name
+elements, this can give us starting points for formulating our own selector. 
+Another possibility would be to use the *SelectorGadget* extension instead of
+the integrated developer tools. Among other things, this enables the selection 
+of several elements at the same time. You can find information on how to use it 
+at:<https://selectorgadget.com/>{target="_blank"}
