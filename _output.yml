@@ -4,7 +4,7 @@ bookdown::gitbook:
       collapse: section
       scroll_highlight: yes
       before: |
-        Web Scraping mit R
+        Web Scraping using R
       after: |
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
     edit: https://github.com/webscraping-tures/webscraping-tures.github.io/%s

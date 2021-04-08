@@ -134,7 +134,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-Web Scraping mit R
+Web Scraping using R
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a>
@@ -572,21 +572,21 @@ for <code>mean</code> and <code>sd</code>. Just writing <code>rnorm()</code> wil
 followed by <code>=</code> and the value to be provided. Note that, since <code>rnorm()</code> draws
 random numbers, your output will differ from the output presented here.</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="R1.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
-<span id="cb35-2"><a href="R1.html#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  1.0452654 -1.0769195 -0.9212859 -0.8578367  0.4178555  0.2752021</span></span>
-<span id="cb35-3"><a href="R1.html#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7] -0.7136311  1.6181693 -0.6211572  2.4704772</span></span></code></pre></div>
+<span id="cb35-2"><a href="R1.html#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] -0.74787875 -0.79445719 -1.50408577  0.04813527 -2.12785319  2.10173662</span></span>
+<span id="cb35-3"><a href="R1.html#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7]  0.30998580 -0.83633836 -1.60180592 -0.58587532</span></span></code></pre></div>
 <p>In the same vein, additional arguments that are allowed by the function can
 be defined, instead of using their default values.</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="R1.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="fl">0.5</span>)</span>
-<span id="cb36-2"><a href="R1.html#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  9.551717  9.630428  9.946385 11.069751 10.360205  9.780985 10.222976</span></span>
-<span id="cb36-3"><a href="R1.html#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [8]  9.902510  9.836354  9.852837</span></span></code></pre></div>
+<span id="cb36-2"><a href="R1.html#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] 10.144187  9.850094 10.209523  9.815166  9.508863 10.001517  9.936687</span></span>
+<span id="cb36-3"><a href="R1.html#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [8]  9.990575  9.899262 10.052278</span></span></code></pre></div>
 <p>We can also skip writing the names of arguments in many cases. As the <code>n</code>
 argument is the first listed in the function’s parentheses, R also understands
 the call, if we just provide the value to be used as the first argument. You
 will often encounter the convention that the first argument is written without
 its name and any further arguments are written in full.</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="R1.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="fl">0.5</span>)</span>
-<span id="cb37-2"><a href="R1.html#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  9.818252 10.504596 10.746962  9.707389 10.100301  9.399032  9.230525</span></span>
-<span id="cb37-3"><a href="R1.html#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [8]  9.624075  9.914873  9.357074</span></span></code></pre></div>
+<span id="cb37-2"><a href="R1.html#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  9.321590 10.138021 10.128795 10.041070  9.368552 10.396584  9.762622</span></span>
+<span id="cb37-3"><a href="R1.html#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [8]  9.961320 10.563875 10.207497</span></span></code></pre></div>
 </div>
 <div id="examples-basic-statistical-functions" class="section level3" number="2.6.2">
 <h3><span class="header-section-number">2.6.2</span> Examples: Basic statistical functions</h3>
