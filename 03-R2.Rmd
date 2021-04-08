@@ -1,13 +1,18 @@
-# Tidyverse
+# RStudio in practice & the tidyverse
 
 ``` {r, include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
 ```
+
+WIP!
+
 ## RStudio Workflow
 
-## Settings?
+### Settings
 
 ## Packages in general
+
+A short note about CRAN: It means "Comprehensive R Archive Network". You already got to know this during the installation of R, but the various R packages, the corresponding documentation and various information are also "hosted" on this website. If you install a package directly from RStudio, it uses CRAN to find and download the package and the associated files.
 
 ### namespaces
 

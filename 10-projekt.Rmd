@@ -1,5 +1,0 @@
-# Beispielprojekt 1 {#projekt1}
-
-``` {r, include = FALSE}
-knitr::opts_chunk$set(collapse = TRUE)
-```

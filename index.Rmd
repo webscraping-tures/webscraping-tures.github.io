@@ -1,5 +1,5 @@
 --- 
-title: "Web Scraping mit R"
+title: "Web Scraping using R"
 author: "Jakob Tures"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
@@ -9,74 +9,89 @@ link-citations: yes
 github-repo: webscraping-tures/webscraping-tures.github.io
 ---
 
-# Einführung {-}
+# Introduction {-}
 
 WIP!
 
-## Was ist Web Scraping? {-}
+## What is web scraping? {-}
 
-* Ziele
-  * Zugang zu Daten die wir auf klassischem Wege nicht bekommen könnten
-  * Zugang zu neuen Formen von Daten die nur im Web denkbar sind (bspw. Kundenreviews, Nutzerverhalten)
-  * Was ist möglich: Beispiele Kriesel 3C
+* Goals
+  * Accessing data that we cannot get with traditional methods.
+  * Accessing data that is only conceivable on the internet 
+  (i.e., customer reviews, user behaviour et al.)
+  * What is feasible: Examples
 
-* Methoden
-  * Identifikation für unsere Fragestellung relevanter Webinhalte
-  * Zugriff auf Webinhalte aus einer Programmiersprache heraus (R, Python, etc.)
-  * Extraktion der für unsere Fragestellung relevanten Teilinhalte der Seite
-  * Säuberung und Überführung in ein für die Datenanalyse geeignetes Format -> Datenanalyse
+* Methods
+  * Identification of web content relevant to our query
+  * Accessing web content directly from a programming language (R, Python, etc.)
+  * Extraction of the page’s contents relevant to our interest
+  * Date cleaning and transferral into a format suited to data analysis
+  * Data analysis
 
-* Ethik
-  * Grundregeln, später Sitzung dazu
+## Course contents {-}
 
-## Was lernen wir, was nicht? {-}
+* Basic structure of the internet
+  * HTML
+  * Overview of other components we might encounter in the wild, without going too much in-depth
 
-* Grundstruktur des Web
-  * HTML, XML
-  * Überblick zu anderen Bausteinen die wir in der Wildnis treffen, ohne zu tief hineinzugehen
-
-* Einführung in R
+* Introduction to R
   * Basics in R Studio
   * Tidyverse
-    * tidy data
-    * dplyr
-    * ggplot
-    * rvest
-    * evtl. stringr
+  * Basics in data transformation and graphical analysis
 
 * Scraping
-  * Scrapen ganzer Seiten mit rvest
-  * CSS Selectors und Developement Tools zur Identifikation des Pfades einzelner Inhalte
-    * Extraktion dieser Pfade mit rvest
-  * Evtl. gezieltes Auslesen von XML Inhalten
-  
-* Was nicht:
-  * Umgang mit dynamischen Websites, javascript, Datenbankzugriffen usw. (hier nur grober Überblick was es alles gibt und das es Wege gibt damit umzugehen -> Fortgeschrittene)
-  * Umgang mit Strings & regular expressions (Hinweis dass sie nicht darum herumkommen wenn sie den Weg weitergehen möchten, kurzer Überblick dazu wenn Zeit reicht)
-  * Scrapen mit anderen packages oder Sprachen als R + rvest (evtl. Hinweis auf weitere verbreitete Möglichkeiten)
+  * Scraping with rvest
+  * CSS Selectors for selecting specific parts of a website
+  * Scraping tables
+  * Scraping dynamically generated websites (HTML forms)
+  * Scraping multi-page websites
+  * Good practice
 
+* Not covered:
+  * Handling of dynamic websites, JavaScript, databank access etc.
+  * Handling of stings & regular expressions (Note: you will not be able to get around this if you want to follow this path)
+  * Scraping with other packages or languages than R + rvest
 
-## Technische Voraussetzungen {-}
+## Technical requirements {-}
 
-* R + R Studio
+* R + RStudio
+  * required packages in chap. 3
 
-* ordentlicher Text Editor
+* A good text editor
   * Windows: Notepad ++
-  * Mac: ?
-  * Linux: Atom
+  * For all OS: Atom
 
 * Browser
-  * Chrome/Chromium (wegen der Developer Tools?)
-  * Notwendige Einstellungen? i.e. Darstellung voller URLs
+  * Chrome/Chromium recommended
+  * Necessary settings (full URLs, WDTs)
   
-## Conventions
+## Conventions {-}
 
 * Inline code and Code blocks
+  * Also HTML code
 
 * Code is copyable but use sparely (writing is important)
 
-Acknowledgement
+## Acknowledgements {-}
+I would like to thank the authors of bookdown the tidyverse and all R packages
+used in the creation of this course on web scraping.
 
-Colophon?
+Very special thanks go to Lukas Höttges for his support in creating the website
+and in organizing the seminar at the University of Potsdam. To Hannah Gehrmann
+for the invaluable feedback on an early draft. To Fabian Class for technical 
+support and numerous answers to my many questions. And to Sophia Varma for
+translating the original German draft and the great support.
+
+## Colophon {-}
+``` {r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+library(knitr)
+library(tidyverse)
+library(rvest)
+library(lubridate)
+library(echarts4r)
+```
+
+``` {r}
 sessioninfo::session_info()
-but need to load all packages here to make them show up?
+```
