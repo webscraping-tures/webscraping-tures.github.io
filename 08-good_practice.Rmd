@@ -1,0 +1,9 @@
+# (PART) Practical application {-}
+
+# Good practice {#good_practice}
+
+``` {r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+WIP!

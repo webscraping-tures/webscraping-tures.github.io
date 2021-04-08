@@ -1,5 +1,7 @@
-# Beispielprojekt 2 {#projekt2}
+# Sample project {#project}
 
 ``` {r, include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
 ```
+
+WIP!

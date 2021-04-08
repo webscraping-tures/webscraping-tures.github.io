@@ -1,69 +1,67 @@
-# Scraping von Tabellen & dynamischen Websites {#rvest2}
+# Scraping of tables & dynamic websites {#rvest2}
 
 ``` {r, include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
 
 ```
 
-## Scraping von Tabellen
+## Scraping of tables
 
-Im Web Scraping werden wir häufig das Ziel verfolgen, die extrahierten Daten in 
-einen Tibble oder Data Frame zu überführen, um diese dann weiter analysieren zu 
-können. Besonders dankbar ist es da, wenn die Daten an denen wir interessiert
-sind bereits in einer HTML-Tabelle gespeichert sind. Denn rvest erlaubt es uns 
-mit der Funktion `html_table()` komplette Tabellen schnell und einfach 
-auszulesen.
+In web scraping, we will often pursue the goal of transferring the extracted 
+data into a tibble or data frame in order to be able to analyse it further. It
+is particularly helpful if the data we are interested in is already stored in an
+HTML table. Because rvest allows us to read out complete tables quickly and
+easily with the function `html_table()`.
 
-Zur Erinnerung, Der HTML-Code für Tabellen ist in der Grundstruktur so 
-gestaltet:
+
+As a reminder, the basic structure of the HTML code for tables is as follows:
 
 ```
 <table>
-  <tr> <th>#</th> <th>Tag</th> <th>Effekt</th> </tr>
+  <tr> <th>#</th> <th>Tag</th> <th>Effect</th> </tr>
   <tr> <td>1</td> <td>"b"</td> <td>bold</td> </tr>
   <tr> <td>2</td> <td>"i"</td> <td>italics</td> </tr>
 </table>
 ```
 
-Der `<table>` Tag umfasst die gesamte Tabelle.
-Zeilen werden durch `<tr>` definiert, Spaltenüberschriften mit `<th>` und
-Zellen mit `<td>`.
+The `<table>` tag covers the entire table. Rows are defined by `<tr>`, column
+headings with `<th>` and cells with `<td>`.
 
-Bevor wir mit dem Scraping beginnen, laden wir wie immer die nötigen packages:
+Before we start scraping, we load the necessary packages as usual:
 
 ``` {r}
 library(tidyverse)
 library(rvest)
 ```
 
-### Tabelle mit CSS Selectors aus Wikipedia
+### Table with CSS selectors from Wikipedia
 
-Auf der [Wikipedia Seite zu "CSS"](https://en.wikipedia.org/wiki/CSS){target="_blank"},
-findet sich auch eine Tabelle mit CSS Selectors. Diese ist unser Scraping Ziel.
+On the
+[Wikipedia page on "CSS"](https://en.wikipedia.org/wiki/CSS){target="_blank"},
+there is also a table with CSS selectors. This is our scraping target.
 
-Lesen wir zunächst die Website ein:
+First we parse the website:
 
 ``` {r}
 website <- "https://en.wikipedia.org/wiki/CSS" %>% 
   read_html()
 ```
 
-Betrachten wir den Quellcode und suchen -- STRG+F -- nach "<table", erkennen
-wir, dass diese Seite eine Vielzahl von HTML-Tabellen enthält. Dazu gehören
-nicht ausschließlich die auf den ersten Blick als "klassische" Tabellen zu 
-erkennenden Elemente, sondern unter anderem auch die "Infoboxen" am rechten 
-oberen Rand des Artikels oder die ausklappbaren Auflistungen weiterführender 
-Links am unteren Ende. Wenn Sie dies genauer betrachten möchten, können die 
-Web Developer Tools hier sehr hilfreich sein.
+If we look at the source code and search -- CTRL+F -- for "<table", we see that 
+this page contains a large number of HTML tables. These include not only the
+elements that are recognisable at first glance as "classic" tables, but also, 
+among other things, the "info boxes" at the top right edge of the article or the
+fold-out lists of further links at the bottom. If you want to look at this more
+closely, the Web Developer Tools can be very helpful here.
 
-Statt einfach alle `<table>` nodes der Seite zu selektieren, könnte eine 
-Strategie sein, mit Hilfe der WDT einen CSS Selector für diese spezifische 
-Tabelle zu erzeugen: `"table.wikitable:nth-child(28)"`. Wir selektieren so, die
-Tabelle der Klasse `"wikitable"` die das 28te Kind der übergeordneten 
-Hierarchiebene ist -- hier `<div class="mw-parser-output">`.
+Instead of simply selecting all `<table>` nodes on the page, one strategy might
+be to use the WDTs to create a CSS selector for that specific table:
+`"table.wikitable:nth-child(28)"`. We thus select the table of class 
+`"wikitable"` which is the 28th child of the parent hierarchy level -- 
+`<div class="mw-parser-output">`.
 
-Wenn wir nur ein einzelnes HTML-Element auswählen möchten, kann es hilfreich 
-sein, statt `html_nodes()` die Funktion `html_node()` zu nutzen. 
+If we only want to select a single HTML element, it can be helpful to use the 
+function `html_node()` instead of `html_nodes()`.
 
 ``` {r}
 node <- website %>% 
@@ -75,18 +73,17 @@ nodes
 node
 ```
 
-Der Unterschied besteht vor allem in der Ausgabe der Funktion.  Dies ist
-erkennbar an dem Eintrag innerhalb der geschweiften Klammern im Output.  Im
-ersten Fall, bekommen wir eine Liste von HTML Elementen -- ein "xml_nodeset" --,
-auch wenn diese Liste, wie hier, nur aus einem Eintrag besteht.  `html_node()`
-gibt uns direkt das HTML Element -- "html_node" -- als Ergebnis der Funktion.
-Warum ist dies relevant? In vielen Fällen kann es einfacher sein direkt mit dem
-HTML-Element statt einer Liste von HTML Elementen zu arbeiten, beispielsweise
-bei der Überführung von Tabellen in Data Frames und Tibbles, aber dazu später
-mehr.
+The difference is mainly in the output of the function. This is recognisable by 
+the entry inside the { } in the output. In the first case, we get a list of HTML 
+elements -- an "xml_nodeset" -- even if this list, as here, consists of only one
+entry. `html_node()` returns the HTML element itself -- the "html_node" -- as
+the function's output. Why is this relevant? In many cases it can be easier to 
+work directly with the HTML element instead of a list of HTML elements, for 
+example when transferring tables into data frames and tibbles, but more on that 
+later. 
 
-Um nun die so ausgewählte Tabelle auszulesen, müssen wir nur noch die Funktion
-`html_table()` auf unser Element anwenden.
+To read out the table selected in this way, we only need to apply the function 
+`html_table()` to the HTML node.
 
 ``` {r}
 css_table_df <- node %>% 
@@ -96,15 +93,13 @@ css_table_df %>%
   head(n = 4)
 ```
 
-Das Ergebnis ist ein Data Frame, der die gescrapten Inhalte der HTML-Tabelle 
-enthält und dabei die in den `<th>` Tags hinterlegten Spaltennamen für die
-Spalten des Data Frames übernimmt.
-Durch die sehr langen Zellen in der Spalte "Matches", ist der Output der R 
-Studio Console leider nicht besonders hilfreich. Ein weiterer Vorteil der
-Nutzung von Tibbles statt Data Frames, ist es, dass lange Zelleninhalte in der
-Darstellung im Output automatisch abgekürzt werden.
-Um einen Data Frame in einen Tibble umzuwandeln, können wir die Funktion
-`as_tibble()` nutzen.
+The result is a data frame that contains the scraped contents of the HTML table
+and adopts the column names stored in the `<th>` tags for the columns of the 
+data frame. Due to the very long cells in the "Matches" column, the output of 
+the RStudio console is unfortunately not particularly helpful. Another advantage
+of using tibbles instead of data frames is that long cell contents are
+automatically abbreviated in the output. To convert a data frame into a tibble, 
+we can use the function `as_tibble()`.
 
 ``` {r}
 css_table_tbl <- node %>% 
@@ -115,15 +110,15 @@ css_table_tbl %>%
   head(n = 4)
 ```
 
-### Scrapen mehrerer Tabellen
 
-Es könnte auch unser Scraping Ziel sein, nicht nur die erste, sondern alle vier 
-inhaltlichen Tabellen des Wikipedia Artikels zu scrapen. Betrachten wir die vier
-Tabellen im Quellcode und/oder den WDTs, zeigt sich, dass sie alle die Klasse
-`"wikitable"` tragen. Damit können wir sie leicht selektieren. Hierbei bitte
-beachten, dass wieder die Funktion `html_nodes()` genutzt werden muss, da wir 
-nicht mehr nur ein Element, sondern wieder eine Liste mehrerer selektierter
-Elemente benötigen.
+### Scraping multiple tables
+
+It could also be our scraping goal to scrape not only the first, but all four
+content tables of the Wikipedia article. If we look at the four tables in the
+source code and/or the WDTs, we see that they all carry the class `"wikitable"`.
+This allows us to select them easily. Please note that the function 
+`html_nodes()` must be used again, as we no longer need just one element, but a
+list of several selected elements.
 
 ``` {r}
 tables <- website %>% 
@@ -131,22 +126,21 @@ tables <- website %>%
   html_table()
 ```
 
-Das Ergebnis ist eine Liste von vier Data Frames, welche jeweils eine der vier 
-Tabellen enthalten. Möchten wir einen Einzelnen der Data Frames aus der Liste
-auswählen um ihn beispielsweise in ein neues Objekt zu überführen, sind wir auf
-*subsetting* angewiesen, welches wir bereits aus der Einführung in R kennen.
+The result is a list of four data frames, each of which contains one of the four
+tables. If we want to select an individual data frame from the list, for 
+example, to transfer it into a new object, we have to rely on *subsetting*.
 
-Zur Erinnerung: es bestehen in R grundsätzlich zwei Möglichkeiten des
-subsettings von Listen.  `liste[#]` und `liste[[#]]`. Der für uns
-relevanteste Unterschied besteht darin, was für eine Art Objekt R an
-uns zurückgibt. Im ersten Fall wird uns immer eine Liste
-zurückgegeben, auch wenn diese Möglicherweise nur aus einem Element
-besteht. Die Nutzung doppelter eckiger Klammern, gibt uns hingegen ein
-einzelnes Element direkt zurück. Der Unterschied ist also ähnlich zu
-dem zwischen `html_nodes()` und `html_node()`.
+We have learned about basic subsetting for vectors using `[#]`, in chapter
+\@ref(R1). For lists, things can get a little bit more complicated.
+There are basically two ways of subsetting lists in R: `list_name[#]` and 
+`list_name[[#]]`. The most relevant difference for us is what kind of object R
+returns to us. In the first case, the returned object is always a list, even if
+it may only consist of one element. Using double square brackets, on the other 
+hand, returns a single element directly. So the difference is not dissimilar to
+that between `html_nodes()` and `html_node()`.
 
-Haben wir das Ziel beispielsweise den dritten Data Frame aus der Liste mit vier
-Data Frames auszuwählen, welches subsetting müssten wir nutzen?
+For example, if our goal is to select the third data frame from the list of four 
+data frames, which subsetting should we use?
 
 ``` {r}
 tables[3] %>% 
@@ -156,36 +150,33 @@ tables[[3]] %>%
   str()
 ```
 
-Im ersten Fall sehen wir, dass wir eine Liste der Länge 1 haben,
-welche einen Data Frame mit 7 Zeilen und 2 Variablen enthält, sowie
-weitere Informationen zu diesen Variablen.  Im zweiten Fall bekommen
-wir den Data Frame direkt, also nicht mehr als Element einer
-Liste. Wir müssen also `liste[[]]` nutzen um direkt einen einzelnen
-Data Frame aus einer Liste von Data Frames auswählen zu können.
+In the first case, we see that we have a list of length 1, which contains a data 
+frame with 7 lines and 2 variables, as well as further information about these
+variables. In the second case, we get the data frame directly, i.e. no longer as
+an element of a list. So we have to use `list_name[[]]` to directly select a 
+single data frame from a list of data frames.
 
-Sind wir stattdessen an einer Auswahl mehrerer Elemente aus einer Liste 
-interessiert, ist dies nur mit `liste[]` möglich. Statt ein Element mit einer
-einzelnen Zahl auszuwählen, können wir mehrere mit einem Vektor von Zahlen
-in einem Schritt selektieren.
+If we are interested in selecting several elements from a list instead, this is
+only possible with `list_name[]`. Instead of selecting an element with a single
+number, we can select several with a vector of numbers in one step.
+
 
 ``` {r}
 tables[c(1, 3)] %>% 
   str()
 ```
 
-Wir bekommen als Ergebnis erneut eine Liste, welche die beiden hier ausgewählten
-Elemente enthält.
+As a result, we get a list again that contains the two elements selected here.
 
 
 ### Tabellen mit NAs
 
-Was passiert, wenn wir versuchen eine Tabelle mit fehlenden Werten auszulesen?
-Betrachten Sie dazu folgendes Beispiel:
+What happens when we try to read a table with missing values? Consider the 
+following example:
 <https://webscraping-tures.github.io/table_na.html>{target="_blank"}
 
-Auf den ersten Blick ist bereits ersichtlich, dass hier mehrere Zellen der
-Tabelle unbesetzt sind. Es fehlen also Werte. Versuchen wir die Tabelle 
-trotzdem einmal einzulesen.
+At first glance, it is already obvious that several cells of the table are
+unoccupied here. Values are missing. Let's try to read in the table anyway.
 
 ``` {r error = TRUE}
 table_na <- "https://webscraping-tures.github.io/table_na.html" %>% 
@@ -196,12 +187,11 @@ table_na %>%
   html_table()
 ```
 
-Wir bekommen eine hilfreiche Fehlermeldung die darüber informiert, dass die
-Anzahl der Spalten nicht über die gesamte Tabelle hinweg konstant ist. 
-Netterweise wird uns auch direkt eine mögliche Lösung angeboten.
-Die Funktion `html_table()` kann mit dem Argument `fill = TRUE` dazu angewiesen 
-werden, Zeilen mit abweichender Spaltenanzahl automatisch mit `NA` aufzufüllen. 
-Dies steht für "Not Available" und repräsentiert fehlende Werte in R.
+We get a helpful error message informing us that the number of columns is not 
+constant across the entire table. We are also kindly offered a possible solution
+directly. The function `html_table()` can be instructed with the argument 
+`fill = TRUE` to automatically fill rows with a different number of columns with
+`NA`. This stands for "Not Available" and represents missing values in R.
 
 ``` {r}
 wahlbet <- table_na %>% 
@@ -211,11 +201,10 @@ wahlbet %>%
   head(n = 4)
 ```
 
-Wie wir sehen, konnte `html_table` die vier Zellen mit fehlenden Werten mit `NA`
-füllen und die Tabelle trotz der Probleme einlesen. Allerdings, bestehen in dem
-HTML-Quellcode zwei unterschiedliche Arten von Problemen, welche die 
-automatische Reparatur unterschiedlich gut handhaben kann. Betrachten wir dazu
-zunächst den Quellcode der ersten beiden Zeilen:
+As we can see, `html_table` was able to fill the four cells with missing values
+with `NA` and read the table despite the problems. However, there are two
+different types of problems in the HTML source code, which the automatic repair 
+handles differently. Let's first look at the source code of the first two lines:
 
 ```
 <tr>
@@ -230,16 +219,16 @@ zunächst den Quellcode der ersten beiden Zeilen:
 </tr>
 ```
 
-Für Baden-Württemberg sehen wir, dass die dritte Spalte zwar im Quellcode
-angelegt ist, sich aber kein Inhalt in dieser Zelle befindet. Dies hätte
-`html_table()` auch ohne `fill = TRUE` einlesen können und die Zelle mit einem
-`NA` gefüllt.  Im Gegensatz dazu fehlt für Bayern die Zelle komplett. Das
-bedeutet, die zweite Zeile der Tabelle besteht nur aus zwei Spalten, während der
-Rest der Tabelle drei Spalten hat. Dies ist das Problem, auf welches uns die
-Fehlermeldung hingewiesen hat. Im Ergebnis konnte R in beiden Fällen den
-richtigen Schluss ziehen und die Zelle in beiden Zeilen mit einem `NA` füllen.
+For "Baden-Württemberg", we see that the third column is created in the source 
+code, but there is no content in this cell. `html_table()` could have read this
+without `fill = TRUE` and would have filled the cell with a `NA`. In contrast, 
+for "Bayern" the cell is completely missing. This means that the second row of
+the table consists of only two columns, while the rest of the table has three
+columns. This is the problem that the error message pointed out to us. As a 
+result, R was able to draw the correct conclusion in both cases and fill the 
+cell in both rows with an `NA`.
 
-Betrachten wir aber auch die dritte und vierte Zeile im Quellcode:
+But let's also look at the third and fourth rows in the source code:
 
 ```
 <tr>
@@ -254,31 +243,28 @@ Betrachten wir aber auch die dritte und vierte Zeile im Quellcode:
 </tr>
 ```
 
-Hier fehlt in beiden Fällen die zweite Spalte. Im ersten Fall ist sie angelegt
-aber leer, im zweiten existiert sie nicht.  Mit dem ersten Fall kann
-`html_table()` erneut problemlos umgehen. Für Brandenburg stößt die Funktion
-aber an ihre Grenzen.  Wir als menschliche Betrachter erkennen schnell, dass die
-letzte Landtagswahl in Brandenburg nicht im Jahr 61.3 stattfand und dies also
-die Wahlbeteiligung sein muss. R kann dies nicht so einfach unterscheiden und
-nimmt 61.3 als Wert für die Spalte "Wahljahr" und setzt für "Wahlbeteiligung"
-ein `NA` ein.
+The second column is missing in both cases. In the first case it is created but
+empty, in the second it does not exist. In the first case, `html_table()` can
+again handle it without any problems. For "Brandenburg", however, the function
+reaches its limits. We, as human observers, quickly realise that the last state
+election in Brandenburg did not take place in 61.3 and that this must therefore
+be the turnout. R cannot distinguish this so easily and takes 61.3 as the value
+for the column "Election year" and inserts a `NA` for "Voter turnout".
 
-Was tun? Zunächst einmal, sollten wir uns darüber bewusst sein, dass solche
-Probleme existieren. Wenn `html_table()`diese Fehlermeldung ausgibt, sollten wir
-also nicht einfach `fill = TRUE` setzen, sondern versuchen herauszufinden, warum
-das Problem besteht und ob die Option, es automatisch beheben zu lassen, uns
-auch tatsächlich zum Ziel führt. Ist dies nicht der Fall, könnte ein
-Lösungsansatz sein, eine eigene "Extraktorfunktion" zu schreiben, welche die
-Probleme direkt während des Scrapings behebt. Dies ist aber eine eher
-fortgeschrittene Methode und außerhalb des in dieser Einführung machbaren. Wir
-können aber immerhin die entstandenen Probleme im Nachhinein korrigieren.
+What to do? First of all, we should be aware that such problems exist. So if 
+`html_table()` gives this error message, we should not simply set `fill = TRUE`,
+but try to find out why the problem exists and whether the option to have it
+fixed automatically will actually get us there. If this is not the case, one
+approach could be to write our own *extractor function* that fixes the problems 
+directly during scraping. However, this is a rather advanced method and outside
+the scope of what is feasible in this introduction. However, we can at least 
+correct the problems that arise afterwards.
 
-Unser Problem liegt ausschließlich in Zeile Vier. Deren zweite Spalte muss in die
-dritte verschoben werden und die zweite dann selbst als `NA` gesetzt werden.
-Dazu benötigen wir erneut subsetting. Im Falle eines Data Frames müssen wir 
-dabei die Zeile und die Spalte in der Form `df[zeile, spalte]` angeben, um eine
-Zelle auszuwählen. So können wir R sagen: "Schreibe in Zelle Drei den Inhalt von
-Zelle Zwei, und dann schreibe in Zelle Zwei `NA`"
+Our problem lies exclusively in row four. Its second column must be moved to the
+third and the second must then itself be set as `NA`. For this we need 
+subsetting again. In the case of a data frame, we need to specify the row and 
+column in the form `df[row, column]` to select a cell. So we can tell R: "Write
+in cell three the content of cell two, and then write in cell two `NA`".
 
 ```{r}
 wahlbet[4, 3] <- wahlbet[4, 2]
@@ -290,73 +276,63 @@ wahlbet %>%
 
 ## Dynamische Websites
 
-In der "Realität" des modernen Internets werden wir immer häufiger auf
-Websites stoßen, die nicht mehr ausschließlich auf statischen HTML-Dateien
-basieren, sondern Inhalte dynamisch generieren. Dies kennen Sie 
-beispielsweise in Form von Timelines in Social Media Angeboten die dynamisch
-auf Basis Ihres Nutzerprofils generiert werden. Andere Websites generieren
-die dargestellten Inhalte möglicherweise mit *JavaScript* Funktionen oder als
-Reaktion auf Eingaben in HTML-Formularen.
+In the "reality" of the modern internet, we will increasingly encounter websites 
+that are no longer based exclusively on static HTML files, but generate content 
+dynamically. You know this, for example, in the form of timelines in social 
+media offerings that are generated dynamically based on your user profile. Other
+websites may generate the displayed content with *JavaScript* functions or in
+response to input in HTML forms.
 
-In vielen dieser Fälle reicht es aus Web Scraping Perspektive nicht mehr aus,
-eine HTML-Seite einzulesen und die gesuchten Daten zu extrahieren, da diese
-im HTML-Quellcode oft nicht enthalten sind, sondern dynamisch im Hintergrund
-geladen werden. Die gute Nachricht ist, dass es auch hier meist Möglichkeiten 
-gibt, die Informationen trotzdem scrapen zu können. 
+In many of these cases, it is no longer sufficient from a web scraping 
+perspective to read in an HTML page and extract the data you are looking for, as
+this is often not contained in the HTML source code but is loaded dynamically in
+the background. The good news is that there are usually ways of scraping the
+information anyway.
 
-Möglicherweise bietet der Betreiber einer Seite oder eines Services eine *API* 
-(Application Programming Interface) an. In diesem Fall können wir uns für einen
-Zugang zu dieser Schnittstelle registrieren und erhalten dann Zugang zu den 
-Daten von Interesse. Dies ist beispielsweise bei Twitter möglich. In anderen
-Fällen können wir eventuell in den eingebetteten Scripts identifizieren, wie und
-aus welcher Datenbank die Informationen geladen werden und diese direkt 
-ansteuern. Oder wir nutzen den *Selenium WebDriver* um ein Browserfenster 
-"fernzusteuern" und das zu Scrapen, was der Browser "sieht". 
+Perhaps the operator of a page or service offers an *API* (Application 
+Programming Interface). In this case, we can register for access to this 
+interface and then get access to the data of interest. This is possible with
+Twitter, for example. In other cases, we may be able to identify in the embedded
+scripts how and from which database the information is loaded and access it
+directly. Or we use the *Selenium WebDriver* to "remotely control" a browser 
+window and scrape what the browser "sees".
 
-Bei all diesen Ansätzen handelt es sich allerdings um fortgeschrittene Methoden,
-die den Umfang dieser Einführung übersteigen.
+However, all of these approaches are advanced methods that are beyond the scope 
+of this introduction.
 
-In den Fällen, in denen auf Basis der Eingaben in ein Formular eine HTML-Datei
-dynamisch erzeugt wird, können wir diese aber mit den bereits bekannten
-Methoden auslesen.
+But in cases where an HTML file is dynamically generated based on input into a
+HTML form, we can read it using the methods we already know.
 
-### HTML-Formulare und HTML-Queries
+### HTML forms and HTML queries
 
-Lassen Sie uns als Beispiel den OPAC Katalog der Universitätsbibliothek
-Potsdam <https://opac.ub.uni-potsdam.de/>{target="_blank"}
-zunächst im Browser betrachten.
+As an example, let's first look at the OPAC catalogue of the Potsdam University
+Library <https://opac.ub.uni-potsdam.de/>{target="_blank"} in the browser.
 
-Geben wir in das Suchfeld den Begriff "test" ein und klicken auf Suche, zeigt
-uns das Browserfenster die Ergebnisse der Suchanfrage. Was uns hier aber
-eigentlich interessiert ist die Adressleiste des Browsers. Statt der URL
-"https://opac.ub.uni-potsdam.de/", steht dort nun eine deutlich längere URL in
-der Form:
-"https://opac.ub.uni-potsdam.de/DB=1/CMD?ACT=SRCHA&IKT=1016&SRT=YOP&TRM=test".
-Der erste Teil ist offensichtlich weiterhin die URL der aufgerufenen Website,
-nennen wir dies die Base-URL. An das Ende der URL wurde aber der Teil
-"CMD?ACT=SRCHA&IKT=1016&SRT=YOP&TRM=test" angehangen. Dies ist der *HTML-Query*,
-an dem wir hier interessiert sind. Zwischen Base-URL und Query befinden sich
-noch ein oder mehrere Bestandteile, die sich in diesem Fall auch je nach ihrem
-Browser unterscheiden können. Diese sind für die eigentliche Suchanfrage aber
-auch irrelevant. Die verkürzte URL:
-"https://opac.ub.uni-potsdam.de/CMD?ACT=SRCHA&IKT=1016&SRT=YOP&TRM=test" führt
-zu dem selben Ergebnis.
+If we enter the term "test" in the search field and click on Search, the browser
+window will show us the results of the search query. But what actually interests 
+us here is the browser's address bar. Instead of the URL 
+"https://opac.ub.uni-potsdam.de/", there is now a much longer URL in the form: "https://opac.ub.uni-potsdam.de/DB=1/CMD?ACT=SRCHA&IKT=1016&SRT=YOP&TRM=test". 
+The first part is obviously still the URL of the website called up, let's call
+this the base URL. However, the part "CMD?ACT=SRCHA&IKT=1016&SRT=YOP&TRM=test" 
+was added to the end of the URL. This is the *HTML query* we are interested in
+here. Between the base URL and the query there are one or more components, which
+in this case may also differ depending on your browser. However, these are also
+irrelevant for the actual search query. The shortened URL: "https://opac.ub.uni-potsdam.de/CMD?ACT=SRCHA&IKT=1016&SRT=YOP&TRM=test" 
+leads to the same result.
 
-Ein Query ist eine Anfrage, in der Daten aus einem HTML-Formular an den Server 
-gesendet werden. Dieser generiert als Reaktion eine neue Website, welche an den 
-Nutzer zurückgesendet und im Browser dargestellt wird.
-Ausgelöst wurde die Anfrage hier durch den Klick auf den "Suchen" Button.
-Wenn wir verstehen, was die Bestandteile des Querys bewirken, könnten wir
-diesen manipulieren und gezielt Nutzen um uns eine Website von Interesse
-erstellen zu lassen und diese auszulesen. 
+A query is a request in which data from an HTML form is sent to the server. In 
+response, the server generates a new website, which is sent back to the user and
+displayed in the browser. In this case, the query was triggered by clicking on 
+the "Search" button. If we understand what the components of the query do, we
+could manipulate it and use it specifically to have a website of interest 
+created and parsed.
 
 
-### HTML-Formulare
+### HTML forms
 
-Dazu müssen wir zunächst einen Blick in den HTML-Code des Suchformulars
-werfen. Um dies nachvollziehen zu können, sollten Sie sich den Quellcode der
-Seite anzeigen lassen und nach "<form" suchen oder die WDTs nutzen, um das
-Formular und seine Bestandteile zu betrachten.
+To do this, we first need to take a look at the HTML code of the search form. To
+understand this, you should display the source code of the page and search for 
+"<form" or use the WDTs to look at the form and its components.
 
 ```
 <form action="CMD"
@@ -367,26 +343,25 @@ Formular und seine Bestandteile zu betrachten.
 </form>
 ```
 
-HTML-Formulare werden durch den `<form>` Tag umfasst. Innerhalb des Tags können
-ein oder mehrere Formular-Elemente wie Texteingabefelder, Drop-Down 
-Optionslisten, Buttons usw. platziert werden.
+HTML forms are encompassed by the `<form>` tag. Within the tag, one or more form
+elements such as text entry fields, drop-down option lists, buttons, etc. can be 
+placed.
 
-`<form>` selbst trägt in diesem Beispiel eine Reihe von Attributen. Interessant 
-für uns ist als erstes das Attribut `method="GET"`. Dies legt die Methode der
-Datenübermittlung zwischen Client und Server fest. Wichtig ist dabei, dass die 
-Methode "GET" für die Übermittlung von Daten Queries in der URL nutzt und die 
-Methode "POST" nicht. Wir können Queries somit nur manipulieren, wenn die "GET" 
-Methode genutzt wird. Ist keine Methode im `<form>` Tag festgelegt, wird als 
-Standard ebenfalls "GET" genutzt. 
+`<form>` itself carries a number of attributes in this example. The first
+attribute of interest to us is the `method="GET"` attribute. This specifies the
+method of data transfer between client and server. It is important to note that 
+the method "GET" uses queries in the URL for the transmission of data and the
+method "POST" does not. We can therefore only manipulate queries if the "GET" 
+method is used. If no method is specified in the `<form>` tag, "GET" is also
+used as the default.
 
-Das zweite für uns interessante Attribut, ist `action="CMD"`. 
-Dies legt fest, welche Aktion ausgelöst werden soll 
-nachdem das Formular übermittelt wurde. Oft ist der Wert von `action=` der
-Name einer Datei auf dem Server, an welche die Daten gesendet werden sollen und
-welche dann eine dynamisch erzeugte HTML-Seite zurück an den Nutzer sendet.
+The second attribute of interest to us is `action="CMD"`. This specifies which
+action should be triggered after the form has been submitted. Often the value of
+`action=` is the name of a file on the server to which the data will be sent and
+which then returns a dynamically generated HTML page back to the user.
 
-Betrachten wir nun die Elemente des Formulars. Hierzu kann die rvest Funktion
-`html_form()` hilfreich sein.
+Let us now look at the elements of the form. For this, the rvest function 
+`html_form()` can be helpful.
 
 ``` {r}
 "https://opac.ub.uni-potsdam.de/" %>% 
@@ -395,17 +370,15 @@ Betrachten wir nun die Elemente des Formulars. Hierzu kann die rvest Funktion
   html_form()
 ```
 
-Der Output zeigt uns in der ersten Zeile nochmals die Werte für `method=` und
-`action=` sowie den Namen des Formulars.  Die weiteren sechs Zeilen zeigen, dass
-das Formular aus drei `<select>` sowie drei `<input>` Elementen besteht. Wir
-sehen außerdem die Namen dieser Elemente sowie den Standardwert, der beim
-Übermitteln des Formulars gesendet wird, solange kein anderer Wert ausgewählt
-oder eingegeben wurde.
-  
-Schauen wir uns einige dieser Elemente an.
-`<select>` Elemente sind Drop-Down Listen mit Optionen, die ausgewählt werden 
-können. Dies ist der Quellcode für das erste `<select>` Element unseres
-Beispiels:
+The output shows us in the first line again the values for `method=` and 
+`action=` as well as the name of the form. The other six lines show that the 
+form consists of three `<select>` and three `<input>` elements. We also see the
+names of these elements as well as the default value that is sent when the form
+is submitted, as long as no other value is selected or entered.
+
+Let's look at some of these elements. `<select>` elements are drop-down lists of
+options that can be selected. This is the source code for the first `<select>`
+element in our example:
 
 ```
 <select name="ACT">
@@ -415,74 +388,73 @@ Beispiels:
 </select>
 ```
 
-Das Attribut `name="ACT"` legt den Namen des Elements fest. Dieser wird bei der
-Übermittlung der Formulardaten über den Query genutzt. Über die '<option>` Tags, 
-werden die auswählbaren Optionen, also die Drop-Down Liste, definiert. 
-`<value="">` steht dabei für den von Formular übermittelten Wert. Den Nutzer:innen
-wird der auf den Tag folgende Text angezeigt. Als Standardwert wird
-entweder der erste Wert der Liste genutzt oder wie hier eine Option mit dem
-Attribut `selected` explizit als Standard festgelegt.
+The attribute `name="ACT"` defines the elements name, which is used when 
+transmitting the data from the form via the query. The `<option>` tags define 
+the selectable options, i.e. the drop down menu. `<value="">` represents the 
+value transmitted by the form. The user is being shown the text following the 
+tag. The default selection is either the first value in the list or -- like in
+this case -- the option with the attribute `selected` is being explicitly chosen
+as the default.
 
-Die drei weiteren Elemente sind `<input>` Tags. Eingabefelder, deren
-spezifischer Typ über das Attribut`type=""` festgelegt wird. 
-Dies können beispielsweise Textboxen (`type="text"`) oder Checkboxes 
-(`input="checkbox"`) sein, es stehen 
-aber weit mehr Optionen zur Verfügung. Eine umfassende Liste finden sie unter:
+The three other elements are `<input>` tags. Input fields whose specific type is
+specified via the attribute `type=""`. These can be, for example, text boxes
+(`type="text"`) or checkboxes (`input="checkbox"`), but there are many more
+options available. A comprehensive list can be found at:
 <https://www.w3schools.com/html/html_form_input_types.asp>{target="_blank"}. 
-Hier der Quellcode zu Zwei der Drei '<input>` Elemente auf der Beispielseite:
+Here is the source code for two of the three `<input>` elements on the example
+page:
 
 ```
 <input type="text" name="TRM" value="" size="50">
 
 <input type="submit" class="button" value=" Suchen ">
 ```
-  
-Der erste Tag ist vom Typ "text", also ein Textfeld, genau genommen das 
-Textfeld in welches der Suchbegriff eingegeben wird. Neben dem Namen des 
-Elements wird über `value=""` ein Standardwert des Feldes festgelegt. In diesem 
-Fall ist der Standardwert ein leeres Feld. Der zweite Tag ist vom Typ "submit". 
-Dies ist der Button "Suchen", welcher durch einen Klick die Übermittlung der
-Formulardaten über den Query auslöst.
+
+The first tag is of the type "text", i.e. a text field, in this case the text
+field into which the search term is entered. In addition to the name of the
+element, a default value of the field is specified via `value=""`. In this case,
+the default value is an empty field. The second tag is of the type "submit". 
+This is the "Search" button, which triggers the transmission of the form data 
+via the query by clicking on it.
 
 
-### Der Query
+### The query
 
-Doch was wird jetzt genau übermittelt? Betrachten wir nochmals den 
-Beispiels-Query von weiter oben: 
+But what exactly is being transmitted? Let's look again at the example query 
+from above:
 
 ```
 CMD?ACT=SRCHA&IKT=1016&SRT=YOP&TRM=test
 ```
 
-Der Wert des `action=""` Attributes bildet den ersten Bestandteil des Queries
-und wird nach der URL angehangen. Der Wert des Attributs teilt dem Server mit,
-was dieser mit den weiteren übermittelten Daten anfangen soll. Darauf folgt ein
-"?", welches die zu übermittelnden Daten als mehrere Paare von `name=""` und
-`value=""`  Attributen der einzelnen Elemente einleitet. Die Paare sind mit `&`
-verbunden. "ACT=SRCHA" steht also dafür, dass im Element mit dem Namen "ACT" die
-Option "SRCHA" ausgewählt wurde. Wofür die Werte der beiden weiteren `<select>`
-Elemente "IKT" und "SRT" stehen, können sie selber mit einem Blick in den 
-Quellcode oder die WDTs nachvollziehen. Als Wert des `<input type="text">` mit 
-dem Namen "TRM" wird der in das Feld eingegebene Text übermittelt. Hier "test".
+The value of the `action=""` attribute forms the first part of the query and is
+appended after the base URL. The value of the attribute tells the server what to
+do with the other transmitted data. This is followed by a `?`, which introduces 
+the data to be transmitted as several pairs of `name=""` and `value=""` 
+attributes of the individual elements. The pairs are connected with `&`. 
+`ACT=SRCHA` thus stands for the fact that the option "SRCHA" has been selected 
+in the element with the name "ACT". What the values of the two other `<select>`
+elements "IKT" and "SRT" stand for, you can understand yourself with a look into
+the source code or the WDTs. The text entered in the field is transmitted as the
+value of the `<input type="text">` with the name "TRM". Here "test".
 
-Der Server empfängt so die Formulardaten, kann auf Basis des `action=""` 
-Attributes, hier "CMD", nachvollziehen, wie die Daten verarbeitet werden sollen 
-und konstruiert dementsprechend die Website, die er an uns zurücksendet und die 
-in unserem Browser dargestellt wird.
+The server receives the form data in this way, can then take a decision on the 
+basis of the `action=""` attribute, here "CMD", how the data is to be processed 
+and constructs the website accordingly, which it sends back to us and which is 
+displayed in our browser.
 
-### Manipulation des Queries und Scrapen des Ergebnis
 
-Da wir jetzt wissen, was die Bestandteile des Queries bedeuten, können wir diese
-auch gezielt manipulieren. Statt nun Queries per Hand zu schreiben, sollten wir
-R Nutzen um diese für uns zusammenzusetzen. Die Technik, URLs direkt im R-Code
-zu manipulieren, wird uns außerdem noch häufiger begegnen. Wir sollten sie also 
-frühzeitig erlernen.
+### Manipulating the query and scraping the result
 
-Die Funktion `str_c()` setzt die als Argumente aufgelisteten *Strings*, also 
-Folgen von Buchstaben, zu einem einzelnen String zusammen. Dabei können auch in 
-anderen R Objekten gespeicherte Strings eingebunden werden. Haben wir das Ziel 
-sowohl die Suchmethode als auch den Suchbgegriff zu manipulieren, könnten wir
-dies so erreichen:
+Now that we know what the components of the query mean, we can manipulate them. 
+Instead of writing queries by hand, we should use R to combine them for us. We
+will also encounter the technique of manipulating URLs directly in the R code
+more often. So we should learn it early.
+
+The function `str_c()` assembles the strings listed as arguments, i.e. sequences
+of letters, into a single string. Strings stored in other R objects can also be
+included. If we have the goal of manipulating both the search method and the
+search handle, we could achieve this in this way:
 
 ``` {r}
 base_url <- "https://opac.ub.uni-potsdam.de/"
@@ -493,9 +465,9 @@ url <- str_c(base_url, "CMD?ACT=", method, "&IKT=1016&SRT=YOP&TRM=", term)
 url
 ```
 
-Verändern wir nun die in den Objekten `method` und `term` gespeicherten Strings 
-und generieren die komplette URL erneut, werden diese Bestandteile des Queries
-entsprechend manipuliert.
+If we now change the strings stored in the `method` and `term` objects and
+generate the complete URL again, these components of the query are manipulated
+accordingly.
 
 ``` {r}
 method <- "SRCH"
@@ -505,15 +477,14 @@ url <- str_c(base_url, "CMD?ACT=", method, "&IKT=1016&SRT=YOP&TRM=", term)
 url
 ```
 
-Die Suchmethode wurde auf den Wert "SRCH" festgelegt, also eine "ODER" Suche, 
-der Suchbegriff auf "web scraping". Dabei ist wichtig zu beachten, dass im Query
-keine Leerzeichen auftauchen dürfen und diese beim Absenden des Formulars durch 
-"+" ersetzt werden. Statt "web scraping" müssen wir also den String 
-"web+scraping" nutzen.
+The search method was set to the value "SRCH", i.e. an "OR" search, the search 
+term to "web scraping". It is important to note that no spaces may appear in the
+query and that these are replaced by "+" when the form is submitted. So instead
+of "web scraping" we have to use the string "web+scraping".
 
-Als Beispielanwendung können wir nun dem Server eine "UND" Suche zu dem Begriff
-"web scraping" durchführen lassen, die vom Server generierte HTML-Seite auslesen
-und die dargestellten 10 Titel extrahieren.
+As an example application, we can now have the server perform an "AND" search 
+for the term "web scraping", read out the HTML page generated by the server and
+extract the 10 titles displayed.
 
 ``` {r}
 base_url <- "https://opac.ub.uni-potsdam.de/"
@@ -527,9 +498,9 @@ website <- url %>%
   read_html()
 ```
 
-Die Suchergebnisse werden in der generierten HTML-Datei als Tabellen 
-dargestellt. Der `<table>` Tag hat dabei die Attribut-Wert Kombination
-`summary="hitlist"`, was wir für unseren CSS Selector nutzen können:
+The search results are displayed as tables in the generated HTML file. The
+`<table>` tag has the attribute-value combination `summary="hitlist"`, which we
+can use for our CSS selector:
 
 ``` {r}
 hits <- website %>% 
@@ -540,14 +511,12 @@ hits <- website %>%
 hits %>% head(n=10)
 ```
 
-Dies hat zwar funktioniert, wir sehen aber, dass die Tabelle vor allem aus 
-leeren Zeilen und Zellen besteht. Diese sind auf der Website unsichtbar, werden
-aber zur Formatierung der Darstellung genutzt. Statt die Tabelle nun 
-nachträglich zu reparieren, macht es mehr Sinn, gezielt nur die Zellen zu 
-extrahieren, in welchen die von uns gesuchte Information enthalten sind. Dies 
-sind die `<td>` Tags mit `class="hit"` und der Attribut-Wert Kombination 
-`align="left"`. Auf dieser Basis können wir einen eindeutigen CSS Selector 
-konstruieren.
+This worked, but we see that the table consists mainly of empty rows and cells. 
+These are invisible on the website, but are used to format the display. 
+Instead of repairing the table afterwards, it makes more sense to extract only
+the cells that contain the information we are looking for. These are the `<td>`
+tags with `class="hit"` and the attribute-value combination `align="left"`. 
+On this basis, we can construct a unique CSS selector.
 
 ``` {r}
 hits <- website %>% 
@@ -557,13 +526,14 @@ hits <- website %>%
 hits %>% head(n = 5)
 ```
 
-### Weiterführende Quellen
+### Additional resources
 
-Um diese Informationen weiter zu verarbeiten und beispielsweise in Daten zu
-Autor, Titel, Jahr usw. zu trennen, sind erweiterte Kenntnisse im Umgang mit
-Strings notwendig, die leider über diese Einführung hinausgehen. Eine gute erste
-Übersicht finden sie im Kapitel "Strings" aus "R for Data Science" von Wickham
-und Grolemund: <https://r4ds.had.co.nz/strings.html>{target="_blank"}
+In order to process this information further and, for example, separate it into 
+data on author, title, year, etc., advanced knowledge in dealing with strings is
+necessary, which unfortunately goes beyond the scope of this introduction. A 
+good first overview can be found in the chapter "Strings" from "R for Data
+Science" by Wickham and Grolemund: 
+<https://r4ds.had.co.nz/strings.html>{target="_blank"}
 
-Dazu sei auch der passende "Cheat Sheet" empfohlen:
+The appropriate "cheat sheet" is also recommended:
 <https://raw.githubusercontent.com/rstudio/cheatsheets/master/strings.pdf>{target="_blank"}

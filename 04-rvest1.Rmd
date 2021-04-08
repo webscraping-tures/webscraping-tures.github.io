@@ -84,12 +84,12 @@ on the page.
 The function `html_nodes()` from the rvest package allows us to extract
 individual elements of the HTML code. To do this, it needs the object to be
 extracted from, as the first argument and a *selector* as well. In this 
-introduction, we will concentrate exclusively on the so-called *CSS Selectors*.
-The alternative *XPath* is a bit more flexible, but CSS Selectors are sufficient
+introduction, we will concentrate exclusively on the so-called *CSS selectors*.
+The alternative *XPath* is a bit more flexible, but CSS selectors are sufficient
 in most cases and have a shorter and more intuitive syntax, which clearly makes
 them the tool of choice here.
 
-We will discuss the possibilities offered by CSS Selectors in more detail in
+We will discuss the possibilities offered by CSS selectors in more detail in
 chapter \@ref(css) and will limit ourselves to the basics for now. A selector in
 the form `"tag"`, selects all HTML tags of the specified name. If we want to 
 extract the `<title>` tag, we can do so in this way:
@@ -173,7 +173,7 @@ website <- read_html("https://scrapethissite.com/pages/simple/")
 
 To understand the structure of the HTML file, the first step is to look at the
 source code. As always, we can open it by right-clicking in the browser window 
-and then clicking on "View page source". The first 100 or so lines of HTML code 
+and then clicking on "View Page Source". The first 100 or so lines of HTML code 
 mainly contain information on the design of the website, which should not 
 distract us further at this point. We are purely interested in the data of the
 countries. The first country listed on the website is Andorra. It therefore 

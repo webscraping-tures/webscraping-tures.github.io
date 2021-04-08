@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Web Scraping mit R</title>
-  <meta name="description" content="Web Scraping mit R" />
+  <title>Web Scraping using R</title>
+  <meta name="description" content="Web Scraping using R" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Web Scraping mit R" />
+  <meta property="og:title" content="Web Scraping using R" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="webscraping-tures/webscraping-tures.github.io" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Web Scraping mit R" />
+  <meta name="twitter:title" content="Web Scraping using R" />
   
   
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2021-04-07" />
+<meta name="date" content="2021-04-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -137,12 +137,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 Web Scraping mit R
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Einführung</a>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a>
 <ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#was-ist-web-scraping"><i class="fa fa-check"></i>Was ist Web Scraping?</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#was-lernen-wir-was-nicht"><i class="fa fa-check"></i>Was lernen wir, was nicht?</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#technische-voraussetzungen"><i class="fa fa-check"></i>Technische Voraussetzungen</a></li>
-<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#conventions"><i class="fa fa-check"></i><b>0.1</b> Conventions</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#what-is-web-scraping"><i class="fa fa-check"></i>What is web scraping?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#course-contents"><i class="fa fa-check"></i>Course contents</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#technical-requirements"><i class="fa fa-check"></i>Technical requirements</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#conventions"><i class="fa fa-check"></i>Conventions</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#colophon"><i class="fa fa-check"></i>Colophon</a></li>
 </ul></li>
 <li class="part"><span><b>I Basics</b></span></li>
 <li class="chapter" data-level="1" data-path="html.html"><a href="html.html"><i class="fa fa-check"></i><b>1</b> HTML as a cornerstone of the internet</a>
@@ -177,7 +179,7 @@ Web Scraping mit R
 <ul>
 <li class="chapter" data-level="2.5.1" data-path="R1.html"><a href="R1.html#subsetting"><i class="fa fa-check"></i><b>2.5.1</b> Subsetting</a></li>
 <li class="chapter" data-level="2.5.2" data-path="R1.html"><a href="R1.html#types-of-vectors"><i class="fa fa-check"></i><b>2.5.2</b> Types of vectors</a></li>
-<li class="chapter" data-level="2.5.3" data-path="R1.html"><a href="R1.html#a-brief-look-on-lists"><i class="fa fa-check"></i><b>2.5.3</b> A brief look on lists</a></li>
+<li class="chapter" data-level="2.5.3" data-path="R1.html"><a href="R1.html#a-brief-look-at-lists"><i class="fa fa-check"></i><b>2.5.3</b> A brief look at lists</a></li>
 </ul></li>
 <li class="chapter" data-level="2.6" data-path="R1.html"><a href="R1.html#functions"><i class="fa fa-check"></i><b>2.6</b> Functions</a>
 <ul>
@@ -185,18 +187,20 @@ Web Scraping mit R
 <li class="chapter" data-level="2.6.2" data-path="R1.html"><a href="R1.html#examples-basic-statistical-functions"><i class="fa fa-check"></i><b>2.6.2</b> Examples: Basic statistical functions</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>3</b> Tidyverse</a>
+<li class="chapter" data-level="3" data-path="rstudio-in-practice-the-tidyverse.html"><a href="rstudio-in-practice-the-tidyverse.html"><i class="fa fa-check"></i><b>3</b> RStudio in practice &amp; the tidyverse</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="tidyverse.html"><a href="tidyverse.html#rstudio-workflow"><i class="fa fa-check"></i><b>3.1</b> RStudio Workflow</a></li>
-<li class="chapter" data-level="3.2" data-path="tidyverse.html"><a href="tidyverse.html#settings"><i class="fa fa-check"></i><b>3.2</b> Settings?</a></li>
-<li class="chapter" data-level="3.3" data-path="tidyverse.html"><a href="tidyverse.html#packages-in-general"><i class="fa fa-check"></i><b>3.3</b> Packages in general</a>
+<li class="chapter" data-level="3.1" data-path="rstudio-in-practice-the-tidyverse.html"><a href="rstudio-in-practice-the-tidyverse.html#rstudio-workflow"><i class="fa fa-check"></i><b>3.1</b> RStudio Workflow</a>
 <ul>
-<li class="chapter" data-level="3.3.1" data-path="tidyverse.html"><a href="tidyverse.html#namespaces"><i class="fa fa-check"></i><b>3.3.1</b> namespaces</a></li>
-<li class="chapter" data-level="3.3.2" data-path="tidyverse.html"><a href="tidyverse.html#helpvignettes"><i class="fa fa-check"></i><b>3.3.2</b> help/vignettes</a></li>
+<li class="chapter" data-level="3.1.1" data-path="rstudio-in-practice-the-tidyverse.html"><a href="rstudio-in-practice-the-tidyverse.html#settings"><i class="fa fa-check"></i><b>3.1.1</b> Settings</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="tidyverse.html"><a href="tidyverse.html#philosophie"><i class="fa fa-check"></i><b>3.4</b> Philosophie</a></li>
-<li class="chapter" data-level="3.5" data-path="tidyverse.html"><a href="tidyverse.html#tidy-data"><i class="fa fa-check"></i><b>3.5</b> Tidy data</a></li>
-<li class="chapter" data-level="3.6" data-path="tidyverse.html"><a href="tidyverse.html#pipe"><i class="fa fa-check"></i><b>3.6</b> Pipe</a></li>
+<li class="chapter" data-level="3.2" data-path="rstudio-in-practice-the-tidyverse.html"><a href="rstudio-in-practice-the-tidyverse.html#packages-in-general"><i class="fa fa-check"></i><b>3.2</b> Packages in general</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="rstudio-in-practice-the-tidyverse.html"><a href="rstudio-in-practice-the-tidyverse.html#namespaces"><i class="fa fa-check"></i><b>3.2.1</b> namespaces</a></li>
+<li class="chapter" data-level="3.2.2" data-path="rstudio-in-practice-the-tidyverse.html"><a href="rstudio-in-practice-the-tidyverse.html#helpvignettes"><i class="fa fa-check"></i><b>3.2.2</b> help/vignettes</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="rstudio-in-practice-the-tidyverse.html"><a href="rstudio-in-practice-the-tidyverse.html#philosophie"><i class="fa fa-check"></i><b>3.3</b> Philosophie</a></li>
+<li class="chapter" data-level="3.4" data-path="rstudio-in-practice-the-tidyverse.html"><a href="rstudio-in-practice-the-tidyverse.html#tidy-data"><i class="fa fa-check"></i><b>3.4</b> Tidy data</a></li>
+<li class="chapter" data-level="3.5" data-path="rstudio-in-practice-the-tidyverse.html"><a href="rstudio-in-practice-the-tidyverse.html#pipe"><i class="fa fa-check"></i><b>3.5</b> Pipe</a></li>
 </ul></li>
 <li class="part"><span><b>III Scraping</b></span></li>
 <li class="chapter" data-level="4" data-path="rvest1.html"><a href="rvest1.html"><i class="fa fa-check"></i><b>4</b> First scraping with rvest</a>
@@ -227,46 +231,45 @@ Web Scraping mit R
 </ul></li>
 <li class="chapter" data-level="5.2" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#developer-tools"><i class="fa fa-check"></i><b>5.2</b> Developer Tools</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="rvest2.html"><a href="rvest2.html"><i class="fa fa-check"></i><b>6</b> Scraping von Tabellen &amp; dynamischen Websites</a>
+<li class="chapter" data-level="6" data-path="rvest2.html"><a href="rvest2.html"><i class="fa fa-check"></i><b>6</b> Scraping of tables &amp; dynamic websites</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="rvest2.html"><a href="rvest2.html#scraping-von-tabellen"><i class="fa fa-check"></i><b>6.1</b> Scraping von Tabellen</a>
+<li class="chapter" data-level="6.1" data-path="rvest2.html"><a href="rvest2.html#scraping-of-tables"><i class="fa fa-check"></i><b>6.1</b> Scraping of tables</a>
 <ul>
-<li class="chapter" data-level="6.1.1" data-path="rvest2.html"><a href="rvest2.html#tabelle-mit-css-selectors-aus-wikipedia"><i class="fa fa-check"></i><b>6.1.1</b> Tabelle mit CSS Selectors aus Wikipedia</a></li>
-<li class="chapter" data-level="6.1.2" data-path="rvest2.html"><a href="rvest2.html#scrapen-mehrerer-tabellen"><i class="fa fa-check"></i><b>6.1.2</b> Scrapen mehrerer Tabellen</a></li>
+<li class="chapter" data-level="6.1.1" data-path="rvest2.html"><a href="rvest2.html#table-with-css-selectors-from-wikipedia"><i class="fa fa-check"></i><b>6.1.1</b> Table with CSS selectors from Wikipedia</a></li>
+<li class="chapter" data-level="6.1.2" data-path="rvest2.html"><a href="rvest2.html#scraping-multiple-tables"><i class="fa fa-check"></i><b>6.1.2</b> Scraping multiple tables</a></li>
 <li class="chapter" data-level="6.1.3" data-path="rvest2.html"><a href="rvest2.html#tabellen-mit-nas"><i class="fa fa-check"></i><b>6.1.3</b> Tabellen mit NAs</a></li>
 </ul></li>
 <li class="chapter" data-level="6.2" data-path="rvest2.html"><a href="rvest2.html#dynamische-websites"><i class="fa fa-check"></i><b>6.2</b> Dynamische Websites</a>
 <ul>
-<li class="chapter" data-level="6.2.1" data-path="rvest2.html"><a href="rvest2.html#html-formulare-und-html-queries"><i class="fa fa-check"></i><b>6.2.1</b> HTML-Formulare und HTML-Queries</a></li>
-<li class="chapter" data-level="6.2.2" data-path="rvest2.html"><a href="rvest2.html#html-formulare"><i class="fa fa-check"></i><b>6.2.2</b> HTML-Formulare</a></li>
-<li class="chapter" data-level="6.2.3" data-path="rvest2.html"><a href="rvest2.html#der-query"><i class="fa fa-check"></i><b>6.2.3</b> Der Query</a></li>
-<li class="chapter" data-level="6.2.4" data-path="rvest2.html"><a href="rvest2.html#manipulation-des-queries-und-scrapen-des-ergebnis"><i class="fa fa-check"></i><b>6.2.4</b> Manipulation des Queries und Scrapen des Ergebnis</a></li>
-<li class="chapter" data-level="6.2.5" data-path="rvest2.html"><a href="rvest2.html#weiterführende-quellen"><i class="fa fa-check"></i><b>6.2.5</b> Weiterführende Quellen</a></li>
+<li class="chapter" data-level="6.2.1" data-path="rvest2.html"><a href="rvest2.html#html-forms-and-html-queries"><i class="fa fa-check"></i><b>6.2.1</b> HTML forms and HTML queries</a></li>
+<li class="chapter" data-level="6.2.2" data-path="rvest2.html"><a href="rvest2.html#html-forms"><i class="fa fa-check"></i><b>6.2.2</b> HTML forms</a></li>
+<li class="chapter" data-level="6.2.3" data-path="rvest2.html"><a href="rvest2.html#the-query"><i class="fa fa-check"></i><b>6.2.3</b> The query</a></li>
+<li class="chapter" data-level="6.2.4" data-path="rvest2.html"><a href="rvest2.html#manipulating-the-query-and-scraping-the-result"><i class="fa fa-check"></i><b>6.2.4</b> Manipulating the query and scraping the result</a></li>
+<li class="chapter" data-level="6.2.5" data-path="rvest2.html"><a href="rvest2.html#additional-resources"><i class="fa fa-check"></i><b>6.2.5</b> Additional resources</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="rvest3.html"><a href="rvest3.html"><i class="fa fa-check"></i><b>7</b> Scraping mehrseitiger Websites</a>
+<li class="chapter" data-level="7" data-path="rvest3.html"><a href="rvest3.html"><i class="fa fa-check"></i><b>7</b> Scraping of multi-page websites</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="rvest3.html"><a href="rvest3.html#indexseiten"><i class="fa fa-check"></i><b>7.1</b> Indexseiten</a>
+<li class="chapter" data-level="7.1" data-path="rvest3.html"><a href="rvest3.html#index-pages"><i class="fa fa-check"></i><b>7.1</b> Index-pages</a>
 <ul>
-<li class="chapter" data-level="7.1.1" data-path="rvest3.html"><a href="rvest3.html#scrapen-des-index"><i class="fa fa-check"></i><b>7.1.1</b> Scrapen des Index</a></li>
-<li class="chapter" data-level="7.1.2" data-path="rvest3.html"><a href="rvest3.html#iteration-mit-map"><i class="fa fa-check"></i><b>7.1.2</b> Iteration mit map()</a></li>
-<li class="chapter" data-level="7.1.3" data-path="rvest3.html"><a href="rvest3.html#scrapen-der-unterseiten"><i class="fa fa-check"></i><b>7.1.3</b> Scrapen der Unterseiten</a></li>
+<li class="chapter" data-level="7.1.1" data-path="rvest3.html"><a href="rvest3.html#scraping-of-the-index"><i class="fa fa-check"></i><b>7.1.1</b> Scraping of the index</a></li>
+<li class="chapter" data-level="7.1.2" data-path="rvest3.html"><a href="rvest3.html#iteration-with-map"><i class="fa fa-check"></i><b>7.1.2</b> Iteration with map()</a></li>
+<li class="chapter" data-level="7.1.3" data-path="rvest3.html"><a href="rvest3.html#scraping-the-sub-pages"><i class="fa fa-check"></i><b>7.1.3</b> Scraping the sub-pages</a></li>
 </ul></li>
 <li class="chapter" data-level="7.2" data-path="rvest3.html"><a href="rvest3.html#pagination"><i class="fa fa-check"></i><b>7.2</b> Pagination</a>
 <ul>
-<li class="chapter" data-level="7.2.1" data-path="rvest3.html"><a href="rvest3.html#der-query-1"><i class="fa fa-check"></i><b>7.2.1</b> Der Query</a></li>
-<li class="chapter" data-level="7.2.2" data-path="rvest3.html"><a href="rvest3.html#scrapen-der-unterseiten-1"><i class="fa fa-check"></i><b>7.2.2</b> Scrapen der Unterseiten</a></li>
+<li class="chapter" data-level="7.2.1" data-path="rvest3.html"><a href="rvest3.html#the-query-1"><i class="fa fa-check"></i><b>7.2.1</b> The query</a></li>
+<li class="chapter" data-level="7.2.2" data-path="rvest3.html"><a href="rvest3.html#scraping-the-sub-pages-1"><i class="fa fa-check"></i><b>7.2.2</b> Scraping the sub-pages</a></li>
 </ul></li>
 </ul></li>
-<li class="part"><span><b>IV Beispielprojekte</b></span></li>
-<li class="chapter" data-level="8" data-path="R3.html"><a href="R3.html"><i class="fa fa-check"></i><b>8</b> Transformation und Visualisierung im Tidyverse</a>
+<li class="part"><span><b>IV Practical application</b></span></li>
+<li class="chapter" data-level="8" data-path="good-practice.html"><a href="good-practice.html"><i class="fa fa-check"></i><b>8</b> Good practice</a></li>
+<li class="chapter" data-level="9" data-path="R3.html"><a href="R3.html"><i class="fa fa-check"></i><b>9</b> Data transformation and graphical analysis</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="R3.html"><a href="R3.html#transformation-mit-dplyr"><i class="fa fa-check"></i><b>8.1</b> Transformation mit dplyr</a></li>
-<li class="chapter" data-level="8.2" data-path="R3.html"><a href="R3.html#visualisierung-mit-ggplot"><i class="fa fa-check"></i><b>8.2</b> Visualisierung mit ggplot</a></li>
+<li class="chapter" data-level="9.1" data-path="R3.html"><a href="R3.html#transformation-with-dplyr"><i class="fa fa-check"></i><b>9.1</b> Transformation with dplyr</a></li>
+<li class="chapter" data-level="9.2" data-path="R3.html"><a href="R3.html#graphical-analysis-with-ggplot"><i class="fa fa-check"></i><b>9.2</b> Graphical analysis with ggplot</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="ethik.html"><a href="ethik.html"><i class="fa fa-check"></i><b>9</b> Ethik &amp; good practice</a></li>
-<li class="chapter" data-level="10" data-path="projekt1.html"><a href="projekt1.html"><i class="fa fa-check"></i><b>10</b> Beispielprojekt 1</a></li>
-<li class="chapter" data-level="11" data-path="projekt2.html"><a href="projekt2.html"><i class="fa fa-check"></i><b>11</b> Beispielprojekt 2</a></li>
+<li class="chapter" data-level="10" data-path="project.html"><a href="project.html"><i class="fa fa-check"></i><b>10</b> Sample project</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -279,7 +282,7 @@ Web Scraping mit R
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Web Scraping mit R</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Web Scraping using R</a>
           </h1>
         </div>
 
@@ -288,99 +291,190 @@ Web Scraping mit R
 
             <section class="normal" id="section-">
 <div id="header">
-<h1 class="title">Web Scraping mit R</h1>
+<h1 class="title">Web Scraping using R</h1>
 <p class="author"><em>Jakob Tures</em></p>
-<p class="date"><em>2021-04-07</em></p>
+<p class="date"><em>2021-04-08</em></p>
 </div>
-<div id="einführung" class="section level1 unnumbered">
-<h1>Einführung</h1>
+<div id="introduction" class="section level1 unnumbered">
+<h1>Introduction</h1>
 <p>WIP!</p>
-<div id="was-ist-web-scraping" class="section level2 unnumbered">
-<h2>Was ist Web Scraping?</h2>
+<div id="what-is-web-scraping" class="section level2 unnumbered">
+<h2>What is web scraping?</h2>
 <ul>
-<li>Ziele
+<li>Goals
 <ul>
-<li>Zugang zu Daten die wir auf klassischem Wege nicht bekommen könnten</li>
-<li>Zugang zu neuen Formen von Daten die nur im Web denkbar sind (bspw. Kundenreviews, Nutzerverhalten)</li>
-<li>Was ist möglich: Beispiele Kriesel 3C</li>
+<li>Accessing data that we cannot get with traditional methods.</li>
+<li>Accessing data that is only conceivable on the internet
+(i.e., customer reviews, user behaviour et al.)</li>
+<li>What is feasible: Examples</li>
 </ul></li>
-<li>Methoden
+<li>Methods
 <ul>
-<li>Identifikation für unsere Fragestellung relevanter Webinhalte</li>
-<li>Zugriff auf Webinhalte aus einer Programmiersprache heraus (R, Python, etc.)</li>
-<li>Extraktion der für unsere Fragestellung relevanten Teilinhalte der Seite</li>
-<li>Säuberung und Überführung in ein für die Datenanalyse geeignetes Format -&gt; Datenanalyse</li>
-</ul></li>
-<li>Ethik
-<ul>
-<li>Grundregeln, später Sitzung dazu</li>
+<li>Identification of web content relevant to our query</li>
+<li>Accessing web content directly from a programming language (R, Python, etc.)</li>
+<li>Extraction of the page’s contents relevant to our interest</li>
+<li>Date cleaning and transferral into a format suited to data analysis</li>
+<li>Data analysis</li>
 </ul></li>
 </ul>
 </div>
-<div id="was-lernen-wir-was-nicht" class="section level2 unnumbered">
-<h2>Was lernen wir, was nicht?</h2>
+<div id="course-contents" class="section level2 unnumbered">
+<h2>Course contents</h2>
 <ul>
-<li>Grundstruktur des Web
+<li>Basic structure of the internet
 <ul>
-<li>HTML, XML</li>
-<li>Überblick zu anderen Bausteinen die wir in der Wildnis treffen, ohne zu tief hineinzugehen</li>
+<li>HTML</li>
+<li>Overview of other components we might encounter in the wild, without going too much in-depth</li>
 </ul></li>
-<li>Einführung in R
+<li>Introduction to R
 <ul>
 <li>Basics in R Studio</li>
-<li>Tidyverse
-<ul>
-<li>tidy data</li>
-<li>dplyr</li>
-<li>ggplot</li>
-<li>rvest</li>
-<li>evtl. stringr</li>
-</ul></li>
+<li>Tidyverse</li>
+<li>Basics in data transformation and graphical analysis</li>
 </ul></li>
 <li>Scraping
 <ul>
-<li>Scrapen ganzer Seiten mit rvest</li>
-<li>CSS Selectors und Developement Tools zur Identifikation des Pfades einzelner Inhalte
-<ul>
-<li>Extraktion dieser Pfade mit rvest</li>
+<li>Scraping with rvest</li>
+<li>CSS Selectors for selecting specific parts of a website</li>
+<li>Scraping tables</li>
+<li>Scraping dynamically generated websites (HTML forms)</li>
+<li>Scraping multi-page websites</li>
+<li>Good practice</li>
 </ul></li>
-<li>Evtl. gezieltes Auslesen von XML Inhalten</li>
-</ul></li>
-<li>Was nicht:
+<li>Not covered:
 <ul>
-<li>Umgang mit dynamischen Websites, javascript, Datenbankzugriffen usw. (hier nur grober Überblick was es alles gibt und das es Wege gibt damit umzugehen -&gt; Fortgeschrittene)</li>
-<li>Umgang mit Strings &amp; regular expressions (Hinweis dass sie nicht darum herumkommen wenn sie den Weg weitergehen möchten, kurzer Überblick dazu wenn Zeit reicht)</li>
-<li>Scrapen mit anderen packages oder Sprachen als R + rvest (evtl. Hinweis auf weitere verbreitete Möglichkeiten)</li>
+<li>Handling of dynamic websites, JavaScript, databank access etc.</li>
+<li>Handling of stings &amp; regular expressions (Note: you will not be able to get around this if you want to follow this path)</li>
+<li>Scraping with other packages or languages than R + rvest</li>
 </ul></li>
 </ul>
 </div>
-<div id="technische-voraussetzungen" class="section level2 unnumbered">
-<h2>Technische Voraussetzungen</h2>
+<div id="technical-requirements" class="section level2 unnumbered">
+<h2>Technical requirements</h2>
 <ul>
-<li><p>R + R Studio</p></li>
-<li><p>ordentlicher Text Editor</p>
+<li>R + RStudio
+<ul>
+<li>required packages in chap. 3</li>
+</ul></li>
+<li>A good text editor
 <ul>
 <li>Windows: Notepad ++</li>
-<li>Mac: ?</li>
-<li>Linux: Atom</li>
+<li>For all OS: Atom</li>
 </ul></li>
-<li><p>Browser</p>
+<li>Browser
 <ul>
-<li>Chrome/Chromium (wegen der Developer Tools?)</li>
-<li>Notwendige Einstellungen? i.e. Darstellung voller URLs</li>
+<li>Chrome/Chromium recommended</li>
+<li>Necessary settings (full URLs, WDTs)</li>
 </ul></li>
 </ul>
 </div>
-<div id="conventions" class="section level2" number="0.1">
-<h2><span class="header-section-number">0.1</span> Conventions</h2>
+<div id="conventions" class="section level2 unnumbered">
+<h2>Conventions</h2>
 <ul>
-<li><p>Inline code and Code blocks</p></li>
-<li><p>Code is copyable but use sparely (writing is important)</p></li>
+<li>Inline code and Code blocks
+<ul>
+<li>Also HTML code</li>
+</ul></li>
+<li>Code is copyable but use sparely (writing is important)</li>
 </ul>
-<p>Acknowledgement</p>
-<p>Colophon?
-sessioninfo::session_info()
-but need to load all packages here to make them show up?</p>
+</div>
+<div id="acknowledgements" class="section level2 unnumbered">
+<h2>Acknowledgements</h2>
+<p>I would like to thank the authors of bookdown the tidyverse and all R packages
+used in the creation of this course on web scraping.</p>
+<p>Very special thanks go to Lukas Höttges for his support in creating the website
+and in organizing the seminar at the University of Potsdam. To Hannah Gehrmann
+for the invaluable feedback on an early draft. To Fabian Class for technical
+support and numerous answers to my many questions. And to Sophia Varma for
+translating the original German draft and the great support.</p>
+</div>
+<div id="colophon" class="section level2 unnumbered">
+<h2>Colophon</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span>
+<span id="cb1-2"><a href="index.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">## ─ Session info ───────────────────────────────────────────────────────────────</span></span>
+<span id="cb1-3"><a href="index.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  setting  value                       </span></span>
+<span id="cb1-4"><a href="index.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  version  R version 4.0.4 (2021-02-15)</span></span>
+<span id="cb1-5"><a href="index.html#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  os       Ubuntu 20.04.2 LTS          </span></span>
+<span id="cb1-6"><a href="index.html#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  system   x86_64, linux-gnu           </span></span>
+<span id="cb1-7"><a href="index.html#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  ui       X11                         </span></span>
+<span id="cb1-8"><a href="index.html#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  language (EN)                        </span></span>
+<span id="cb1-9"><a href="index.html#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  collate  en_US.UTF-8                 </span></span>
+<span id="cb1-10"><a href="index.html#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  ctype    en_US.UTF-8                 </span></span>
+<span id="cb1-11"><a href="index.html#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  tz       Europe/Berlin               </span></span>
+<span id="cb1-12"><a href="index.html#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  date     2021-04-08                  </span></span>
+<span id="cb1-13"><a href="index.html#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb1-14"><a href="index.html#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="do">## ─ Packages ───────────────────────────────────────────────────────────────────</span></span>
+<span id="cb1-15"><a href="index.html#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  package     * version date       lib source        </span></span>
+<span id="cb1-16"><a href="index.html#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  assertthat    0.2.1   2019-03-21 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-17"><a href="index.html#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  backports     1.2.1   2020-12-09 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-18"><a href="index.html#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  bookdown      0.21    2020-10-13 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-19"><a href="index.html#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="do">##  broom         0.7.4   2021-01-29 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-20"><a href="index.html#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="do">##  cellranger    1.1.0   2016-07-27 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-21"><a href="index.html#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="do">##  cli           2.3.0   2021-01-31 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-22"><a href="index.html#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="do">##  colorspace    2.0-0   2020-11-11 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-23"><a href="index.html#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="do">##  crayon        1.4.1   2021-02-08 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-24"><a href="index.html#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="do">##  DBI           1.1.1   2021-01-15 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-25"><a href="index.html#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="do">##  dbplyr        2.1.0   2021-02-03 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-26"><a href="index.html#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="do">##  digest        0.6.27  2020-10-24 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-27"><a href="index.html#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="do">##  dplyr       * 1.0.4   2021-02-02 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-28"><a href="index.html#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="do">##  echarts4r   * 0.4.0   2021-03-07 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-29"><a href="index.html#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="do">##  ellipsis      0.3.1   2020-05-15 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-30"><a href="index.html#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="do">##  evaluate      0.14    2019-05-28 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-31"><a href="index.html#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="do">##  fastmap       1.1.0   2021-01-25 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-32"><a href="index.html#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="do">##  forcats     * 0.5.1   2021-01-27 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-33"><a href="index.html#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="do">##  fs            1.5.0   2020-07-31 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-34"><a href="index.html#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="do">##  generics      0.1.0   2020-10-31 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-35"><a href="index.html#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="do">##  ggplot2     * 3.3.3   2020-12-30 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-36"><a href="index.html#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="do">##  glue          1.4.2   2020-08-27 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-37"><a href="index.html#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="do">##  gtable        0.3.0   2019-03-25 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-38"><a href="index.html#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="do">##  haven         2.3.1   2020-06-01 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-39"><a href="index.html#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="do">##  hms           1.0.0   2021-01-13 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-40"><a href="index.html#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="do">##  htmltools     0.5.1.1 2021-01-22 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-41"><a href="index.html#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="do">##  htmlwidgets   1.5.3   2020-12-10 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-42"><a href="index.html#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="do">##  httpuv        1.5.5   2021-01-13 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-43"><a href="index.html#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="do">##  httr          1.4.2   2020-07-20 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-44"><a href="index.html#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="do">##  jsonlite      1.7.2   2020-12-09 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-45"><a href="index.html#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="do">##  knitr       * 1.31    2021-01-27 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-46"><a href="index.html#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="do">##  later         1.1.0.1 2020-06-05 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-47"><a href="index.html#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="do">##  lifecycle     1.0.0   2021-02-15 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-48"><a href="index.html#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="do">##  lubridate   * 1.7.9.2 2020-11-13 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-49"><a href="index.html#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="do">##  magrittr      2.0.1   2020-11-17 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-50"><a href="index.html#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="do">##  mime          0.10    2021-02-13 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-51"><a href="index.html#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="do">##  modelr        0.1.8   2020-05-19 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-52"><a href="index.html#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="do">##  munsell       0.5.0   2018-06-12 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-53"><a href="index.html#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="do">##  pillar        1.4.7   2020-11-20 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-54"><a href="index.html#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="do">##  pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-55"><a href="index.html#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="do">##  promises      1.2.0.1 2021-02-11 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-56"><a href="index.html#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="do">##  purrr       * 0.3.4   2020-04-17 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-57"><a href="index.html#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="do">##  R6            2.5.0   2020-10-28 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-58"><a href="index.html#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="do">##  Rcpp          1.0.6   2021-01-15 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-59"><a href="index.html#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="do">##  readr       * 1.4.0   2020-10-05 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-60"><a href="index.html#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="do">##  readxl        1.3.1   2019-03-13 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-61"><a href="index.html#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="do">##  reprex        1.0.0   2021-01-27 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-62"><a href="index.html#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="do">##  rlang         0.4.10  2020-12-30 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-63"><a href="index.html#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="do">##  rmarkdown     2.6     2020-12-14 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-64"><a href="index.html#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="do">##  rstudioapi    0.13    2020-11-12 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-65"><a href="index.html#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="do">##  rvest       * 0.3.6   2020-07-25 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-66"><a href="index.html#cb1-66" aria-hidden="true" tabindex="-1"></a><span class="do">##  scales        1.1.1   2020-05-11 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-67"><a href="index.html#cb1-67" aria-hidden="true" tabindex="-1"></a><span class="do">##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-68"><a href="index.html#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="do">##  shiny         1.6.0   2021-01-25 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-69"><a href="index.html#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="do">##  stringi       1.5.3   2020-09-09 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-70"><a href="index.html#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="do">##  stringr     * 1.4.0   2019-02-10 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-71"><a href="index.html#cb1-71" aria-hidden="true" tabindex="-1"></a><span class="do">##  tibble      * 3.0.6   2021-01-29 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-72"><a href="index.html#cb1-72" aria-hidden="true" tabindex="-1"></a><span class="do">##  tidyr       * 1.1.2   2020-08-27 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-73"><a href="index.html#cb1-73" aria-hidden="true" tabindex="-1"></a><span class="do">##  tidyselect    1.1.0   2020-05-11 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-74"><a href="index.html#cb1-74" aria-hidden="true" tabindex="-1"></a><span class="do">##  tidyverse   * 1.3.0   2019-11-21 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-75"><a href="index.html#cb1-75" aria-hidden="true" tabindex="-1"></a><span class="do">##  vctrs         0.3.6   2020-12-17 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-76"><a href="index.html#cb1-76" aria-hidden="true" tabindex="-1"></a><span class="do">##  withr         2.4.1   2021-01-26 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-77"><a href="index.html#cb1-77" aria-hidden="true" tabindex="-1"></a><span class="do">##  xfun          0.21    2021-02-10 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-78"><a href="index.html#cb1-78" aria-hidden="true" tabindex="-1"></a><span class="do">##  xml2        * 1.3.2   2020-04-23 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-79"><a href="index.html#cb1-79" aria-hidden="true" tabindex="-1"></a><span class="do">##  xtable        1.8-4   2019-04-21 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-80"><a href="index.html#cb1-80" aria-hidden="true" tabindex="-1"></a><span class="do">##  yaml          2.2.1   2020-02-01 [1] CRAN (R 4.0.4)</span></span>
+<span id="cb1-81"><a href="index.html#cb1-81" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb1-82"><a href="index.html#cb1-82" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] /home/jakobtures/R/x86_64-pc-linux-gnu-library/4.0</span></span>
+<span id="cb1-83"><a href="index.html#cb1-83" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] /usr/local/lib/R/site-library</span></span>
+<span id="cb1-84"><a href="index.html#cb1-84" aria-hidden="true" tabindex="-1"></a><span class="do">## [3] /usr/lib/R/site-library</span></span>
+<span id="cb1-85"><a href="index.html#cb1-85" aria-hidden="true" tabindex="-1"></a><span class="do">## [4] /usr/lib/R/library</span></span></code></pre></div>
 
 </div>
 </div>

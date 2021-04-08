@@ -17,7 +17,7 @@ specific code. This code is then interpreted by your browser and translated into
 a visual representation, which you are finding yourselves in front of now.
 
 Try it yourself. With a right-click into this area of the text and a further
-click on “View page source”, the HTML-code that the website is based on, is 
+click on “View Page Source”, the HTML-code that the website is based on, is 
 shown. At this point it is completely legitimate to be overwhelmed by the flood
 of unfamiliar symbols and terminology. Who would have thought that a relatively
 simple website such as this one, can be so complex and complicated on the 
