@@ -138,7 +138,7 @@ extraction of the title and the text displayed on the page.
 
 One more thing about the application of `html_text()` to elements that 
 themselves contain further tags: Further above we extracted the object 
-node_body, which contains the <b> tags as well as several line breaks in 
+node_body, which contains the `<b>` tags as well as several line breaks in 
 addition to the displayed text. Here, too, we can extract the pure text.
 
 ``` {r}
