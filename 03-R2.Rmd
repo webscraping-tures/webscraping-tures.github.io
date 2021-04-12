@@ -322,7 +322,7 @@ circumventing the need to assign the results to an object first:
 tibble(
   numbers = c(1, 2, 3),
   roots = sqrt(numbers),
-  rounded = round(roots, digits = 2)
+  rounded = round(roots)
 )
 ```
 
