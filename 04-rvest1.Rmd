@@ -2,6 +2,8 @@
 
 ``` {r, include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
+knitr::opts_chunk$set(cache = TRUE)
+knitr::opts_chunk$set(cache.path = 'cache/')
 ```
 
 # First scraping with rvest {#rvest1}
@@ -15,13 +17,13 @@ analysis in the future.
 
 ## The rvest package
 
-Part of the *tidyverse* is a package called *rvest*, which provides us with all
+Part of the *tidyverse* is a package called rvest, which provides us with all
 the basic functions for a variety of typical web scraping tasks. This package 
 was included in the installation of the tidyverse package, but it is not part of
 the *core tidyverse* and thus is not loaded into the current R session with
 `library(tidyverse)`. Therefore, we have to do this explicitly:
 
-``` {r}
+``` {r, message = FALSE}
 library(rvest)
 ```
 
@@ -54,13 +56,13 @@ As a reminder, here is the HTML source code:
 The first step in web scraping is to convert the page we are interested in into
 an R object. This is made possible by the function `read_html()` from the xml2
 package. `read_html()` "parses" the website, i.e. it reads the HTML, understands
-its source code and transforms it into a representation R can understand.
-This function needs the URL, i.e. the address of the website we want to
-read in, as its first argument. The URL must be given as a string, so we have to
-enclose it in `"`. The function also allows you to specify other options. In
-most cases, however, the default settings are sufficient. So we read in the
-hello_world.html file, assign it to a new R object at the same time and have 
-this object put out in the next step:
+its source code and transforms it into a representation R can understand. This
+function needs the URL, i.e. the address of the website we want to read in, as 
+its first argument. The URL must be given as a string, so we have to enclose it 
+in `"`. The function also allows you to specify other options. In most cases, 
+however, the default settings are sufficient. So we read in the hello_world.html 
+file, assign it to a new R object at the same time and have this object put out
+in the next step:
 
 ``` {r}
 hello_world <- read_html("https://webscraping-tures.github.io/hello_world.html")
@@ -164,7 +166,7 @@ Before we start, we should load the required packages (we will also need the
 tidyverse package this time) and read the website with the function 
 `read_html()` and assign it to an R object.
 
-``` {r}
+``` {r, message = FALSE}
 library(tidyverse)
 library(rvest)
 

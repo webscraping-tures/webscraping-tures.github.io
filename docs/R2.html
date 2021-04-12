@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>7 Transformation und Visualisierung im Tidyverse | Web Scraping mit R</title>
-  <meta name="description" content="7 Transformation und Visualisierung im Tidyverse | Web Scraping mit R" />
+  <title>3 RStudio in practice &amp; the tidyverse | Web Scraping using R</title>
+  <meta name="description" content="3 RStudio in practice &amp; the tidyverse | Web Scraping using R" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="7 Transformation und Visualisierung im Tidyverse | Web Scraping mit R" />
+  <meta property="og:title" content="3 RStudio in practice &amp; the tidyverse | Web Scraping using R" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="webscraping-tures/webscraping-tures.github.io" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="7 Transformation und Visualisierung im Tidyverse | Web Scraping mit R" />
+  <meta name="twitter:title" content="3 RStudio in practice &amp; the tidyverse | Web Scraping using R" />
   
   
   
@@ -24,15 +24,15 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2021-03-05" />
+<meta name="date" content="2021-04-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="rvest2.html"/>
-<link rel="next" href="ethik.html"/>
+<link rel="prev" href="R1.html"/>
+<link rel="next" href="rvest1.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -51,8 +51,76 @@
 
 
 
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/echarts4r-4.8.0/echarts-en.min.js"></script>
+<script src="libs/echarts4r-4.8.0/ecStat.min.js"></script>
+<script src="libs/echarts4r-4.8.0/dataTool.min.js"></script>
+<script src="libs/echarts4r-binding-0.4.0/echarts4r.js"></script>
 
 
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 </head>
 
@@ -66,66 +134,146 @@
       <nav role="navigation">
 
 <ul class="summary">
-Web Scraping mit R
+Web Scraping using R
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Einführung</a>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a>
 <ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#was-ist-web-scraping"><i class="fa fa-check"></i>Was ist Web Scraping?</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#was-lernen-wir-was-nicht"><i class="fa fa-check"></i>Was lernen wir, was nicht?</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#technische-voraussetzungen"><i class="fa fa-check"></i>Technische Voraussetzungen</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#what-is-web-scraping"><i class="fa fa-check"></i>What is web scraping?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#course-contents"><i class="fa fa-check"></i>Course contents</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#technical-requirements"><i class="fa fa-check"></i>Technical requirements</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#conventions"><i class="fa fa-check"></i>Conventions</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#colophon"><i class="fa fa-check"></i>Colophon</a></li>
 </ul></li>
 <li class="part"><span><b>I Basics</b></span></li>
-<li class="chapter" data-level="1" data-path="html.html"><a href="html.html"><i class="fa fa-check"></i><b>1</b> HTML als Grundbaustein des Web</a>
+<li class="chapter" data-level="1" data-path="html.html"><a href="html.html"><i class="fa fa-check"></i><b>1</b> HTML as a cornerstone of the internet</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="html.html"><a href="html.html#html-tags"><i class="fa fa-check"></i><b>1.1</b> HTML-Tags</a>
 <ul>
 <li class="chapter" data-level="1.1.1" data-path="html.html"><a href="html.html#hello_world.html"><i class="fa fa-check"></i><b>1.1.1</b> hello_world.html</a></li>
-<li class="chapter" data-level="1.1.2" data-path="html.html"><a href="html.html#wichtige-tags"><i class="fa fa-check"></i><b>1.1.2</b> Wichtige Tags</a></li>
+<li class="chapter" data-level="1.1.2" data-path="html.html"><a href="html.html#important-tags"><i class="fa fa-check"></i><b>1.1.2</b> Important tags</a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="html.html"><a href="html.html#attribute"><i class="fa fa-check"></i><b>1.2</b> Attribute</a>
+<li class="chapter" data-level="1.2" data-path="html.html"><a href="html.html#attribute"><i class="fa fa-check"></i><b>1.2</b> Attributes</a>
 <ul>
 <li class="chapter" data-level="1.2.1" data-path="html.html"><a href="html.html#links"><i class="fa fa-check"></i><b>1.2.1</b> Links</a></li>
-<li class="chapter" data-level="1.2.2" data-path="html.html"><a href="html.html#bilder"><i class="fa fa-check"></i><b>1.2.2</b> Bilder</a></li>
+<li class="chapter" data-level="1.2.2" data-path="html.html"><a href="html.html#images"><i class="fa fa-check"></i><b>1.2.2</b> Images</a></li>
 </ul></li>
 <li class="chapter" data-level="1.3" data-path="html.html"><a href="html.html#entities"><i class="fa fa-check"></i><b>1.3</b> Entities</a></li>
-<li class="chapter" data-level="" data-path="html.html"><a href="html.html#weiterführende-literatur"><i class="fa fa-check"></i>Weiterführende Literatur</a></li>
 </ul></li>
 <li class="part"><span><b>II R Basics &amp; Tidyverse</b></span></li>
-<li class="chapter" data-level="2" data-path="R1.html"><a href="R1.html"><i class="fa fa-check"></i><b>2</b> R &amp; R Studio</a></li>
-<li class="chapter" data-level="3" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>3</b> Tidyverse</a>
+<li class="chapter" data-level="2" data-path="R1.html"><a href="R1.html"><i class="fa fa-check"></i><b>2</b> R &amp; R Studio</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="tidyverse.html"><a href="tidyverse.html#philosophie"><i class="fa fa-check"></i><b>3.1</b> Philosophie</a></li>
-<li class="chapter" data-level="3.2" data-path="tidyverse.html"><a href="tidyverse.html#tidy-data"><i class="fa fa-check"></i><b>3.2</b> Tidy data</a></li>
-<li class="chapter" data-level="3.3" data-path="tidyverse.html"><a href="tidyverse.html#pipe"><i class="fa fa-check"></i><b>3.3</b> Pipe</a></li>
+<li class="chapter" data-level="2.1" data-path="R1.html"><a href="R1.html#installing-r"><i class="fa fa-check"></i><b>2.1</b> Installing R</a></li>
+<li class="chapter" data-level="2.2" data-path="R1.html"><a href="R1.html#rstudio"><i class="fa fa-check"></i><b>2.2</b> RStudio</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="R1.html"><a href="R1.html#overview"><i class="fa fa-check"></i><b>2.2.1</b> Overview</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="R1.html"><a href="R1.html#hello-world"><i class="fa fa-check"></i><b>2.3</b> Hello World!</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="R1.html"><a href="R1.html#calculating-with-r"><i class="fa fa-check"></i><b>2.3.1</b> Calculating with R</a></li>
+<li class="chapter" data-level="2.3.2" data-path="R1.html"><a href="R1.html#comparison-operators"><i class="fa fa-check"></i><b>2.3.2</b> Comparison operators</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="R1.html"><a href="R1.html#objects"><i class="fa fa-check"></i><b>2.4</b> Objects</a></li>
+<li class="chapter" data-level="2.5" data-path="R1.html"><a href="R1.html#vectors"><i class="fa fa-check"></i><b>2.5</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="R1.html"><a href="R1.html#subsetting"><i class="fa fa-check"></i><b>2.5.1</b> Subsetting</a></li>
+<li class="chapter" data-level="2.5.2" data-path="R1.html"><a href="R1.html#types-of-vectors"><i class="fa fa-check"></i><b>2.5.2</b> Types of vectors</a></li>
+<li class="chapter" data-level="2.5.3" data-path="R1.html"><a href="R1.html#a-brief-look-at-lists"><i class="fa fa-check"></i><b>2.5.3</b> A brief look at lists</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="R1.html"><a href="R1.html#functions"><i class="fa fa-check"></i><b>2.6</b> Functions</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="R1.html"><a href="R1.html#help"><i class="fa fa-check"></i><b>2.6.1</b> Help</a></li>
+<li class="chapter" data-level="2.6.2" data-path="R1.html"><a href="R1.html#examples-basic-statistical-functions"><i class="fa fa-check"></i><b>2.6.2</b> Examples: Basic statistical functions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="R2.html"><a href="R2.html"><i class="fa fa-check"></i><b>3</b> RStudio in practice &amp; the tidyverse</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="R2.html"><a href="R2.html#rstudio-workflow"><i class="fa fa-check"></i><b>3.1</b> RStudio Workflow</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="R2.html"><a href="R2.html#r-scripts"><i class="fa fa-check"></i><b>3.1.1</b> R Scripts</a></li>
+<li class="chapter" data-level="3.1.2" data-path="R2.html"><a href="R2.html#projects"><i class="fa fa-check"></i><b>3.1.2</b> Projects</a></li>
+<li class="chapter" data-level="3.1.3" data-path="R2.html"><a href="R2.html#comments"><i class="fa fa-check"></i><b>3.1.3</b> Comments</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="R2.html"><a href="R2.html#r-packages"><i class="fa fa-check"></i><b>3.2</b> R packages</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="R2.html"><a href="R2.html#installing-and-loading-packages"><i class="fa fa-check"></i><b>3.2.1</b> Installing and loading packages</a></li>
+<li class="chapter" data-level="3.2.2" data-path="R2.html"><a href="R2.html#namespaces"><i class="fa fa-check"></i><b>3.2.2</b> Namespaces</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="R2.html"><a href="R2.html#tidyverse"><i class="fa fa-check"></i><b>3.3</b> Tidyverse</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="R2.html"><a href="R2.html#tibbles"><i class="fa fa-check"></i><b>3.3.1</b> Tibbles</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="R2.html"><a href="R2.html#additional-resources"><i class="fa fa-check"></i><b>3.4</b> Additional resources</a></li>
 </ul></li>
 <li class="part"><span><b>III Scraping</b></span></li>
-<li class="chapter" data-level="4" data-path="rvest1.html"><a href="rvest1.html"><i class="fa fa-check"></i><b>4</b> Erstes Scraping mit rvest</a></li>
-<li class="chapter" data-level="5" data-path="css.html"><a href="css.html"><i class="fa fa-check"></i><b>5</b> CSS selectors &amp; Developer Tools</a>
+<li class="chapter" data-level="4" data-path="rvest1.html"><a href="rvest1.html"><i class="fa fa-check"></i><b>4</b> First scraping with rvest</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="css.html"><a href="css.html#css-selectors"><i class="fa fa-check"></i><b>5.1</b> CSS selectors</a></li>
-<li class="chapter" data-level="5.2" data-path="css.html"><a href="css.html#developer-tools"><i class="fa fa-check"></i><b>5.2</b> Developer Tools</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="rvest2.html"><a href="rvest2.html"><i class="fa fa-check"></i><b>6</b> Fortgeschrittenes Scraping mit rvest</a></li>
-<li class="part"><span><b>IV Beispielprojekte</b></span></li>
-<li class="chapter" data-level="7" data-path="R2.html"><a href="R2.html"><i class="fa fa-check"></i><b>7</b> Transformation und Visualisierung im Tidyverse</a>
+<li class="chapter" data-level="4.1" data-path="rvest1.html"><a href="rvest1.html#the-rvest-package"><i class="fa fa-check"></i><b>4.1</b> The rvest package</a></li>
+<li class="chapter" data-level="4.2" data-path="rvest1.html"><a href="rvest1.html#hello_world.html-1"><i class="fa fa-check"></i><b>4.2</b> hello_world.html</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="R2.html"><a href="R2.html#transformation-mit-dplyr"><i class="fa fa-check"></i><b>7.1</b> Transformation mit dplyr</a></li>
-<li class="chapter" data-level="7.2" data-path="R2.html"><a href="R2.html#visualisierung-mit-ggplot"><i class="fa fa-check"></i><b>7.2</b> Visualisierung mit ggplot</a></li>
+<li class="chapter" data-level="4.2.1" data-path="rvest1.html"><a href="rvest1.html#read_html"><i class="fa fa-check"></i><b>4.2.1</b> read_html()</a></li>
+<li class="chapter" data-level="4.2.2" data-path="rvest1.html"><a href="rvest1.html#html_nodes"><i class="fa fa-check"></i><b>4.2.2</b> html_nodes()</a></li>
+<li class="chapter" data-level="4.2.3" data-path="rvest1.html"><a href="rvest1.html#html_text"><i class="fa fa-check"></i><b>4.2.3</b> html_text()</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="ethik.html"><a href="ethik.html"><i class="fa fa-check"></i><b>8</b> Ethik &amp; good practice</a></li>
-<li class="chapter" data-level="9" data-path="projekt1.html"><a href="projekt1.html"><i class="fa fa-check"></i><b>9</b> Beispielprojekt HTML Scraping</a></li>
-<li class="chapter" data-level="10" data-path="projekt2.html"><a href="projekt2.html"><i class="fa fa-check"></i><b>10</b> Beispielprojekt XML Scraping</a></li>
-<li class="part"><span><b>V Weiterführende Techniken</b></span></li>
-<li class="chapter" data-level="11" data-path="web.html"><a href="web.html"><i class="fa fa-check"></i><b>11</b> Weitere Formate im WWW</a>
+<li class="chapter" data-level="4.3" data-path="rvest1.html"><a href="rvest1.html#countries-of-the-world"><i class="fa fa-check"></i><b>4.3</b> Countries of the World</a>
 <ul>
-<li class="chapter" data-level="11.1" data-path="web.html"><a href="web.html#xml"><i class="fa fa-check"></i><b>11.1</b> XML</a></li>
-<li class="chapter" data-level="11.2" data-path="web.html"><a href="web.html#json"><i class="fa fa-check"></i><b>11.2</b> JSON</a></li>
-<li class="chapter" data-level="11.3" data-path="web.html"><a href="web.html#ajax"><i class="fa fa-check"></i><b>11.3</b> AJAX</a></li>
-<li class="chapter" data-level="11.4" data-path="web.html"><a href="web.html#sql"><i class="fa fa-check"></i><b>11.4</b> SQL</a></li>
-<li class="chapter" data-level="11.5" data-path="web.html"><a href="web.html#apis"><i class="fa fa-check"></i><b>11.5</b> APIs</a></li>
+<li class="chapter" data-level="4.3.1" data-path="rvest1.html"><a href="rvest1.html#country-names"><i class="fa fa-check"></i><b>4.3.1</b> Country names</a></li>
+<li class="chapter" data-level="4.3.2" data-path="rvest1.html"><a href="rvest1.html#capitals-population-and-area"><i class="fa fa-check"></i><b>4.3.2</b> Capitals, population and area</a></li>
+<li class="chapter" data-level="4.3.3" data-path="rvest1.html"><a href="rvest1.html#merge-into-one-tibble"><i class="fa fa-check"></i><b>4.3.3</b> Merge into one tibble</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="regex.html"><a href="regex.html"><i class="fa fa-check"></i><b>12</b> Regular Expressions</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html"><i class="fa fa-check"></i><b>5</b> CSS selectors &amp; Developer Tools</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#css"><i class="fa fa-check"></i><b>5.1</b> CSS selectors</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#classes"><i class="fa fa-check"></i><b>5.1.1</b> Classes</a></li>
+<li class="chapter" data-level="5.1.2" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#ids"><i class="fa fa-check"></i><b>5.1.2</b> IDs</a></li>
+<li class="chapter" data-level="5.1.3" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#attributes"><i class="fa fa-check"></i><b>5.1.3</b> Attributes</a></li>
+<li class="chapter" data-level="5.1.4" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#hierarchy-levels"><i class="fa fa-check"></i><b>5.1.4</b> Hierarchy levels</a></li>
+<li class="chapter" data-level="5.1.5" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#further-selectors"><i class="fa fa-check"></i><b>5.1.5</b> Further selectors</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#developer-tools"><i class="fa fa-check"></i><b>5.2</b> Developer Tools</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="rvest2.html"><a href="rvest2.html"><i class="fa fa-check"></i><b>6</b> Scraping of tables &amp; dynamic websites</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="rvest2.html"><a href="rvest2.html#scraping-of-tables"><i class="fa fa-check"></i><b>6.1</b> Scraping of tables</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="rvest2.html"><a href="rvest2.html#table-with-css-selectors-from-wikipedia"><i class="fa fa-check"></i><b>6.1.1</b> Table with CSS selectors from Wikipedia</a></li>
+<li class="chapter" data-level="6.1.2" data-path="rvest2.html"><a href="rvest2.html#scraping-multiple-tables"><i class="fa fa-check"></i><b>6.1.2</b> Scraping multiple tables</a></li>
+<li class="chapter" data-level="6.1.3" data-path="rvest2.html"><a href="rvest2.html#tabellen-mit-nas"><i class="fa fa-check"></i><b>6.1.3</b> Tabellen mit NAs</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="rvest2.html"><a href="rvest2.html#dynamische-websites"><i class="fa fa-check"></i><b>6.2</b> Dynamische Websites</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="rvest2.html"><a href="rvest2.html#html-forms-and-html-queries"><i class="fa fa-check"></i><b>6.2.1</b> HTML forms and HTML queries</a></li>
+<li class="chapter" data-level="6.2.2" data-path="rvest2.html"><a href="rvest2.html#html-forms"><i class="fa fa-check"></i><b>6.2.2</b> HTML forms</a></li>
+<li class="chapter" data-level="6.2.3" data-path="rvest2.html"><a href="rvest2.html#the-query"><i class="fa fa-check"></i><b>6.2.3</b> The query</a></li>
+<li class="chapter" data-level="6.2.4" data-path="rvest2.html"><a href="rvest2.html#manipulating-the-query-and-scraping-the-result"><i class="fa fa-check"></i><b>6.2.4</b> Manipulating the query and scraping the result</a></li>
+<li class="chapter" data-level="6.2.5" data-path="rvest2.html"><a href="rvest2.html#additional-resources-1"><i class="fa fa-check"></i><b>6.2.5</b> Additional resources</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="rvest3.html"><a href="rvest3.html"><i class="fa fa-check"></i><b>7</b> Scraping of multi-page websites</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="rvest3.html"><a href="rvest3.html#index-pages"><i class="fa fa-check"></i><b>7.1</b> Index-pages</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="rvest3.html"><a href="rvest3.html#scraping-of-the-index"><i class="fa fa-check"></i><b>7.1.1</b> Scraping of the index</a></li>
+<li class="chapter" data-level="7.1.2" data-path="rvest3.html"><a href="rvest3.html#iteration-with-map"><i class="fa fa-check"></i><b>7.1.2</b> Iteration with map()</a></li>
+<li class="chapter" data-level="7.1.3" data-path="rvest3.html"><a href="rvest3.html#scraping-the-sub-pages"><i class="fa fa-check"></i><b>7.1.3</b> Scraping the sub-pages</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="rvest3.html"><a href="rvest3.html#pagination"><i class="fa fa-check"></i><b>7.2</b> Pagination</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="rvest3.html"><a href="rvest3.html#the-query-1"><i class="fa fa-check"></i><b>7.2.1</b> The query</a></li>
+<li class="chapter" data-level="7.2.2" data-path="rvest3.html"><a href="rvest3.html#scraping-the-sub-pages-1"><i class="fa fa-check"></i><b>7.2.2</b> Scraping the sub-pages</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>IV Practical application</b></span></li>
+<li class="chapter" data-level="8" data-path="good-practice.html"><a href="good-practice.html"><i class="fa fa-check"></i><b>8</b> Good practice</a></li>
+<li class="chapter" data-level="9" data-path="R3.html"><a href="R3.html"><i class="fa fa-check"></i><b>9</b> Data transformation and graphical analysis</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="R3.html"><a href="R3.html#transformation-with-dplyr"><i class="fa fa-check"></i><b>9.1</b> Transformation with dplyr</a></li>
+<li class="chapter" data-level="9.2" data-path="R3.html"><a href="R3.html#graphical-analysis-with-ggplot"><i class="fa fa-check"></i><b>9.2</b> Graphical analysis with ggplot</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="project.html"><a href="project.html"><i class="fa fa-check"></i><b>10</b> Sample project</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -138,7 +286,7 @@ Web Scraping mit R
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Web Scraping mit R</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Web Scraping using R</a>
           </h1>
         </div>
 
@@ -146,23 +294,353 @@ Web Scraping mit R
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="R2" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> Transformation und Visualisierung im Tidyverse</h1>
-<div id="transformation-mit-dplyr" class="section level2" number="7.1">
-<h2><span class="header-section-number">7.1</span> Transformation mit dplyr</h2>
+<div id="R2" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> RStudio in practice &amp; the tidyverse</h1>
+<div id="rstudio-workflow" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> RStudio Workflow</h2>
+<p>Up until now, we wrote our code directly into the RStudio console, pressed
+“Enter” and received the desired output. This works but will not satisfy our
+needs in the long run. The main problem is, that the code we wrote essentially
+disappears after running it. Imagine that you want to rerun your code a week
+from now or even tomorrow. Maybe you took notes and can recreate it, but that
+means a lot of unsatisfying and error prone work. Also maybe at some point you
+want to share code with colleagues, fellow students or the R community in
+general. At the same time, as our code gets more complex, spans multiple lines
+and consists of many interdependent blocks of code, you will inevitably run into
+the situation where you realise you made a mistake or have to change some code
+at the very beginning of your R session. This would mean, recreating and
+rerunning most or all of the code you have already written.</p>
+<p>These are some of the reasons why we should start writing our code into so
+called R Scripts.</p>
+<div id="r-scripts" class="section level3" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> R Scripts</h3>
+<p>To create a new R Script, you can click on “File” &gt; “New File” &gt; “R Script”, or
+more conveniently press “CTRL” + “Shift” + “N” simultaneously. This creates an
+untitled script that we can write our code into.</p>
+<p>Let’s start with something simple by recreating some of the code from last week.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="R2.html#cb41-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">17</span></span>
+<span id="cb41-2"><a href="R2.html#cb41-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb41-3"><a href="R2.html#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="R2.html#cb41-4" aria-hidden="true" tabindex="-1"></a>the_answer <span class="ot">&lt;-</span> (a <span class="sc">+</span> b) <span class="sc">*</span> <span class="dv">2</span></span>
+<span id="cb41-5"><a href="R2.html#cb41-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-6"><a href="R2.html#cb41-6" aria-hidden="true" tabindex="-1"></a>the_answer</span>
+<span id="cb41-7"><a href="R2.html#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 42</span></span></code></pre></div>
+<p>We assign two numerical values two the objects <code>a</code> and <code>b</code>, assign a calculation
+based on these objects to the new object <code>the_answer</code> and prompt R to return
+its value to us. Instead of writing the code line by line into the console, now
+we write the whole block into the newly created script. We can now run the
+complete script by clicking on “Source” in the upper toolbar attached to the
+script’s tab. In most cases I prefer running the script line by line though.
+This allows full control of the process and enables you to stop in certain lines
+to e.g. contemplate what the code is doing, check for errors or change details
+of the code before moving on to the next line. You can do this either
+by clicking on “Run” in the toolbar or pressing “CTRL” + “Enter” simultaneously.
+In both cases, copies the line of code where your text cursor is currently
+residinginto the console and runs it for you. The text cursor then conveniently
+jumps to the next line in the script. In this way you can quickly run your
+script line by line, while keeping in full control of when to stop.</p>
+<p>You can decide for yourselves which is the right approach to run your code from
+situation to situation, but remember that R always assumes you know what your
+are doing. So there will be no warning prompts, if you are about to overwrite
+work you have previously done. This is a strength of R from my point of view,
+as we are taking serious as users, but you have to aware of this, when working
+within the language.</p>
+<p>When you are done writing your script, you might want to save it to the
+harddisk, preserving your work for later re-runs or for sharing. By clicking
+on “File” &gt; “Save” or presing “CTRL” + “S” you can save the file with a name
+of your choosing. The file extension for R Scripts is always “.R”.</p>
+<p>One problem that you will run into sooner or later is, that you will try to run
+incomplete code from a script, most commonly a missing closing bracket.
+What will happen is that RStudio puts the code to be run into the console and
+begins a new line, starting with <code>+</code> and then nothing happens. R assumes that
+your code will continue in a further line and waits for you to enter it after
+the <code>+</code>. In most cases the right approach is to cancel the entered command, fix
+your code and re-run it after this. To cancel an already entered command, you
+have to click into the “Console” tab and press “Esc” on your keyboard. After
+this the <code>&gt;</code> prompt will reappear in the console and you can continue with your
+work.</p>
 </div>
-<div id="visualisierung-mit-ggplot" class="section level2" number="7.2">
-<h2><span class="header-section-number">7.2</span> Visualisierung mit ggplot</h2>
+<div id="projects" class="section level3" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> Projects</h3>
+<p>In many cases, your work will consist of multiple scripts, data files, graphics
+saved to the disk or additional output. So it makes sense to assign your files
+a place to live on your harddisk. You can do this “by hand” but a convenient
+approach might be to use RStudio’s project functionality.</p>
+<p>By clicking on “File” &gt; “New Project”, you can start the project creation
+wizard. If you have already created a folder on your harddisk that shall contain
+the project, you can click on “Existing Directory”, select the folder and click
+on “Create Project”. You can also create the folder on the fly by clicking on
+“New Directory” &gt; “New Project” and then choosing a folder name and the
+sub-folder where it should be placed, before creating the project.</p>
+<p>RStudio will now close all files currently open and switch to your newly
+created project. The name you chose for the project’s folder will also be its
+name, seen in RStudio’s title bar. When you look at the “File” tab (lower right)
+you will also see that you are now in the project’s folder. This is your current
+<em>working directory</em>, a concept we will talk about momentarily. All scripts you
+create while working in your project will become a part of it. So when you want
+to return to continuing your work, you can now click on “File” &gt;<br />
+“Open Project”. All files opened the last time you worked on the project will be
+reopened and you will again be in the project’s working directory. This is an
+easy and convenient way to keep your work tidy.</p>
+<p>At this point I would advise you to create a project for this introduction to
+web scraping and create R scripts for each chapter as parts of the project.
+The name and sub-folder you choose is not important from the point of view of
+functionality but it should make sense to you.</p>
+<p>We should now briefly talk about the working directory. If you try to open or
+save a file directly from an R script – without specifying a complete path –
+R will always assume you refer to your working directory. If you created a
+project, this automatically set the project’s folder as the working directory.
+You can always check for your current working directory by entering <code>getwd()</code>
+into the console. To change your current working directory, you can do this
+by clicking on “Session” &gt; “Set Working Directory” &gt; “Choose Directory…” or
+by using the function <code>setwd()</code> with the desired path enclosed by <code>"</code> as the
+function’s argument.</p>
+</div>
+<div id="comments" class="section level3" number="3.1.3">
+<h3><span class="header-section-number">3.1.3</span> Comments</h3>
+<p>You should get into the habit of commenting your code, as early as possible.
+Comments are started with one or multiple <code>#</code>. All code following the <code>#</code> will
+not be evaluated by R and thus serves as the perfect place to comment on what
+you were doing and thinking while writing the code. Why do this? When you reopen
+a script that you have not been working on in a while, it can be hard to
+understand, what you tried to do in the first place. Commented code, makes this
+much easier. This is even more true, if you share your code with other people.
+They may have very different approaches to certain R problems and clearly
+commented code will help them to quickly understand it. You should see this as a
+sign of respect towards the time your peers may invest in helping you with your
+coding problems.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="R2.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># assigning objects</span></span>
+<span id="cb42-2"><a href="R2.html#cb42-2" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">17</span></span>
+<span id="cb42-3"><a href="R2.html#cb42-3" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb42-4"><a href="R2.html#cb42-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-5"><a href="R2.html#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="co"># calculating the answer</span></span>
+<span id="cb42-6"><a href="R2.html#cb42-6" aria-hidden="true" tabindex="-1"></a>the_answer <span class="ot">&lt;-</span> (a <span class="sc">+</span> b) <span class="sc">*</span> <span class="dv">2</span></span>
+<span id="cb42-7"><a href="R2.html#cb42-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-8"><a href="R2.html#cb42-8" aria-hidden="true" tabindex="-1"></a>the_answer</span>
+<span id="cb42-9"><a href="R2.html#cb42-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 42</span></span>
+<span id="cb42-10"><a href="R2.html#cb42-10" aria-hidden="true" tabindex="-1"></a><span class="co"># but what is the question?</span></span></code></pre></div>
+<p>If you plan on using <code>setwd()</code> in your script, it is a good idea to comment this
+line before sharing your script. Other people will have different folder
+structures and will want to decide for themselves. The same goes for all lines
+that will save something to the harddisk, e.g. data sets or exported graphics.
+The R and RStudio communities are very welcoming and you will always find people
+that are willing to lend you their help, so you should return the favour and be
+polite in your code. This includes writing clear comments and not cluttering
+anyone’s harddisk with files, the may not want to have.</p>
+</div>
+</div>
+<div id="r-packages" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> R packages</h2>
+<p>The R world is open and collaborative by nature. Besides the packages that come
+with your R installation – base R – an ever growing number of additional
+packages written by professionals and users is available for download by
+anyone. Every package is focussed on a specific use case and brings with it a
+number of functions that enable R to be used for tasks that the original
+software designers did not have in mind or at the very least provide a smoother
+user experience in cases where the original base R solutions are a bit outdated.</p>
+<p>The packages, its documentation and various other related information are
+hosted at CRAN – “Comprehensive R Archive Network”– which you already got to
+know during the installation of R. If you install a package directly from
+RStudio, it uses CRAN to find and download the package and the associated files.</p>
+<div id="installing-and-loading-packages" class="section level3" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> Installing and loading packages</h3>
+<p>To install a package we can use the R function <code>install.packages()</code> where the
+name of the package to be installed is written enclosed by <code>"</code> between the
+parentheses. Normally we do this using the console. Installing packages from
+an R script works as well, but as we only need to perform the installation once,
+there is no benefit in it. It actually slows things down if we repeat the
+installation every time we run a script. At the same time, if we share our
+script it is impolite to force an (re)installation on somebody else.</p>
+<p>For this introduction we will focus on the packages of the tidyverse – more
+on them below. To install the core tidyverse package, you should type:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="R2.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</span></code></pre></div>
+<p>R will output a lot of information concerning the installation process, and
+close with a satisfying <code>DONE (tidyverse)</code> if everything went acording to plan.</p>
+<p>Now that the installation is complete, we can load the package. This should
+normally be done in the first lines of a script. This way all necessary packages
+are loaded at the beginning of running a script and other users that see your
+code also immediately see which packages are required and can decide for
+themselves if they want to install them. Loading a package is done with
+<code>library()</code> with the name of the package in the parentheses, this time without
+the need for enclosing it in <code>"</code>.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="R2.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<p>Loading the tidyverse package returns a lot of information to us, some which we
+will look at in more detail during the course of this chapter. Please note that
+not all packages are that verbose in their loading process. Often you will get
+no output at all, which is a good sign, as this also means that the package
+loaded correctly. If anything goes wrong, R will return an error message.</p>
+</div>
+<div id="namespaces" class="section level3" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> Namespaces</h3>
+<p>Looking at the last lines of the returned message when loading the tidyverse
+package, informs us, that there are two conflicts. These arise, when two or more
+loaded packages include functions with the same name. Here we can see that the
+tidyverse package <em>dplyr</em> masks the functions <code>filter()</code> and <code>lag()</code> from the
+base R package <em>stats</em>. If we would have used <code>filter()</code> without loading dplyr,
+the function from the stats package would have been used. After loading it, the
+function from dplyr masks the function from stats and is used instead.</p>
+<p>If we had a case where we want to load dplyr, but still use <code>filter()</code> from
+stats, we can still do this by explicitly declaring the <em>namespace</em> which we are
+referring to. The namespace basically is a reference for R where to look up the
+function we have called. If we just write the functions name, R looks for it in
+the list of loaded packages, which would result in applying <code>filter()</code> from
+dplyr here. But we can tell R to look up the function in another namespace, by
+using the notation <code>namespace::function</code>. So to call <code>filter()</code> from stats
+while the function is masked by the similarly named function from dplyr, we
+could write <code>stats::filter()</code>. As the function will not work without further
+arguments, we can’t try this out directly, but the same principle applies to
+loading the help files:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="R2.html#cb45-1" aria-hidden="true" tabindex="-1"></a>?dplyr<span class="sc">::</span><span class="fu">filter</span>()</span>
+<span id="cb45-2"><a href="R2.html#cb45-2" aria-hidden="true" tabindex="-1"></a>?stats<span class="sc">::</span><span class="fu">filter</span>()</span></code></pre></div>
+</div>
+</div>
+<div id="tidyverse" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Tidyverse</h2>
+<p>While we will use some basr R functions throughout this course, our main focus
+will lie on the <em>tidyverse</em> packages.</p>
+<p>The tidyverse is a collection of R packages, all following a shared philosophy
+concerning the syntax of their functions and the way in which data is
+represented. We will see how the philosophy underlying the tidyverse can lead to
+more intuitive R code, especially when using the pipe (%&gt;%), in the next
+chapter. If you want to learn more about the concept of <em>tidy data</em>, the
+structure of data representation underlying the tidyverse, a read of the chapter
+on this concept from “R for Data Science” by Wickham &amp; Grolemund is highly
+recommended: <a href="https://r4ds.had.co.nz/tidy-data.html" target="_blank">https://r4ds.had.co.nz/tidy-data.html</a>.</p>
+<p>Right now, the <em>core tidyverse</em> consists of eight packages. These are the
+packages that are loaded when we type <code>library(tidyverse)</code> and that are listed
+in the corresponding output under “Attaching packages”. As the name suggests,
+the packages comprise the core functionalities that define the tidyverse. This
+includes reading, cleaning and transforming data, handing certain data types,
+plotting graphs and more. Over the course of this introduction to web scraping,
+we will make use of several of these packages, so in most chapters we will begin
+our scripts with loading the tidyverse package.</p>
+<p>Besides the core tidyverse, a number of additional and more specialised packages
+are part of the tidyverse and were already installed when you ran
+<code>install.packages("tidyverse")</code> above. Among them, the package <em>rvest</em> is of
+special importance to us, as it will be our main tool for web scraping
+throughout the course.</p>
+<p>For a full list of tidyverse packages and the corresponding descriptions of
+their functionality, you can visit:
+<a href="https://www.tidyverse.org/packages/" target="_blank">https://www.tidyverse.org/packages/</a></p>
+<div id="tibbles" class="section level3" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> Tibbles</h3>
+<p>The “tibbles” package is part of the core tidyverse and offers an alternative to
+the <em>data frame</em> data structure that is used in base R to represent data in
+tabular form. The differences between data frames and <em>tibbles</em> are relatively
+minor. If you are interested in the details, you can read up on them in this
+section from “R for Data Science” and the chapter on tibbles in general:
+<a href="https://r4ds.had.co.nz/tibbles.html#tibbles-vs.-data.frame" target="_blank">https://r4ds.had.co.nz/tibbles.html#tibbles-vs.-data.frame</a>.
+For now it will suffice to know, that tibbles are used throughout this
+introduction, but that all examples will also work with the classic data frames.</p>
+<p>The syntax to create a tibble is simple. Every column represents a variable,
+every row an observation. You should think of the columns as vectors, where the
+first position in each vector corresponds to the first observation (row), the
+second position in each vector to the second observation and so on. In this way,
+we can create tibbles vector by vector or variable by variable, using the
+function <code>tibble()</code>. We assign a name to the variable followed by <code>=</code> and the
+data to be assigned to the variable. The variable-data pairs are separated by
+<code>,</code>:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="R2.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">numbers =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="at">strings =</span> <span class="fu">c</span>(<span class="st">&quot;one&quot;</span>, <span class="st">&quot;two&quot;</span>, <span class="st">&quot;three&quot;</span>), <span class="at">logicals =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>))</span>
+<span id="cb46-2"><a href="R2.html#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 x 3</span></span>
+<span id="cb46-3"><a href="R2.html#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   numbers strings logicals</span></span>
+<span id="cb46-4"><a href="R2.html#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="do">##     &lt;dbl&gt; &lt;chr&gt;   &lt;lgl&gt;   </span></span>
+<span id="cb46-5"><a href="R2.html#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 1       1 one     TRUE    </span></span>
+<span id="cb46-6"><a href="R2.html#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 2       2 two     TRUE    </span></span>
+<span id="cb46-7"><a href="R2.html#cb46-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 3       3 three   FALSE</span></span></code></pre></div>
+<p>For longer code like this, it is advisable to use multiple lines and a more
+clear formatting to create code that is readable and intuitive:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="R2.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb47-2"><a href="R2.html#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">numbers =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),</span>
+<span id="cb47-3"><a href="R2.html#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">strings =</span> <span class="fu">c</span>(<span class="st">&quot;one&quot;</span>, <span class="st">&quot;two&quot;</span>, <span class="st">&quot;three&quot;</span>),</span>
+<span id="cb47-4"><a href="R2.html#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">logicals =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span>
+<span id="cb47-5"><a href="R2.html#cb47-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb47-6"><a href="R2.html#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 x 3</span></span>
+<span id="cb47-7"><a href="R2.html#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   numbers strings logicals</span></span>
+<span id="cb47-8"><a href="R2.html#cb47-8" aria-hidden="true" tabindex="-1"></a><span class="do">##     &lt;dbl&gt; &lt;chr&gt;   &lt;lgl&gt;   </span></span>
+<span id="cb47-9"><a href="R2.html#cb47-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 1       1 one     TRUE    </span></span>
+<span id="cb47-10"><a href="R2.html#cb47-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 2       2 two     TRUE    </span></span>
+<span id="cb47-11"><a href="R2.html#cb47-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 3       3 three   FALSE</span></span></code></pre></div>
+<p>R understands that all five lines are part of one command as it evaluates
+everything between the opening and closing bracket of the <code>tibbles()</code> function
+together. We just have to make sure, that we don’t miss the closing bracket or a
+<code>,</code> that separates the variable-data pairs. This actually is a main source of
+errors and be high on your list of things to check, if something does not work
+as planned.</p>
+<p>We can also use calculations and functions directly in tibble creation,
+circumventing the need to assign the results to an object first:</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="R2.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb48-2"><a href="R2.html#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">numbers =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),</span>
+<span id="cb48-3"><a href="R2.html#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">roots =</span> <span class="fu">sqrt</span>(numbers),</span>
+<span id="cb48-4"><a href="R2.html#cb48-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">rounded =</span> <span class="fu">round</span>(roots, <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb48-5"><a href="R2.html#cb48-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb48-6"><a href="R2.html#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 x 3</span></span>
+<span id="cb48-7"><a href="R2.html#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   numbers roots rounded</span></span>
+<span id="cb48-8"><a href="R2.html#cb48-8" aria-hidden="true" tabindex="-1"></a><span class="do">##     &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span id="cb48-9"><a href="R2.html#cb48-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 1       1  1       1   </span></span>
+<span id="cb48-10"><a href="R2.html#cb48-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 2       2  1.41    1.41</span></span>
+<span id="cb48-11"><a href="R2.html#cb48-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 3       3  1.73    1.73</span></span></code></pre></div>
+<p>Sidenote: The function <code>sqrt()</code> takes the square roots of the data it is applied
+to.</p>
+</div>
+</div>
+<div id="additional-resources" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Additional resources</h2>
+<p>When learning R and when using functions and packages that are new to you, you
+will regularly run into situations, where you need help in understanding what
+is happenning and what you can do about it. Luckily, there a lot of resources
+that will help you on your R journey.</p>
+<p>You already have learned about the build in help functionalities embedded in R.
+Many packages also come with so called <em>vignettes</em> which offer more in depth
+introductions to the functionalities of the packages. Let’s see if the tibble
+package comes with vignettes. To do this we can write:</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="R2.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vignette</span>(<span class="at">package =</span> <span class="st">&quot;tibble&quot;</span>)</span></code></pre></div>
+<p>We get a list of all vignettes avaialable for the specific package. To access a
+specific vignette, we also use the <code>vignette()</code> function, this time with the
+specific name of the vignette as the function’s argument:</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="R2.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vignette</span>(<span class="st">&quot;types&quot;</span>)</span></code></pre></div>
+<p>You can also always check the CRAN page for the package in question. Here you
+can access the documentation as well as available vignettes, e.g.:
+<a href="https://cran.r-project.org/web/packages/tibble/index.html" target="_blank">https://cran.r-project.org/web/packages/tibble/index.html</a>.</p>
+<p>Another highly recommended resource are the RStudio <em>cheatsheets</em> found at:
+<a href="https://www.rstudio.com/resources/cheatsheets/" target="_blank">https://www.rstudio.com/resources/cheatsheets/</a>. These are
+available for many popular packages and present a comprehensive list of the
+functions offered by the packages.</p>
+<p>The RStudio homepage also offers many more resources for learning R and
+specific packages including a number of webinars and tutorial videos, accessed
+by the menu “Resources”: <a href="https://www.rstudio.com/" target="_blank">https://www.rstudio.com/</a></p>
+<p>In general, the internet offers a lot of resources that you can access. One of
+the most important skills you have to develop as an aspiring R use is to
+understand the problem you are facing to best of your abilities and formulate
+a short but precise google search. In most cases you can assume, that you are
+not the first or last person to have a specific problem. Someone will have
+written a blogpost, asked a question on
+<a href="https://stackoverflow.com/" target="_blank">https://stackoverflow.com/</a>, made a video tutorial and so on.
+If you can find these resources, you are already halfway there.</p>
+<p>There also are a lot of books available on R and RStudio in general, as well as
+on more specific applications in R. I want to reccomend two of them in
+particular, both avalaible as paperback as well as online:</p>
+<ul>
+<li><p><em>R Cookbook, 2nd Edition</em> by J.D. Long &amp; Paul Teetor.
+The book is comprised of recipes for specific tasks, you might want to perform.
+It is not designed as a course but rather as reference for concrete questions.
+Available under: <a href="https://rc2e.com/" target="_blank">https://rc2e.com/</a></p></li>
+<li><p><em>R for Data Science</em> by Hadley Wickham and Garrett Grolemund.
+An introduction to data science using (almost) exclusively the tidyverse
+packages. Available under: <a href="https://r4ds.had.co.nz/" target="_blank">https://r4ds.had.co.nz/</a></p></li>
+</ul>
 
 </div>
 </div>
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="rvest2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="ethik.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="R1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="rvest1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -184,7 +662,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/webscraping-tures/webscraping-tures.github.io/07_R3.Rmd",
+"link": "https://github.com/webscraping-tures/webscraping-tures.github.io/03-R2.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -204,6 +682,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>
