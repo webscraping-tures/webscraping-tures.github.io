@@ -406,7 +406,7 @@ argument.</p>
 extraction of the title and the text displayed on the page.</p>
 <p>One more thing about the application of <code>html_text()</code> to elements that
 themselves contain further tags: Further above we extracted the object
-node_body, which contains the <b> tags as well as several line breaks in
+node_body, which contains the <code>&lt;b&gt;</code> tags as well as several line breaks in
 addition to the displayed text. Here, too, we can extract the pure text.</p>
 <div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="rvest1.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">html_text</span>(node_body)</span>
 <span id="cb58-2"><a href="rvest1.html#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;\n    Hello World!\n  &quot;</span></span></code></pre></div>
