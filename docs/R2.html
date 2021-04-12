@@ -571,14 +571,14 @@ circumventing the need to assign the results to an object first:</p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="R2.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
 <span id="cb48-2"><a href="R2.html#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">numbers =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),</span>
 <span id="cb48-3"><a href="R2.html#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">roots =</span> <span class="fu">sqrt</span>(numbers),</span>
-<span id="cb48-4"><a href="R2.html#cb48-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">rounded =</span> <span class="fu">round</span>(roots, <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb48-4"><a href="R2.html#cb48-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">rounded =</span> <span class="fu">round</span>(roots)</span>
 <span id="cb48-5"><a href="R2.html#cb48-5" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb48-6"><a href="R2.html#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 x 3</span></span>
 <span id="cb48-7"><a href="R2.html#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   numbers roots rounded</span></span>
 <span id="cb48-8"><a href="R2.html#cb48-8" aria-hidden="true" tabindex="-1"></a><span class="do">##     &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;</span></span>
-<span id="cb48-9"><a href="R2.html#cb48-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 1       1  1       1   </span></span>
-<span id="cb48-10"><a href="R2.html#cb48-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 2       2  1.41    1.41</span></span>
-<span id="cb48-11"><a href="R2.html#cb48-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 3       3  1.73    1.73</span></span></code></pre></div>
+<span id="cb48-9"><a href="R2.html#cb48-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 1       1  1          1</span></span>
+<span id="cb48-10"><a href="R2.html#cb48-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 2       2  1.41       1</span></span>
+<span id="cb48-11"><a href="R2.html#cb48-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 3       3  1.73       2</span></span></code></pre></div>
 <p>Sidenote: The function <code>sqrt()</code> takes the square roots of the data it is applied
 to.</p>
 </div>
