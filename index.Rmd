@@ -11,66 +11,152 @@ github-repo: webscraping-tures/webscraping-tures.github.io
 
 # Introduction {-}
 
-WIP!
+This is an introduction to web scraping using R, designed to accompany a seminar
+held at the University of Potsdam in summer 2021.
 
 ## What is web scraping? {-}
 
-* Goals
-  * Accessing data that we cannot get with traditional methods.
-  * Accessing data that is only conceivable on the internet 
-  (i.e., customer reviews, user behaviour et al.)
-  * What is feasible: Examples
+Web scraping encompasses methods of data collection from online sources. This
+introduction will focus on scraping websites, but other forms on online data, 
+e.g. databases or files, are scrapable as well.
 
-* Methods
-  * Identification of web content relevant to our query
-  * Accessing web content directly from a programming language (R, Python, etc.)
-  * Extraction of the page’s contents relevant to our interest
-  * Date cleaning and transferral into a format suited to data analysis
-  * Data analysis
+Instead of copying and pasting content from a browser window, in web scraping 
+the process is automated through a programming language as R or Python. This is
+less error prone than manual collection and enables us to collect large amounts
+of data efficiently or regularly repeat the scraping process to update the data
+without investing much time. In web scraping your time is invested in planning 
+the scraping process, programming your software and analysing the retrieved 
+data -- aka the fun stuff -- rather than in time consuming and repetitive 
+manual work.
+
+Web scraping enables us to access data, that we could not retrieve using 
+traditional methods of data collection. Mainly because some types of data would
+not exist without the internet. Think of consumer reviews or social media 
+posts. In other cases, web scraping enables us to collect data much more 
+efficiently compared to traditional methods. Imagine you want to create a data 
+file with demographic information in parliament members. This was obviously 
+possible and done before web scraping became a possibility but included a lot of
+manual work using printed almanacs and typing the information into a table. Time
+consuming and error prone work. With web scraping we can set up scripts that 
+gather this data directly from the website of a parliament including the 
+possibility to  rerun the collection process after the next election. But we 
+don't have to stop there. Maybe we want to analyse the sentiment of twitter 
+messages written by parliament members by some socio-demographic variables as 
+gender, age or educational background. We could retrieve both the tweets and the 
+socio-demographic information using web scraping and analyse the gathered data
+in combination.
+
+At this point, your alarm bells should hopefully be ringing. Collecting data 
+from social media profiles sounds like an Orwellian nightmare, and if it is done
+incorrectly, it is. We should not and will not collect data for the sake of data
+collection. Before scraping data on the internet we have to think about what 
+data we actually need to answer our specific research question. Next we have to
+check if we are actually allowed to collect certain types of data and even if we
+are, if we should collect it. Do we need the names of people or users if we are
+collecting data? Do we actually need all socio-demographic variables available 
+or can we keep it at a minimum, ensuring that individuals in our data remain
+unidentifiable? We are not web spiders, collecting every bit of data that is
+available, whether we need it or not. We are scientists and have to behave in a
+responsible and reasonable manner when collecting data.
+
 
 ## Course contents {-}
 
-* Basic structure of the internet
-  * HTML
-  * Overview of other components we might encounter in the wild, without going too much in-depth
+The first part of the course covers HTML as the conerstone of the (traditional) 
+internet. We have to understand the structure of websites before we can start
+picking out their specific parts. 
 
-* Introduction to R
-  * Basics in R Studio
-  * Tidyverse
-  * Basics in data transformation and graphical analysis
+Part II serves as an introduction to R, the programming language we will use
+for web scraping as well as analysis of the data gathered. This introduction can
+necessarily only cover the basics of R, as our focus lies on introducing the
+concepts of web scraping. The introduction to R will be problem-oriented, i.e. 
+we learn what we need for web scraping, but there will be a lot left out or only
+covered cursorily. See this as a starting point for your R journey, not its
+destination. Additional resources for deepening your R knowledge will be 
+provided at later points.
 
-* Scraping
-  * Scraping with rvest
-  * CSS Selectors for selecting specific parts of a website
-  * Scraping tables
-  * Scraping dynamically generated websites (HTML forms)
-  * Scraping multi-page websites
-  * Good practice
+Part III forms the main part of the course and introduces basic and intermediate
+web scraping concepts. We will learn how to identify data of interest on HTML
+pages, select the data using CSS selectors and extract it using the R package
+rvest. We will also look at scraping tables, content generated by dynamic 
+websites and scraping of multi-page websites.
 
-* Not covered:
-  * Handling of dynamic websites, JavaScript, databank access etc.
-  * Handling of stings & regular expressions (Note: you will not be able to get around this if you want to follow this path)
-  * Scraping with other packages or languages than R + rvest
+Part IV will cover the practical application of the acquired scraping knowledge
+to a small real world data analysis project. In preparation, we will take a 
+closer look on web scraping ethics and good practice, already briefly discussed
+above, and what we can do to make sure we scrape responsibly. We will also 
+deepen our R knowledge by looking on data cleaning, data transformation and
+graphical analysis in R using the tidyverse packages. The course will close with
+a sample project, spanning the process from generating a research question over
+finding appropriate data and scraping it to cleaning and analysing the data with
+the goal of answering the formulated question.
+
+The internet is an ever changing landscape. Where once every page we ecnountered
+was a simple HTML document, now many modern pages are less simplistic. Content 
+is generated dynamically for each individual user and displayed information is
+not actually "present" in the HTML files but loaded through JavaScript or 
+database connections. This also makes scraping harder. While still being
+possible, this requires advanced techniques that go beyond the scope of this 
+introduction. You will still receive some pointers for where to look, should you
+want to follow these paths further. Also, when we begin scraping raw text from
+websites, we will need to learn about advanced handling of strings and regular 
+expressions, whichcan also not be covered here. 
+
+This introduction focusses on using rvest for scraping in R. This will suffice 
+for many intermediate and advanced scraping projects, but alternatives exist
+within R and in other languages. While these also can not be covered here, you
+will gain a solid basis to pursue alternatives, should you so desire.
+
 
 ## Technical requirements {-}
 
-* R + RStudio
-  * required packages in chap. 3
+All scraping in this introduction is done in R and RStudio using the tidyverse
+packages. Information on how to install the software and handle packages will be
+provided in chapters \@ref(R1) and \@ref(R2).
 
-* A good text editor
-  * Windows: Notepad ++
-  * For all OS: Atom
+We will also need a browser for scraping. While in principle any popular browser
+should do, I would recommend using Chrome or Chromium, as all examples using the
+build in Web Developer Tools, are done in Chromium. You should make sure, that
+the URL bar in your browser shows the full URLs. In Chrome/Chromium this is done
+by right-clicking the URL bar and choosing "Always show full URLs" in the 
+context menu.
 
-* Browser
-  * Chrome/Chromium recommended
-  * Necessary settings (full URLs, WDTs)
-  
+While not strictly necessary, i would also advice using a decent text editor for
+opening HTML files. The options that come with your operating systems but why 
+not do yourselves a favour and use something you can actually work with. Options
+are aplenty, but some of the more accessible while still powerful text editors I
+personally would recommend are Notepad++ on Windows 
+(<https://notepad-plus-plus.org/>{target="_blank"}) and Atom on all operating
+systems (<https://atom.io/>{target="_blank"}). If your feel you are up to it, 
+you can also dip your feet into Emacs, also available for every OS 
+(<https://www.gnu.org/software/emacs/>{target="_blanK"}), but note that this is 
+an advanced option. Proceed at your own risk.
+
+
 ## Conventions {-}
 
-* Inline code and Code blocks
-  * Also HTML code
+All code on the website is set in this `code font`.  This is true for R as well
+as HTML code. R code that is included in text paragraphs will not always be 
+runnable and often serve illustrative purposes. All R code written in code
+blocks is runnable and look like this:
 
-* Code is copyable but use sparely (writing is important)
+``` {r, collapse = TRUE}
+print("Hello World!")
+```
+
+If an R command produces relevant output, you will see the output following 
+directly after the command, written in red and introduced by `##`.
+
+You should in general try to run the code blocks yourself in RStudio. The only 
+way to learn what is happening in R and web scraping, is doing it yourself.
+Run the examples and experiment with them. Every problem you will run into while
+changing the code is a learning opportunity. Notice, that code blocks are
+copyable. Mouse over the code block and you will see a copy symbol, or simply 
+copy & paste like you are used to. But, I would strongly advice on writing as
+much code as you can yourself. While copying code examples by hand may not be 
+intellectually challenging, but if your aim is to learn the R functions and 
+syntax you have to write a lot of it before it can become second nature.
+
 
 ## Acknowledgements {-}
 I would like to thank the authors of bookdown the tidyverse and all R packages
@@ -91,6 +177,8 @@ library(rvest)
 library(lubridate)
 library(echarts4r)
 ```
+
+The website was built with:
 
 ``` {r}
 sessioninfo::session_info()

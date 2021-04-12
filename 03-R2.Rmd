@@ -1,29 +1,391 @@
-# RStudio in practice & the tidyverse
+# RStudio in practice & the tidyverse {#R2}
 
 ``` {r, include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
+knitr::opts_chunk$set(cache = TRUE)
+knitr::opts_chunk$set(cache.path = 'cache/')
 ```
-
-WIP!
 
 ## RStudio Workflow
 
-### Settings
+Up until now, we wrote our code directly into the RStudio console, pressed
+"Enter" and received the desired output. This works but will not satisfy our 
+needs in the long run. The main problem is, that the code we wrote essentially
+disappears after running it. Imagine that you want to rerun your code a week
+from now or even tomorrow. Maybe you took notes and can recreate it, but that
+means a lot of unsatisfying and error prone work. Also maybe at some point you
+want to share code with colleagues, fellow students or the R community in 
+general. At the same time, as our code gets more complex, spans multiple lines
+and consists of many interdependent blocks of code, you will inevitably run into
+the situation where you realise you made a mistake or have to change some code
+at the very beginning of your R session. This would mean, recreating and 
+rerunning most or all of the code you have already written. 
 
-## Packages in general
+These are some of the reasons why we should start writing our code into so 
+called R Scripts.
 
-A short note about CRAN: It means "Comprehensive R Archive Network". You already got to know this during the installation of R, but the various R packages, the corresponding documentation and various information are also "hosted" on this website. If you install a package directly from RStudio, it uses CRAN to find and download the package and the associated files.
+### R Scripts
 
-### namespaces
+To create a new R Script, you can click on "File" > "New File" > "R Script", or
+more conveniently press "CTRL" + "Shift" + "N" simultaneously. This creates an
+untitled script that we can write our code into.
 
-### help/vignettes
+Let's start with something simple by recreating some of the code from last week.
 
-## Philosophie
+``` {r}
+a <- 17
+b <- 4
 
-## Tidy data
+the_answer <- (a + b) * 2
 
-## Pipe
+the_answer
+```
+
+We assign two numerical values two the objects `a` and `b`, assign a calculation
+based on these objects to the new object `the_answer` and prompt R to return
+its value to us. Instead of writing the code line by line into the console, now
+we write the whole block into the newly created script. We can now run the 
+complete script by clicking on "Source" in the upper toolbar attached to the
+script's tab. In most cases I prefer running the script line by line though.
+This allows full control of the process and enables you to stop in certain lines
+to e.g. contemplate what the code is doing, check for errors or change details
+of the code before moving on to the next line. You can do this either 
+by clicking on "Run" in the toolbar or pressing "CTRL" + "Enter" simultaneously.
+In both cases, copies the line of code where your text cursor is currently
+residinginto the console and runs it for you. The text cursor then conveniently
+jumps to the next line in the script. In this way you can quickly run your 
+script line by line, while keeping in full control of when to stop. 
+
+You can decide for yourselves which is the right approach to run your code from 
+situation to situation, but remember that R always assumes you know what your 
+are doing. So there will be no warning prompts, if you are about to overwrite 
+work you have previously done. This is a strength of R from my point of view,
+as we are taking serious as users, but you have to aware of this, when working
+within the language.
+
+When you are done writing your script, you might want to save it to the 
+harddisk, preserving your work for later re-runs or for sharing. By clicking
+on "File" > "Save" or presing "CTRL" + "S" you can save the file with a name
+of your choosing. The file extension for R Scripts is always ".R".
+
+One problem that you will run into sooner or later is, that you will try to run
+incomplete code from a script, most commonly a missing closing bracket.
+What will happen is that RStudio puts the code to be run into the console and
+begins a new line, starting with `+` and then nothing happens. R assumes that
+your code will continue in a further line and waits for you to enter it after 
+the `+`. In most cases the right approach is to cancel the entered command, fix
+your code and re-run it after this. To cancel an already entered command, you 
+have to click into the "Console" tab and press "Esc" on your keyboard. After
+this the `>` prompt will reappear in the console and you can continue with your
+work.
+
+
+### Projects
+
+In many cases, your work will consist of multiple scripts, data files, graphics
+saved to the disk or additional output. So it makes sense to assign your files
+a place to live on your harddisk. You can do this "by hand" but a convenient 
+approach might be to use RStudio's project functionality. 
+
+By clicking on "File" > "New Project", you can start the project creation 
+wizard. If you have already created a folder on your harddisk that shall contain
+the project, you can click on "Existing Directory", select the folder and click
+on "Create Project". You can also create the folder on the fly by clicking on
+"New Directory" > "New Project" and then choosing a folder name and the 
+sub-folder where it should be placed, before creating the project.
+
+RStudio will now close all files currently open and switch to your newly
+created project. The name you chose for the project's folder will also be its
+name, seen in RStudio's title bar. When you look at the "File" tab (lower right)
+you will also see that you are now in the project's folder. This is your current
+*working directory*, a concept we will talk about momentarily. All scripts you 
+create while working in your project will become a part of it. So when you want
+to return to continuing your work, you can now click on "File" >  
+"Open Project". All files opened the last time you worked on the project will be
+reopened and you will again be in the project's working directory. This is an 
+easy and convenient way to keep your work tidy.
+
+At this point I would advise you to create a project for this introduction to 
+web scraping and create R scripts for each chapter as parts of the project.
+The name and sub-folder you choose is not important from the point of view of
+functionality but it should make sense to you.
+
+We should now briefly talk about the working directory. If you try to open or 
+save a file directly from an R script -- without specifying a complete path --
+R will always assume you refer to your working directory. If you created a 
+project, this automatically set the project's folder as the working directory.
+You can always check for your current working directory by entering `getwd()`
+into the console. To change your current working directory, you can do this
+by clicking on "Session" > "Set Working Directory" > "Choose Directory..." or
+by using the function `setwd()` with the desired path enclosed by `"` as the 
+function's argument.
+
+
+### Comments
+
+You should get into the habit of commenting your code, as early as possible.
+Comments are started with one or multiple `#`. All code following the `#` will
+not be evaluated by R and thus serves as the perfect place to comment on what 
+you were doing and thinking while writing the code. Why do this? When you reopen
+a script that you have not been working on in a while, it can be hard to 
+understand, what you tried to do in the first place. Commented code, makes this
+much easier. This is even more true, if you share your code with other people.
+They may have very different approaches to certain R problems and clearly 
+commented code will help them to quickly understand it. You should see this as a
+sign of respect towards the time your peers may invest in helping you with your
+coding problems. 
+
+
+``` {r}
+# assigning objects
+a <- 17
+b <- 4
+
+# calculating the answer
+the_answer <- (a + b) * 2
+
+the_answer
+# but what is the question?
+```
+
+If you plan on using `setwd()` in your script, it is a good idea to comment this
+line before sharing your script. Other people will have different folder 
+structures and will want to decide for themselves. The same goes for all lines 
+that will save something to the harddisk, e.g. data sets or exported graphics.
+The R and RStudio communities are very welcoming and you will always find people
+that are willing to lend you their help, so you should return the favour and be
+polite in your code. This includes writing clear comments and not cluttering 
+anyone's harddisk with files, the may not want to have.
+
+
+## R packages
+
+The R world is open and collaborative by nature. Besides the packages that come
+with your R installation -- base R -- an ever growing number of additional 
+packages written by professionals and users is available for download by
+anyone. Every package is focussed on a specific use case and brings with it a 
+number of functions that enable R to be used for tasks that the original 
+software designers did not have in mind or at the very least provide a smoother 
+user experience in cases where the original base R solutions are a bit outdated.
+
+The packages, its documentation and various other related information are
+hosted at CRAN -- "Comprehensive R Archive Network"-- which you already got to
+know during the installation of R. If you install a package directly from 
+RStudio, it uses CRAN to find and download the package and the associated files.
+
+### Installing and loading packages
+
+To install a package we can use the R function `install.packages()` where the 
+name of the package to be installed is written enclosed by `"` between the 
+parentheses. Normally we do this using the console. Installing packages from
+an R script works as well, but as we only need to perform the installation once,
+there is no benefit in it. It actually slows things down if we repeat the
+installation every time we run a script. At the same time, if we share our
+script it is impolite to force an (re)installation on somebody else. 
+
+For this introduction we will focus on the packages of the tidyverse -- more 
+on them below. To install the core tidyverse package, you should type:
+
+``` {r, eval = FALSE}
+install.packages("tidyverse")
+```
+
+R will output a lot of information concerning the installation process, and 
+close with a satisfying `DONE (tidyverse)` if everything went acording to plan.
+
+Now that the installation is complete, we can load the package. This should
+normally be done in the first lines of a script. This way all necessary packages 
+are loaded at the beginning of running a script and other users that see your
+code also immediately see which packages are required and can decide for 
+themselves if they want to install them. Loading a package is done with 
+`library()` with the name of the package in the parentheses, this time without 
+the need for enclosing it in `"`.
+
+``` {r}
+library(tidyverse)
+```
+
+Loading the tidyverse package returns a lot of information to us, some which we
+will look at in more detail during the course of this chapter. Please note that
+not all packages are that verbose in their loading process. Often you will get 
+no output at all, which is a good sign, as this also means that the package 
+loaded correctly. If anything goes wrong, R will return an error message.
+
+### Namespaces
+
+Looking at the last lines of the returned message when loading the tidyverse
+package, informs us, that there are two conflicts. These arise, when two or more
+loaded packages include functions with the same name. Here we can see that the
+tidyverse package *dplyr* masks the functions `filter()` and `lag()` from the 
+base R package *stats*. If we would have used `filter()` without loading dplyr, 
+the function from the stats package would have been used. After loading it, the
+function from dplyr masks the function from stats and is used instead. 
+
+If we had a case where we want to load dplyr, but still use `filter()` from
+stats, we can still do this by explicitly declaring the *namespace* which we are
+referring to. The namespace basically is a reference for R where to look up the
+function we have called. If we just write the functions name, R looks for it in
+the list of loaded packages, which would result in applying `filter()` from
+dplyr here. But we can tell R to look up the function in another namespace, by
+using the notation `namespace::function`. So to call `filter()` from stats 
+while the function is masked by the similarly named function from dplyr, we 
+could write `stats::filter()`. As the function will not work without further
+arguments, we can't try this out directly, but the same principle applies to
+loading the help files:
+
+``` {r, eval = FALSE}
+?dplyr::filter()
+?stats::filter()
+```
+
+
+## Tidyverse
+
+While we will use some basr R functions throughout this course, our main focus
+will lie on the *tidyverse* packages.
+
+The tidyverse is a collection of R packages, all following a shared philosophy
+concerning the syntax of their functions and the way in which data is 
+represented. We will see how the philosophy underlying the tidyverse can lead to
+more intuitive R code, especially when using the pipe (%>%), in the next 
+chapter. If you want to learn more about the concept of *tidy data*, the 
+structure of data representation underlying the tidyverse, a read of the chapter
+on this concept from "R for Data Science" by Wickham & Grolemund is highly
+recommended: <https://r4ds.had.co.nz/tidy-data.html>{target="_blank"}.
+
+Right now, the *core tidyverse* consists of eight packages. These are the
+packages that are loaded when we type `library(tidyverse)` and that are listed 
+in the corresponding output under "Attaching packages". As the name suggests, 
+the packages comprise the core functionalities that define the tidyverse. This 
+includes reading, cleaning and transforming data, handing certain data types,
+plotting graphs and more. Over the course of this introduction to web scraping, 
+we will make use of several of these packages, so in most chapters we will begin
+our scripts with loading the tidyverse package.
+
+Besides the core tidyverse, a number of additional and more specialised packages
+are part of the tidyverse and were already installed when you ran 
+`install.packages("tidyverse")` above. Among them, the package *rvest* is of 
+special importance to us, as it will be our main tool for web scraping 
+throughout the course.
+
+For a full list of tidyverse packages and the corresponding descriptions of 
+their functionality, you can visit:
+<https://www.tidyverse.org/packages/>{target="_blank"}
+
+
+### Tibbles
+
+The "tibbles" package is part of the core tidyverse and offers an alternative to
+the *data frame* data structure that is used in base R to represent data in 
+tabular form. The differences between data frames and *tibbles* are relatively
+minor. If you are interested in the details, you can read up on them in this
+section from "R for Data Science" and the chapter on tibbles in general:
+<https://r4ds.had.co.nz/tibbles.html#tibbles-vs.-data.frame>{target="_blank"}.
+For now it will suffice to know, that tibbles are used throughout this 
+introduction, but that all examples will also work with the classic data frames.
+
+The syntax to create a tibble is simple. Every column represents a variable, 
+every row an observation. You should think of the columns as vectors, where the
+first position in each vector corresponds to the first observation (row), the
+second position in each vector to the second observation and so on. In this way,
+we can create tibbles vector by vector or variable by variable, using the
+function `tibble()`. We assign a name to the variable followed by `=` and the 
+data to be assigned to the variable. The variable-data pairs are separated by 
+`,`:
+
+``` {r}
+tibble(numbers = c(1, 2, 3), strings = c("one", "two", "three"), logicals = c(TRUE, TRUE, FALSE))
+```
+
+For longer code like this, it is advisable to use multiple lines and a more 
+clear formatting to create code that is readable and intuitive:
+
+``` {r}
+tibble(
+  numbers = c(1, 2, 3),
+  strings = c("one", "two", "three"),
+  logicals = c(TRUE, TRUE, FALSE)
+)
+```
+
+R understands that all five lines are part of one command as it evaluates 
+everything between the opening and closing bracket of the `tibbles()` function
+together. We just have to make sure, that we don't miss the closing bracket or a
+`,` that separates the variable-data pairs. This actually is a main source of
+errors and be high on your list of things to check, if something does not work
+as planned.
+
+We can also use calculations and functions directly in tibble creation,
+circumventing the need to assign the results to an object first:
+
+``` {r}
+tibble(
+  numbers = c(1, 2, 3),
+  roots = sqrt(numbers),
+  rounded = round(roots, digits = 2)
+)
+```
+
+Sidenote: The function `sqrt()` takes the square roots of the data it is applied
+to.
 
 
 
-cheat sheets
+## Additional resources
+
+When learning R and when using functions and packages that are new to you, you 
+will regularly run into situations, where you need help in understanding what
+is happenning and what you can do about it. Luckily, there a lot of resources
+that will help you on your R journey.
+
+You already have learned about the build in help functionalities embedded in R.
+Many packages also come with so called *vignettes* which offer more in depth
+introductions to the functionalities of the packages. Let's see if the tibble
+package comes with vignettes. To do this we can write:
+
+``` {r, eval = FALSE}
+vignette(package = "tibble")
+```
+
+We get a list of all vignettes avaialable for the specific package. To access a 
+specific vignette, we also use the `vignette()` function, this time with the
+specific name of the vignette as the function's argument:
+
+``` {r, eval = FALSE}
+vignette("types")
+```
+
+You can also always check the CRAN page for the package in question. Here you
+can access the documentation as well as available vignettes, e.g.:
+<https://cran.r-project.org/web/packages/tibble/index.html>{target="_blank"}.
+
+Another highly recommended resource are the RStudio *cheatsheets* found at:
+<https://www.rstudio.com/resources/cheatsheets/>{target="_blank"}. These are
+available for many popular packages and present a comprehensive list of the
+functions offered by the packages. 
+
+The RStudio homepage also offers many more resources for learning R and 
+specific packages including a number of webinars and tutorial videos, accessed
+by the menu "Resources":  <https://www.rstudio.com/>{target="_blank"}
+
+In general, the internet offers a lot of resources that you can access. One of
+the most important skills you have to develop as an aspiring R use is to
+understand the problem you are facing to best of your abilities and formulate
+a short but precise google search. In most cases you can assume, that you are 
+not the first or last person to have a specific problem. Someone will have 
+written a blogpost, asked a question on
+<https://stackoverflow.com/>{target="_blank"}, made a video tutorial and so on.
+If you can find these resources, you are already halfway there. 
+
+There also are a lot of books available on R and RStudio in general, as well as
+on more specific applications in R. I want to reccomend two of them in 
+particular, both avalaible as paperback as well as online:
+
+* *R Cookbook, 2nd Edition* by J.D. Long & Paul Teetor.
+The book is comprised of recipes for specific tasks, you might want to perform.
+It is not designed as a course but rather as reference for concrete questions. 
+Available under: <https://rc2e.com/>{target="_blank"}
+
+* *R for Data Science* by Hadley Wickham and Garrett Grolemund.
+An introduction to data science using (almost) exclusively the tidyverse
+packages. Available under: <https://r4ds.had.co.nz/>{target="_blank"}

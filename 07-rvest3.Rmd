@@ -2,6 +2,8 @@
 
 ``` {r, include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
+knitr::opts_chunk$set(cache = TRUE)
+knitr::opts_chunk$set(cache.path = 'cache/')
 ```
 
 In many cases, we do not want to scrape the content of a single website, but 
@@ -34,7 +36,7 @@ contain in one step. This is exactly what we will look at in the following.
 
 ### Scraping of the index
 
-``` {r}
+``` {r, message = FALSE}
 library(tidyverse)
 library(rvest)
 ```
@@ -365,9 +367,11 @@ irrelevant whether the components of the date are separated with ".", "/", "-"
 or spaces. Even written out or abbreviated month names can be processed by
 lubridate.
 
-``` {r}
+``` {r, message = FALSE}
 library(lubridate)
+```
 
+```
 test <- pages %>% 
   map(html_nodes, css = "p.date") %>% 
   map(html_text) %>% 

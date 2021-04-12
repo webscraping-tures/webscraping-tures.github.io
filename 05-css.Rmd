@@ -2,6 +2,8 @@
 
 ``` {r, include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
+knitr::opts_chunk$set(cache = TRUE)
+knitr::opts_chunk$set(cache.path = 'cache/')
 ```
 
 ## CSS selectors {#css}
@@ -25,7 +27,7 @@ In the following, the CSS selectors are applied to the website
 for illustration. You can view the source code the usual way. Firstly, we load
 the rvest package and parse the website.
 
-``` {r}
+``` {r, message = FALSE}
 library(rvest)
 
 website <- "https://webscraping-tures.github.io/wahlbeteiligung_2.html" %>% 
