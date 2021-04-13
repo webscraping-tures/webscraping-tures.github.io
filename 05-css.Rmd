@@ -23,14 +23,14 @@ here that the entire selector -- regardless of how many individual parts it
 consists of -- is always passed along as a string to the argument.
 
 In the following, the CSS selectors are applied to the website
-<https://webscraping-tures.github.io/wahlbeteiligung_2.html>{target="_blank"}
+<https://webscraping-tures.github.io/turnout.html>{target="_blank"}
 for illustration. You can view the source code the usual way. Firstly, we load
 the rvest package and parse the website.
 
 ``` {r, message = FALSE}
 library(rvest)
 
-website <- "https://webscraping-tures.github.io/wahlbeteiligung_2.html" %>% 
+website <- "https://webscraping-tures.github.io/turnout.html" %>% 
   read_html()
 ```
 
@@ -51,24 +51,24 @@ website %>%
 
 We also got to know the selector for the argument `class` -- `".class"` -- in 
 the previous section. We can select all `<span>` tags of the class 
-`"bundesland-name"` as follows:
+`"state-name"` as follows:
 
 ``` {r}
 website %>% 
-  html_nodes(css = ".bundesland-name") %>% 
+  html_nodes(css = ".state-name") %>% 
   head(n = 2)
 
 
 website %>% 
-  html_nodes(css = "span.bundesland-name") %>% 
+  html_nodes(css = "span.state-name") %>% 
   head(n = 2)
 ```
 
 The first variation of the selector says, 
-*select all elements of the class `"bundesland-name"`*. The second variation 
-says, *select all <span> elements of the class `"bundesland-name"`*. For this 
+*select all elements of the class `"state-name"`*. The second variation 
+says, *select all <span> elements of the class `"state-name"`*. For this 
 website, both variations are equivalent in result, since all elements assigned 
-the class `"bundesland-name"` are also `<span>` tags. However, this does not 
+the class `"state-name"` are also `<span>` tags. However, this does not 
 always have to be the case. Different tags with different content may very well
 have the same class in practice.
 
@@ -76,13 +76,14 @@ Basically, constructing CSS selectors is always a balancing act between
 functionality and readability. The selector should select exactly only the 
 elements we are interested in, and at the same time be understandable. The 
 latter is especially important when others -- or you yourself a few weeks later
--- read the code. Readability also means achieving a balance between length and clarity of the selector.
+-- read the code. Readability also means achieving a balance between length and 
+clarity of the selector.
 
 To illustrate:
 
 ``` {r}
 website %>% 
-  html_nodes(css = "body > div#daten > div[class^=bundesland-] > span.bundesland-name") %>% 
+  html_nodes(css = "body > div#data > div[class^=state-] > span.state-name") %>% 
   head(n = 2)
 ```
 
@@ -90,7 +91,7 @@ This is the full path through the hierarchical HTML structure, which leads us to
 the result already seen above. You don't need to fully understand this one yet. 
 But you can see that the selector can get long and complicated, and here we are
 dealing with a very simply designed website. For me, the selector
-`"span.bundesland-name"` is a good choice, because it allows us to reach our 
+`"span.state-name"` is a good choice, because it allows us to reach our 
 goal and has a balance between brevity and readability that is pleasant for me.
 But you must decide this for yourself in each individual case.
 
@@ -106,7 +107,7 @@ In our example, the `<span>` tag, which includes the name of each state, has an
 id that identifies the state with a two-character abbreviation:
 
 ```
-<span class="bundesland-name" id="bw">Baden-Württemberg</span>
+<span class="state-name" id="bw">Baden-Württemberg</span>
 ```
 
 The selector for IDs is being written as `"#id"`.
@@ -135,7 +136,7 @@ A combination with the class attribute is also possible.
 
 ``` {r}
 website %>% 
-  html_nodes(css = "span.bundesland-name#bw")
+  html_nodes(css = "span.state-name#bw")
 ```
 
 In general, it should be noted that the CSS selectors are *case-sensitive*. 
@@ -143,7 +144,7 @@ This means that we also need to be case sensitive. In the entry for Hamburg, the
 name of the id is capitalized:
 
 ```
-<span class="bundesland-name" id="HH">Hamburg</span>
+<span class="state-name" id="HH">Hamburg</span>
 ```
 
 If we want to extract this element, we have to use this way of writing in the
@@ -227,13 +228,13 @@ html_tree <- tibble(
       tibble(name = c('<head>', '<body>'),
         children = list(
           tibble(name = c('<title>', '<meta>', '<style>')),
-          tibble(name = c('<span class="titel">', '<div id="daten">', '<div class="quote">', '<div>'),
+          tibble(name = c('<span class="title">', '<div id="data">', '<div class="quote">', '<div>'),
             children = list(
               tibble(name = '<h3>'),
-              tibble(name = c('<div class="bundesland-odd">', '<div class="bundesland-even">'),
+              tibble(name = c('<div class="state-odd">', '<div class="state-even">'),
                 children = list(
-                  tibble(name = c('<img>', '<span class="bundesland-name">', '<span class="wahljahr">', '<span class="wahlbeteiligung">')),
-                  tibble(name = c('<img>', '<span class="bundesland-name">', '<span class="wahljahr">', '<span class="wahlbeteiligung">'))
+                  tibble(name = c('<img>', '<span class="state-name">', '<span class="election-year">', '<span class="election-turnout">')),
+                  tibble(name = c('<img>', '<span class="state-name">', '<span class="election-year">', '<span class="election-turnout">'))
                 )
               ),
               tibble(name = '<a>'),
@@ -249,13 +250,13 @@ html_tree <- tibble(
 html_tree %>% 
   e_charts() %>% 
   e_tree(initialTreeDepth = 1) %>% 
-  e_title("HTML Hierarchy - wahlbeteiligung_2.html")
+  e_title("HTML Hierarchy - turnout.html")
 ```
 
 By clicking on the elements of the family tree, you can expand and collapse the
 hierarchy levels. Click once through the different levels and compare this with
 the HTML source code of the page. When you're done with that, I suggest
-collapsing `<head>` and expanding only `<div id="daten">` in `<body>` and the
+collapsing `<head>` and expanding only `<div id="data">` in `<body>` and the
 first `<div>` at the next level down. With that, you should see everything we
 need below.
 
@@ -272,18 +273,18 @@ grandchildren and grandparents with any number of "grand" prefixes. In the
 selector, we write this as `"B A"`.
 
 For example, if we want to select all `<span>` tags that descend from the
-`<div id="daten">` tag -- that is, a grandchild-grandparent relationship:
+`<div id="data">` tag -- that is, a grandchild-grandparent relationship:
 
 ``` {r}
 website %>% 
-  html_nodes(css = "div#daten span") %>% 
+  html_nodes(css = "div#data span") %>% 
   head(n = 6)
 ```
 
 It should be noted that we can only select younger generations with CSS 
 Selectors. So, for example, we can't select the grandparents of the 
 grandchildren by "flipping" the selector around. To select the grandparents --
-i.e. `<div id="daten">`, we would need to look at which element they descended 
+i.e. `<div id="data">`, we would need to look at which element they descended 
 from, for example `<body>`.
 
 CSS selectors are not limited to mapping the relationship of two generations. 
@@ -292,7 +293,7 @@ could look like this:
 
 ``` {r}
 website %>% 
-  html_nodes(css = "body div#daten div span") %>% 
+  html_nodes(css = "body div#data div span") %>% 
   head(n = 6)
 ```
 
@@ -302,9 +303,9 @@ website %>%
 If we want to define direct child-parent relationships instead of lineages 
 across any number of generations, we can do this with selectors in the form 
 `"B > A"`. This means A is a direct child of B. Since the `<span>` tags selected
-earlier are not direct children of `<div id="daten">`, `"div#daten > span"` would 
+earlier are not direct children of `<div id="data">`, `"div#data > span"` would 
 not achieve the desired goal here. However, the `<span>` tags are direct 
-children of `<div>` with classes `"bundesland-odd"` and `"bundesland-even"`
+children of `<div>` with classes `"state-odd"` and `"state-even"`
 respectively. Since there is no other direct child-parent relationship of 
 `<span>` and `<div>` tags in our example, the selector `"div > span"` would 
 already be sufficient. However, we could become more explicit to write less
@@ -313,7 +314,7 @@ error-prone code. Both `<div>` tags are similar in that their classes start with
 
 ``` {r}
 website %>% 
-  html_nodes(css = "div[class^='bundesland'] > span") %>% 
+  html_nodes(css = "div[class^='state'] > span") %>% 
   head(n = 6)
 ```
 
@@ -324,7 +325,7 @@ number of options.
 
 ``` {r}
 website %>% 
-  html_nodes(css = "div[class^='bundesland'] > :first-child") %>% 
+  html_nodes(css = "div[class^='state'] > :first-child") %>% 
   head(n = 2)
 ```
 
@@ -336,7 +337,7 @@ interested in `<span>` children, we combine `"span"` and `"nth-child(n)"`:
 
 ``` {r}
 website %>% 
-  html_nodes(css = "div[class^='bundesland'] > span:nth-child(2)") %>% 
+  html_nodes(css = "div[class^='state'] > span:nth-child(2)") %>% 
   head(n = 2)
 ```
 
@@ -348,7 +349,7 @@ If we would like to select only the last child, we could do this with
 
 ``` {r}
 website %>% 
-  html_nodes(css = "div[class^='bundesland'] > span:last-child") %>% 
+  html_nodes(css = "div[class^='state'] > span:last-child") %>% 
   head(n = 2)
 ```
 
@@ -362,7 +363,7 @@ sibling A:
 
 ``` {r}
 website %>% 
-  html_nodes(css = "div[class^='bundesland'] img ~ span") %>% 
+  html_nodes(css = "div[class^='state'] img ~ span") %>% 
   head(n = 6)
 
 website %>% 
@@ -383,7 +384,7 @@ website %>%
   head(n = 2)
 
 website %>% 
-  html_nodes(css = "span.bundesland-name + span") %>% 
+  html_nodes(css = "span.state-name + span") %>% 
   head(n = 2)
 ```
 
@@ -396,15 +397,15 @@ overused.
 
 ``` {r}
 website %>% 
-  html_nodes(css = "div[class^='bundesland'] > span:first-of-type") %>% 
+  html_nodes(css = "div[class^='state'] > span:first-of-type") %>% 
   head(n = 2)
 
 website %>% 
-  html_nodes(css = "div[class^='bundesland'] > span:nth-of-type(2)") %>% 
+  html_nodes(css = "div[class^='state'] > span:nth-of-type(2)") %>% 
   head(n = 2)
 
 website %>% 
-  html_nodes(css = "div[class^='bundesland'] > span:last-of-type") %>% 
+  html_nodes(css = "div[class^='state'] > span:last-of-type") %>% 
   head(n = 2)
 ```
 
@@ -416,7 +417,7 @@ children of an element in the following way:
 
 ``` {r}
 website %>% 
-  html_nodes(css = "div[class^='bundesland'] > *") %>% 
+  html_nodes(css = "div[class^='state'] > *") %>% 
   head(n = 8)
 ```
 
@@ -426,7 +427,7 @@ explicitly excluded. For example, all children except the `<img>` elements:
 
 ``` {r}
 website %>% 
-  html_nodes(css = "div[class^='bundesland'] > :not(img)") %>% 
+  html_nodes(css = "div[class^='state'] > :not(img)") %>% 
   head(n = 6)
 ```
 
@@ -435,7 +436,7 @@ This makes it possible, for example, to select two `<span>` classes in one step:
 
 ``` {r}
 website %>% 
-  html_nodes(css = "div[class^='bundesland'] > span.wahljahr, div[class^='bundesland'] > span.wahlbeteiligung") %>% 
+  html_nodes(css = "div[class^='state'] > span.election-year, div[class^='state'] > span.election-turnout") %>% 
   head(n = 4)
 ```
 
