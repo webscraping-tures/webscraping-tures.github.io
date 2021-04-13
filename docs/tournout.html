@@ -1,0 +1,176 @@
+<!DOCTYPE HTML>
+
+<html>
+  <head>
+    <title>Voter turnout for German federal state elections</title>
+
+    <meta charset="UTF-8">
+    <meta name="author" content="Jakob Tures">
+    <meta name="description" content="Voter turnout for German federal state elections (last election)">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+      .state-odd {
+        background-color: AliceBlue;
+      }
+      .state-even {
+        background-color: Beige;
+      }
+      .state-name {
+        font-family: Arial, sans-serif;
+        font-weight: bold;
+      }
+      .election-year {
+        font-family: Arial, sans-serif;
+      }
+      .election-turnout {
+        font-family: Arial, sans-serif;
+        font-style: italic;
+      }
+      .quote {
+        margin: 50px;
+        font-family: Arial, sans-serif;
+      }
+      .title {
+        font-family: Arial, sans-serif;
+      }
+      img {
+        vertical-align: middle;
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <span class="title"><h3>Voter turnout for the last federal state elections in Germany:</h3></span>
+    <div id="data">
+      <div class="state-odd">
+        <img id="bw" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Flag_of_Baden-W%C3%BCrttemberg_%28state%2C_greater_arms%29.svg/200px-Flag_of_Baden-W%C3%BCrttemberg_%28state%2C_greater_arms%29.svg.png" width="50" heigth="30">
+        <span class="state-name" id="bw">Baden-Württemberg</span>
+        <span class="election-year">2016</span>:
+        <span class="election-turnout">70.4</span>%
+      </div>
+  
+      <div class="state-even">
+        <img id="by" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Flag_of_Bavaria_%28lozengy%29.svg/200px-Flag_of_Bavaria_%28lozengy%29.svg.png" width="50" heigth="30">
+        <span class="state-name" id="by">Bayern</span>
+        <span class="election-year">2018</span>:
+        <span class="election-turnout">72.4</span>%
+      </div>
+  
+      <div class="state-odd">
+        <img id="be" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Flag_of_Berlin.svg/200px-Flag_of_Berlin.svg.png" width="50" heigth="30">
+        <span class="state-name" id="be">Berlin</span>
+        <span class="election-year">2016</span>:
+        <span class="election-turnout">66.9</span>%
+      </div>
+  
+      <div class="state-even">
+        <img id="bb" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Flag_of_Brandenburg.svg/200px-Flag_of_Brandenburg.svg.png" width="50" heigth="30">
+        <span class="state-name" id="bb">Brandenburg</span>
+        <span class="election-year">2019</span>:
+        <span class="election-turnout">61.3</span>%
+      </div>
+  
+      <div class="state-odd">
+        <img id="hb" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Flag_of_Bremen_%28middle_arms%29.svg/200px-Flag_of_Bremen_%28middle_arms%29.svg.png" width="50" heigth="30">
+        <span class="state-name" id="hb">Bremen</span>
+        <span class="election-year">2019</span>:
+        <span class="election-turnout">64.1</span>%
+      </div>
+  
+      <div class="state-even">
+        <img id="HH" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Flag_of_Hamburg.svg/200px-Flag_of_Hamburg.svg.png" width="50" heigth="30">
+        <span class="state-name" id="HH">Hamburg</span>
+        <span class="election-year">2020</span>:
+        <span class="election-turnout">63.2</span>%
+      </div>
+  
+      <div class="state-odd">
+        <img id="he" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Flag_of_Hesse_%28state%29.svg/200px-Flag_of_Hesse_%28state%29.svg.png" width="50" heigth="30">
+        <span class="state-name" id="he">Hessen</span>
+        <span class="election-year">2018</span>:
+        <span class="election-turnout">67.3</span>%
+      </div>
+  
+      <div class="state-even">
+        <img id="mv" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Flag_of_Mecklenburg-Western_Pomerania_%28state%29.svg/200px-Flag_of_Mecklenburg-Western_Pomerania_%28state%29.svg.png" width="50" heigth="30">
+        <span class="state-name" id="mv">Mecklenburg-Vorpommern</span>
+        <span class="election-year">2016</span>:
+        <span class="election-turnout">61.6</span>%
+      </div>
+  
+      <div class="state-odd">
+        <img id="ni" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Flag_of_Lower_Saxony.svg/200px-Flag_of_Lower_Saxony.svg.png" width="50" heigth="30">
+        <span class="state-name" id="ni">Niedersachsen</span>
+        <span class="election-year">2017</span>:
+        <span class="election-turnout">63.1</span>%
+      </div>
+  
+      <div class="state-even">
+        <img id="nw" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Flag_of_North_Rhine-Westphalia_%28state%29.svg/200px-Flag_of_North_Rhine-Westphalia_%28state%29.svg.png" width="50" heigth="30">
+        <span class="state-name" id="nw">Nordrhein-Westfalen</span>
+        <span class="election-year">2017</span>:
+        <span class="election-turnout">65.2</span>%
+      </div>
+  
+      <div class="state-odd">
+        <img id="rp" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Flag_of_Rhineland-Palatinate.svg/200px-Flag_of_Rhineland-Palatinate.svg.png" width="50" heigth="30">
+        <span class="state-name" id="rp">Rheinland-Pfalz</span>
+        <span class="election-year">2016</span>:
+        <span class="election-turnout">70.4</span>%
+      </div>
+  
+      <div class="state-even">
+        <img id="sl" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Flag_of_Saarland.svg/200px-Flag_of_Saarland.svg.png" width="50" heigth="30">
+        <span class="state-name" id="sl">Saarland</span>
+        <span class="election-year">2017</span>:
+        <span class="election-turnout">69.7</span>%
+      </div>
+  
+      <div class="state-odd">
+        <img id="sn" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Flag_of_Saxony_%28state%29.svg/200px-Flag_of_Saxony_%28state%29.svg.png" width="50" heigth="30">
+        <span class="state-name" id="sn">Sachsen</span>
+        <span class="election-year">2019</span>:
+        <span class="election-turnout">66.6</span>%
+      </div>
+  
+      <div class="state-even">
+        <img id="st" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Flag_of_Saxony-Anhalt_%28state%29.svg/200px-Flag_of_Saxony-Anhalt_%28state%29.svg.png" width="50" heigth="30">
+        <span class="state-name" id="st">Sachsen-Anhalt</span>
+        <span class="election-year">2016</span>:
+        <span class="election-turnout">61.1</span>%
+      </div>
+  
+      <div class="state-odd">
+        <img id="sh" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Flag_of_Schleswig-Holstein_%28state%29.svg/200px-Flag_of_Schleswig-Holstein_%28state%29.svg.png" width="50" heigth="30">
+        <span class="state-name" id="sh">Schleswig-Holstein</span>
+        <span class="election-year">2017</span>:
+        <span class="election-turnout">64.2</span>%
+      </div>
+  
+      <div class="state-even">
+        <img id="th" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Flag_of_Thuringia_%28state%29.svg/200px-Flag_of_Thuringia_%28state%29.svg.png" width="50" heigth="30">
+        <span class="state-name" id="th">Thüringen</span>
+        <span class="election-year">2019</span>:
+        <span class="election-turnout">64.9</span>%
+      </div>
+    </div>
+    
+    <div class="quote">
+      Data: 
+      <a href="https://www.wahlrecht.de/ergebnisse/index.htm" target="_blank">
+        https://www.wahlrecht.de/ergebnisse/index.htm</a> (08.03.2021)
+      <br>
+      Flags: 
+      <a href="https://de.wikipedia.org/wiki/Flaggen_und_Wappen_der_L%C3%A4nder_der_Bundesrepublik_Deutschland">
+        https://de.wikipedia.org/wiki/Flaggen_und_Wappen_der_L%C3%A4nder_der_Bundesrepublik_Deutschland</a> (09.03.2021)
+    </div>
+    
+    <div>
+      <a href="https://webscraping-tures.github.io/css-selectors-developer-tools.html" target="_self">
+        Back</a> to course
+    </div>
+  </body>
+</html>
