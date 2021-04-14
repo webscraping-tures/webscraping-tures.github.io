@@ -24,7 +24,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2021-04-13" />
+<meta name="date" content="2021-04-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -303,8 +303,8 @@ Web Scraping using R
 needs in the long run. The main problem is, that the code we wrote essentially
 disappears after running it. Imagine that you want to rerun your code a week
 from now or even tomorrow. Maybe you took notes and can recreate it, but that
-means a lot of unsatisfying and error prone work. Also maybe at some point you
-want to share code with colleagues, fellow students or the R community in
+means a lot of unsatisfying and error prone work. Also, maybe at some point you
+want to share code with colleagues, fellow students, or the R community in
 general. At the same time, as our code gets more complex, spans multiple lines
 and consists of many interdependent blocks of code, you will inevitably run into
 the situation where you realise you made a mistake or have to change some code
@@ -326,85 +326,82 @@ untitled script that we can write our code into.</p>
 <span id="cb41-6"><a href="R2.html#cb41-6" aria-hidden="true" tabindex="-1"></a>the_answer</span>
 <span id="cb41-7"><a href="R2.html#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 42</span></span></code></pre></div>
 <p>We assign two numerical values two the objects <code>a</code> and <code>b</code>, assign a calculation
-based on these objects to the new object <code>the_answer</code> and prompt R to return
-its value to us. Instead of writing the code line by line into the console, now
-we write the whole block into the newly created script. We can now run the
-complete script by clicking on “Source” in the upper toolbar attached to the
-script’s tab. In most cases I prefer running the script line by line though.
-This allows full control of the process and enables you to stop in certain lines
-to e.g. contemplate what the code is doing, check for errors or change details
-of the code before moving on to the next line. You can do this either
-by clicking on “Run” in the toolbar or pressing “CTRL” + “Enter” simultaneously.
-In both cases, copies the line of code where your text cursor is currently
-residinginto the console and runs it for you. The text cursor then conveniently
+based on these objects to the new object <code>the_answer</code> and prompt R to return its
+value to us. Instead of writing the code line by line into the console, now we
+write the whole block into the newly created script. We can now run the complete
+script by clicking on “Source” in the upper toolbar attached to the script’s
+tab. In most cases I prefer running the script line by line though. This allows
+full control of the process and enables you to stop in certain lines to
+e.g. contemplate what the code is doing, check for errors or change details of
+the code before moving on to the next line. You can do this either by clicking
+on “Run” in the toolbar or pressing “CTRL” + “Enter” simultaneously. In both
+cases, RStudio copies the line of code where your text cursor is currently
+residing into the console and runs it for you. The text cursor then conveniently
 jumps to the next line in the script. In this way you can quickly run your
-script line by line, while keeping in full control of when to stop.</p>
-<p>You can decide for yourselves which is the right approach to run your code from
-situation to situation, but remember that R always assumes you know what your
-are doing. So there will be no warning prompts, if you are about to overwrite
-work you have previously done. This is a strength of R from my point of view,
-as we are taking serious as users, but you have to aware of this, when working
-within the language.</p>
-<p>When you are done writing your script, you might want to save it to the
-harddisk, preserving your work for later re-runs or for sharing. By clicking
-on “File” &gt; “Save” or presing “CTRL” + “S” you can save the file with a name
-of your choosing. The file extension for R Scripts is always “.R”.</p>
-<p>One problem that you will run into sooner or later is, that you will try to run
-incomplete code from a script, most commonly a missing closing bracket.
-What will happen is that RStudio puts the code to be run into the console and
-begins a new line, starting with <code>+</code> and then nothing happens. R assumes that
-your code will continue in a further line and waits for you to enter it after
-the <code>+</code>. In most cases the right approach is to cancel the entered command, fix
-your code and re-run it after this. To cancel an already entered command, you
-have to click into the “Console” tab and press “Esc” on your keyboard. After
-this the <code>&gt;</code> prompt will reappear in the console and you can continue with your
-work.</p>
+script line by line, while having full control over when to stop.</p>
+<p>You can decide for yourself what the right approach to running your code is,
+based on the given situation. But remember that R always assumes that you know
+what you’re doing. There will be no warning prompts if you are about to
+overwrite work you have previously done.</p>
+<p>When you are done writing your script, you might want to save it to the hard
+drive, preserving your work for later re-runs or for sharing. By clicking on
+“File” &gt; “Save” or presing “CTRL” + “S” you can save the file with a name of
+your choosing. The file extension for R Scripts is always “.R”.</p>
+<p>One problem – that you will run into sooner or later – is that you will try to
+run incomplete code from a script, most commonly a missing closing bracket. In
+this case, RStudio puts the code to be run into the console and begins a new
+line, starting with <code>+</code>, and then nothing happens. R assumes that your code will
+continue in a further line and waits for you to enter it after the <code>+</code>. In most
+cases the right approach is to cancel the entered command, fix your code and
+re-run it afterwards. To cancel an already entered command, you have to click
+into the “Console” tab and press “CTRL” + “C” or “Esc” on your keyboard. The <code>&gt;</code>
+prompt will reappear in the console and you can continue with your work.</p>
 </div>
 <div id="projects" class="section level3" number="3.1.2">
 <h3><span class="header-section-number">3.1.2</span> Projects</h3>
 <p>In many cases, your work will consist of multiple scripts, data files, graphics
 saved to the disk or additional output. So it makes sense to assign your files
-a place to live on your harddisk. You can do this “by hand” but a convenient
+to a place on your hard drive. You can do this “by hand” but a convenient
 approach might be to use RStudio’s project functionality.</p>
 <p>By clicking on “File” &gt; “New Project”, you can start the project creation
-wizard. If you have already created a folder on your harddisk that shall contain
-the project, you can click on “Existing Directory”, select the folder and click
-on “Create Project”. You can also create the folder on the fly by clicking on
-“New Directory” &gt; “New Project” and then choosing a folder name and the
-sub-folder where it should be placed, before creating the project.</p>
-<p>RStudio will now close all files currently open and switch to your newly
-created project. The name you chose for the project’s folder will also be its
-name, seen in RStudio’s title bar. When you look at the “File” tab (lower right)
-you will also see that you are now in the project’s folder. This is your current
+wizard. If you have already created a folder on your hard drive that shall
+contain the project, you can click on “Existing Directory”, select the folder
+and click on “Create Project”. You can also create the folder on the fly by
+clicking on “New Directory” &gt; “New Project” and then choosing a folder name and
+the sub-folder where it should be placed, before creating the project.</p>
+<p>RStudio will now close all files currently open and switch to your newly created
+project. The name you chose for the project’s folder will also be its name, seen
+in RStudio’s title bar. When you look at the “File” tab (lower right), you will
+also see that you are now in the project’s folder. This is your current
 <em>working directory</em>, a concept we will talk about momentarily. All scripts you
 create while working in your project will become a part of it. So when you want
-to return to continuing your work, you can now click on “File” &gt;<br />
-“Open Project”. All files opened the last time you worked on the project will be
-reopened and you will again be in the project’s working directory. This is an
-easy and convenient way to keep your work tidy.</p>
-<p>At this point I would advise you to create a project for this introduction to
-web scraping and create R scripts for each chapter as parts of the project.
-The name and sub-folder you choose is not important from the point of view of
-functionality but it should make sense to you.</p>
+to return to continuing your work, you can now click on “File” &gt; “Open Project”.
+All files opened the last time you worked on the project will be reopened and
+you will again be in the project’s working directory. This is an easy and
+convenient way to keep your work tidy.</p>
+<p>At this point, I would advise you to create a project for this introduction to
+web scraping and create R scripts for each chapter as parts of the project. The
+name and sub-folder you choose is not important from the point of view of
+functionality, but it should make sense to you.</p>
 <p>We should now briefly talk about the working directory. If you try to open or
-save a file directly from an R script – without specifying a complete path –
-R will always assume you refer to your working directory. If you created a
+save a file directly from an R script – without specifying a complete path – R
+will always assume you refer to your working directory. If you created a
 project, this automatically set the project’s folder as the working directory.
 You can always check for your current working directory by entering <code>getwd()</code>
-into the console. To change your current working directory, you can do this
-by clicking on “Session” &gt; “Set Working Directory” &gt; “Choose Directory…” or
-by using the function <code>setwd()</code> with the desired path enclosed by <code>"</code> as the
-function’s argument.</p>
+into the console. You can change your current working directory by clicking on
+“Session” &gt; “Set Working Directory” &gt; “Choose Directory…” or by using the
+function <code>setwd()</code> with the desired path enclosed by <code>"</code> as the function’s
+argument.</p>
 </div>
 <div id="comments" class="section level3" number="3.1.3">
 <h3><span class="header-section-number">3.1.3</span> Comments</h3>
-<p>You should get into the habit of commenting your code, as early as possible.
+<p>You should get into the habit of commenting your code as early as possible.
 Comments are started with one or multiple <code>#</code>. All code following the <code>#</code> will
 not be evaluated by R and thus serves as the perfect place to comment on what
 you were doing and thinking while writing the code. Why do this? When you reopen
 a script that you have not been working on in a while, it can be hard to
-understand, what you tried to do in the first place. Commented code, makes this
-much easier. This is even more true, if you share your code with other people.
+understand what you tried to do in the first place. Commented code makes this
+much easier. This is even more true if you share your code with other people.
 They may have very different approaches to certain R problems and clearly
 commented code will help them to quickly understand it. You should see this as a
 sign of respect towards the time your peers may invest in helping you with your
@@ -422,22 +419,23 @@ coding problems.</p>
 <p>If you plan on using <code>setwd()</code> in your script, it is a good idea to comment this
 line before sharing your script. Other people will have different folder
 structures and will want to decide for themselves. The same goes for all lines
-that will save something to the harddisk, e.g. data sets or exported graphics.
+that will save something to the hard drive, e.g. data sets or exported graphics.
 The R and RStudio communities are very welcoming and you will always find people
 that are willing to lend you their help, so you should return the favour and be
 polite in your code. This includes writing clear comments and not cluttering
-anyone’s harddisk with files, the may not want to have.</p>
+anyone’s hard drive with files they may not want to have.</p>
 </div>
 </div>
 <div id="r-packages" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> R packages</h2>
 <p>The R world is open and collaborative by nature. Besides the packages that come
 with your R installation – base R – an ever growing number of additional
-packages written by professionals and users is available for download by
+packages, written by professionals and users, is available for download by
 anyone. Every package is focussed on a specific use case and brings with it a
 number of functions that enable R to be used for tasks that the original
 software designers did not have in mind or at the very least provide a smoother
-user experience in cases where the original base R solutions are a bit outdated.</p>
+user experience in cases where the original base R solutions are more
+complicated.</p>
 <p>The packages, its documentation and various other related information are
 hosted at CRAN – “Comprehensive R Archive Network”– which you already got to
 know during the installation of R. If you install a package directly from
@@ -450,39 +448,38 @@ parentheses. Normally we do this using the console. Installing packages from
 an R script works as well, but as we only need to perform the installation once,
 there is no benefit in it. It actually slows things down if we repeat the
 installation every time we run a script. At the same time, if we share our
-script it is impolite to force an (re)installation on somebody else.</p>
+script, it is impolite to force an (re)installation on somebody else.</p>
 <p>For this introduction we will focus on the packages of the tidyverse – more
 on them below. To install the core tidyverse package, you should type:</p>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="R2.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</span></code></pre></div>
 <p>R will output a lot of information concerning the installation process, and
-close with a satisfying <code>DONE (tidyverse)</code> if everything went acording to plan.</p>
+close with a satisfying <code>DONE (tidyverse)</code> if everything went according to plan.</p>
 <p>Now that the installation is complete, we can load the package. This should
 normally be done in the first lines of a script. This way all necessary packages
 are loaded at the beginning of running a script and other users that see your
-code also immediately see which packages are required and can decide for
-themselves if they want to install them. Loading a package is done with
-<code>library()</code> with the name of the package in the parentheses, this time without
-the need for enclosing it in <code>"</code>.</p>
+code also immediately see which packages are required. Loading a package is done
+with <code>library()</code> with the name of the package in the parentheses, this time
+without the need for enclosing it in <code>"</code>.</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="R2.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
-<p>Loading the tidyverse package returns a lot of information to us, some which we
-will look at in more detail during the course of this chapter. Please note that
-not all packages are that verbose in their loading process. Often you will get
-no output at all, which is a good sign, as this also means that the package
+<p>Loading the tidyverse package returns a lot of information to us, some of which
+we will look at in more detail during the course of this chapter. Please note
+that not all packages are that verbose in their loading process. Often you will
+get no output at all which is a good sign, as this also means that the package
 loaded correctly. If anything goes wrong, R will return an error message.</p>
 </div>
 <div id="namespaces" class="section level3" number="3.2.2">
 <h3><span class="header-section-number">3.2.2</span> Namespaces</h3>
 <p>Looking at the last lines of the returned message when loading the tidyverse
-package, informs us, that there are two conflicts. These arise, when two or more
-loaded packages include functions with the same name. Here we can see that the
-tidyverse package <em>dplyr</em> masks the functions <code>filter()</code> and <code>lag()</code> from the
-base R package <em>stats</em>. If we would have used <code>filter()</code> without loading dplyr,
-the function from the stats package would have been used. After loading it, the
-function from dplyr masks the function from stats and is used instead.</p>
+package, we’re informed that there are two conflicts. These arise when two or
+more loaded packages include functions with the same name. Here we can see that
+the tidyverse package <em>dplyr</em> masks the functions <code>filter()</code> and <code>lag()</code> from
+the base R package <em>stats</em>. If we would have used <code>filter()</code> without loading
+dplyr, the function from the stats package would have been used. After loading
+it, the function from dplyr masks the function from stats and is used instead.</p>
 <p>If we had a case where we want to load dplyr, but still use <code>filter()</code> from
 stats, we can still do this by explicitly declaring the <em>namespace</em> which we are
 referring to. The namespace basically is a reference for R where to look up the
-function we have called. If we just write the functions name, R looks for it in
+function we have called. If we just write the function’s name, R looks for it in
 the list of loaded packages, which would result in applying <code>filter()</code> from
 dplyr here. But we can tell R to look up the function in another namespace, by
 using the notation <code>namespace::function</code>. So to call <code>filter()</code> from stats
@@ -496,7 +493,7 @@ loading the help files:</p>
 </div>
 <div id="tidyverse" class="section level2" number="3.3">
 <h2><span class="header-section-number">3.3</span> Tidyverse</h2>
-<p>While we will use some basr R functions throughout this course, our main focus
+<p>While we will use some base R functions throughout this course, our main focus
 will lie on the <em>tidyverse</em> packages.</p>
 <p>The tidyverse is a collection of R packages, all following a shared philosophy
 concerning the syntax of their functions and the way in which data is
@@ -510,7 +507,7 @@ recommended: <a href="https://r4ds.had.co.nz/tidy-data.html" target="_blank">htt
 packages that are loaded when we type <code>library(tidyverse)</code> and that are listed
 in the corresponding output under “Attaching packages”. As the name suggests,
 the packages comprise the core functionalities that define the tidyverse. This
-includes reading, cleaning and transforming data, handing certain data types,
+includes reading, cleaning and transforming data, handling certain data types,
 plotting graphs and more. Over the course of this introduction to web scraping,
 we will make use of several of these packages, so in most chapters we will begin
 our scripts with loading the tidyverse package.</p>
@@ -524,48 +521,48 @@ their functionality, you can visit:
 <a href="https://www.tidyverse.org/packages/" target="_blank">https://www.tidyverse.org/packages/</a></p>
 <div id="tibbles" class="section level3" number="3.3.1">
 <h3><span class="header-section-number">3.3.1</span> Tibbles</h3>
-<p>The “tibbles” package is part of the core tidyverse and offers an alternative to
+<p>The “tibble” package is part of the core tidyverse and offers an alternative to
 the <em>data frame</em> data structure that is used in base R to represent data in
 tabular form. The differences between data frames and <em>tibbles</em> are relatively
 minor. If you are interested in the details, you can read up on them in this
 section from “R for Data Science” and the chapter on tibbles in general:
 <a href="https://r4ds.had.co.nz/tibbles.html#tibbles-vs.-data.frame" target="_blank">https://r4ds.had.co.nz/tibbles.html#tibbles-vs.-data.frame</a>.
-For now it will suffice to know, that tibbles are used throughout this
+For now, it will suffice to know that tibbles are used throughout this
 introduction, but that all examples will also work with the classic data frames.</p>
 <p>The syntax to create a tibble is simple. Every column represents a variable,
 every row an observation. You should think of the columns as vectors, where the
 first position in each vector corresponds to the first observation (row), the
-second position in each vector to the second observation and so on. In this way,
+second position in each vector to the second observation, and so on. In this way,
 we can create tibbles vector by vector or variable by variable, using the
 function <code>tibble()</code>. We assign a name to the variable followed by <code>=</code> and the
 data to be assigned to the variable. The variable-data pairs are separated by
 <code>,</code>:</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="R2.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">numbers =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="at">strings =</span> <span class="fu">c</span>(<span class="st">&quot;one&quot;</span>, <span class="st">&quot;two&quot;</span>, <span class="st">&quot;three&quot;</span>), <span class="at">logicals =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>))</span>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="R2.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">numbers =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="at">strings =</span> <span class="fu">c</span>(<span class="st">&quot;zero&quot;</span>, <span class="st">&quot;one&quot;</span>, <span class="st">&quot;two&quot;</span>), <span class="at">logicals =</span> <span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>))</span>
 <span id="cb46-2"><a href="R2.html#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 x 3</span></span>
 <span id="cb46-3"><a href="R2.html#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   numbers strings logicals</span></span>
 <span id="cb46-4"><a href="R2.html#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="do">##     &lt;dbl&gt; &lt;chr&gt;   &lt;lgl&gt;   </span></span>
-<span id="cb46-5"><a href="R2.html#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 1       1 one     TRUE    </span></span>
-<span id="cb46-6"><a href="R2.html#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 2       2 two     TRUE    </span></span>
-<span id="cb46-7"><a href="R2.html#cb46-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 3       3 three   FALSE</span></span></code></pre></div>
+<span id="cb46-5"><a href="R2.html#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 1       0 zero    FALSE   </span></span>
+<span id="cb46-6"><a href="R2.html#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 2       1 one     TRUE    </span></span>
+<span id="cb46-7"><a href="R2.html#cb46-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 3       2 two     TRUE</span></span></code></pre></div>
 <p>For longer code like this, it is advisable to use multiple lines and a more
 clear formatting to create code that is readable and intuitive:</p>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="R2.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
-<span id="cb47-2"><a href="R2.html#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">numbers =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),</span>
-<span id="cb47-3"><a href="R2.html#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">strings =</span> <span class="fu">c</span>(<span class="st">&quot;one&quot;</span>, <span class="st">&quot;two&quot;</span>, <span class="st">&quot;three&quot;</span>),</span>
-<span id="cb47-4"><a href="R2.html#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">logicals =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span>
+<span id="cb47-2"><a href="R2.html#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">numbers =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>),</span>
+<span id="cb47-3"><a href="R2.html#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">strings =</span> <span class="fu">c</span>(<span class="st">&quot;zero&quot;</span>, <span class="st">&quot;one&quot;</span>, <span class="st">&quot;two&quot;</span>),</span>
+<span id="cb47-4"><a href="R2.html#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">logicals =</span> <span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>)</span>
 <span id="cb47-5"><a href="R2.html#cb47-5" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb47-6"><a href="R2.html#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 x 3</span></span>
 <span id="cb47-7"><a href="R2.html#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   numbers strings logicals</span></span>
 <span id="cb47-8"><a href="R2.html#cb47-8" aria-hidden="true" tabindex="-1"></a><span class="do">##     &lt;dbl&gt; &lt;chr&gt;   &lt;lgl&gt;   </span></span>
-<span id="cb47-9"><a href="R2.html#cb47-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 1       1 one     TRUE    </span></span>
-<span id="cb47-10"><a href="R2.html#cb47-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 2       2 two     TRUE    </span></span>
-<span id="cb47-11"><a href="R2.html#cb47-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 3       3 three   FALSE</span></span></code></pre></div>
+<span id="cb47-9"><a href="R2.html#cb47-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 1       0 zero    FALSE   </span></span>
+<span id="cb47-10"><a href="R2.html#cb47-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 2       1 one     TRUE    </span></span>
+<span id="cb47-11"><a href="R2.html#cb47-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 3       2 two     TRUE</span></span></code></pre></div>
 <p>R understands that all five lines are part of one command as it evaluates
 everything between the opening and closing bracket of the <code>tibbles()</code> function
 together. We just have to make sure, that we don’t miss the closing bracket or a
 <code>,</code> that separates the variable-data pairs. This actually is a main source of
-errors and be high on your list of things to check, if something does not work
-as planned.</p>
+errors and will be high on your list of things to check if something does not
+work as planned.</p>
 <p>We can also use calculations and functions directly in tibble creation,
 circumventing the need to assign the results to an object first:</p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="R2.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
@@ -586,11 +583,11 @@ to.</p>
 <div id="additional-resources" class="section level2" number="3.4">
 <h2><span class="header-section-number">3.4</span> Additional resources</h2>
 <p>When learning R and when using functions and packages that are new to you, you
-will regularly run into situations, where you need help in understanding what
-is happenning and what you can do about it. Luckily, there a lot of resources
-that will help you on your R journey.</p>
-<p>You already have learned about the build in help functionalities embedded in R.
-Many packages also come with so called <em>vignettes</em> which offer more in depth
+will regularly run into situations where you need help in understanding what is
+happenning and what you can do. Luckily, there a lot of resources that will help
+you on your R journey.</p>
+<p>You have already learned about the built-in help functionalities of R. Many
+packages also come with so called <em>vignettes</em> which offer more in-depth
 introductions to the functionalities of the packages. Let’s see if the tibble
 package comes with vignettes. To do this we can write:</p>
 <div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="R2.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vignette</span>(<span class="at">package =</span> <span class="st">&quot;tibble&quot;</span>)</span></code></pre></div>
@@ -605,21 +602,25 @@ can access the documentation as well as available vignettes, e.g.:
 <a href="https://www.rstudio.com/resources/cheatsheets/" target="_blank">https://www.rstudio.com/resources/cheatsheets/</a>. These are
 available for many popular packages and present a comprehensive list of the
 functions offered by the packages.</p>
-<p>The RStudio homepage also offers many more resources for learning R and
-specific packages including a number of webinars and tutorial videos, accessed
-by the menu “Resources”: <a href="https://www.rstudio.com/" target="_blank">https://www.rstudio.com/</a></p>
+<p>The RStudio homepage also offers many more resources for learning R and specific
+packages, including a number of webinars and tutorial videos available under the
+menu “Resources”: <a href="https://www.rstudio.com/" target="_blank">https://www.rstudio.com/</a></p>
 <p>In general, the internet offers a lot of resources that you can access. One of
-the most important skills you have to develop as an aspiring R use is to
-understand the problem you are facing to best of your abilities and formulate
-a short but precise google search. In most cases you can assume, that you are
-not the first or last person to have a specific problem. Someone will have
-written a blogpost, asked a question on
-<a href="https://stackoverflow.com/" target="_blank">https://stackoverflow.com/</a>, made a video tutorial and so on.
+the most important skills you have to develop as an aspiring R user is to
+understand the problem you are facing to the best of your abilities and
+formulate a short but precise google search. In most cases you can assume, that
+you are not the first or last person to have a specific problem. Someone will
+have written a blogpost, asked a question on
+<a href="https://stackoverflow.com/" target="_blank">https://stackoverflow.com/</a>, made a video tutorial, and so on.
 If you can find these resources, you are already halfway there.</p>
-<p>There also are a lot of books available on R and RStudio in general, as well as
+<p>There are also a lot of books available on R and RStudio in general, as well as
 on more specific applications in R. I want to reccomend two of them in
-particular, both avalaible as paperback as well as online:</p>
+particular, both avalaible as paperback or online:</p>
 <ul>
+<li><p><em>Intro to R for Social Scientists</em> by Jasper Tjaden.
+An accessible introduction to R that expands on the concepts only touched here.
+Written for a seminar at the University of Potsdam in summer 2021. Available
+under: <a href="https://jaspertjaden.github.io/course-intro2r/" target="_blank">https://jaspertjaden.github.io/course-intro2r/</a></p></li>
 <li><p><em>R Cookbook, 2nd Edition</em> by J.D. Long &amp; Paul Teetor.
 The book is comprised of recipes for specific tasks, you might want to perform.
 It is not designed as a course but rather as reference for concrete questions.
