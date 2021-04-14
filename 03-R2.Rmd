@@ -378,6 +378,11 @@ There are also a lot of books available on R and RStudio in general, as well as
 on more specific applications in R. I want to reccomend two of them in 
 particular, both avalaible as paperback or online:
 
+* *Intro to R for Social Scientists* by Jasper Tjaden.
+An accessible introduction to R that expands on the concepts only touched here.
+Written for a seminar at the University of Potsdam in summer 2021. Available
+under: <https://jaspertjaden.github.io/course-intro2r/>{target="_blank"}
+
 * *R Cookbook, 2nd Edition* by J.D. Long & Paul Teetor.
 The book is comprised of recipes for specific tasks, you might want to perform.
 It is not designed as a course but rather as reference for concrete questions. 
