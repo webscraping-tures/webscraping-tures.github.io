@@ -237,7 +237,7 @@ of the paragraph, no further spacing is inserted after `<br>`:
 ```
 Here comes some text, which is now broken up in two lines.<br>
 After the break tag, in contrast to the paragraph tag, no line spacing is inserted.<br>
-If the break tag is also explicitly closed again, two line breaks are inserted.<br></br>.
+If the break tag is also explicitly closed again, two line breaks are inserted.<br></br>
 As can be seen here.
 ```
 
@@ -245,7 +245,7 @@ This is represented as:
 
 Here comes some text, which is now broken up in two lines.<br>
 After the break tag, in contrast to the paragraph tag, no line spacing is inserted.<br>
-If the break tag is also explicitly closed again, two line breaks are inserted.<br></br>.
+If the break tag is also explicitly closed again, two line breaks are inserted.<br></br>
 As can be seen here.
 
 <br>
