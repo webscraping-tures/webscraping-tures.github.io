@@ -223,7 +223,7 @@ This sentence is not part of the paragraph.
 This is represented as:
 
 <p>This sentence is part of the paragraph. So is this. And this one.</p>
-Dieser Satz ist nicht mehr Teil des Absatz.
+This sentence is not part of the paragraph.
 
 <br>
 
