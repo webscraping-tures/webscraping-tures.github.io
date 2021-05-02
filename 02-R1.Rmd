@@ -386,3 +386,207 @@ mean(data)
 median(data)
 sd(data)
 ```
+
+
+## If/Else statements
+Often we want to write code that reacts to the value of a certain object and 
+thus "decides" by itself which action to perform, based on this value. To 
+achieve this, we can use *conditional execution* by using `if` and `else` 
+statements. The basic syntax look as follows:
+
+```
+if (condition) {
+  code to be executed when the condition is TRUE
+} else {
+  code to be executed when the condition is FALSE
+}
+```
+
+`if` and `else` are both followed by `{}`, which enclose the code to be 
+executed. While it is not strictly necessary to stretch the code over multiple
+lines, I would highly recommend to do this. It increases readability of your 
+code for yourself and anyone you share it with, which makes it easier to
+understand and also makes it easier to spot mistakes and correct them. For the
+same reasons, it is also recommended to indent the code to be executed.
+
+Conditions are created by applying comparison operators, like `==`, `<`, `>`, 
+`!=` and so on. Thus the condition compares two values and returns `TRUE` if the
+condition is met, and `FALSE` if it is not met. When the condition for the `if`
+statement is `TRUE`, the code between the `{}` following it is executed. If it
+is `FALSE`, the code between the `{}` following the `else` statement is
+executed instead.
+
+``` {r}
+x <- 42
+
+if (x == 42) {
+  print("This is the answer")
+} else {
+  print("This is not the answer")
+}
+
+x <- 24
+
+if (x == 42) {
+  print("This is the answer")
+} else {
+  print("This is not the answer")
+}
+```
+
+In the code above, we first asign a value to the object `x` and follow this with
+an `if` statement, that checks if the value equals `42` and returns a string to
+the console, indicating if the condition was met or not.
+
+We can also chain multiple `if` and `else` statements to create more complex
+decisions. While it is possible to chain a high number of statements in this
+way, it is not recommended to overuse this technique. The code will get long,
+hard to understand and thus mistakes get more likely.
+
+To chain statements, we use `else if` statements after the first `if` and the
+last `else`. The basic syntac stays the same. Contemplate the example below.
+
+``` {r}
+x <- 42
+
+if (x == 42) {
+  print("This is the answer")
+} else if (x < 42) {
+  print("The value is to low to be the answer")
+} else {
+  print("The value is to high to be the answer")
+}
+
+x <- 24
+
+if (x == 42) {
+  print("This is the answer")
+} else if (x < 42) {
+  print("The value is to low to be the answer")
+} else {
+  print("The value is to high to be the answer")
+}
+
+x <- 84
+
+if (x == 42) {
+  print("This is the answer")
+} else if (x < 42) {
+  print("The value is to low to be the answer")
+} else {
+  print("The value is to high to be the answer")
+}
+```
+
+In the first case, the `if` condition is met and the code following the `if`
+statement is executed. In the second case, the `if` condition is not met, so the
+code checks if the condition for the `else if` statement is `TRUE`. Here it is,
+so the code following it is executed. In the third case, both conditions return
+`FALSE` and thus the code following the `else` statement is run by R.
+
+We can also combine conditions by applying *logical operators* to create more
+complex conditions. `&&` -- *AND* -- checks if both conditions combined by it
+are `TRUE` and only returns `TRUE` if both are at the same time. `||` -- *OR* --
+checks if at least on of the conditions is `TRUE` and returns `TRUE` if one or 
+both are. When combining two conditions, we thus have these possibilities:
+
+* `TRUE && TRUE` returns `TRUE`
+* `TRUE && FALSE`, `FALSE && TRUE` and `FALSE && FALSE` all return `FALSE`
+* `TRUE || TRUE`, `TRUE || FALSE` and `FALSE || TRUE` all return `TRUE`
+* `FALSE || FALSE` returns `FALSE`
+
+In most cases, you could also use single `&` and `|` operators, to combine
+conditions. `&&` and `||` are the safer alternatives in this case, as they
+always return a single `TRUE` or `FALSE` and `if` statements can not interpret
+a logical vector containing multiple values. `&` and `|` can return such a
+vector, if at least one object used for comparison is a vector of a length
+longer than 1. For more details on this, you can read the corresponding chapter
+in "R for Data Science" by Wickham & Grolemund:
+<https://r4ds.had.co.nz/functions.html#conditional-execution>{target="_blank"}.
+
+``` {r}
+x <- 42
+y <- 42
+
+if (x == 42 && y == 42) {
+  print("Both x and y are the answer")
+} else {
+  print("At least one of x and y is not the answer")
+}
+
+x <- 42
+y <- 24
+
+if (x == 42 && y == 42) {
+  print("Both x and y are the answer")
+} else {
+  print("At least one of x and y is not the answer")
+}
+
+x <- 42
+y <- 24
+
+if (x == 42 || y == 42) {
+  print("At least one of x and y is the answer")
+} else {
+  print("Both x and y are not the answer")
+}
+
+
+x <- 12
+y <- 24
+
+if (x == 42 || y == 42) {
+  print("At least one of x and y is the answer")
+} else {
+  print("Both x and y are not the answer")
+}
+```
+
+We can use combined conditions and chaining to create more complex decisions.
+But be wary to not overuse both techniques, for the same reasons stated above.
+
+``` {r}
+x <- 42
+y <- 42
+
+if (x == 42 && y == 42) {
+  print("Both x and y are the answer")
+} else if (x == 42) {
+  print("x is the answer")
+} else if (y == 42) {
+  print("y is the answer")
+} else {
+  print("Both x and y are not the answer")
+}
+
+x <- 42
+y <- 24
+
+if (x == 42 && y == 42) {
+  print("Both x and y are the answer")
+} else if (x == 42) {
+  print("x is the answer")
+} else if (y == 42) {
+  print("y is the answer")
+} else {
+  print("Both x and y are not the answer")
+}
+
+x <- 24
+y <- 12
+
+if (x == 42 && y == 42) {
+  print("Both x and y are the answer")
+} else if (x == 42) {
+  print("x is the answer")
+} else if (y == 42) {
+  print("y is the answer")
+} else {
+  print("Both x and y are not the answer")
+}
+```
+
+Please note, that the code following the statements can be more complex than the
+code used in these introductory examples and can be comprised of anything that
+is valid R code. Also, each `{}`can hold multiple lines of code.
