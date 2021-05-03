@@ -402,9 +402,9 @@ if (condition) {
 }
 ```
 
-`if` and `else` are both followed by `{}`, which enclose the code to be 
+`if` and `else` are both followed by `{}`, which enclose the code to be
 executed. While it is not strictly necessary to stretch the code over multiple
-lines, I would highly recommend to do this. It increases readability of your 
+lines, I would highly recommend doing this. It increases readability of your
 code for yourself and anyone you share it with, which makes it easier to
 understand and also makes it easier to spot mistakes and correct them. For the
 same reasons, it is also recommended to indent the code to be executed.
@@ -435,7 +435,7 @@ if (x == 42) {
 ```
 
 In the code above, we first asign a value to the object `x` and follow this with
-an `if` statement, that checks if the value equals `42` and returns a string to
+an `if` statement that checks if the value equals `42` and returns a string to
 the console, indicating if the condition was met or not.
 
 We can also chain multiple `if` and `else` statements to create more complex
@@ -443,8 +443,8 @@ decisions. While it is possible to chain a high number of statements in this
 way, it is not recommended to overuse this technique. The code will get long,
 hard to understand and thus mistakes get more likely.
 
-To chain statements, we use `else if` statements after the first `if` and the
-last `else`. The basic syntac stays the same. Contemplate the example below.
+To chain statements, we use `else if` statements after the first `if` and before
+the last `else`. The basic syntac stays the same. Contemplate the example below.
 
 ``` {r}
 x <- 42
@@ -452,9 +452,9 @@ x <- 42
 if (x == 42) {
   print("This is the answer")
 } else if (x < 42) {
-  print("The value is to low to be the answer")
+  print("The value is too low to be the answer")
 } else {
-  print("The value is to high to be the answer")
+  print("The value is too high to be the answer")
 }
 
 x <- 24
@@ -480,9 +480,10 @@ if (x == 42) {
 
 In the first case, the `if` condition is met and the code following the `if`
 statement is executed. In the second case, the `if` condition is not met, so the
-code checks if the condition for the `else if` statement is `TRUE`. Here it is,
-so the code following it is executed. In the third case, both conditions return
-`FALSE` and thus the code following the `else` statement is run by R.
+code checks if the condition for the `else if` statement is `TRUE`. It is in
+this case, so the code following it is executed. In the third case, both
+conditions return `FALSE` and thus the code following the `else` statement is
+run.
 
 We can also combine conditions by applying *logical operators* to create more
 complex conditions. `&&` -- *AND* -- checks if both conditions combined by it
@@ -496,12 +497,12 @@ both are. When combining two conditions, we thus have these possibilities:
 * `FALSE || FALSE` returns `FALSE`
 
 In most cases, you could also use single `&` and `|` operators, to combine
-conditions. `&&` and `||` are the safer alternatives in this case, as they
-always return a single `TRUE` or `FALSE` and `if` statements can not interpret
-a logical vector containing multiple values. `&` and `|` can return such a
-vector, if at least one object used for comparison is a vector of a length
-longer than 1. For more details on this, you can read the corresponding chapter
-in "R for Data Science" by Wickham & Grolemund:
+conditions. `&&` and `||` are the safer alternatives, as they always return a
+single `TRUE` or `FALSE` and `if` statements can not interpret a logical vector
+containing multiple values. `&` and `|` can return such a vector if at least
+one object used for comparison is a vector of a length longer than 1. For more
+details on this, you can read the corresponding chapter in "R for Data Science"
+by Wickham & Grolemund:
 <https://r4ds.had.co.nz/functions.html#conditional-execution>{target="_blank"}.
 
 ``` {r}
@@ -544,7 +545,8 @@ if (x == 42 || y == 42) {
 ```
 
 We can use combined conditions and chaining to create more complex decisions.
-But be wary to not overuse both techniques, for the same reasons stated above.
+But be wary to not overuse both techniques, for the same reasons as stated
+above.
 
 ``` {r}
 x <- 42
