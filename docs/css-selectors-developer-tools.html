@@ -24,7 +24,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2021-04-23" />
+<meta name="date" content="2021-05-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -186,6 +186,7 @@ Web Scraping using R
 <li class="chapter" data-level="2.6.1" data-path="R1.html"><a href="R1.html#help"><i class="fa fa-check"></i><b>2.6.1</b> Help</a></li>
 <li class="chapter" data-level="2.6.2" data-path="R1.html"><a href="R1.html#examples-basic-statistical-functions"><i class="fa fa-check"></i><b>2.6.2</b> Examples: Basic statistical functions</a></li>
 </ul></li>
+<li class="chapter" data-level="2.7" data-path="R1.html"><a href="R1.html#ifelse-statements"><i class="fa fa-check"></i><b>2.7</b> If/Else statements</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="R2.html"><a href="R2.html"><i class="fa fa-check"></i><b>3</b> RStudio in practice &amp; the tidyverse</a>
 <ul>
@@ -314,42 +315,42 @@ consists of – is always passed along as a string to the argument.</p>
 <a href="https://webscraping-tures.github.io/turnout.html" target="_blank">https://webscraping-tures.github.io/turnout.html</a>
 for illustration. You can view the source code the usual way. Firstly, we load
 the rvest package and parse the website.</p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="css-selectors-developer-tools.html#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span>
-<span id="cb78-2"><a href="css-selectors-developer-tools.html#cb78-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-3"><a href="css-selectors-developer-tools.html#cb78-3" aria-hidden="true" tabindex="-1"></a>website <span class="ot">&lt;-</span> <span class="st">&quot;https://webscraping-tures.github.io/turnout.html&quot;</span> <span class="sc">%&gt;%</span> </span>
-<span id="cb78-4"><a href="css-selectors-developer-tools.html#cb78-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_html</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="css-selectors-developer-tools.html#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span>
+<span id="cb83-2"><a href="css-selectors-developer-tools.html#cb83-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-3"><a href="css-selectors-developer-tools.html#cb83-3" aria-hidden="true" tabindex="-1"></a>website <span class="ot">&lt;-</span> <span class="st">&quot;https://webscraping-tures.github.io/turnout.html&quot;</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb83-4"><a href="css-selectors-developer-tools.html#cb83-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_html</span>()</span></code></pre></div>
 <p>We have already learned about the simplest selector. <code>"Tag"</code> selects all
 occurrences of the specified HTML tag. For example, we can select the title of
 the website – in the <code>&lt;title&gt;</code> tag – or the heading displayed in the browser
 window – in <code>&lt;h3&gt;</code>.</p>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="css-selectors-developer-tools.html#cb79-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
-<span id="cb79-2"><a href="css-selectors-developer-tools.html#cb79-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;title&quot;</span>)</span>
-<span id="cb79-3"><a href="css-selectors-developer-tools.html#cb79-3" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (1)}</span></span>
-<span id="cb79-4"><a href="css-selectors-developer-tools.html#cb79-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;title&gt;Voter turnout for German federal state elections&lt;/title&gt;\n</span></span>
-<span id="cb79-5"><a href="css-selectors-developer-tools.html#cb79-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb79-6"><a href="css-selectors-developer-tools.html#cb79-6" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
-<span id="cb79-7"><a href="css-selectors-developer-tools.html#cb79-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;h3&quot;</span>)</span>
-<span id="cb79-8"><a href="css-selectors-developer-tools.html#cb79-8" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (1)}</span></span>
-<span id="cb79-9"><a href="css-selectors-developer-tools.html#cb79-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;h3&gt;Voter turnout for the last federal state elections in Germany:&lt;/h3&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="css-selectors-developer-tools.html#cb84-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
+<span id="cb84-2"><a href="css-selectors-developer-tools.html#cb84-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;title&quot;</span>)</span>
+<span id="cb84-3"><a href="css-selectors-developer-tools.html#cb84-3" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (1)}</span></span>
+<span id="cb84-4"><a href="css-selectors-developer-tools.html#cb84-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;title&gt;Voter turnout for German federal state elections&lt;/title&gt;\n</span></span>
+<span id="cb84-5"><a href="css-selectors-developer-tools.html#cb84-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-6"><a href="css-selectors-developer-tools.html#cb84-6" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
+<span id="cb84-7"><a href="css-selectors-developer-tools.html#cb84-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;h3&quot;</span>)</span>
+<span id="cb84-8"><a href="css-selectors-developer-tools.html#cb84-8" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (1)}</span></span>
+<span id="cb84-9"><a href="css-selectors-developer-tools.html#cb84-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;h3&gt;Voter turnout for the last federal state elections in Germany:&lt;/h3&gt;</span></span></code></pre></div>
 <div id="classes" class="section level3" number="5.1.1">
 <h3><span class="header-section-number">5.1.1</span> Classes</h3>
 <p>We also got to know the selector for the argument <code>class</code> – <code>".class"</code> – in
 the previous section. We can select all <code>&lt;span&gt;</code> tags of the class
 <code>"state-name"</code> as follows:</p>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="css-selectors-developer-tools.html#cb80-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
-<span id="cb80-2"><a href="css-selectors-developer-tools.html#cb80-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;.state-name&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb80-3"><a href="css-selectors-developer-tools.html#cb80-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">2</span>)</span>
-<span id="cb80-4"><a href="css-selectors-developer-tools.html#cb80-4" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (2)}</span></span>
-<span id="cb80-5"><a href="css-selectors-developer-tools.html#cb80-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;state-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</span></span>
-<span id="cb80-6"><a href="css-selectors-developer-tools.html#cb80-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;state-name&quot; id=&quot;by&quot;&gt;Bayern&lt;/span&gt;</span></span>
-<span id="cb80-7"><a href="css-selectors-developer-tools.html#cb80-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb80-8"><a href="css-selectors-developer-tools.html#cb80-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb80-9"><a href="css-selectors-developer-tools.html#cb80-9" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
-<span id="cb80-10"><a href="css-selectors-developer-tools.html#cb80-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;span.state-name&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb80-11"><a href="css-selectors-developer-tools.html#cb80-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">2</span>)</span>
-<span id="cb80-12"><a href="css-selectors-developer-tools.html#cb80-12" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (2)}</span></span>
-<span id="cb80-13"><a href="css-selectors-developer-tools.html#cb80-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;state-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</span></span>
-<span id="cb80-14"><a href="css-selectors-developer-tools.html#cb80-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;state-name&quot; id=&quot;by&quot;&gt;Bayern&lt;/span&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="css-selectors-developer-tools.html#cb85-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
+<span id="cb85-2"><a href="css-selectors-developer-tools.html#cb85-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;.state-name&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb85-3"><a href="css-selectors-developer-tools.html#cb85-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">2</span>)</span>
+<span id="cb85-4"><a href="css-selectors-developer-tools.html#cb85-4" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (2)}</span></span>
+<span id="cb85-5"><a href="css-selectors-developer-tools.html#cb85-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;state-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</span></span>
+<span id="cb85-6"><a href="css-selectors-developer-tools.html#cb85-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;state-name&quot; id=&quot;by&quot;&gt;Bayern&lt;/span&gt;</span></span>
+<span id="cb85-7"><a href="css-selectors-developer-tools.html#cb85-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-8"><a href="css-selectors-developer-tools.html#cb85-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-9"><a href="css-selectors-developer-tools.html#cb85-9" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
+<span id="cb85-10"><a href="css-selectors-developer-tools.html#cb85-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;span.state-name&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb85-11"><a href="css-selectors-developer-tools.html#cb85-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">2</span>)</span>
+<span id="cb85-12"><a href="css-selectors-developer-tools.html#cb85-12" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (2)}</span></span>
+<span id="cb85-13"><a href="css-selectors-developer-tools.html#cb85-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;state-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</span></span>
+<span id="cb85-14"><a href="css-selectors-developer-tools.html#cb85-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;state-name&quot; id=&quot;by&quot;&gt;Bayern&lt;/span&gt;</span></span></code></pre></div>
 <p>The first variation of the selector says,
 <em>select all elements of the class <code>"state-name"</code></em>. The second variation
 says, <em>select all <span> elements of the class <code>"state-name"</code></em>. For this
@@ -364,12 +365,12 @@ latter is especially important when others – or you yourself a few weeks later
 – read the code. Readability also means achieving a balance between length and
 clarity of the selector.</p>
 <p>To illustrate:</p>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="css-selectors-developer-tools.html#cb81-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
-<span id="cb81-2"><a href="css-selectors-developer-tools.html#cb81-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;body &gt; div#data &gt; div[class^=state-] &gt; span.state-name&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb81-3"><a href="css-selectors-developer-tools.html#cb81-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">2</span>)</span>
-<span id="cb81-4"><a href="css-selectors-developer-tools.html#cb81-4" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (2)}</span></span>
-<span id="cb81-5"><a href="css-selectors-developer-tools.html#cb81-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;state-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</span></span>
-<span id="cb81-6"><a href="css-selectors-developer-tools.html#cb81-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;state-name&quot; id=&quot;by&quot;&gt;Bayern&lt;/span&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="css-selectors-developer-tools.html#cb86-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
+<span id="cb86-2"><a href="css-selectors-developer-tools.html#cb86-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;body &gt; div#data &gt; div[class^=state-] &gt; span.state-name&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb86-3"><a href="css-selectors-developer-tools.html#cb86-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">2</span>)</span>
+<span id="cb86-4"><a href="css-selectors-developer-tools.html#cb86-4" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (2)}</span></span>
+<span id="cb86-5"><a href="css-selectors-developer-tools.html#cb86-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;state-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</span></span>
+<span id="cb86-6"><a href="css-selectors-developer-tools.html#cb86-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;state-name&quot; id=&quot;by&quot;&gt;Bayern&lt;/span&gt;</span></span></code></pre></div>
 <p>This is the full path through the hierarchical HTML structure, which leads us to
 the result already seen above. You don’t need to fully understand this one yet.
 But you can see that the selector can get long and complicated, and here we are
@@ -389,11 +390,11 @@ specifically.</p>
 id that identifies the state with a two-character abbreviation:</p>
 <pre><code>&lt;span class=&quot;state-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</code></pre>
 <p>The selector for IDs is being written as <code>"#id"</code>.</p>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="css-selectors-developer-tools.html#cb83-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
-<span id="cb83-2"><a href="css-selectors-developer-tools.html#cb83-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;#bw&quot;</span>)</span>
-<span id="cb83-3"><a href="css-selectors-developer-tools.html#cb83-3" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (2)}</span></span>
-<span id="cb83-4"><a href="css-selectors-developer-tools.html#cb83-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;img id=&quot;bw&quot; src=&quot;https://upload.wikimedia.org/wikipedia/commons/thumb/6/ ...</span></span>
-<span id="cb83-5"><a href="css-selectors-developer-tools.html#cb83-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;state-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="css-selectors-developer-tools.html#cb88-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
+<span id="cb88-2"><a href="css-selectors-developer-tools.html#cb88-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;#bw&quot;</span>)</span>
+<span id="cb88-3"><a href="css-selectors-developer-tools.html#cb88-3" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (2)}</span></span>
+<span id="cb88-4"><a href="css-selectors-developer-tools.html#cb88-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;img id=&quot;bw&quot; src=&quot;https://upload.wikimedia.org/wikipedia/commons/thumb/6/ ...</span></span>
+<span id="cb88-5"><a href="css-selectors-developer-tools.html#cb88-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;state-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</span></span></code></pre></div>
 <p>In this case, however, we have selected more than we wanted. Because the <code>&lt;img&gt;</code>
 tag, which represents the flags of the federal states, has the attribute
 <code>id="bw"</code> as well. Strictly speaking, this is against the HTML rules, but this
@@ -402,29 +403,29 @@ clean HTML code, so we have to be able to deal with “rule violations” and
 unexpected structures.</p>
 <p>The solution at this point is the combination of ID and tag in the selector,
 in the form <code>"tag#id"</code>.</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="css-selectors-developer-tools.html#cb84-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
-<span id="cb84-2"><a href="css-selectors-developer-tools.html#cb84-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;span#bw&quot;</span>)</span>
-<span id="cb84-3"><a href="css-selectors-developer-tools.html#cb84-3" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (1)}</span></span>
-<span id="cb84-4"><a href="css-selectors-developer-tools.html#cb84-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;state-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="css-selectors-developer-tools.html#cb89-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
+<span id="cb89-2"><a href="css-selectors-developer-tools.html#cb89-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;span#bw&quot;</span>)</span>
+<span id="cb89-3"><a href="css-selectors-developer-tools.html#cb89-3" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (1)}</span></span>
+<span id="cb89-4"><a href="css-selectors-developer-tools.html#cb89-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;state-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</span></span></code></pre></div>
 <p>A combination with the class attribute is also possible.</p>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="css-selectors-developer-tools.html#cb85-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
-<span id="cb85-2"><a href="css-selectors-developer-tools.html#cb85-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;span.state-name#bw&quot;</span>)</span>
-<span id="cb85-3"><a href="css-selectors-developer-tools.html#cb85-3" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (1)}</span></span>
-<span id="cb85-4"><a href="css-selectors-developer-tools.html#cb85-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;state-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="css-selectors-developer-tools.html#cb90-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
+<span id="cb90-2"><a href="css-selectors-developer-tools.html#cb90-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;span.state-name#bw&quot;</span>)</span>
+<span id="cb90-3"><a href="css-selectors-developer-tools.html#cb90-3" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (1)}</span></span>
+<span id="cb90-4"><a href="css-selectors-developer-tools.html#cb90-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;state-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</span></span></code></pre></div>
 <p>In general, it should be noted that the CSS selectors are <em>case-sensitive</em>.
 This means that we also need to be case sensitive. In the entry for Hamburg, the
 name of the id is capitalized:</p>
 <pre><code>&lt;span class=&quot;state-name&quot; id=&quot;HH&quot;&gt;Hamburg&lt;/span&gt;</code></pre>
 <p>If we want to extract this element, we have to use this way of writing in the
 selector as well, <code>"#hh"</code> will not work.</p>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="css-selectors-developer-tools.html#cb87-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
-<span id="cb87-2"><a href="css-selectors-developer-tools.html#cb87-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;span#hh&quot;</span>)</span>
-<span id="cb87-3"><a href="css-selectors-developer-tools.html#cb87-3" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (0)}</span></span>
-<span id="cb87-4"><a href="css-selectors-developer-tools.html#cb87-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-5"><a href="css-selectors-developer-tools.html#cb87-5" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
-<span id="cb87-6"><a href="css-selectors-developer-tools.html#cb87-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;span#HH&quot;</span>)</span>
-<span id="cb87-7"><a href="css-selectors-developer-tools.html#cb87-7" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (1)}</span></span>
-<span id="cb87-8"><a href="css-selectors-developer-tools.html#cb87-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;state-name&quot; id=&quot;HH&quot;&gt;Hamburg&lt;/span&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="css-selectors-developer-tools.html#cb92-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
+<span id="cb92-2"><a href="css-selectors-developer-tools.html#cb92-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;span#hh&quot;</span>)</span>
+<span id="cb92-3"><a href="css-selectors-developer-tools.html#cb92-3" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (0)}</span></span>
+<span id="cb92-4"><a href="css-selectors-developer-tools.html#cb92-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-5"><a href="css-selectors-developer-tools.html#cb92-5" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
+<span id="cb92-6"><a href="css-selectors-developer-tools.html#cb92-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;span#HH&quot;</span>)</span>
+<span id="cb92-7"><a href="css-selectors-developer-tools.html#cb92-7" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (1)}</span></span>
+<span id="cb92-8"><a href="css-selectors-developer-tools.html#cb92-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;state-name&quot; id=&quot;HH&quot;&gt;Hamburg&lt;/span&gt;</span></span></code></pre></div>
 </div>
 <div id="attributes" class="section level3" number="5.1.3">
 <h3><span class="header-section-number">5.1.3</span> Attributes</h3>
@@ -438,11 +439,11 @@ This specifies how the link should open. The value <code>"_blank"</code> opens t
 a new browser tab, <code>"_self"</code> in the active tab. For the second link no
 <code>target=""</code> attribute is set. In our example, to select all <code>&lt;a&gt;</code> tags that have
 a <code>target</code> attribute, i.e. the first and third, we could proceed as follows:</p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="css-selectors-developer-tools.html#cb88-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
-<span id="cb88-2"><a href="css-selectors-developer-tools.html#cb88-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;a[target]&quot;</span>)</span>
-<span id="cb88-3"><a href="css-selectors-developer-tools.html#cb88-3" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (2)}</span></span>
-<span id="cb88-4"><a href="css-selectors-developer-tools.html#cb88-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;a href=&quot;https://www.wahlrecht.de/ergebnisse/index.htm&quot; target=&quot;_blank&quot;&gt;\ ...</span></span>
-<span id="cb88-5"><a href="css-selectors-developer-tools.html#cb88-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;a href=&quot;https://webscraping-tures.github.io/css-selectors-developer-tool ...</span></span></code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="css-selectors-developer-tools.html#cb93-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
+<span id="cb93-2"><a href="css-selectors-developer-tools.html#cb93-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;a[target]&quot;</span>)</span>
+<span id="cb93-3"><a href="css-selectors-developer-tools.html#cb93-3" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (2)}</span></span>
+<span id="cb93-4"><a href="css-selectors-developer-tools.html#cb93-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;a href=&quot;https://www.wahlrecht.de/ergebnisse/index.htm&quot; target=&quot;_blank&quot;&gt;\ ...</span></span>
+<span id="cb93-5"><a href="css-selectors-developer-tools.html#cb93-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;a href=&quot;https://webscraping-tures.github.io/css-selectors-developer-tool ...</span></span></code></pre></div>
 <p>With <code>"element[attribute='value']"</code> it is possible to select only attributes
 with a certain value. Note that the value is enclosed in single quotes. The
 manner of writing <code>"element[attribute="value"]"</code> would be split into the two
@@ -452,38 +453,38 @@ the value of the attribute. This is a convention used in many programming
 contexts. Inside “ we use ‘, inside ‘ we use “ to be able to realize multiple
 levels of quotes.</p>
 <p>If we want to select only the link that opens in a new tab:</p>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="css-selectors-developer-tools.html#cb89-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
-<span id="cb89-2"><a href="css-selectors-developer-tools.html#cb89-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;a[target=&#39;_blank&#39;]&quot;</span>)</span>
-<span id="cb89-3"><a href="css-selectors-developer-tools.html#cb89-3" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (1)}</span></span>
-<span id="cb89-4"><a href="css-selectors-developer-tools.html#cb89-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;a href=&quot;https://www.wahlrecht.de/ergebnisse/index.htm&quot; target=&quot;_blank&quot;&gt;\ ...</span></span></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="css-selectors-developer-tools.html#cb94-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
+<span id="cb94-2"><a href="css-selectors-developer-tools.html#cb94-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;a[target=&#39;_blank&#39;]&quot;</span>)</span>
+<span id="cb94-3"><a href="css-selectors-developer-tools.html#cb94-3" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (1)}</span></span>
+<span id="cb94-4"><a href="css-selectors-developer-tools.html#cb94-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;a href=&quot;https://www.wahlrecht.de/ergebnisse/index.htm&quot; target=&quot;_blank&quot;&gt;\ ...</span></span></code></pre></div>
 <p>This can be further modified by specifying that the value of an attribute should
 have a certain beginning – <code>"element[attribute^='beginning']"</code> – a certain end
 – <code>"element[attribute$='end']"</code> – or contain a certain partial term –
 <code>"element[attribute*='partial term']"</code>. Thus, we could select the links based on
 the beginning, the end, or any part of the URL assigned to the <code>href=""</code>
 attribute.</p>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="css-selectors-developer-tools.html#cb90-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
-<span id="cb90-2"><a href="css-selectors-developer-tools.html#cb90-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;a[href^=&#39;https://www&#39;]&quot;</span>)</span>
-<span id="cb90-3"><a href="css-selectors-developer-tools.html#cb90-3" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (1)}</span></span>
-<span id="cb90-4"><a href="css-selectors-developer-tools.html#cb90-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;a href=&quot;https://www.wahlrecht.de/ergebnisse/index.htm&quot; target=&quot;_blank&quot;&gt;\ ...</span></span>
-<span id="cb90-5"><a href="css-selectors-developer-tools.html#cb90-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-6"><a href="css-selectors-developer-tools.html#cb90-6" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
-<span id="cb90-7"><a href="css-selectors-developer-tools.html#cb90-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;a[href$=&#39;Deutschland&#39;]&quot;</span>)</span>
-<span id="cb90-8"><a href="css-selectors-developer-tools.html#cb90-8" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (1)}</span></span>
-<span id="cb90-9"><a href="css-selectors-developer-tools.html#cb90-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;a href=&quot;https://de.wikipedia.org/wiki/Flaggen_und_Wappen_der_L%C3%A4nder ...</span></span>
-<span id="cb90-10"><a href="css-selectors-developer-tools.html#cb90-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-11"><a href="css-selectors-developer-tools.html#cb90-11" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
-<span id="cb90-12"><a href="css-selectors-developer-tools.html#cb90-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;a[href*=&#39;webscraping&#39;]&quot;</span>)</span>
-<span id="cb90-13"><a href="css-selectors-developer-tools.html#cb90-13" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (1)}</span></span>
-<span id="cb90-14"><a href="css-selectors-developer-tools.html#cb90-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;a href=&quot;https://webscraping-tures.github.io/css-selectors-developer-tool ...</span></span></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="css-selectors-developer-tools.html#cb95-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
+<span id="cb95-2"><a href="css-selectors-developer-tools.html#cb95-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;a[href^=&#39;https://www&#39;]&quot;</span>)</span>
+<span id="cb95-3"><a href="css-selectors-developer-tools.html#cb95-3" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (1)}</span></span>
+<span id="cb95-4"><a href="css-selectors-developer-tools.html#cb95-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;a href=&quot;https://www.wahlrecht.de/ergebnisse/index.htm&quot; target=&quot;_blank&quot;&gt;\ ...</span></span>
+<span id="cb95-5"><a href="css-selectors-developer-tools.html#cb95-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-6"><a href="css-selectors-developer-tools.html#cb95-6" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
+<span id="cb95-7"><a href="css-selectors-developer-tools.html#cb95-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;a[href$=&#39;Deutschland&#39;]&quot;</span>)</span>
+<span id="cb95-8"><a href="css-selectors-developer-tools.html#cb95-8" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (1)}</span></span>
+<span id="cb95-9"><a href="css-selectors-developer-tools.html#cb95-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;a href=&quot;https://de.wikipedia.org/wiki/Flaggen_und_Wappen_der_L%C3%A4nder ...</span></span>
+<span id="cb95-10"><a href="css-selectors-developer-tools.html#cb95-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-11"><a href="css-selectors-developer-tools.html#cb95-11" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
+<span id="cb95-12"><a href="css-selectors-developer-tools.html#cb95-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;a[href*=&#39;webscraping&#39;]&quot;</span>)</span>
+<span id="cb95-13"><a href="css-selectors-developer-tools.html#cb95-13" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (1)}</span></span>
+<span id="cb95-14"><a href="css-selectors-developer-tools.html#cb95-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;a href=&quot;https://webscraping-tures.github.io/css-selectors-developer-tool ...</span></span></code></pre></div>
 </div>
 <div id="hierarchy-levels" class="section level3" number="5.1.4">
 <h3><span class="header-section-number">5.1.4</span> Hierarchy levels</h3>
 <p>We can think of the hierarchy of an HTML structure as analogous to a family
 tree. A simplified representation of our example page as a family tree could
 look like this:</p>
-<div id="htmlwidget-176a98f2b74e60977c28" style="width:100%;height:500px;" class="echarts4r html-widget"></div>
-<script type="application/json" data-for="htmlwidget-176a98f2b74e60977c28">{"x":{"theme":"","tl":false,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"series":[{"type":"tree","data":[{"name":"<html>","children":[{"name":"<head>","children":[{"name":"<title>"},{"name":"<meta>"},{"name":"<style>"}]},{"name":"<body>","children":[{"name":"<span class=\"title\">","children":[{"name":"<h3>"}]},{"name":"<div id=\"data\">","children":[{"name":"<div class=\"state-odd\">","children":[{"name":"<img>"},{"name":"<span class=\"state-name\">"},{"name":"<span class=\"election-year\">"},{"name":"<span class=\"election-turnout\">"}]},{"name":"<div class=\"state-even\">","children":[{"name":"<img>"},{"name":"<span class=\"state-name\">"},{"name":"<span class=\"election-year\">"},{"name":"<span class=\"election-turnout\">"}]}]},{"name":"<div class=\"quote\">","children":[{"name":"<a>"}]},{"name":"<div>","children":[{"name":"<a>"}]}]}]}],"initialTreeDepth":1}],"title":[{"text":"HTML Hierarchy - turnout.html"}]},"dispose":true},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-9d6b16b135491364d8d0" style="width:100%;height:500px;" class="echarts4r html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9d6b16b135491364d8d0">{"x":{"theme":"","tl":false,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"series":[{"type":"tree","data":[{"name":"<html>","children":[{"name":"<head>","children":[{"name":"<title>"},{"name":"<meta>"},{"name":"<style>"}]},{"name":"<body>","children":[{"name":"<span class=\"title\">","children":[{"name":"<h3>"}]},{"name":"<div id=\"data\">","children":[{"name":"<div class=\"state-odd\">","children":[{"name":"<img>"},{"name":"<span class=\"state-name\">"},{"name":"<span class=\"election-year\">"},{"name":"<span class=\"election-turnout\">"}]},{"name":"<div class=\"state-even\">","children":[{"name":"<img>"},{"name":"<span class=\"state-name\">"},{"name":"<span class=\"election-year\">"},{"name":"<span class=\"election-turnout\">"}]}]},{"name":"<div class=\"quote\">","children":[{"name":"<a>"}]},{"name":"<div>","children":[{"name":"<a>"}]}]}]}],"initialTreeDepth":1}],"title":[{"text":"HTML Hierarchy - turnout.html"}]},"dispose":true},"evals":[],"jsHooks":[]}</script>
 <p>By clicking on the elements of the family tree, you can expand and collapse the
 hierarchy levels. Click once through the different levels and compare this with
 the HTML source code of the page. When you’re done with that, I suggest
@@ -502,16 +503,16 @@ grandchildren and grandparents with any number of “grand” prefixes. In the
 selector, we write this as <code>"B A"</code>.</p>
 <p>For example, if we want to select all <code>&lt;span&gt;</code> tags that descend from the
 <code>&lt;div id="data"&gt;</code> tag – that is, a grandchild-grandparent relationship:</p>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="css-selectors-developer-tools.html#cb91-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
-<span id="cb91-2"><a href="css-selectors-developer-tools.html#cb91-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;div#data span&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb91-3"><a href="css-selectors-developer-tools.html#cb91-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">6</span>)</span>
-<span id="cb91-4"><a href="css-selectors-developer-tools.html#cb91-4" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (6)}</span></span>
-<span id="cb91-5"><a href="css-selectors-developer-tools.html#cb91-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;state-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</span></span>
-<span id="cb91-6"><a href="css-selectors-developer-tools.html#cb91-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;election-year&quot;&gt;2016&lt;/span&gt;</span></span>
-<span id="cb91-7"><a href="css-selectors-developer-tools.html#cb91-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [3] &lt;span class=&quot;election-turnout&quot;&gt;70.4&lt;/span&gt;</span></span>
-<span id="cb91-8"><a href="css-selectors-developer-tools.html#cb91-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [4] &lt;span class=&quot;state-name&quot; id=&quot;by&quot;&gt;Bayern&lt;/span&gt;</span></span>
-<span id="cb91-9"><a href="css-selectors-developer-tools.html#cb91-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [5] &lt;span class=&quot;election-year&quot;&gt;2018&lt;/span&gt;</span></span>
-<span id="cb91-10"><a href="css-selectors-developer-tools.html#cb91-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [6] &lt;span class=&quot;election-turnout&quot;&gt;72.4&lt;/span&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="css-selectors-developer-tools.html#cb96-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
+<span id="cb96-2"><a href="css-selectors-developer-tools.html#cb96-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;div#data span&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb96-3"><a href="css-selectors-developer-tools.html#cb96-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">6</span>)</span>
+<span id="cb96-4"><a href="css-selectors-developer-tools.html#cb96-4" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (6)}</span></span>
+<span id="cb96-5"><a href="css-selectors-developer-tools.html#cb96-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;state-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</span></span>
+<span id="cb96-6"><a href="css-selectors-developer-tools.html#cb96-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;election-year&quot;&gt;2016&lt;/span&gt;</span></span>
+<span id="cb96-7"><a href="css-selectors-developer-tools.html#cb96-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [3] &lt;span class=&quot;election-turnout&quot;&gt;70.4&lt;/span&gt;</span></span>
+<span id="cb96-8"><a href="css-selectors-developer-tools.html#cb96-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [4] &lt;span class=&quot;state-name&quot; id=&quot;by&quot;&gt;Bayern&lt;/span&gt;</span></span>
+<span id="cb96-9"><a href="css-selectors-developer-tools.html#cb96-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [5] &lt;span class=&quot;election-year&quot;&gt;2018&lt;/span&gt;</span></span>
+<span id="cb96-10"><a href="css-selectors-developer-tools.html#cb96-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [6] &lt;span class=&quot;election-turnout&quot;&gt;72.4&lt;/span&gt;</span></span></code></pre></div>
 <p>It should be noted that we can only select younger generations with CSS
 Selectors. So, for example, we can’t select the grandparents of the
 grandchildren by “flipping” the selector around. To select the grandparents –
@@ -520,16 +521,16 @@ from, for example <code>&lt;body&gt;</code>.</p>
 <p>CSS selectors are not limited to mapping the relationship of two generations.
 A longer selector containing four generations and leading to the same result
 could look like this:</p>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="css-selectors-developer-tools.html#cb92-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
-<span id="cb92-2"><a href="css-selectors-developer-tools.html#cb92-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;body div#data div span&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb92-3"><a href="css-selectors-developer-tools.html#cb92-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">6</span>)</span>
-<span id="cb92-4"><a href="css-selectors-developer-tools.html#cb92-4" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (6)}</span></span>
-<span id="cb92-5"><a href="css-selectors-developer-tools.html#cb92-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;state-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</span></span>
-<span id="cb92-6"><a href="css-selectors-developer-tools.html#cb92-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;election-year&quot;&gt;2016&lt;/span&gt;</span></span>
-<span id="cb92-7"><a href="css-selectors-developer-tools.html#cb92-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [3] &lt;span class=&quot;election-turnout&quot;&gt;70.4&lt;/span&gt;</span></span>
-<span id="cb92-8"><a href="css-selectors-developer-tools.html#cb92-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [4] &lt;span class=&quot;state-name&quot; id=&quot;by&quot;&gt;Bayern&lt;/span&gt;</span></span>
-<span id="cb92-9"><a href="css-selectors-developer-tools.html#cb92-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [5] &lt;span class=&quot;election-year&quot;&gt;2018&lt;/span&gt;</span></span>
-<span id="cb92-10"><a href="css-selectors-developer-tools.html#cb92-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [6] &lt;span class=&quot;election-turnout&quot;&gt;72.4&lt;/span&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="css-selectors-developer-tools.html#cb97-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
+<span id="cb97-2"><a href="css-selectors-developer-tools.html#cb97-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;body div#data div span&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb97-3"><a href="css-selectors-developer-tools.html#cb97-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">6</span>)</span>
+<span id="cb97-4"><a href="css-selectors-developer-tools.html#cb97-4" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (6)}</span></span>
+<span id="cb97-5"><a href="css-selectors-developer-tools.html#cb97-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;state-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</span></span>
+<span id="cb97-6"><a href="css-selectors-developer-tools.html#cb97-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;election-year&quot;&gt;2016&lt;/span&gt;</span></span>
+<span id="cb97-7"><a href="css-selectors-developer-tools.html#cb97-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [3] &lt;span class=&quot;election-turnout&quot;&gt;70.4&lt;/span&gt;</span></span>
+<span id="cb97-8"><a href="css-selectors-developer-tools.html#cb97-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [4] &lt;span class=&quot;state-name&quot; id=&quot;by&quot;&gt;Bayern&lt;/span&gt;</span></span>
+<span id="cb97-9"><a href="css-selectors-developer-tools.html#cb97-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [5] &lt;span class=&quot;election-year&quot;&gt;2018&lt;/span&gt;</span></span>
+<span id="cb97-10"><a href="css-selectors-developer-tools.html#cb97-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [6] &lt;span class=&quot;election-turnout&quot;&gt;72.4&lt;/span&gt;</span></span></code></pre></div>
 </div>
 <div id="childparent" class="section level4" number="5.1.4.2">
 <h4><span class="header-section-number">5.1.4.2</span> Child/Parent</h4>
@@ -544,46 +545,46 @@ respectively. Since there is no other direct child-parent relationship of
 already be sufficient. However, we could become more explicit to write less
 error-prone code. Both <code>&lt;div&gt;</code> tags are similar in that their classes start with
 <code>"state"</code> and we already know how to exploit this:</p>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="css-selectors-developer-tools.html#cb93-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
-<span id="cb93-2"><a href="css-selectors-developer-tools.html#cb93-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;div[class^=&#39;state&#39;] &gt; span&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb93-3"><a href="css-selectors-developer-tools.html#cb93-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">6</span>)</span>
-<span id="cb93-4"><a href="css-selectors-developer-tools.html#cb93-4" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (6)}</span></span>
-<span id="cb93-5"><a href="css-selectors-developer-tools.html#cb93-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;state-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</span></span>
-<span id="cb93-6"><a href="css-selectors-developer-tools.html#cb93-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;election-year&quot;&gt;2016&lt;/span&gt;</span></span>
-<span id="cb93-7"><a href="css-selectors-developer-tools.html#cb93-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [3] &lt;span class=&quot;election-turnout&quot;&gt;70.4&lt;/span&gt;</span></span>
-<span id="cb93-8"><a href="css-selectors-developer-tools.html#cb93-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [4] &lt;span class=&quot;state-name&quot; id=&quot;by&quot;&gt;Bayern&lt;/span&gt;</span></span>
-<span id="cb93-9"><a href="css-selectors-developer-tools.html#cb93-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [5] &lt;span class=&quot;election-year&quot;&gt;2018&lt;/span&gt;</span></span>
-<span id="cb93-10"><a href="css-selectors-developer-tools.html#cb93-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [6] &lt;span class=&quot;election-turnout&quot;&gt;72.4&lt;/span&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="css-selectors-developer-tools.html#cb98-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
+<span id="cb98-2"><a href="css-selectors-developer-tools.html#cb98-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;div[class^=&#39;state&#39;] &gt; span&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb98-3"><a href="css-selectors-developer-tools.html#cb98-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">6</span>)</span>
+<span id="cb98-4"><a href="css-selectors-developer-tools.html#cb98-4" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (6)}</span></span>
+<span id="cb98-5"><a href="css-selectors-developer-tools.html#cb98-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;state-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</span></span>
+<span id="cb98-6"><a href="css-selectors-developer-tools.html#cb98-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;election-year&quot;&gt;2016&lt;/span&gt;</span></span>
+<span id="cb98-7"><a href="css-selectors-developer-tools.html#cb98-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [3] &lt;span class=&quot;election-turnout&quot;&gt;70.4&lt;/span&gt;</span></span>
+<span id="cb98-8"><a href="css-selectors-developer-tools.html#cb98-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [4] &lt;span class=&quot;state-name&quot; id=&quot;by&quot;&gt;Bayern&lt;/span&gt;</span></span>
+<span id="cb98-9"><a href="css-selectors-developer-tools.html#cb98-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [5] &lt;span class=&quot;election-year&quot;&gt;2018&lt;/span&gt;</span></span>
+<span id="cb98-10"><a href="css-selectors-developer-tools.html#cb98-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [6] &lt;span class=&quot;election-turnout&quot;&gt;72.4&lt;/span&gt;</span></span></code></pre></div>
 <p>If we do not want to select all children, but only certain ones, there are a
 number of options.</p>
 <p><code>":first-child"</code> selects the first child of an element:</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="css-selectors-developer-tools.html#cb94-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
-<span id="cb94-2"><a href="css-selectors-developer-tools.html#cb94-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;div[class^=&#39;state&#39;] &gt; :first-child&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb94-3"><a href="css-selectors-developer-tools.html#cb94-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">2</span>)</span>
-<span id="cb94-4"><a href="css-selectors-developer-tools.html#cb94-4" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (2)}</span></span>
-<span id="cb94-5"><a href="css-selectors-developer-tools.html#cb94-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;img id=&quot;bw&quot; src=&quot;https://upload.wikimedia.org/wikipedia/commons/thumb/6/ ...</span></span>
-<span id="cb94-6"><a href="css-selectors-developer-tools.html#cb94-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;img id=&quot;by&quot; src=&quot;https://upload.wikimedia.org/wikipedia/commons/thumb/2/ ...</span></span></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="css-selectors-developer-tools.html#cb99-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
+<span id="cb99-2"><a href="css-selectors-developer-tools.html#cb99-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;div[class^=&#39;state&#39;] &gt; :first-child&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb99-3"><a href="css-selectors-developer-tools.html#cb99-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">2</span>)</span>
+<span id="cb99-4"><a href="css-selectors-developer-tools.html#cb99-4" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (2)}</span></span>
+<span id="cb99-5"><a href="css-selectors-developer-tools.html#cb99-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;img id=&quot;bw&quot; src=&quot;https://upload.wikimedia.org/wikipedia/commons/thumb/6/ ...</span></span>
+<span id="cb99-6"><a href="css-selectors-developer-tools.html#cb99-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;img id=&quot;by&quot; src=&quot;https://upload.wikimedia.org/wikipedia/commons/thumb/2/ ...</span></span></code></pre></div>
 <p>However, these are not the <code>&lt;span&gt;</code> but the <code>&lt;img&gt;</code> tags, as a quick look at the
 family tree reminds us again. With <code>":nth-child(n)"</code> we can again specify more
 precisely which child – counted in the order in which they appear in the HTML
 code – we are interested in. To make it clearer again that we are only
 interested in <code>&lt;span&gt;</code> children, we combine <code>"span"</code> and <code>"nth-child(n)"</code>:</p>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="css-selectors-developer-tools.html#cb95-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
-<span id="cb95-2"><a href="css-selectors-developer-tools.html#cb95-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;div[class^=&#39;state&#39;] &gt; span:nth-child(2)&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb95-3"><a href="css-selectors-developer-tools.html#cb95-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">2</span>)</span>
-<span id="cb95-4"><a href="css-selectors-developer-tools.html#cb95-4" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (2)}</span></span>
-<span id="cb95-5"><a href="css-selectors-developer-tools.html#cb95-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;state-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</span></span>
-<span id="cb95-6"><a href="css-selectors-developer-tools.html#cb95-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;state-name&quot; id=&quot;by&quot;&gt;Bayern&lt;/span&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="css-selectors-developer-tools.html#cb100-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
+<span id="cb100-2"><a href="css-selectors-developer-tools.html#cb100-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;div[class^=&#39;state&#39;] &gt; span:nth-child(2)&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb100-3"><a href="css-selectors-developer-tools.html#cb100-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">2</span>)</span>
+<span id="cb100-4"><a href="css-selectors-developer-tools.html#cb100-4" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (2)}</span></span>
+<span id="cb100-5"><a href="css-selectors-developer-tools.html#cb100-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;state-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</span></span>
+<span id="cb100-6"><a href="css-selectors-developer-tools.html#cb100-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;state-name&quot; id=&quot;by&quot;&gt;Bayern&lt;/span&gt;</span></span></code></pre></div>
 <p>So we want to select all <code>&lt;span&gt;</code> tags that are the second child of the <code>&lt;div&gt;</code>
 tags whose classes start with <code>"state"</code>.</p>
 <p>If we would like to select only the last child, we could do this with
 <code>:last-child</code>:</p>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="css-selectors-developer-tools.html#cb96-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
-<span id="cb96-2"><a href="css-selectors-developer-tools.html#cb96-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;div[class^=&#39;state&#39;] &gt; span:last-child&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb96-3"><a href="css-selectors-developer-tools.html#cb96-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">2</span>)</span>
-<span id="cb96-4"><a href="css-selectors-developer-tools.html#cb96-4" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (2)}</span></span>
-<span id="cb96-5"><a href="css-selectors-developer-tools.html#cb96-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;election-turnout&quot;&gt;70.4&lt;/span&gt;</span></span>
-<span id="cb96-6"><a href="css-selectors-developer-tools.html#cb96-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;election-turnout&quot;&gt;72.4&lt;/span&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="css-selectors-developer-tools.html#cb101-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
+<span id="cb101-2"><a href="css-selectors-developer-tools.html#cb101-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;div[class^=&#39;state&#39;] &gt; span:last-child&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb101-3"><a href="css-selectors-developer-tools.html#cb101-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">2</span>)</span>
+<span id="cb101-4"><a href="css-selectors-developer-tools.html#cb101-4" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (2)}</span></span>
+<span id="cb101-5"><a href="css-selectors-developer-tools.html#cb101-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;election-turnout&quot;&gt;70.4&lt;/span&gt;</span></span>
+<span id="cb101-6"><a href="css-selectors-developer-tools.html#cb101-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;election-turnout&quot;&gt;72.4&lt;/span&gt;</span></span></code></pre></div>
 </div>
 <div id="siblings" class="section level4" number="5.1.4.3">
 <h4><span class="header-section-number">5.1.4.3</span> Sibling(s)</h4>
@@ -592,112 +593,112 @@ metaphor of the family tree. On the lowest hierarchical level, we thus have four
 siblings per federal state in our example. One <code>&lt;img&gt;</code> and three <code>&lt;span&gt;</code> tags.
 The selector <code>"Element-A ~ Element-B"</code> selects all siblings B that follow
 sibling A:</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="css-selectors-developer-tools.html#cb97-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
-<span id="cb97-2"><a href="css-selectors-developer-tools.html#cb97-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;div[class^=&#39;state&#39;] img ~ span&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb97-3"><a href="css-selectors-developer-tools.html#cb97-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">6</span>)</span>
-<span id="cb97-4"><a href="css-selectors-developer-tools.html#cb97-4" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (6)}</span></span>
-<span id="cb97-5"><a href="css-selectors-developer-tools.html#cb97-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;state-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</span></span>
-<span id="cb97-6"><a href="css-selectors-developer-tools.html#cb97-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;election-year&quot;&gt;2016&lt;/span&gt;</span></span>
-<span id="cb97-7"><a href="css-selectors-developer-tools.html#cb97-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [3] &lt;span class=&quot;election-turnout&quot;&gt;70.4&lt;/span&gt;</span></span>
-<span id="cb97-8"><a href="css-selectors-developer-tools.html#cb97-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [4] &lt;span class=&quot;state-name&quot; id=&quot;by&quot;&gt;Bayern&lt;/span&gt;</span></span>
-<span id="cb97-9"><a href="css-selectors-developer-tools.html#cb97-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [5] &lt;span class=&quot;election-year&quot;&gt;2018&lt;/span&gt;</span></span>
-<span id="cb97-10"><a href="css-selectors-developer-tools.html#cb97-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [6] &lt;span class=&quot;election-turnout&quot;&gt;72.4&lt;/span&gt;</span></span>
-<span id="cb97-11"><a href="css-selectors-developer-tools.html#cb97-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-12"><a href="css-selectors-developer-tools.html#cb97-12" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
-<span id="cb97-13"><a href="css-selectors-developer-tools.html#cb97-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;img ~ span&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb97-14"><a href="css-selectors-developer-tools.html#cb97-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">6</span>)</span>
-<span id="cb97-15"><a href="css-selectors-developer-tools.html#cb97-15" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (6)}</span></span>
-<span id="cb97-16"><a href="css-selectors-developer-tools.html#cb97-16" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;state-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</span></span>
-<span id="cb97-17"><a href="css-selectors-developer-tools.html#cb97-17" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;election-year&quot;&gt;2016&lt;/span&gt;</span></span>
-<span id="cb97-18"><a href="css-selectors-developer-tools.html#cb97-18" aria-hidden="true" tabindex="-1"></a><span class="do">## [3] &lt;span class=&quot;election-turnout&quot;&gt;70.4&lt;/span&gt;</span></span>
-<span id="cb97-19"><a href="css-selectors-developer-tools.html#cb97-19" aria-hidden="true" tabindex="-1"></a><span class="do">## [4] &lt;span class=&quot;state-name&quot; id=&quot;by&quot;&gt;Bayern&lt;/span&gt;</span></span>
-<span id="cb97-20"><a href="css-selectors-developer-tools.html#cb97-20" aria-hidden="true" tabindex="-1"></a><span class="do">## [5] &lt;span class=&quot;election-year&quot;&gt;2018&lt;/span&gt;</span></span>
-<span id="cb97-21"><a href="css-selectors-developer-tools.html#cb97-21" aria-hidden="true" tabindex="-1"></a><span class="do">## [6] &lt;span class=&quot;election-turnout&quot;&gt;72.4&lt;/span&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="css-selectors-developer-tools.html#cb102-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
+<span id="cb102-2"><a href="css-selectors-developer-tools.html#cb102-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;div[class^=&#39;state&#39;] img ~ span&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb102-3"><a href="css-selectors-developer-tools.html#cb102-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">6</span>)</span>
+<span id="cb102-4"><a href="css-selectors-developer-tools.html#cb102-4" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (6)}</span></span>
+<span id="cb102-5"><a href="css-selectors-developer-tools.html#cb102-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;state-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</span></span>
+<span id="cb102-6"><a href="css-selectors-developer-tools.html#cb102-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;election-year&quot;&gt;2016&lt;/span&gt;</span></span>
+<span id="cb102-7"><a href="css-selectors-developer-tools.html#cb102-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [3] &lt;span class=&quot;election-turnout&quot;&gt;70.4&lt;/span&gt;</span></span>
+<span id="cb102-8"><a href="css-selectors-developer-tools.html#cb102-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [4] &lt;span class=&quot;state-name&quot; id=&quot;by&quot;&gt;Bayern&lt;/span&gt;</span></span>
+<span id="cb102-9"><a href="css-selectors-developer-tools.html#cb102-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [5] &lt;span class=&quot;election-year&quot;&gt;2018&lt;/span&gt;</span></span>
+<span id="cb102-10"><a href="css-selectors-developer-tools.html#cb102-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [6] &lt;span class=&quot;election-turnout&quot;&gt;72.4&lt;/span&gt;</span></span>
+<span id="cb102-11"><a href="css-selectors-developer-tools.html#cb102-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb102-12"><a href="css-selectors-developer-tools.html#cb102-12" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
+<span id="cb102-13"><a href="css-selectors-developer-tools.html#cb102-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;img ~ span&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb102-14"><a href="css-selectors-developer-tools.html#cb102-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">6</span>)</span>
+<span id="cb102-15"><a href="css-selectors-developer-tools.html#cb102-15" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (6)}</span></span>
+<span id="cb102-16"><a href="css-selectors-developer-tools.html#cb102-16" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;state-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</span></span>
+<span id="cb102-17"><a href="css-selectors-developer-tools.html#cb102-17" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;election-year&quot;&gt;2016&lt;/span&gt;</span></span>
+<span id="cb102-18"><a href="css-selectors-developer-tools.html#cb102-18" aria-hidden="true" tabindex="-1"></a><span class="do">## [3] &lt;span class=&quot;election-turnout&quot;&gt;70.4&lt;/span&gt;</span></span>
+<span id="cb102-19"><a href="css-selectors-developer-tools.html#cb102-19" aria-hidden="true" tabindex="-1"></a><span class="do">## [4] &lt;span class=&quot;state-name&quot; id=&quot;by&quot;&gt;Bayern&lt;/span&gt;</span></span>
+<span id="cb102-20"><a href="css-selectors-developer-tools.html#cb102-20" aria-hidden="true" tabindex="-1"></a><span class="do">## [5] &lt;span class=&quot;election-year&quot;&gt;2018&lt;/span&gt;</span></span>
+<span id="cb102-21"><a href="css-selectors-developer-tools.html#cb102-21" aria-hidden="true" tabindex="-1"></a><span class="do">## [6] &lt;span class=&quot;election-turnout&quot;&gt;72.4&lt;/span&gt;</span></span></code></pre></div>
 <p>The result for both notations is identical. If we had <code>&lt;span&gt;</code> tags that follow
 <code>&lt;img&gt;</code> tags in other places in the HTML code in our example, the second variant
 would no longer be explicit enough.</p>
 <p>The selector <code>"Element-A + Element-B"</code> works in the same way, but only selects
 the sibling B that follows directly after sibling A:</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="css-selectors-developer-tools.html#cb98-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
-<span id="cb98-2"><a href="css-selectors-developer-tools.html#cb98-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;img + span&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb98-3"><a href="css-selectors-developer-tools.html#cb98-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">2</span>)</span>
-<span id="cb98-4"><a href="css-selectors-developer-tools.html#cb98-4" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (2)}</span></span>
-<span id="cb98-5"><a href="css-selectors-developer-tools.html#cb98-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;state-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</span></span>
-<span id="cb98-6"><a href="css-selectors-developer-tools.html#cb98-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;state-name&quot; id=&quot;by&quot;&gt;Bayern&lt;/span&gt;</span></span>
-<span id="cb98-7"><a href="css-selectors-developer-tools.html#cb98-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb98-8"><a href="css-selectors-developer-tools.html#cb98-8" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
-<span id="cb98-9"><a href="css-selectors-developer-tools.html#cb98-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;span.state-name + span&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb98-10"><a href="css-selectors-developer-tools.html#cb98-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">2</span>)</span>
-<span id="cb98-11"><a href="css-selectors-developer-tools.html#cb98-11" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (2)}</span></span>
-<span id="cb98-12"><a href="css-selectors-developer-tools.html#cb98-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;election-year&quot;&gt;2016&lt;/span&gt;</span></span>
-<span id="cb98-13"><a href="css-selectors-developer-tools.html#cb98-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;election-year&quot;&gt;2018&lt;/span&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="css-selectors-developer-tools.html#cb103-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
+<span id="cb103-2"><a href="css-selectors-developer-tools.html#cb103-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;img + span&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb103-3"><a href="css-selectors-developer-tools.html#cb103-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">2</span>)</span>
+<span id="cb103-4"><a href="css-selectors-developer-tools.html#cb103-4" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (2)}</span></span>
+<span id="cb103-5"><a href="css-selectors-developer-tools.html#cb103-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;state-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</span></span>
+<span id="cb103-6"><a href="css-selectors-developer-tools.html#cb103-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;state-name&quot; id=&quot;by&quot;&gt;Bayern&lt;/span&gt;</span></span>
+<span id="cb103-7"><a href="css-selectors-developer-tools.html#cb103-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb103-8"><a href="css-selectors-developer-tools.html#cb103-8" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
+<span id="cb103-9"><a href="css-selectors-developer-tools.html#cb103-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;span.state-name + span&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb103-10"><a href="css-selectors-developer-tools.html#cb103-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">2</span>)</span>
+<span id="cb103-11"><a href="css-selectors-developer-tools.html#cb103-11" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (2)}</span></span>
+<span id="cb103-12"><a href="css-selectors-developer-tools.html#cb103-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;election-year&quot;&gt;2016&lt;/span&gt;</span></span>
+<span id="cb103-13"><a href="css-selectors-developer-tools.html#cb103-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;election-year&quot;&gt;2018&lt;/span&gt;</span></span></code></pre></div>
 <p>The selection of siblings can be further restricted with
 <code>"element:first-of-type"</code>, <code>"element:nth-of-type(n)"</code> and
 <code>"element:last-of-type"</code>. In this way, the first, nth and last sibling of a
 certain type can be selected. The siblings are thus differentiated according to
 the type of element, with which our family tree metaphor is being somewhat
 overused.</p>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="css-selectors-developer-tools.html#cb99-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
-<span id="cb99-2"><a href="css-selectors-developer-tools.html#cb99-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;div[class^=&#39;state&#39;] &gt; span:first-of-type&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb99-3"><a href="css-selectors-developer-tools.html#cb99-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">2</span>)</span>
-<span id="cb99-4"><a href="css-selectors-developer-tools.html#cb99-4" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (2)}</span></span>
-<span id="cb99-5"><a href="css-selectors-developer-tools.html#cb99-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;state-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</span></span>
-<span id="cb99-6"><a href="css-selectors-developer-tools.html#cb99-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;state-name&quot; id=&quot;by&quot;&gt;Bayern&lt;/span&gt;</span></span>
-<span id="cb99-7"><a href="css-selectors-developer-tools.html#cb99-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb99-8"><a href="css-selectors-developer-tools.html#cb99-8" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
-<span id="cb99-9"><a href="css-selectors-developer-tools.html#cb99-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;div[class^=&#39;state&#39;] &gt; span:nth-of-type(2)&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb99-10"><a href="css-selectors-developer-tools.html#cb99-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">2</span>)</span>
-<span id="cb99-11"><a href="css-selectors-developer-tools.html#cb99-11" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (2)}</span></span>
-<span id="cb99-12"><a href="css-selectors-developer-tools.html#cb99-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;election-year&quot;&gt;2016&lt;/span&gt;</span></span>
-<span id="cb99-13"><a href="css-selectors-developer-tools.html#cb99-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;election-year&quot;&gt;2018&lt;/span&gt;</span></span>
-<span id="cb99-14"><a href="css-selectors-developer-tools.html#cb99-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb99-15"><a href="css-selectors-developer-tools.html#cb99-15" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
-<span id="cb99-16"><a href="css-selectors-developer-tools.html#cb99-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;div[class^=&#39;state&#39;] &gt; span:last-of-type&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb99-17"><a href="css-selectors-developer-tools.html#cb99-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">2</span>)</span>
-<span id="cb99-18"><a href="css-selectors-developer-tools.html#cb99-18" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (2)}</span></span>
-<span id="cb99-19"><a href="css-selectors-developer-tools.html#cb99-19" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;election-turnout&quot;&gt;70.4&lt;/span&gt;</span></span>
-<span id="cb99-20"><a href="css-selectors-developer-tools.html#cb99-20" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;election-turnout&quot;&gt;72.4&lt;/span&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="css-selectors-developer-tools.html#cb104-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
+<span id="cb104-2"><a href="css-selectors-developer-tools.html#cb104-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;div[class^=&#39;state&#39;] &gt; span:first-of-type&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb104-3"><a href="css-selectors-developer-tools.html#cb104-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">2</span>)</span>
+<span id="cb104-4"><a href="css-selectors-developer-tools.html#cb104-4" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (2)}</span></span>
+<span id="cb104-5"><a href="css-selectors-developer-tools.html#cb104-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;state-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</span></span>
+<span id="cb104-6"><a href="css-selectors-developer-tools.html#cb104-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;state-name&quot; id=&quot;by&quot;&gt;Bayern&lt;/span&gt;</span></span>
+<span id="cb104-7"><a href="css-selectors-developer-tools.html#cb104-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb104-8"><a href="css-selectors-developer-tools.html#cb104-8" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
+<span id="cb104-9"><a href="css-selectors-developer-tools.html#cb104-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;div[class^=&#39;state&#39;] &gt; span:nth-of-type(2)&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb104-10"><a href="css-selectors-developer-tools.html#cb104-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">2</span>)</span>
+<span id="cb104-11"><a href="css-selectors-developer-tools.html#cb104-11" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (2)}</span></span>
+<span id="cb104-12"><a href="css-selectors-developer-tools.html#cb104-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;election-year&quot;&gt;2016&lt;/span&gt;</span></span>
+<span id="cb104-13"><a href="css-selectors-developer-tools.html#cb104-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;election-year&quot;&gt;2018&lt;/span&gt;</span></span>
+<span id="cb104-14"><a href="css-selectors-developer-tools.html#cb104-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb104-15"><a href="css-selectors-developer-tools.html#cb104-15" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
+<span id="cb104-16"><a href="css-selectors-developer-tools.html#cb104-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;div[class^=&#39;state&#39;] &gt; span:last-of-type&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb104-17"><a href="css-selectors-developer-tools.html#cb104-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">2</span>)</span>
+<span id="cb104-18"><a href="css-selectors-developer-tools.html#cb104-18" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (2)}</span></span>
+<span id="cb104-19"><a href="css-selectors-developer-tools.html#cb104-19" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;election-turnout&quot;&gt;70.4&lt;/span&gt;</span></span>
+<span id="cb104-20"><a href="css-selectors-developer-tools.html#cb104-20" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;election-turnout&quot;&gt;72.4&lt;/span&gt;</span></span></code></pre></div>
 </div>
 </div>
 <div id="further-selectors" class="section level3" number="5.1.5">
 <h3><span class="header-section-number">5.1.5</span> Further selectors</h3>
 <p>The wildcard <code>"*"</code> selects all elements. For example, we can also select all
 children of an element in the following way:</p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="css-selectors-developer-tools.html#cb100-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
-<span id="cb100-2"><a href="css-selectors-developer-tools.html#cb100-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;div[class^=&#39;state&#39;] &gt; *&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb100-3"><a href="css-selectors-developer-tools.html#cb100-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">8</span>)</span>
-<span id="cb100-4"><a href="css-selectors-developer-tools.html#cb100-4" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (8)}</span></span>
-<span id="cb100-5"><a href="css-selectors-developer-tools.html#cb100-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;img id=&quot;bw&quot; src=&quot;https://upload.wikimedia.org/wikipedia/commons/thumb/6/ ...</span></span>
-<span id="cb100-6"><a href="css-selectors-developer-tools.html#cb100-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;state-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</span></span>
-<span id="cb100-7"><a href="css-selectors-developer-tools.html#cb100-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [3] &lt;span class=&quot;election-year&quot;&gt;2016&lt;/span&gt;</span></span>
-<span id="cb100-8"><a href="css-selectors-developer-tools.html#cb100-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [4] &lt;span class=&quot;election-turnout&quot;&gt;70.4&lt;/span&gt;</span></span>
-<span id="cb100-9"><a href="css-selectors-developer-tools.html#cb100-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [5] &lt;img id=&quot;by&quot; src=&quot;https://upload.wikimedia.org/wikipedia/commons/thumb/2/ ...</span></span>
-<span id="cb100-10"><a href="css-selectors-developer-tools.html#cb100-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [6] &lt;span class=&quot;state-name&quot; id=&quot;by&quot;&gt;Bayern&lt;/span&gt;</span></span>
-<span id="cb100-11"><a href="css-selectors-developer-tools.html#cb100-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [7] &lt;span class=&quot;election-year&quot;&gt;2018&lt;/span&gt;</span></span>
-<span id="cb100-12"><a href="css-selectors-developer-tools.html#cb100-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [8] &lt;span class=&quot;election-turnout&quot;&gt;72.4&lt;/span&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="css-selectors-developer-tools.html#cb105-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
+<span id="cb105-2"><a href="css-selectors-developer-tools.html#cb105-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;div[class^=&#39;state&#39;] &gt; *&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb105-3"><a href="css-selectors-developer-tools.html#cb105-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">8</span>)</span>
+<span id="cb105-4"><a href="css-selectors-developer-tools.html#cb105-4" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (8)}</span></span>
+<span id="cb105-5"><a href="css-selectors-developer-tools.html#cb105-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;img id=&quot;bw&quot; src=&quot;https://upload.wikimedia.org/wikipedia/commons/thumb/6/ ...</span></span>
+<span id="cb105-6"><a href="css-selectors-developer-tools.html#cb105-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;state-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</span></span>
+<span id="cb105-7"><a href="css-selectors-developer-tools.html#cb105-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [3] &lt;span class=&quot;election-year&quot;&gt;2016&lt;/span&gt;</span></span>
+<span id="cb105-8"><a href="css-selectors-developer-tools.html#cb105-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [4] &lt;span class=&quot;election-turnout&quot;&gt;70.4&lt;/span&gt;</span></span>
+<span id="cb105-9"><a href="css-selectors-developer-tools.html#cb105-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [5] &lt;img id=&quot;by&quot; src=&quot;https://upload.wikimedia.org/wikipedia/commons/thumb/2/ ...</span></span>
+<span id="cb105-10"><a href="css-selectors-developer-tools.html#cb105-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [6] &lt;span class=&quot;state-name&quot; id=&quot;by&quot;&gt;Bayern&lt;/span&gt;</span></span>
+<span id="cb105-11"><a href="css-selectors-developer-tools.html#cb105-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [7] &lt;span class=&quot;election-year&quot;&gt;2018&lt;/span&gt;</span></span>
+<span id="cb105-12"><a href="css-selectors-developer-tools.html#cb105-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [8] &lt;span class=&quot;election-turnout&quot;&gt;72.4&lt;/span&gt;</span></span></code></pre></div>
 <p>If we want to exclude certain elements from the selection, this is possible with
 <code>":not(selector)"</code>. Here, all elements are selected, except those that we have
 explicitly excluded. For example, all children except the <code>&lt;img&gt;</code> elements:</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="css-selectors-developer-tools.html#cb101-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
-<span id="cb101-2"><a href="css-selectors-developer-tools.html#cb101-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;div[class^=&#39;state&#39;] &gt; :not(img)&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb101-3"><a href="css-selectors-developer-tools.html#cb101-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">6</span>)</span>
-<span id="cb101-4"><a href="css-selectors-developer-tools.html#cb101-4" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (6)}</span></span>
-<span id="cb101-5"><a href="css-selectors-developer-tools.html#cb101-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;state-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</span></span>
-<span id="cb101-6"><a href="css-selectors-developer-tools.html#cb101-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;election-year&quot;&gt;2016&lt;/span&gt;</span></span>
-<span id="cb101-7"><a href="css-selectors-developer-tools.html#cb101-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [3] &lt;span class=&quot;election-turnout&quot;&gt;70.4&lt;/span&gt;</span></span>
-<span id="cb101-8"><a href="css-selectors-developer-tools.html#cb101-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [4] &lt;span class=&quot;state-name&quot; id=&quot;by&quot;&gt;Bayern&lt;/span&gt;</span></span>
-<span id="cb101-9"><a href="css-selectors-developer-tools.html#cb101-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [5] &lt;span class=&quot;election-year&quot;&gt;2018&lt;/span&gt;</span></span>
-<span id="cb101-10"><a href="css-selectors-developer-tools.html#cb101-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [6] &lt;span class=&quot;election-turnout&quot;&gt;72.4&lt;/span&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="css-selectors-developer-tools.html#cb106-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
+<span id="cb106-2"><a href="css-selectors-developer-tools.html#cb106-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;div[class^=&#39;state&#39;] &gt; :not(img)&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb106-3"><a href="css-selectors-developer-tools.html#cb106-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">6</span>)</span>
+<span id="cb106-4"><a href="css-selectors-developer-tools.html#cb106-4" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (6)}</span></span>
+<span id="cb106-5"><a href="css-selectors-developer-tools.html#cb106-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;state-name&quot; id=&quot;bw&quot;&gt;Baden-Württemberg&lt;/span&gt;</span></span>
+<span id="cb106-6"><a href="css-selectors-developer-tools.html#cb106-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;election-year&quot;&gt;2016&lt;/span&gt;</span></span>
+<span id="cb106-7"><a href="css-selectors-developer-tools.html#cb106-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [3] &lt;span class=&quot;election-turnout&quot;&gt;70.4&lt;/span&gt;</span></span>
+<span id="cb106-8"><a href="css-selectors-developer-tools.html#cb106-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [4] &lt;span class=&quot;state-name&quot; id=&quot;by&quot;&gt;Bayern&lt;/span&gt;</span></span>
+<span id="cb106-9"><a href="css-selectors-developer-tools.html#cb106-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [5] &lt;span class=&quot;election-year&quot;&gt;2018&lt;/span&gt;</span></span>
+<span id="cb106-10"><a href="css-selectors-developer-tools.html#cb106-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [6] &lt;span class=&quot;election-turnout&quot;&gt;72.4&lt;/span&gt;</span></span></code></pre></div>
 <p>With <code>"selector-A, selector-B"</code>, several selectors can be linked with “and/or”.
 This makes it possible, for example, to select two <code>&lt;span&gt;</code> classes in one step:</p>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="css-selectors-developer-tools.html#cb102-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
-<span id="cb102-2"><a href="css-selectors-developer-tools.html#cb102-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;div[class^=&#39;state&#39;] &gt; span.election-year, div[class^=&#39;state&#39;] &gt; span.election-turnout&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb102-3"><a href="css-selectors-developer-tools.html#cb102-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">4</span>)</span>
-<span id="cb102-4"><a href="css-selectors-developer-tools.html#cb102-4" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (4)}</span></span>
-<span id="cb102-5"><a href="css-selectors-developer-tools.html#cb102-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;election-year&quot;&gt;2016&lt;/span&gt;</span></span>
-<span id="cb102-6"><a href="css-selectors-developer-tools.html#cb102-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;election-turnout&quot;&gt;70.4&lt;/span&gt;</span></span>
-<span id="cb102-7"><a href="css-selectors-developer-tools.html#cb102-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [3] &lt;span class=&quot;election-year&quot;&gt;2018&lt;/span&gt;</span></span>
-<span id="cb102-8"><a href="css-selectors-developer-tools.html#cb102-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [4] &lt;span class=&quot;election-turnout&quot;&gt;72.4&lt;/span&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="css-selectors-developer-tools.html#cb107-1" aria-hidden="true" tabindex="-1"></a>website <span class="sc">%&gt;%</span> </span>
+<span id="cb107-2"><a href="css-selectors-developer-tools.html#cb107-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;div[class^=&#39;state&#39;] &gt; span.election-year, div[class^=&#39;state&#39;] &gt; span.election-turnout&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb107-3"><a href="css-selectors-developer-tools.html#cb107-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">4</span>)</span>
+<span id="cb107-4"><a href="css-selectors-developer-tools.html#cb107-4" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (4)}</span></span>
+<span id="cb107-5"><a href="css-selectors-developer-tools.html#cb107-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;span class=&quot;election-year&quot;&gt;2016&lt;/span&gt;</span></span>
+<span id="cb107-6"><a href="css-selectors-developer-tools.html#cb107-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;span class=&quot;election-turnout&quot;&gt;70.4&lt;/span&gt;</span></span>
+<span id="cb107-7"><a href="css-selectors-developer-tools.html#cb107-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [3] &lt;span class=&quot;election-year&quot;&gt;2018&lt;/span&gt;</span></span>
+<span id="cb107-8"><a href="css-selectors-developer-tools.html#cb107-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [4] &lt;span class=&quot;election-turnout&quot;&gt;72.4&lt;/span&gt;</span></span></code></pre></div>
 <p>You now know the selectors most commonly used in web scraping. An overview of
 these and all other CSS selectors can be found on the W3 pages:
 <a href="https://www.w3schools.com/cssref/css_selectors.asp" target="_blank">https://www.w3schools.com/cssref/css_selectors.asp</a></p>

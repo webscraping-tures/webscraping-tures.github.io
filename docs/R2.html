@@ -24,7 +24,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2021-04-23" />
+<meta name="date" content="2021-05-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -186,6 +186,7 @@ Web Scraping using R
 <li class="chapter" data-level="2.6.1" data-path="R1.html"><a href="R1.html#help"><i class="fa fa-check"></i><b>2.6.1</b> Help</a></li>
 <li class="chapter" data-level="2.6.2" data-path="R1.html"><a href="R1.html#examples-basic-statistical-functions"><i class="fa fa-check"></i><b>2.6.2</b> Examples: Basic statistical functions</a></li>
 </ul></li>
+<li class="chapter" data-level="2.7" data-path="R1.html"><a href="R1.html#ifelse-statements"><i class="fa fa-check"></i><b>2.7</b> If/Else statements</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="R2.html"><a href="R2.html"><i class="fa fa-check"></i><b>3</b> RStudio in practice &amp; the tidyverse</a>
 <ul>
@@ -318,13 +319,13 @@ called R Scripts.</p>
 more conveniently press “CTRL” + “Shift” + “N” simultaneously. This creates an
 untitled script that we can write our code into.</p>
 <p>Let’s start with something simple by recreating some of the code from last week.</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="R2.html#cb41-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">17</span></span>
-<span id="cb41-2"><a href="R2.html#cb41-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="dv">4</span></span>
-<span id="cb41-3"><a href="R2.html#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-4"><a href="R2.html#cb41-4" aria-hidden="true" tabindex="-1"></a>the_answer <span class="ot">&lt;-</span> (a <span class="sc">+</span> b) <span class="sc">*</span> <span class="dv">2</span></span>
-<span id="cb41-5"><a href="R2.html#cb41-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-6"><a href="R2.html#cb41-6" aria-hidden="true" tabindex="-1"></a>the_answer</span>
-<span id="cb41-7"><a href="R2.html#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 42</span></span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="R2.html#cb46-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">17</span></span>
+<span id="cb46-2"><a href="R2.html#cb46-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb46-3"><a href="R2.html#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-4"><a href="R2.html#cb46-4" aria-hidden="true" tabindex="-1"></a>the_answer <span class="ot">&lt;-</span> (a <span class="sc">+</span> b) <span class="sc">*</span> <span class="dv">2</span></span>
+<span id="cb46-5"><a href="R2.html#cb46-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-6"><a href="R2.html#cb46-6" aria-hidden="true" tabindex="-1"></a>the_answer</span>
+<span id="cb46-7"><a href="R2.html#cb46-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 42</span></span></code></pre></div>
 <p>We assign two numerical values two the objects <code>a</code> and <code>b</code>, assign a calculation
 based on these objects to the new object <code>the_answer</code> and prompt R to return its
 value to us. Instead of writing the code line by line into the console, now we
@@ -406,16 +407,16 @@ They may have very different approaches to certain R problems and clearly
 commented code will help them to quickly understand it. You should see this as a
 sign of respect towards the time your peers may invest in helping you with your
 coding problems.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="R2.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># assigning objects</span></span>
-<span id="cb42-2"><a href="R2.html#cb42-2" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">17</span></span>
-<span id="cb42-3"><a href="R2.html#cb42-3" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="dv">4</span></span>
-<span id="cb42-4"><a href="R2.html#cb42-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-5"><a href="R2.html#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="co"># calculating the answer</span></span>
-<span id="cb42-6"><a href="R2.html#cb42-6" aria-hidden="true" tabindex="-1"></a>the_answer <span class="ot">&lt;-</span> (a <span class="sc">+</span> b) <span class="sc">*</span> <span class="dv">2</span></span>
-<span id="cb42-7"><a href="R2.html#cb42-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-8"><a href="R2.html#cb42-8" aria-hidden="true" tabindex="-1"></a>the_answer</span>
-<span id="cb42-9"><a href="R2.html#cb42-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 42</span></span>
-<span id="cb42-10"><a href="R2.html#cb42-10" aria-hidden="true" tabindex="-1"></a><span class="co"># but what is the question?</span></span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="R2.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># assigning objects</span></span>
+<span id="cb47-2"><a href="R2.html#cb47-2" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">17</span></span>
+<span id="cb47-3"><a href="R2.html#cb47-3" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb47-4"><a href="R2.html#cb47-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-5"><a href="R2.html#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="co"># calculating the answer</span></span>
+<span id="cb47-6"><a href="R2.html#cb47-6" aria-hidden="true" tabindex="-1"></a>the_answer <span class="ot">&lt;-</span> (a <span class="sc">+</span> b) <span class="sc">*</span> <span class="dv">2</span></span>
+<span id="cb47-7"><a href="R2.html#cb47-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-8"><a href="R2.html#cb47-8" aria-hidden="true" tabindex="-1"></a>the_answer</span>
+<span id="cb47-9"><a href="R2.html#cb47-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 42</span></span>
+<span id="cb47-10"><a href="R2.html#cb47-10" aria-hidden="true" tabindex="-1"></a><span class="co"># but what is the question?</span></span></code></pre></div>
 <p>If you plan on using <code>setwd()</code> in your script, it is a good idea to comment this
 line before sharing your script. Other people will have different folder
 structures and will want to decide for themselves. The same goes for all lines
@@ -451,7 +452,7 @@ installation every time we run a script. At the same time, if we share our
 script, it is impolite to force an (re)installation on somebody else.</p>
 <p>For this introduction we will focus on the packages of the tidyverse – more
 on them below. To install the core tidyverse package, you should type:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="R2.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="R2.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</span></code></pre></div>
 <p>R will output a lot of information concerning the installation process, and
 close with a satisfying <code>DONE (tidyverse)</code> if everything went according to plan.</p>
 <p>Now that the installation is complete, we can load the package. This should
@@ -460,7 +461,7 @@ are loaded at the beginning of running a script and other users that see your
 code also immediately see which packages are required. Loading a package is done
 with <code>library()</code> with the name of the package in the parentheses, this time
 without the need for enclosing it in <code>"</code>.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="R2.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="R2.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <p>Loading the tidyverse package returns a lot of information to us, some of which
 we will look at in more detail during the course of this chapter. Please note
 that not all packages are that verbose in their loading process. Often you will
@@ -487,8 +488,8 @@ while the function is masked by the similarly named function from dplyr, we
 could write <code>stats::filter()</code>. As the function will not work without further
 arguments, we can’t try this out directly, but the same principle applies to
 loading the help files:</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="R2.html#cb45-1" aria-hidden="true" tabindex="-1"></a>?dplyr<span class="sc">::</span><span class="fu">filter</span>()</span>
-<span id="cb45-2"><a href="R2.html#cb45-2" aria-hidden="true" tabindex="-1"></a>?stats<span class="sc">::</span><span class="fu">filter</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="R2.html#cb50-1" aria-hidden="true" tabindex="-1"></a>?dplyr<span class="sc">::</span><span class="fu">filter</span>()</span>
+<span id="cb50-2"><a href="R2.html#cb50-2" aria-hidden="true" tabindex="-1"></a>?stats<span class="sc">::</span><span class="fu">filter</span>()</span></code></pre></div>
 </div>
 </div>
 <div id="tidyverse" class="section level2" number="3.3">
@@ -537,26 +538,26 @@ we can create tibbles vector by vector or variable by variable, using the
 function <code>tibble()</code>. We assign a name to the variable followed by <code>=</code> and the
 data to be assigned to the variable. The variable-data pairs are separated by
 <code>,</code>:</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="R2.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">numbers =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="at">strings =</span> <span class="fu">c</span>(<span class="st">&quot;zero&quot;</span>, <span class="st">&quot;one&quot;</span>, <span class="st">&quot;two&quot;</span>), <span class="at">logicals =</span> <span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>))</span>
-<span id="cb46-2"><a href="R2.html#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 x 3</span></span>
-<span id="cb46-3"><a href="R2.html#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   numbers strings logicals</span></span>
-<span id="cb46-4"><a href="R2.html#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="do">##     &lt;dbl&gt; &lt;chr&gt;   &lt;lgl&gt;   </span></span>
-<span id="cb46-5"><a href="R2.html#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 1       0 zero    FALSE   </span></span>
-<span id="cb46-6"><a href="R2.html#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 2       1 one     TRUE    </span></span>
-<span id="cb46-7"><a href="R2.html#cb46-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 3       2 two     TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="R2.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">numbers =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="at">strings =</span> <span class="fu">c</span>(<span class="st">&quot;zero&quot;</span>, <span class="st">&quot;one&quot;</span>, <span class="st">&quot;two&quot;</span>), <span class="at">logicals =</span> <span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>))</span>
+<span id="cb51-2"><a href="R2.html#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 x 3</span></span>
+<span id="cb51-3"><a href="R2.html#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   numbers strings logicals</span></span>
+<span id="cb51-4"><a href="R2.html#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="do">##     &lt;dbl&gt; &lt;chr&gt;   &lt;lgl&gt;   </span></span>
+<span id="cb51-5"><a href="R2.html#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 1       0 zero    FALSE   </span></span>
+<span id="cb51-6"><a href="R2.html#cb51-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 2       1 one     TRUE    </span></span>
+<span id="cb51-7"><a href="R2.html#cb51-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 3       2 two     TRUE</span></span></code></pre></div>
 <p>For longer code like this, it is advisable to use multiple lines and a more
 clear formatting to create code that is readable and intuitive:</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="R2.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
-<span id="cb47-2"><a href="R2.html#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">numbers =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>),</span>
-<span id="cb47-3"><a href="R2.html#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">strings =</span> <span class="fu">c</span>(<span class="st">&quot;zero&quot;</span>, <span class="st">&quot;one&quot;</span>, <span class="st">&quot;two&quot;</span>),</span>
-<span id="cb47-4"><a href="R2.html#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">logicals =</span> <span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>)</span>
-<span id="cb47-5"><a href="R2.html#cb47-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb47-6"><a href="R2.html#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 x 3</span></span>
-<span id="cb47-7"><a href="R2.html#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   numbers strings logicals</span></span>
-<span id="cb47-8"><a href="R2.html#cb47-8" aria-hidden="true" tabindex="-1"></a><span class="do">##     &lt;dbl&gt; &lt;chr&gt;   &lt;lgl&gt;   </span></span>
-<span id="cb47-9"><a href="R2.html#cb47-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 1       0 zero    FALSE   </span></span>
-<span id="cb47-10"><a href="R2.html#cb47-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 2       1 one     TRUE    </span></span>
-<span id="cb47-11"><a href="R2.html#cb47-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 3       2 two     TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="R2.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb52-2"><a href="R2.html#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">numbers =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>),</span>
+<span id="cb52-3"><a href="R2.html#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">strings =</span> <span class="fu">c</span>(<span class="st">&quot;zero&quot;</span>, <span class="st">&quot;one&quot;</span>, <span class="st">&quot;two&quot;</span>),</span>
+<span id="cb52-4"><a href="R2.html#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">logicals =</span> <span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>)</span>
+<span id="cb52-5"><a href="R2.html#cb52-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb52-6"><a href="R2.html#cb52-6" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 x 3</span></span>
+<span id="cb52-7"><a href="R2.html#cb52-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   numbers strings logicals</span></span>
+<span id="cb52-8"><a href="R2.html#cb52-8" aria-hidden="true" tabindex="-1"></a><span class="do">##     &lt;dbl&gt; &lt;chr&gt;   &lt;lgl&gt;   </span></span>
+<span id="cb52-9"><a href="R2.html#cb52-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 1       0 zero    FALSE   </span></span>
+<span id="cb52-10"><a href="R2.html#cb52-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 2       1 one     TRUE    </span></span>
+<span id="cb52-11"><a href="R2.html#cb52-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 3       2 two     TRUE</span></span></code></pre></div>
 <p>R understands that all five lines are part of one command as it evaluates
 everything between the opening and closing bracket of the <code>tibbles()</code> function
 together. We just have to make sure, that we don’t miss the closing bracket or a
@@ -565,17 +566,17 @@ errors and will be high on your list of things to check if something does not
 work as planned.</p>
 <p>We can also use calculations and functions directly in tibble creation,
 circumventing the need to assign the results to an object first:</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="R2.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
-<span id="cb48-2"><a href="R2.html#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">numbers =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),</span>
-<span id="cb48-3"><a href="R2.html#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">roots =</span> <span class="fu">sqrt</span>(numbers),</span>
-<span id="cb48-4"><a href="R2.html#cb48-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">rounded =</span> <span class="fu">round</span>(roots)</span>
-<span id="cb48-5"><a href="R2.html#cb48-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb48-6"><a href="R2.html#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 x 3</span></span>
-<span id="cb48-7"><a href="R2.html#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   numbers roots rounded</span></span>
-<span id="cb48-8"><a href="R2.html#cb48-8" aria-hidden="true" tabindex="-1"></a><span class="do">##     &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;</span></span>
-<span id="cb48-9"><a href="R2.html#cb48-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 1       1  1          1</span></span>
-<span id="cb48-10"><a href="R2.html#cb48-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 2       2  1.41       1</span></span>
-<span id="cb48-11"><a href="R2.html#cb48-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 3       3  1.73       2</span></span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="R2.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb53-2"><a href="R2.html#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">numbers =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),</span>
+<span id="cb53-3"><a href="R2.html#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">roots =</span> <span class="fu">sqrt</span>(numbers),</span>
+<span id="cb53-4"><a href="R2.html#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">rounded =</span> <span class="fu">round</span>(roots)</span>
+<span id="cb53-5"><a href="R2.html#cb53-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb53-6"><a href="R2.html#cb53-6" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 x 3</span></span>
+<span id="cb53-7"><a href="R2.html#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   numbers roots rounded</span></span>
+<span id="cb53-8"><a href="R2.html#cb53-8" aria-hidden="true" tabindex="-1"></a><span class="do">##     &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span id="cb53-9"><a href="R2.html#cb53-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 1       1  1          1</span></span>
+<span id="cb53-10"><a href="R2.html#cb53-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 2       2  1.41       1</span></span>
+<span id="cb53-11"><a href="R2.html#cb53-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 3       3  1.73       2</span></span></code></pre></div>
 <p>Sidenote: The function <code>sqrt()</code> takes the square roots of the data it is applied
 to.</p>
 </div>
@@ -590,11 +591,11 @@ you on your R journey.</p>
 packages also come with so called <em>vignettes</em> which offer more in-depth
 introductions to the functionalities of the packages. Let’s see if the tibble
 package comes with vignettes. To do this we can write:</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="R2.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vignette</span>(<span class="at">package =</span> <span class="st">&quot;tibble&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="R2.html#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vignette</span>(<span class="at">package =</span> <span class="st">&quot;tibble&quot;</span>)</span></code></pre></div>
 <p>We get a list of all vignettes avaialable for the specific package. To access a
 specific vignette, we also use the <code>vignette()</code> function, this time with the
 specific name of the vignette as the function’s argument:</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="R2.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vignette</span>(<span class="st">&quot;types&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="R2.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vignette</span>(<span class="st">&quot;types&quot;</span>)</span></code></pre></div>
 <p>You can also always check the CRAN page for the package in question. Here you
 can access the documentation as well as available vignettes, e.g.:
 <a href="https://cran.r-project.org/web/packages/tibble/index.html" target="_blank">https://cran.r-project.org/web/packages/tibble/index.html</a>.</p>

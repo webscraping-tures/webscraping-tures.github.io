@@ -25,6 +25,7 @@ a-brief-look-at-lists
 functions
 help
 examples-basic-statistical-functions
+ifelse-statements
 R2
 rstudio-workflow
 r-scripts
@@ -82,4 +83,3 @@ R3
 transformation-with-dplyr
 graphical-analysis-with-ggplot
 project
-ifelse-statements
