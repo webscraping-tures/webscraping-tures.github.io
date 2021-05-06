@@ -24,7 +24,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2021-05-02" />
+<meta name="date" content="2021-05-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,6 +51,11 @@
 
 
 
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/echarts4r-4.8.0/echarts-en.min.js"></script>
+<script src="libs/echarts4r-4.8.0/ecStat.min.js"></script>
+<script src="libs/echarts4r-4.8.0/dataTool.min.js"></script>
+<script src="libs/echarts4r-binding-0.4.0/echarts4r.js"></script>
 
 
 <style type="text/css">
@@ -351,8 +356,8 @@ commands directly into the console.
 You will notice a <code>&gt;</code> sign at the beginning of the last line in the console.
 This is a prompt, as in “write commands here”. Try writing this and executing
 the command with the “Enter” key:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="R1.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Hello World!&quot;</span>)</span>
-<span id="cb1-2"><a href="R1.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Hello World!&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="R1.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Hello World!&quot;</span>)</span>
+<span id="cb16-2"><a href="R1.html#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Hello World!&quot;</span></span></code></pre></div>
 <p>You just entered your first R command, received your first output and also used
 your first function. We will address functions in more detail later. For now, it
 is enough to know that the command <code>print()</code> prints everything that is enclosed
@@ -370,38 +375,38 @@ used as a calculator. Many functions for more involved calculations, e.g. 
 are available. <code>x^y</code> can be used to write x to the power of y. For now, you
 should write the code below line for line into the R console and execute each
 line with the “Enter” key.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="R1.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dv">17</span> <span class="sc">+</span> <span class="dv">25</span></span>
-<span id="cb2-2"><a href="R1.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 42</span></span>
-<span id="cb2-3"><a href="R1.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dv">99</span> <span class="sc">-</span> <span class="dv">57</span></span>
-<span id="cb2-4"><a href="R1.html#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 42</span></span>
-<span id="cb2-5"><a href="R1.html#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="sc">*</span> <span class="fl">10.5</span></span>
-<span id="cb2-6"><a href="R1.html#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 42</span></span>
-<span id="cb2-7"><a href="R1.html#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="dv">84</span> <span class="sc">/</span> <span class="dv">2</span></span>
-<span id="cb2-8"><a href="R1.html#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 42</span></span>
-<span id="cb2-9"><a href="R1.html#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="dv">1764</span>)</span>
-<span id="cb2-10"><a href="R1.html#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 42</span></span>
-<span id="cb2-11"><a href="R1.html#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fl">6.480741</span> <span class="sc">^</span> <span class="dv">2</span></span>
-<span id="cb2-12"><a href="R1.html#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 42</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="R1.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="dv">17</span> <span class="sc">+</span> <span class="dv">25</span></span>
+<span id="cb17-2"><a href="R1.html#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 42</span></span>
+<span id="cb17-3"><a href="R1.html#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="dv">99</span> <span class="sc">-</span> <span class="dv">57</span></span>
+<span id="cb17-4"><a href="R1.html#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 42</span></span>
+<span id="cb17-5"><a href="R1.html#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="sc">*</span> <span class="fl">10.5</span></span>
+<span id="cb17-6"><a href="R1.html#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 42</span></span>
+<span id="cb17-7"><a href="R1.html#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="dv">84</span> <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb17-8"><a href="R1.html#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 42</span></span>
+<span id="cb17-9"><a href="R1.html#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="dv">1764</span>)</span>
+<span id="cb17-10"><a href="R1.html#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 42</span></span>
+<span id="cb17-11"><a href="R1.html#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="fl">6.480741</span> <span class="sc">^</span> <span class="dv">2</span></span>
+<span id="cb17-12"><a href="R1.html#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 42</span></span></code></pre></div>
 </div>
 <div id="comparison-operators" class="section level3" number="2.3.2">
 <h3><span class="header-section-number">2.3.2</span> Comparison operators</h3>
 <p>We can use comparison operators to compare two values and receive the test
 result as output. To test if two values are equal, we write <code>==</code>. To test if
 they are not equal, we can use <code>!=</code></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="R1.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dv">42</span> <span class="sc">==</span> <span class="dv">42</span></span>
-<span id="cb3-2"><a href="R1.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
-<span id="cb3-3"><a href="R1.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="dv">42</span> <span class="sc">!=</span> <span class="dv">42</span></span>
-<span id="cb3-4"><a href="R1.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] FALSE</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="R1.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="dv">42</span> <span class="sc">==</span> <span class="dv">42</span></span>
+<span id="cb18-2"><a href="R1.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
+<span id="cb18-3"><a href="R1.html#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="dv">42</span> <span class="sc">!=</span> <span class="dv">42</span></span>
+<span id="cb18-4"><a href="R1.html#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] FALSE</span></span></code></pre></div>
 <p>We can also compare if the first value is less <code>&lt;</code>, less or equal <code>&lt;=</code>,
 larger <code>&gt;</code> or larger or equal <code>&gt;=</code>, compared to the second value.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="R1.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> <span class="sc">&lt;</span> <span class="dv">42</span></span>
-<span id="cb4-2"><a href="R1.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
-<span id="cb4-3"><a href="R1.html#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="dv">42</span> <span class="sc">&lt;=</span> <span class="dv">42</span></span>
-<span id="cb4-4"><a href="R1.html#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
-<span id="cb4-5"><a href="R1.html#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> <span class="sc">&gt;</span> <span class="dv">42</span></span>
-<span id="cb4-6"><a href="R1.html#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] FALSE</span></span>
-<span id="cb4-7"><a href="R1.html#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="dv">90</span> <span class="sc">&gt;=</span> <span class="dv">42</span></span>
-<span id="cb4-8"><a href="R1.html#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="R1.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> <span class="sc">&lt;</span> <span class="dv">42</span></span>
+<span id="cb19-2"><a href="R1.html#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
+<span id="cb19-3"><a href="R1.html#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="dv">42</span> <span class="sc">&lt;=</span> <span class="dv">42</span></span>
+<span id="cb19-4"><a href="R1.html#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
+<span id="cb19-5"><a href="R1.html#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> <span class="sc">&gt;</span> <span class="dv">42</span></span>
+<span id="cb19-6"><a href="R1.html#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] FALSE</span></span>
+<span id="cb19-7"><a href="R1.html#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="dv">90</span> <span class="sc">&gt;=</span> <span class="dv">42</span></span>
+<span id="cb19-8"><a href="R1.html#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span></code></pre></div>
 </div>
 </div>
 <div id="objects" class="section level2" number="2.4">
@@ -411,31 +416,31 @@ ability to store data or results for later use and further analysis.
 In R, all types of data are stored in objects.
 On a basic level, an object is a name that we define that has some form of data
 assigned to it. To assign data to a name, we use the assignment operator <code>&lt;-</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="R1.html#cb5-1" aria-hidden="true" tabindex="-1"></a>the_answer <span class="ot">&lt;-</span> <span class="dv">42</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="R1.html#cb20-1" aria-hidden="true" tabindex="-1"></a>the_answer <span class="ot">&lt;-</span> <span class="dv">42</span></span></code></pre></div>
 <p>A handy keyboard shortcut for writing the assignment operator is pressing the
 “Alt” and “-” keys simultaneously. Learning this shortcut early, will safe you
 on a lot of typing and keyboard gymnastics.</p>
 <p>After we assigned a value to an object, we can recall that value, by writing the
 object’s name.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="R1.html#cb6-1" aria-hidden="true" tabindex="-1"></a>the_answer</span>
-<span id="cb6-2"><a href="R1.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 42</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="R1.html#cb21-1" aria-hidden="true" tabindex="-1"></a>the_answer</span>
+<span id="cb21-2"><a href="R1.html#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 42</span></span></code></pre></div>
 <p>We can also use defined objects in calculations and function calls (more on
 those later). Note, that if we assign a value to an already defined object, the
 stored value is overwritten by the new one.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="R1.html#cb7-1" aria-hidden="true" tabindex="-1"></a>the_answer <span class="ot">&lt;-</span> the_answer <span class="sc">/</span> <span class="dv">2</span></span>
-<span id="cb7-2"><a href="R1.html#cb7-2" aria-hidden="true" tabindex="-1"></a>the_answer</span>
-<span id="cb7-3"><a href="R1.html#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 21</span></span>
-<span id="cb7-4"><a href="R1.html#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="R1.html#cb7-5" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">17</span></span>
-<span id="cb7-6"><a href="R1.html#cb7-6" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="dv">4</span></span>
-<span id="cb7-7"><a href="R1.html#cb7-7" aria-hidden="true" tabindex="-1"></a>the_answer <span class="ot">&lt;-</span> (a <span class="sc">+</span> b) <span class="sc">*</span> <span class="dv">2</span></span>
-<span id="cb7-8"><a href="R1.html#cb7-8" aria-hidden="true" tabindex="-1"></a>the_answer</span>
-<span id="cb7-9"><a href="R1.html#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 42</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="R1.html#cb22-1" aria-hidden="true" tabindex="-1"></a>the_answer <span class="ot">&lt;-</span> the_answer <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb22-2"><a href="R1.html#cb22-2" aria-hidden="true" tabindex="-1"></a>the_answer</span>
+<span id="cb22-3"><a href="R1.html#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 21</span></span>
+<span id="cb22-4"><a href="R1.html#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="R1.html#cb22-5" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">17</span></span>
+<span id="cb22-6"><a href="R1.html#cb22-6" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb22-7"><a href="R1.html#cb22-7" aria-hidden="true" tabindex="-1"></a>the_answer <span class="ot">&lt;-</span> (a <span class="sc">+</span> b) <span class="sc">*</span> <span class="dv">2</span></span>
+<span id="cb22-8"><a href="R1.html#cb22-8" aria-hidden="true" tabindex="-1"></a>the_answer</span>
+<span id="cb22-9"><a href="R1.html#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 42</span></span></code></pre></div>
 <p>All objects we define are listed in the “Environment” tab, seen in the upper
 right of RStudio. If we ever want to remove objects from the environment,
 we can use the <code>rm()</code> function. In general, this is not necessary, but it can
 help with keeping the list from getting cluttered.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="R1.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(the_answer)</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="R1.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(the_answer)</span></code></pre></div>
 </div>
 <div id="vectors" class="section level2" number="2.5">
 <h2><span class="header-section-number">2.5</span> Vectors</h2>
@@ -446,26 +451,26 @@ one element is still a vector, but with a length of 1.
 To assign multiple elements to a vector, we use the combine function <code>c()</code>. All
 values inside the parentheses, separated by <code>,</code>, are combined as elements to
 form the vector.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="R1.html#cb9-1" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>)</span>
-<span id="cb9-2"><a href="R1.html#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="R1.html#cb9-3" aria-hidden="true" tabindex="-1"></a>v</span>
-<span id="cb9-4"><a href="R1.html#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 7 8 9</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="R1.html#cb24-1" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>)</span>
+<span id="cb24-2"><a href="R1.html#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="R1.html#cb24-3" aria-hidden="true" tabindex="-1"></a>v</span>
+<span id="cb24-4"><a href="R1.html#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 7 8 9</span></span></code></pre></div>
 <div id="subsetting" class="section level3" number="2.5.1">
 <h3><span class="header-section-number">2.5.1</span> Subsetting</h3>
 <p>If we want to access certain elements of a vector, we have to use subsetting.
 This is achieved by adding square brackets to the object’s name, containing the
 position of the element in its vector. In order to access the first or third
 element, we can write:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="R1.html#cb10-1" aria-hidden="true" tabindex="-1"></a>v[<span class="dv">1</span>]</span>
-<span id="cb10-2"><a href="R1.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 7</span></span>
-<span id="cb10-3"><a href="R1.html#cb10-3" aria-hidden="true" tabindex="-1"></a>v[<span class="dv">3</span>]</span>
-<span id="cb10-4"><a href="R1.html#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 9</span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="R1.html#cb25-1" aria-hidden="true" tabindex="-1"></a>v[<span class="dv">1</span>]</span>
+<span id="cb25-2"><a href="R1.html#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 7</span></span>
+<span id="cb25-3"><a href="R1.html#cb25-3" aria-hidden="true" tabindex="-1"></a>v[<span class="dv">3</span>]</span>
+<span id="cb25-4"><a href="R1.html#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 9</span></span></code></pre></div>
 <p>We can also access multiple elements at once, using <code>c()</code> inside the brackets or
 by defining a range of positions using <code>:</code>.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="R1.html#cb11-1" aria-hidden="true" tabindex="-1"></a>v[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</span>
-<span id="cb11-2"><a href="R1.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 7 9</span></span>
-<span id="cb11-3"><a href="R1.html#cb11-3" aria-hidden="true" tabindex="-1"></a>v[<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>]</span>
-<span id="cb11-4"><a href="R1.html#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 8 9</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="R1.html#cb26-1" aria-hidden="true" tabindex="-1"></a>v[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</span>
+<span id="cb26-2"><a href="R1.html#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 7 9</span></span>
+<span id="cb26-3"><a href="R1.html#cb26-3" aria-hidden="true" tabindex="-1"></a>v[<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>]</span>
+<span id="cb26-4"><a href="R1.html#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 8 9</span></span></code></pre></div>
 </div>
 <div id="types-of-vectors" class="section level3" number="2.5.2">
 <h3><span class="header-section-number">2.5.2</span> Types of vectors</h3>
@@ -475,8 +480,8 @@ indicates the length of 3, while the first part shows the type of the vector we
 created. In this case the type is <em>numeric</em>. Numeric vectors, as you might have
 guessed, contain numbers. We can also use <code>str()</code> to receive info on type,
 length and content of a vector.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="R1.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(v)</span>
-<span id="cb12-2"><a href="R1.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  num [1:3] 7 8 9</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="R1.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(v)</span>
+<span id="cb27-2"><a href="R1.html#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  num [1:3] 7 8 9</span></span></code></pre></div>
 <p>There are a number of other types of vectors, the two most important – besides
 numeric vectors – being logical and character vectors.</p>
 <p><em>Logical</em> vectors can only contain the values <code>TRUE</code> and <code>FALSE</code>. Strictly
@@ -485,50 +490,50 @@ indicating a missing value. We will talk more about NAs later on. Logical
 vectors are often created when we test for something. For example, we can test,
 if the elements in a numerical vector are larger or equal to 5 and receive a
 logical vector containing the test results.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="R1.html#cb13-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">5</span>)</span>
-<span id="cb13-2"><a href="R1.html#cb13-2" aria-hidden="true" tabindex="-1"></a>x <span class="sc">&gt;=</span> <span class="dv">5</span></span>
-<span id="cb13-3"><a href="R1.html#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] FALSE  TRUE FALSE  TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="R1.html#cb28-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">5</span>)</span>
+<span id="cb28-2"><a href="R1.html#cb28-2" aria-hidden="true" tabindex="-1"></a>x <span class="sc">&gt;=</span> <span class="dv">5</span></span>
+<span id="cb28-3"><a href="R1.html#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] FALSE  TRUE FALSE  TRUE</span></span></code></pre></div>
 <p><em>Character</em> vectors contain <em>strings</em> of characters. When assigning strings,
 they have to be enclosed in quotation marks.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="R1.html#cb14-1" aria-hidden="true" tabindex="-1"></a>char_v <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;This&quot;</span>, <span class="st">&quot;is&quot;</span>, <span class="st">&quot;a&quot;</span>, <span class="st">&quot;character&quot;</span>, <span class="st">&quot;vector!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="R1.html#cb29-1" aria-hidden="true" tabindex="-1"></a>char_v <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;This&quot;</span>, <span class="st">&quot;is&quot;</span>, <span class="st">&quot;a&quot;</span>, <span class="st">&quot;character&quot;</span>, <span class="st">&quot;vector!&quot;</span>)</span></code></pre></div>
 <p>We can compare character vectors only for (non-)equality, not for being smaller
 or larger.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="R1.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;same&quot;</span> <span class="sc">==</span> <span class="st">&quot;same&quot;</span></span>
-<span id="cb15-2"><a href="R1.html#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
-<span id="cb15-3"><a href="R1.html#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;same&quot;</span> <span class="sc">==</span> <span class="st">&quot;not the same&quot;</span></span>
-<span id="cb15-4"><a href="R1.html#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] FALSE</span></span>
-<span id="cb15-5"><a href="R1.html#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;same&quot;</span> <span class="sc">!=</span> <span class="st">&quot;not the same&quot;</span></span>
-<span id="cb15-6"><a href="R1.html#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="R1.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;same&quot;</span> <span class="sc">==</span> <span class="st">&quot;same&quot;</span></span>
+<span id="cb30-2"><a href="R1.html#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
+<span id="cb30-3"><a href="R1.html#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;same&quot;</span> <span class="sc">==</span> <span class="st">&quot;not the same&quot;</span></span>
+<span id="cb30-4"><a href="R1.html#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] FALSE</span></span>
+<span id="cb30-5"><a href="R1.html#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;same&quot;</span> <span class="sc">!=</span> <span class="st">&quot;not the same&quot;</span></span>
+<span id="cb30-6"><a href="R1.html#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span></code></pre></div>
 <p>Character vectors also cannot be used to calculate. This can get problematic, if
 numbers are stored as characters, which arises frequently when Web Scraping.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="R1.html#cb16-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
-<span id="cb16-2"><a href="R1.html#cb16-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;7&quot;</span>, <span class="st">&quot;8&quot;</span>, <span class="st">&quot;9&quot;</span>)</span>
-<span id="cb16-3"><a href="R1.html#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="R1.html#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(a)</span>
-<span id="cb16-5"><a href="R1.html#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  num [1:3] 1 2 3</span></span>
-<span id="cb16-6"><a href="R1.html#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(b)</span>
-<span id="cb16-7"><a href="R1.html#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  chr [1:3] &quot;7&quot; &quot;8&quot; &quot;9&quot;</span></span>
-<span id="cb16-8"><a href="R1.html#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-9"><a href="R1.html#cb16-9" aria-hidden="true" tabindex="-1"></a>a <span class="sc">+</span> b</span>
-<span id="cb16-10"><a href="R1.html#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in a + b: non-numeric argument to binary operator</span></span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="R1.html#cb31-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb31-2"><a href="R1.html#cb31-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;7&quot;</span>, <span class="st">&quot;8&quot;</span>, <span class="st">&quot;9&quot;</span>)</span>
+<span id="cb31-3"><a href="R1.html#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="R1.html#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(a)</span>
+<span id="cb31-5"><a href="R1.html#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  num [1:3] 1 2 3</span></span>
+<span id="cb31-6"><a href="R1.html#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(b)</span>
+<span id="cb31-7"><a href="R1.html#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  chr [1:3] &quot;7&quot; &quot;8&quot; &quot;9&quot;</span></span>
+<span id="cb31-8"><a href="R1.html#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-9"><a href="R1.html#cb31-9" aria-hidden="true" tabindex="-1"></a>a <span class="sc">+</span> b</span>
+<span id="cb31-10"><a href="R1.html#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in a + b: non-numeric argument to binary operator</span></span></code></pre></div>
 <p>As we enclosed the elements of vector <code>b</code> in quotation marks, R interprets the
 data as characters instead of numbers. Since characters cannot be used for
 calculations, we received an error message. But we can make R interpret the
 characters as numbers by using <code>as.numeric()</code>.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="R1.html#cb17-1" aria-hidden="true" tabindex="-1"></a>a <span class="sc">+</span> <span class="fu">as.numeric</span>(b)</span>
-<span id="cb17-2"><a href="R1.html#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  8 10 12</span></span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="R1.html#cb32-1" aria-hidden="true" tabindex="-1"></a>a <span class="sc">+</span> <span class="fu">as.numeric</span>(b)</span>
+<span id="cb32-2"><a href="R1.html#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  8 10 12</span></span></code></pre></div>
 </div>
 <div id="a-brief-look-at-lists" class="section level3" number="2.5.3">
 <h3><span class="header-section-number">2.5.3</span> A brief look at lists</h3>
 <p>Note that a vector of a certain type, can only contain elements of that type. So
 we cannot mix data types in the same vector. If we want to mix data types, we
 can use lists instead of vectors.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="R1.html#cb18-1" aria-hidden="true" tabindex="-1"></a>l <span class="ot">&lt;-</span><span class="fu">list</span>(<span class="dv">1</span>, <span class="cn">TRUE</span>, <span class="st">&quot;Hello World!&quot;</span>)</span>
-<span id="cb18-2"><a href="R1.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(l)</span>
-<span id="cb18-3"><a href="R1.html#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="do">## List of 3</span></span>
-<span id="cb18-4"><a href="R1.html#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ : num 1</span></span>
-<span id="cb18-5"><a href="R1.html#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ : logi TRUE</span></span>
-<span id="cb18-6"><a href="R1.html#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ : chr &quot;Hello World!&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="R1.html#cb33-1" aria-hidden="true" tabindex="-1"></a>l <span class="ot">&lt;-</span><span class="fu">list</span>(<span class="dv">1</span>, <span class="cn">TRUE</span>, <span class="st">&quot;Hello World!&quot;</span>)</span>
+<span id="cb33-2"><a href="R1.html#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(l)</span>
+<span id="cb33-3"><a href="R1.html#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="do">## List of 3</span></span>
+<span id="cb33-4"><a href="R1.html#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ : num 1</span></span>
+<span id="cb33-5"><a href="R1.html#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ : logi TRUE</span></span>
+<span id="cb33-6"><a href="R1.html#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ : chr &quot;Hello World!&quot;</span></span></code></pre></div>
 <p>Lists can also contain other lists to represent hierarchical data structures.
 We will see lists “in action” later on in this course.</p>
 </div>
@@ -555,7 +560,7 @@ help functionality build into R. By writing <code>?</code> in front of the funct
 into the console and executing the line by pressing “Enter”, the help file is
 opened in the lower right of the RStudio window. Let’s try this for the
 function <code>rnorm()</code>.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="R1.html#cb19-1" aria-hidden="true" tabindex="-1"></a>?<span class="fu">rnorm</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="R1.html#cb34-1" aria-hidden="true" tabindex="-1"></a>?<span class="fu">rnorm</span>()</span></code></pre></div>
 <p>The help file tells us several things. <code>rnorm()</code> is part of a family of
 functions that are related to the normal distribution, each providing a distinct
 functionality. The functionality of <code>rnorm()</code> being the generation of random
@@ -566,27 +571,27 @@ distribution to be drawn from. We also see that <code>mean</code> and <code>sd</
 with the standard values 0 and 1 respectively, indicated by the <code>=</code>. We also see
 that <code>n</code> has no standard value. So we have to provide a value for <code>n</code>, but not
 for <code>mean</code> and <code>sd</code>. Just writing <code>rnorm()</code> will result in an error.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="R1.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>()</span>
-<span id="cb20-2"><a href="R1.html#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in rnorm(): argument &quot;n&quot; is missing, with no default</span></span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="R1.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>()</span>
+<span id="cb35-2"><a href="R1.html#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in rnorm(): argument &quot;n&quot; is missing, with no default</span></span></code></pre></div>
 <p>To provide an argument to a function, we write the name of the argument,
 followed by <code>=</code> and the value to be provided. Note that, since <code>rnorm()</code> draws
 random numbers, your output will differ from the output presented here.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="R1.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
-<span id="cb21-2"><a href="R1.html#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] -0.3827516 -1.7653751  0.1376976 -0.8467500 -0.3655448  0.4783728</span></span>
-<span id="cb21-3"><a href="R1.html#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7]  0.7324376  0.2512458  0.7227453  0.4985543</span></span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="R1.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
+<span id="cb36-2"><a href="R1.html#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  0.9163263 -0.6709938  0.7685378  0.3568964 -0.5726529  0.3027808</span></span>
+<span id="cb36-3"><a href="R1.html#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7] -0.9336805 -1.4970583 -0.7386025 -0.9185746</span></span></code></pre></div>
 <p>In the same vein, additional arguments that are allowed by the function can
 be defined, instead of using their default values.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="R1.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="fl">0.5</span>)</span>
-<span id="cb22-2"><a href="R1.html#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] 10.270419  8.689432 10.053728  9.225036  9.931805 10.463063 10.253123</span></span>
-<span id="cb22-3"><a href="R1.html#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [8] 11.293298  9.374612 11.031481</span></span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="R1.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="fl">0.5</span>)</span>
+<span id="cb37-2"><a href="R1.html#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  9.600285  9.591219 12.035315  9.818112  9.908060  9.583184 10.147536</span></span>
+<span id="cb37-3"><a href="R1.html#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [8] 10.053590 10.117315 10.140186</span></span></code></pre></div>
 <p>We can also skip writing the names of arguments in many cases. As the <code>n</code>
 argument is the first listed in the function’s parentheses, R also understands
 the call, if we just provide the value to be used as the first argument. You
 will often encounter the convention that the first argument is written without
 its name and any further arguments are written in full.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="R1.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="fl">0.5</span>)</span>
-<span id="cb23-2"><a href="R1.html#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] 10.156423  9.713636 11.074311  9.427185 10.101856 10.805756 10.581888</span></span>
-<span id="cb23-3"><a href="R1.html#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [8]  8.763369  9.845257  9.743787</span></span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="R1.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="fl">0.5</span>)</span>
+<span id="cb38-2"><a href="R1.html#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  9.549023  9.125467  9.838277  9.989322 10.594859 10.546628 10.366899</span></span>
+<span id="cb38-3"><a href="R1.html#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [8]  9.861486 10.307058 10.192276</span></span></code></pre></div>
 </div>
 <div id="examples-basic-statistical-functions" class="section level3" number="2.6.2">
 <h3><span class="header-section-number">2.6.2</span> Examples: Basic statistical functions</h3>
@@ -594,18 +599,18 @@ its name and any further arguments are written in full.</p>
 data analysis.</p>
 <p>We should start with defining a numerical vector that contains some data to be
 analysed.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="R1.html#cb24-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">15</span>, <span class="dv">16</span>, <span class="dv">23</span>, <span class="dv">42</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="R1.html#cb39-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">15</span>, <span class="dv">16</span>, <span class="dv">23</span>, <span class="dv">42</span>)</span></code></pre></div>
 <p>We could be interested in describing this data by its arithmetic mean, median
 and standard deviation. For this purpose we can use the functions <code>mean()</code>,
 <code>median()</code>, and <code>sd()</code> provided by base R. All three do not require additional
 arguments besides the data to be analysed which we can provide using the
 object <code>data</code> we created beforehand.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="R1.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(data)</span>
-<span id="cb25-2"><a href="R1.html#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 18</span></span>
-<span id="cb25-3"><a href="R1.html#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(data)</span>
-<span id="cb25-4"><a href="R1.html#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 15.5</span></span>
-<span id="cb25-5"><a href="R1.html#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(data)</span>
-<span id="cb25-6"><a href="R1.html#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 13.49074</span></span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="R1.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(data)</span>
+<span id="cb40-2"><a href="R1.html#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 18</span></span>
+<span id="cb40-3"><a href="R1.html#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(data)</span>
+<span id="cb40-4"><a href="R1.html#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 15.5</span></span>
+<span id="cb40-5"><a href="R1.html#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(data)</span>
+<span id="cb40-6"><a href="R1.html#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 13.49074</span></span></code></pre></div>
 </div>
 </div>
 <div id="ifelse-statements" class="section level2" number="2.7">
@@ -621,7 +626,7 @@ statements. The basic syntax look as follows:</p>
 }</code></pre>
 <p><code>if</code> and <code>else</code> are both followed by <code>{}</code>, which enclose the code to be
 executed. While it is not strictly necessary to stretch the code over multiple
-lines, I would highly recommend to do this. It increases readability of your
+lines, I would highly recommend doing this. It increases readability of your
 code for yourself and anyone you share it with, which makes it easier to
 understand and also makes it easier to spot mistakes and correct them. For the
 same reasons, it is also recommended to indent the code to be executed.</p>
@@ -631,69 +636,70 @@ condition is met, and <code>FALSE</code> if it is not met. When the condition fo
 statement is <code>TRUE</code>, the code between the <code>{}</code> following it is executed. If it
 is <code>FALSE</code>, the code between the <code>{}</code> following the <code>else</code> statement is
 executed instead.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="R1.html#cb27-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">42</span></span>
-<span id="cb27-2"><a href="R1.html#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-3"><a href="R1.html#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb27-4"><a href="R1.html#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;This is the answer&quot;</span>)</span>
-<span id="cb27-5"><a href="R1.html#cb27-5" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb27-6"><a href="R1.html#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;This is not the answer&quot;</span>)</span>
-<span id="cb27-7"><a href="R1.html#cb27-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb27-8"><a href="R1.html#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;This is the answer&quot;</span></span>
-<span id="cb27-9"><a href="R1.html#cb27-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-10"><a href="R1.html#cb27-10" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">24</span></span>
-<span id="cb27-11"><a href="R1.html#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-12"><a href="R1.html#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb27-13"><a href="R1.html#cb27-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;This is the answer&quot;</span>)</span>
-<span id="cb27-14"><a href="R1.html#cb27-14" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb27-15"><a href="R1.html#cb27-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;This is not the answer&quot;</span>)</span>
-<span id="cb27-16"><a href="R1.html#cb27-16" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb27-17"><a href="R1.html#cb27-17" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;This is not the answer&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="R1.html#cb42-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">42</span></span>
+<span id="cb42-2"><a href="R1.html#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="R1.html#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span>) {</span>
+<span id="cb42-4"><a href="R1.html#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;This is the answer&quot;</span>)</span>
+<span id="cb42-5"><a href="R1.html#cb42-5" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb42-6"><a href="R1.html#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;This is not the answer&quot;</span>)</span>
+<span id="cb42-7"><a href="R1.html#cb42-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb42-8"><a href="R1.html#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;This is the answer&quot;</span></span>
+<span id="cb42-9"><a href="R1.html#cb42-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-10"><a href="R1.html#cb42-10" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">24</span></span>
+<span id="cb42-11"><a href="R1.html#cb42-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-12"><a href="R1.html#cb42-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span>) {</span>
+<span id="cb42-13"><a href="R1.html#cb42-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;This is the answer&quot;</span>)</span>
+<span id="cb42-14"><a href="R1.html#cb42-14" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb42-15"><a href="R1.html#cb42-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;This is not the answer&quot;</span>)</span>
+<span id="cb42-16"><a href="R1.html#cb42-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb42-17"><a href="R1.html#cb42-17" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;This is not the answer&quot;</span></span></code></pre></div>
 <p>In the code above, we first asign a value to the object <code>x</code> and follow this with
-an <code>if</code> statement, that checks if the value equals <code>42</code> and returns a string to
+an <code>if</code> statement that checks if the value equals <code>42</code> and returns a string to
 the console, indicating if the condition was met or not.</p>
 <p>We can also chain multiple <code>if</code> and <code>else</code> statements to create more complex
 decisions. While it is possible to chain a high number of statements in this
 way, it is not recommended to overuse this technique. The code will get long,
 hard to understand and thus mistakes get more likely.</p>
-<p>To chain statements, we use <code>else if</code> statements after the first <code>if</code> and the
-last <code>else</code>. The basic syntac stays the same. Contemplate the example below.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="R1.html#cb28-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">42</span></span>
-<span id="cb28-2"><a href="R1.html#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-3"><a href="R1.html#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb28-4"><a href="R1.html#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;This is the answer&quot;</span>)</span>
-<span id="cb28-5"><a href="R1.html#cb28-5" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (x <span class="sc">&lt;</span> <span class="dv">42</span>) {</span>
-<span id="cb28-6"><a href="R1.html#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;The value is to low to be the answer&quot;</span>)</span>
-<span id="cb28-7"><a href="R1.html#cb28-7" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb28-8"><a href="R1.html#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;The value is to high to be the answer&quot;</span>)</span>
-<span id="cb28-9"><a href="R1.html#cb28-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb28-10"><a href="R1.html#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;This is the answer&quot;</span></span>
-<span id="cb28-11"><a href="R1.html#cb28-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-12"><a href="R1.html#cb28-12" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">24</span></span>
-<span id="cb28-13"><a href="R1.html#cb28-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-14"><a href="R1.html#cb28-14" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb28-15"><a href="R1.html#cb28-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;This is the answer&quot;</span>)</span>
-<span id="cb28-16"><a href="R1.html#cb28-16" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (x <span class="sc">&lt;</span> <span class="dv">42</span>) {</span>
-<span id="cb28-17"><a href="R1.html#cb28-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;The value is to low to be the answer&quot;</span>)</span>
-<span id="cb28-18"><a href="R1.html#cb28-18" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb28-19"><a href="R1.html#cb28-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;The value is to high to be the answer&quot;</span>)</span>
-<span id="cb28-20"><a href="R1.html#cb28-20" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb28-21"><a href="R1.html#cb28-21" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;The value is to low to be the answer&quot;</span></span>
-<span id="cb28-22"><a href="R1.html#cb28-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-23"><a href="R1.html#cb28-23" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">84</span></span>
-<span id="cb28-24"><a href="R1.html#cb28-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-25"><a href="R1.html#cb28-25" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb28-26"><a href="R1.html#cb28-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;This is the answer&quot;</span>)</span>
-<span id="cb28-27"><a href="R1.html#cb28-27" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (x <span class="sc">&lt;</span> <span class="dv">42</span>) {</span>
-<span id="cb28-28"><a href="R1.html#cb28-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;The value is to low to be the answer&quot;</span>)</span>
-<span id="cb28-29"><a href="R1.html#cb28-29" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb28-30"><a href="R1.html#cb28-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;The value is to high to be the answer&quot;</span>)</span>
-<span id="cb28-31"><a href="R1.html#cb28-31" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb28-32"><a href="R1.html#cb28-32" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;The value is to high to be the answer&quot;</span></span></code></pre></div>
+<p>To chain statements, we use <code>else if</code> statements after the first <code>if</code> and before
+the last <code>else</code>. The basic syntac stays the same. Contemplate the example below.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="R1.html#cb43-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">42</span></span>
+<span id="cb43-2"><a href="R1.html#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-3"><a href="R1.html#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span>) {</span>
+<span id="cb43-4"><a href="R1.html#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;This is the answer&quot;</span>)</span>
+<span id="cb43-5"><a href="R1.html#cb43-5" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (x <span class="sc">&lt;</span> <span class="dv">42</span>) {</span>
+<span id="cb43-6"><a href="R1.html#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;The value is too low to be the answer&quot;</span>)</span>
+<span id="cb43-7"><a href="R1.html#cb43-7" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb43-8"><a href="R1.html#cb43-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;The value is too high to be the answer&quot;</span>)</span>
+<span id="cb43-9"><a href="R1.html#cb43-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb43-10"><a href="R1.html#cb43-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;This is the answer&quot;</span></span>
+<span id="cb43-11"><a href="R1.html#cb43-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-12"><a href="R1.html#cb43-12" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">24</span></span>
+<span id="cb43-13"><a href="R1.html#cb43-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-14"><a href="R1.html#cb43-14" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span>) {</span>
+<span id="cb43-15"><a href="R1.html#cb43-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;This is the answer&quot;</span>)</span>
+<span id="cb43-16"><a href="R1.html#cb43-16" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (x <span class="sc">&lt;</span> <span class="dv">42</span>) {</span>
+<span id="cb43-17"><a href="R1.html#cb43-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;The value is to low to be the answer&quot;</span>)</span>
+<span id="cb43-18"><a href="R1.html#cb43-18" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb43-19"><a href="R1.html#cb43-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;The value is to high to be the answer&quot;</span>)</span>
+<span id="cb43-20"><a href="R1.html#cb43-20" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb43-21"><a href="R1.html#cb43-21" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;The value is to low to be the answer&quot;</span></span>
+<span id="cb43-22"><a href="R1.html#cb43-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-23"><a href="R1.html#cb43-23" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">84</span></span>
+<span id="cb43-24"><a href="R1.html#cb43-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-25"><a href="R1.html#cb43-25" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span>) {</span>
+<span id="cb43-26"><a href="R1.html#cb43-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;This is the answer&quot;</span>)</span>
+<span id="cb43-27"><a href="R1.html#cb43-27" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (x <span class="sc">&lt;</span> <span class="dv">42</span>) {</span>
+<span id="cb43-28"><a href="R1.html#cb43-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;The value is to low to be the answer&quot;</span>)</span>
+<span id="cb43-29"><a href="R1.html#cb43-29" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb43-30"><a href="R1.html#cb43-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;The value is to high to be the answer&quot;</span>)</span>
+<span id="cb43-31"><a href="R1.html#cb43-31" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb43-32"><a href="R1.html#cb43-32" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;The value is to high to be the answer&quot;</span></span></code></pre></div>
 <p>In the first case, the <code>if</code> condition is met and the code following the <code>if</code>
 statement is executed. In the second case, the <code>if</code> condition is not met, so the
-code checks if the condition for the <code>else if</code> statement is <code>TRUE</code>. Here it is,
-so the code following it is executed. In the third case, both conditions return
-<code>FALSE</code> and thus the code following the <code>else</code> statement is run by R.</p>
+code checks if the condition for the <code>else if</code> statement is <code>TRUE</code>. It is in
+this case, so the code following it is executed. In the third case, both
+conditions return <code>FALSE</code> and thus the code following the <code>else</code> statement is
+run.</p>
 <p>We can also combine conditions by applying <em>logical operators</em> to create more
 complex conditions. <code>&amp;&amp;</code> – <em>AND</em> – checks if both conditions combined by it
 are <code>TRUE</code> and only returns <code>TRUE</code> if both are at the same time. <code>||</code> – <em>OR</em> –
@@ -706,96 +712,97 @@ both are. When combining two conditions, we thus have these possibilities:</p>
 <li><code>FALSE || FALSE</code> returns <code>FALSE</code></li>
 </ul>
 <p>In most cases, you could also use single <code>&amp;</code> and <code>|</code> operators, to combine
-conditions. <code>&amp;&amp;</code> and <code>||</code> are the safer alternatives in this case, as they
-always return a single <code>TRUE</code> or <code>FALSE</code> and <code>if</code> statements can not interpret
-a logical vector containing multiple values. <code>&amp;</code> and <code>|</code> can return such a
-vector, if at least one object used for comparison is a vector of a length
-longer than 1. For more details on this, you can read the corresponding chapter
-in “R for Data Science” by Wickham &amp; Grolemund:
+conditions. <code>&amp;&amp;</code> and <code>||</code> are the safer alternatives, as they always return a
+single <code>TRUE</code> or <code>FALSE</code> and <code>if</code> statements can not interpret a logical vector
+containing multiple values. <code>&amp;</code> and <code>|</code> can return such a vector if at least
+one object used for comparison is a vector of a length longer than 1. For more
+details on this, you can read the corresponding chapter in “R for Data Science”
+by Wickham &amp; Grolemund:
 <a href="https://r4ds.had.co.nz/functions.html#conditional-execution" target="_blank">https://r4ds.had.co.nz/functions.html#conditional-execution</a>.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="R1.html#cb29-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">42</span></span>
-<span id="cb29-2"><a href="R1.html#cb29-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">42</span></span>
-<span id="cb29-3"><a href="R1.html#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-4"><a href="R1.html#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span> <span class="sc">&amp;&amp;</span> y <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb29-5"><a href="R1.html#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Both x and y are the answer&quot;</span>)</span>
-<span id="cb29-6"><a href="R1.html#cb29-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb29-7"><a href="R1.html#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;At least one of x and y is not the answer&quot;</span>)</span>
-<span id="cb29-8"><a href="R1.html#cb29-8" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb29-9"><a href="R1.html#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Both x and y are the answer&quot;</span></span>
-<span id="cb29-10"><a href="R1.html#cb29-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-11"><a href="R1.html#cb29-11" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">42</span></span>
-<span id="cb29-12"><a href="R1.html#cb29-12" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">24</span></span>
-<span id="cb29-13"><a href="R1.html#cb29-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-14"><a href="R1.html#cb29-14" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span> <span class="sc">&amp;&amp;</span> y <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb29-15"><a href="R1.html#cb29-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Both x and y are the answer&quot;</span>)</span>
-<span id="cb29-16"><a href="R1.html#cb29-16" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb29-17"><a href="R1.html#cb29-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;At least one of x and y is not the answer&quot;</span>)</span>
-<span id="cb29-18"><a href="R1.html#cb29-18" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb29-19"><a href="R1.html#cb29-19" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;At least one of x and y is not the answer&quot;</span></span>
-<span id="cb29-20"><a href="R1.html#cb29-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-21"><a href="R1.html#cb29-21" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">42</span></span>
-<span id="cb29-22"><a href="R1.html#cb29-22" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">24</span></span>
-<span id="cb29-23"><a href="R1.html#cb29-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-24"><a href="R1.html#cb29-24" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span> <span class="sc">||</span> y <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb29-25"><a href="R1.html#cb29-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;At least one of x and y is the answer&quot;</span>)</span>
-<span id="cb29-26"><a href="R1.html#cb29-26" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb29-27"><a href="R1.html#cb29-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Both x and y are not the answer&quot;</span>)</span>
-<span id="cb29-28"><a href="R1.html#cb29-28" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb29-29"><a href="R1.html#cb29-29" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;At least one of x and y is the answer&quot;</span></span>
-<span id="cb29-30"><a href="R1.html#cb29-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-31"><a href="R1.html#cb29-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-32"><a href="R1.html#cb29-32" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">12</span></span>
-<span id="cb29-33"><a href="R1.html#cb29-33" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">24</span></span>
-<span id="cb29-34"><a href="R1.html#cb29-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-35"><a href="R1.html#cb29-35" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span> <span class="sc">||</span> y <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb29-36"><a href="R1.html#cb29-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;At least one of x and y is the answer&quot;</span>)</span>
-<span id="cb29-37"><a href="R1.html#cb29-37" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb29-38"><a href="R1.html#cb29-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Both x and y are not the answer&quot;</span>)</span>
-<span id="cb29-39"><a href="R1.html#cb29-39" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb29-40"><a href="R1.html#cb29-40" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Both x and y are not the answer&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="R1.html#cb44-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">42</span></span>
+<span id="cb44-2"><a href="R1.html#cb44-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">42</span></span>
+<span id="cb44-3"><a href="R1.html#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-4"><a href="R1.html#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span> <span class="sc">&amp;&amp;</span> y <span class="sc">==</span> <span class="dv">42</span>) {</span>
+<span id="cb44-5"><a href="R1.html#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Both x and y are the answer&quot;</span>)</span>
+<span id="cb44-6"><a href="R1.html#cb44-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb44-7"><a href="R1.html#cb44-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;At least one of x and y is not the answer&quot;</span>)</span>
+<span id="cb44-8"><a href="R1.html#cb44-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb44-9"><a href="R1.html#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Both x and y are the answer&quot;</span></span>
+<span id="cb44-10"><a href="R1.html#cb44-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-11"><a href="R1.html#cb44-11" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">42</span></span>
+<span id="cb44-12"><a href="R1.html#cb44-12" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">24</span></span>
+<span id="cb44-13"><a href="R1.html#cb44-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-14"><a href="R1.html#cb44-14" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span> <span class="sc">&amp;&amp;</span> y <span class="sc">==</span> <span class="dv">42</span>) {</span>
+<span id="cb44-15"><a href="R1.html#cb44-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Both x and y are the answer&quot;</span>)</span>
+<span id="cb44-16"><a href="R1.html#cb44-16" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb44-17"><a href="R1.html#cb44-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;At least one of x and y is not the answer&quot;</span>)</span>
+<span id="cb44-18"><a href="R1.html#cb44-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb44-19"><a href="R1.html#cb44-19" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;At least one of x and y is not the answer&quot;</span></span>
+<span id="cb44-20"><a href="R1.html#cb44-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-21"><a href="R1.html#cb44-21" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">42</span></span>
+<span id="cb44-22"><a href="R1.html#cb44-22" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">24</span></span>
+<span id="cb44-23"><a href="R1.html#cb44-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-24"><a href="R1.html#cb44-24" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span> <span class="sc">||</span> y <span class="sc">==</span> <span class="dv">42</span>) {</span>
+<span id="cb44-25"><a href="R1.html#cb44-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;At least one of x and y is the answer&quot;</span>)</span>
+<span id="cb44-26"><a href="R1.html#cb44-26" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb44-27"><a href="R1.html#cb44-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Both x and y are not the answer&quot;</span>)</span>
+<span id="cb44-28"><a href="R1.html#cb44-28" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb44-29"><a href="R1.html#cb44-29" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;At least one of x and y is the answer&quot;</span></span>
+<span id="cb44-30"><a href="R1.html#cb44-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-31"><a href="R1.html#cb44-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-32"><a href="R1.html#cb44-32" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">12</span></span>
+<span id="cb44-33"><a href="R1.html#cb44-33" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">24</span></span>
+<span id="cb44-34"><a href="R1.html#cb44-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-35"><a href="R1.html#cb44-35" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span> <span class="sc">||</span> y <span class="sc">==</span> <span class="dv">42</span>) {</span>
+<span id="cb44-36"><a href="R1.html#cb44-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;At least one of x and y is the answer&quot;</span>)</span>
+<span id="cb44-37"><a href="R1.html#cb44-37" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb44-38"><a href="R1.html#cb44-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Both x and y are not the answer&quot;</span>)</span>
+<span id="cb44-39"><a href="R1.html#cb44-39" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb44-40"><a href="R1.html#cb44-40" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Both x and y are not the answer&quot;</span></span></code></pre></div>
 <p>We can use combined conditions and chaining to create more complex decisions.
-But be wary to not overuse both techniques, for the same reasons stated above.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="R1.html#cb30-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">42</span></span>
-<span id="cb30-2"><a href="R1.html#cb30-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">42</span></span>
-<span id="cb30-3"><a href="R1.html#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-4"><a href="R1.html#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span> <span class="sc">&amp;&amp;</span> y <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb30-5"><a href="R1.html#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Both x and y are the answer&quot;</span>)</span>
-<span id="cb30-6"><a href="R1.html#cb30-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb30-7"><a href="R1.html#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;x is the answer&quot;</span>)</span>
-<span id="cb30-8"><a href="R1.html#cb30-8" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (y <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb30-9"><a href="R1.html#cb30-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;y is the answer&quot;</span>)</span>
-<span id="cb30-10"><a href="R1.html#cb30-10" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb30-11"><a href="R1.html#cb30-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Both x and y are not the answer&quot;</span>)</span>
-<span id="cb30-12"><a href="R1.html#cb30-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb30-13"><a href="R1.html#cb30-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Both x and y are the answer&quot;</span></span>
-<span id="cb30-14"><a href="R1.html#cb30-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-15"><a href="R1.html#cb30-15" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">42</span></span>
-<span id="cb30-16"><a href="R1.html#cb30-16" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">24</span></span>
-<span id="cb30-17"><a href="R1.html#cb30-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-18"><a href="R1.html#cb30-18" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span> <span class="sc">&amp;&amp;</span> y <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb30-19"><a href="R1.html#cb30-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Both x and y are the answer&quot;</span>)</span>
-<span id="cb30-20"><a href="R1.html#cb30-20" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb30-21"><a href="R1.html#cb30-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;x is the answer&quot;</span>)</span>
-<span id="cb30-22"><a href="R1.html#cb30-22" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (y <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb30-23"><a href="R1.html#cb30-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;y is the answer&quot;</span>)</span>
-<span id="cb30-24"><a href="R1.html#cb30-24" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb30-25"><a href="R1.html#cb30-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Both x and y are not the answer&quot;</span>)</span>
-<span id="cb30-26"><a href="R1.html#cb30-26" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb30-27"><a href="R1.html#cb30-27" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;x is the answer&quot;</span></span>
-<span id="cb30-28"><a href="R1.html#cb30-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-29"><a href="R1.html#cb30-29" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">24</span></span>
-<span id="cb30-30"><a href="R1.html#cb30-30" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">12</span></span>
-<span id="cb30-31"><a href="R1.html#cb30-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-32"><a href="R1.html#cb30-32" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span> <span class="sc">&amp;&amp;</span> y <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb30-33"><a href="R1.html#cb30-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Both x and y are the answer&quot;</span>)</span>
-<span id="cb30-34"><a href="R1.html#cb30-34" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb30-35"><a href="R1.html#cb30-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;x is the answer&quot;</span>)</span>
-<span id="cb30-36"><a href="R1.html#cb30-36" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (y <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb30-37"><a href="R1.html#cb30-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;y is the answer&quot;</span>)</span>
-<span id="cb30-38"><a href="R1.html#cb30-38" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb30-39"><a href="R1.html#cb30-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Both x and y are not the answer&quot;</span>)</span>
-<span id="cb30-40"><a href="R1.html#cb30-40" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb30-41"><a href="R1.html#cb30-41" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Both x and y are not the answer&quot;</span></span></code></pre></div>
+But be wary to not overuse both techniques, for the same reasons as stated
+above.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="R1.html#cb45-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">42</span></span>
+<span id="cb45-2"><a href="R1.html#cb45-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">42</span></span>
+<span id="cb45-3"><a href="R1.html#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="R1.html#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span> <span class="sc">&amp;&amp;</span> y <span class="sc">==</span> <span class="dv">42</span>) {</span>
+<span id="cb45-5"><a href="R1.html#cb45-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Both x and y are the answer&quot;</span>)</span>
+<span id="cb45-6"><a href="R1.html#cb45-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span>) {</span>
+<span id="cb45-7"><a href="R1.html#cb45-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;x is the answer&quot;</span>)</span>
+<span id="cb45-8"><a href="R1.html#cb45-8" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (y <span class="sc">==</span> <span class="dv">42</span>) {</span>
+<span id="cb45-9"><a href="R1.html#cb45-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;y is the answer&quot;</span>)</span>
+<span id="cb45-10"><a href="R1.html#cb45-10" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb45-11"><a href="R1.html#cb45-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Both x and y are not the answer&quot;</span>)</span>
+<span id="cb45-12"><a href="R1.html#cb45-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb45-13"><a href="R1.html#cb45-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Both x and y are the answer&quot;</span></span>
+<span id="cb45-14"><a href="R1.html#cb45-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-15"><a href="R1.html#cb45-15" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">42</span></span>
+<span id="cb45-16"><a href="R1.html#cb45-16" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">24</span></span>
+<span id="cb45-17"><a href="R1.html#cb45-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-18"><a href="R1.html#cb45-18" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span> <span class="sc">&amp;&amp;</span> y <span class="sc">==</span> <span class="dv">42</span>) {</span>
+<span id="cb45-19"><a href="R1.html#cb45-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Both x and y are the answer&quot;</span>)</span>
+<span id="cb45-20"><a href="R1.html#cb45-20" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span>) {</span>
+<span id="cb45-21"><a href="R1.html#cb45-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;x is the answer&quot;</span>)</span>
+<span id="cb45-22"><a href="R1.html#cb45-22" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (y <span class="sc">==</span> <span class="dv">42</span>) {</span>
+<span id="cb45-23"><a href="R1.html#cb45-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;y is the answer&quot;</span>)</span>
+<span id="cb45-24"><a href="R1.html#cb45-24" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb45-25"><a href="R1.html#cb45-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Both x and y are not the answer&quot;</span>)</span>
+<span id="cb45-26"><a href="R1.html#cb45-26" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb45-27"><a href="R1.html#cb45-27" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;x is the answer&quot;</span></span>
+<span id="cb45-28"><a href="R1.html#cb45-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-29"><a href="R1.html#cb45-29" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">24</span></span>
+<span id="cb45-30"><a href="R1.html#cb45-30" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">12</span></span>
+<span id="cb45-31"><a href="R1.html#cb45-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-32"><a href="R1.html#cb45-32" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span> <span class="sc">&amp;&amp;</span> y <span class="sc">==</span> <span class="dv">42</span>) {</span>
+<span id="cb45-33"><a href="R1.html#cb45-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Both x and y are the answer&quot;</span>)</span>
+<span id="cb45-34"><a href="R1.html#cb45-34" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span>) {</span>
+<span id="cb45-35"><a href="R1.html#cb45-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;x is the answer&quot;</span>)</span>
+<span id="cb45-36"><a href="R1.html#cb45-36" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (y <span class="sc">==</span> <span class="dv">42</span>) {</span>
+<span id="cb45-37"><a href="R1.html#cb45-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;y is the answer&quot;</span>)</span>
+<span id="cb45-38"><a href="R1.html#cb45-38" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb45-39"><a href="R1.html#cb45-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Both x and y are not the answer&quot;</span>)</span>
+<span id="cb45-40"><a href="R1.html#cb45-40" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb45-41"><a href="R1.html#cb45-41" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Both x and y are not the answer&quot;</span></span></code></pre></div>
 <p>Please note, that the code following the statements can be more complex than the
 code used in these introductory examples and can be comprised of anything that
 is valid R code. Also, each <code>{}</code>can hold multiple lines of code.</p>
@@ -850,6 +857,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>
