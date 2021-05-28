@@ -1,0 +1,20 @@
+# (PART) Data analysis {-}
+
+# Transformation with dplyr {#dplyr}
+
+WIP!
+
+## `filter()`
+
+## `select()`
+
+
+## `rename()`
+
+
+## `mutate()`
+
+
+## `summarise()` & `group_by()`
+
+

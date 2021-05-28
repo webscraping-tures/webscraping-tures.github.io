@@ -271,7 +271,7 @@ displayed again. So "980521" is actually functionally equivalent to
 With this we already know that we will be able to manipulate the URLs directly
 from Rstudio and thus scrape the sub-pages.
 
-### Scraping the sub-pages
+### Scraping the sub-pages {#sub-pgs}
 
 Before we start scraping all the press releases, we first need to find out how 
 many sub-pages there are. The easiest way would be to do this by eye. We can see

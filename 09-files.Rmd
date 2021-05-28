@@ -1,4 +1,4 @@
-# Good practice {#good_practice}
+# Downloading and saving files {#files}
 
 ``` {r, include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
@@ -8,8 +8,13 @@ knitr::opts_chunk$set(cache.path = 'cache/')
 
 WIP!
 
-## Legality?
+## CSV files
 
-## Responsibility!
+## Parsing a CSV file
 
-## Good practice
+## Running example
+
+### Download files from within R
+
+
+### Parsing the csv files  

@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>9 Data transformation and graphical analysis | Web Scraping using R</title>
-  <meta name="description" content="9 Data transformation and graphical analysis | Web Scraping using R" />
+  <title>9 Parsing csv files with readr | Web Scraping using R</title>
+  <meta name="description" content="9 Parsing csv files with readr | Web Scraping using R" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="9 Data transformation and graphical analysis | Web Scraping using R" />
+  <meta property="og:title" content="9 Parsing csv files with readr | Web Scraping using R" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="webscraping-tures/webscraping-tures.github.io" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="9 Data transformation and graphical analysis | Web Scraping using R" />
+  <meta name="twitter:title" content="9 Parsing csv files with readr | Web Scraping using R" />
   
   
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2021-05-06" />
+<meta name="date" content="2021-05-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="good-practice.html"/>
-<link rel="next" href="project.html"/>
+<link rel="next" href="R4.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -264,17 +264,41 @@ Web Scraping using R
 <li class="chapter" data-level="7.2" data-path="rvest3.html"><a href="rvest3.html#pagination"><i class="fa fa-check"></i><b>7.2</b> Pagination</a>
 <ul>
 <li class="chapter" data-level="7.2.1" data-path="rvest3.html"><a href="rvest3.html#the-query-1"><i class="fa fa-check"></i><b>7.2.1</b> The query</a></li>
-<li class="chapter" data-level="7.2.2" data-path="rvest3.html"><a href="rvest3.html#scraping-the-sub-pages-1"><i class="fa fa-check"></i><b>7.2.2</b> Scraping the sub-pages</a></li>
+<li class="chapter" data-level="7.2.2" data-path="rvest3.html"><a href="rvest3.html#sub-pgs"><i class="fa fa-check"></i><b>7.2.2</b> Scraping the sub-pages</a></li>
 </ul></li>
 </ul></li>
-<li class="part"><span><b>IV Practical application</b></span></li>
-<li class="chapter" data-level="8" data-path="good-practice.html"><a href="good-practice.html"><i class="fa fa-check"></i><b>8</b> Good practice</a></li>
-<li class="chapter" data-level="9" data-path="R3.html"><a href="R3.html"><i class="fa fa-check"></i><b>9</b> Data transformation and graphical analysis</a>
+<li class="chapter" data-level="8" data-path="good-practice.html"><a href="good-practice.html"><i class="fa fa-check"></i><b>8</b> Good practice</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="R3.html"><a href="R3.html#transformation-with-dplyr"><i class="fa fa-check"></i><b>9.1</b> Transformation with dplyr</a></li>
-<li class="chapter" data-level="9.2" data-path="R3.html"><a href="R3.html#graphical-analysis-with-ggplot"><i class="fa fa-check"></i><b>9.2</b> Graphical analysis with ggplot</a></li>
+<li class="chapter" data-level="8.1" data-path="good-practice.html"><a href="good-practice.html#legality"><i class="fa fa-check"></i><b>8.1</b> Legality?</a></li>
+<li class="chapter" data-level="8.2" data-path="good-practice.html"><a href="good-practice.html#responsibility"><i class="fa fa-check"></i><b>8.2</b> Responsibility!</a></li>
+<li class="chapter" data-level="8.3" data-path="good-practice.html"><a href="good-practice.html#how-to-behave"><i class="fa fa-check"></i><b>8.3</b> How to behave?</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="project.html"><a href="project.html"><i class="fa fa-check"></i><b>10</b> Sample project</a></li>
+<li class="part"><span><b>IV Sample project</b></span></li>
+<li class="chapter" data-level="9" data-path="R3.html"><a href="R3.html"><i class="fa fa-check"></i><b>9</b> Parsing csv files with readr</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="R3.html"><a href="R3.html#csv-files"><i class="fa fa-check"></i><b>9.1</b> CSV files</a></li>
+<li class="chapter" data-level="9.2" data-path="R3.html"><a href="R3.html#parsing-a-csv-file"><i class="fa fa-check"></i><b>9.2</b> Parsing a CSV file</a></li>
+<li class="chapter" data-level="9.3" data-path="R3.html"><a href="R3.html#sample-project"><i class="fa fa-check"></i><b>9.3</b> Sample project</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="R3.html"><a href="R3.html#download-files-from-within-r"><i class="fa fa-check"></i><b>9.3.1</b> Download files from within R</a></li>
+<li class="chapter" data-level="9.3.2" data-path="R3.html"><a href="R3.html#parsing-the-csv-files"><i class="fa fa-check"></i><b>9.3.2</b> Parsing the csv files</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="R4.html"><a href="R4.html"><i class="fa fa-check"></i><b>10</b> Transformation with dplyr</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="R4.html"><a href="R4.html#filter"><i class="fa fa-check"></i><b>10.1</b> <code>filter()</code></a></li>
+<li class="chapter" data-level="10.2" data-path="R4.html"><a href="R4.html#select"><i class="fa fa-check"></i><b>10.2</b> <code>select()</code></a></li>
+<li class="chapter" data-level="10.3" data-path="R4.html"><a href="R4.html#rename"><i class="fa fa-check"></i><b>10.3</b> <code>rename()</code></a></li>
+<li class="chapter" data-level="10.4" data-path="R4.html"><a href="R4.html#mutate"><i class="fa fa-check"></i><b>10.4</b> <code>mutate()</code></a></li>
+<li class="chapter" data-level="10.5" data-path="R4.html"><a href="R4.html#summarise-group_by"><i class="fa fa-check"></i><b>10.5</b> <code>summarise()</code> &amp; <code>group_by()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="R5.html"><a href="R5.html"><i class="fa fa-check"></i><b>11</b> Categorical data with forcats &amp; joining tibbles</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="R5.html"><a href="R5.html#forcats"><i class="fa fa-check"></i><b>11.1</b> forcats</a></li>
+<li class="chapter" data-level="11.2" data-path="R5.html"><a href="R5.html#join"><i class="fa fa-check"></i><b>11.2</b> <code>*_join()</code></a></li>
+<li class="chapter" data-level="11.3" data-path="R5.html"><a href="R5.html#computations-and-summaries-for-the-sample-project"><i class="fa fa-check"></i><b>11.3</b> Computations and summaries for the sample project</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="R6.html"><a href="R6.html"><i class="fa fa-check"></i><b>12</b> Graphical analysis with ggplot</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -296,14 +320,294 @@ Web Scraping using R
 
             <section class="normal" id="section-">
 <div id="R3" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> Data transformation and graphical analysis</h1>
-<p>WIP!</p>
-<div id="transformation-with-dplyr" class="section level2" number="9.1">
-<h2><span class="header-section-number">9.1</span> Transformation with dplyr</h2>
+<h1><span class="header-section-number">9</span> Parsing csv files with readr</h1>
+<div id="csv-files" class="section level2" number="9.1">
+<h2><span class="header-section-number">9.1</span> CSV files</h2>
+<p>By now we have a good grip on how to scrape the contents of typical HTML
+documents, like tables, lists or textual contents. In some cases, the data we
+are interested may also be provided as data files which can directly be used in
+R, like XML, JSON or CSV files. In these cases, it is often the more efficient
+approach to just download such a file instead of scraping the data directly from
+the site. Also, the data in the file may not even be displayed in full on the
+website itself and downloading the data file thus may open up additional
+analytical possibilities.</p>
+<p>One of the more widespread types of data files, are <em>CSV</em> files –
+comma-separated values. While they are limited to the display of
+two-dimensional tables, their simplicity and portability makes them one of the
+most used formats for this type of data. You can open and write CSV files with
+statistical software, spreadsheet software like Excel and with even the most
+basic text editor.</p>
+<p>A simple CSV file may look like this:</p>
+<pre><code>column1, column2, column3
+data1_1, data1_2, data1_3
+data2_1, data2_2, data2_3
+data3_1, data3_2, data3_3</code></pre>
+<p>In essence, CSV files are tables. The rows of the table are delimited by line
+breaks, the columns by commas.</p>
+<p>Often the first row represents the column names, as in the example above
+(<code>column1, column2, column3</code>). Be aware, that this is not necessarily always the
+case. A CSV file may not contain any column names at all, and start with a first
+row of data cells. This is a vital difference when it comes to parsing the file,
+as discussed further below. Like every row, the row of column names, if present,
+is delimited by a line break.</p>
 </div>
-<div id="graphical-analysis-with-ggplot" class="section level2" number="9.2">
-<h2><span class="header-section-number">9.2</span> Graphical analysis with ggplot</h2>
+<div id="parsing-a-csv-file" class="section level2" number="9.2">
+<h2><span class="header-section-number">9.2</span> Parsing a CSV file</h2>
+<p>To convert the data contained in the CSV file into a format we can use for data
+analysis we have to <em>parse</em> it first. The function used for parsing
+“understands” the representation of a table in the CSV syntax, can discern
+column names from data cells, assigns data cells to the correct rows and columns
+and returns an R object representing the table. <code>read.csv()</code> from base R returns
+a data frame while <code>read_csv()</code> from the readr package, which we will use here,
+returns a tibble.</p>
+<p>As readr is part of the core tidyverse we can just load the tidyverse package.
+We will also need rvest soon, so let us begin with loading both libraries.</p>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="R3.html#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb155-2"><a href="R3.html#cb155-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span></code></pre></div>
+<p>The readr function <code>read_csv()</code> takes a CSV file as it’s first argument. To test
+it, we can also use <em>literal data</em> for the file argument. So we can pass the
+example defined above as a string – contained in <code>"</code> – as the <code>file</code>argument.
+We won’t do this much in practice, but it serves as a good first example.</p>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="R3.html#cb156-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(</span>
+<span id="cb156-2"><a href="R3.html#cb156-2" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;column1, column2, column3</span></span>
+<span id="cb156-3"><a href="R3.html#cb156-3" aria-hidden="true" tabindex="-1"></a><span class="st">data1_1, data1_2, data1_3</span></span>
+<span id="cb156-4"><a href="R3.html#cb156-4" aria-hidden="true" tabindex="-1"></a><span class="st">data2_1, data2_2, data2_3</span></span>
+<span id="cb156-5"><a href="R3.html#cb156-5" aria-hidden="true" tabindex="-1"></a><span class="st">data3_1, data3_2, data3_3&quot;</span></span>
+<span id="cb156-6"><a href="R3.html#cb156-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb156-7"><a href="R3.html#cb156-7" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 x 3</span></span>
+<span id="cb156-8"><a href="R3.html#cb156-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   column1 column2 column3</span></span>
+<span id="cb156-9"><a href="R3.html#cb156-9" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  </span></span>
+<span id="cb156-10"><a href="R3.html#cb156-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 data1_1 data1_2 data1_3</span></span>
+<span id="cb156-11"><a href="R3.html#cb156-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 data2_1 data2_2 data2_3</span></span>
+<span id="cb156-12"><a href="R3.html#cb156-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 data3_1 data3_2 data3_3</span></span></code></pre></div>
+<p><code>read_csv()</code> guesses the column types by the data entered. Here all three
+columns were automatically defined as character vectors. Automatic guessing
+works reliably in most situations. Let’s try a CSV with multiple different
+column types:</p>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="R3.html#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(</span>
+<span id="cb157-2"><a href="R3.html#cb157-2" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;name, age, size, retired</span></span>
+<span id="cb157-3"><a href="R3.html#cb157-3" aria-hidden="true" tabindex="-1"></a><span class="st">Peter, 42, 1.68, FALSE</span></span>
+<span id="cb157-4"><a href="R3.html#cb157-4" aria-hidden="true" tabindex="-1"></a><span class="st">Paul, 84, 1.82, TRUE</span></span>
+<span id="cb157-5"><a href="R3.html#cb157-5" aria-hidden="true" tabindex="-1"></a><span class="st">Mary, 24, 1.74, FALSE&quot;</span></span>
+<span id="cb157-6"><a href="R3.html#cb157-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb157-7"><a href="R3.html#cb157-7" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 x 4</span></span>
+<span id="cb157-8"><a href="R3.html#cb157-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   name    age  size retired</span></span>
+<span id="cb157-9"><a href="R3.html#cb157-9" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt;  </span></span>
+<span id="cb157-10"><a href="R3.html#cb157-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Peter    42  1.68 FALSE  </span></span>
+<span id="cb157-11"><a href="R3.html#cb157-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Paul     84  1.82 TRUE   </span></span>
+<span id="cb157-12"><a href="R3.html#cb157-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 Mary     24  1.74 FALSE</span></span></code></pre></div>
+<p><code>read_csv()</code> correctly guessed that the first column is of type character, the
+third of the type double and the fourth is a logical vector. It also guessed
+that the second column should be of the type double, i.e. floating point
+numbers. This will do, but we could redefine this vector as integer manually by
+using the <code>col_types</code> argument. This will not be necessary in most situations
+but could increase computational speed with very large datasets, as integers can
+be saved more efficiently. More on the definition of column types can be found
+in the help file.</p>
+<p>What happens when we have CSV data without column names defined in the first
+line?</p>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="R3.html#cb158-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(</span>
+<span id="cb158-2"><a href="R3.html#cb158-2" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;Peter, 42, 1.68, FALSE</span></span>
+<span id="cb158-3"><a href="R3.html#cb158-3" aria-hidden="true" tabindex="-1"></a><span class="st">Paul, 84, 1.82, TRUE</span></span>
+<span id="cb158-4"><a href="R3.html#cb158-4" aria-hidden="true" tabindex="-1"></a><span class="st">Mary, 24, 1.74, FALSE&quot;</span></span>
+<span id="cb158-5"><a href="R3.html#cb158-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb158-6"><a href="R3.html#cb158-6" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 2 x 4</span></span>
+<span id="cb158-7"><a href="R3.html#cb158-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   Peter  `42` `1.68` `FALSE`</span></span>
+<span id="cb158-8"><a href="R3.html#cb158-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt;  </span></span>
+<span id="cb158-9"><a href="R3.html#cb158-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Paul     84   1.82 TRUE   </span></span>
+<span id="cb158-10"><a href="R3.html#cb158-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Mary     24   1.74 FALSE</span></span></code></pre></div>
+<p><code>read_csv()</code> can not by itself discern if the authors of the CSV file intended
+the first line to be used for names or not. If there are no column names in the
+CSV data, as in this case, we have to explicitly tell <code>read_csv()</code> not to use
+the first line for column names ourselves. We can do this by specifying the
+<code>col_names()</code> argument as <code>FALSE</code>, instead of the default <code>TRUE</code>. In this case,
+read_csv() chooses default names for the columns, which we can change later on.</p>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="R3.html#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(</span>
+<span id="cb159-2"><a href="R3.html#cb159-2" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;Peter, 42, 1.68, FALSE</span></span>
+<span id="cb159-3"><a href="R3.html#cb159-3" aria-hidden="true" tabindex="-1"></a><span class="st">Paul, 84, 1.82, TRUE</span></span>
+<span id="cb159-4"><a href="R3.html#cb159-4" aria-hidden="true" tabindex="-1"></a><span class="st">Mary, 24, 1.74, FALSE&quot;</span>,</span>
+<span id="cb159-5"><a href="R3.html#cb159-5" aria-hidden="true" tabindex="-1"></a><span class="at">col_names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb159-6"><a href="R3.html#cb159-6" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 x 4</span></span>
+<span id="cb159-7"><a href="R3.html#cb159-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   X1       X2    X3 X4   </span></span>
+<span id="cb159-8"><a href="R3.html#cb159-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt;</span></span>
+<span id="cb159-9"><a href="R3.html#cb159-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Peter    42  1.68 FALSE</span></span>
+<span id="cb159-10"><a href="R3.html#cb159-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Paul     84  1.82 TRUE </span></span>
+<span id="cb159-11"><a href="R3.html#cb159-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 Mary     24  1.74 FALSE</span></span></code></pre></div>
+</div>
+<div id="sample-project" class="section level2" number="9.3">
+<h2><span class="header-section-number">9.3</span> Sample project</h2>
+<p>Let us look at some real CSV files to download, parse and use as running
+examples for data transformation and visualization in the remaining chapter.</p>
+<p>The website
+<a href="https://www.bundeswahlleiter.de/bundestagswahlen/2017/ergebnisse/repraesentative-wahlstatistik.html" target="_blank">https://www.bundeswahlleiter.de/bundestagswahlen/2017/ergebnisse/repraesentative-wahlstatistik.html</a>
+holds multiple CSV files containing inferential statistics on the German federal
+election held in 2017. Among them, two files with statistics on the number of
+people eligible to vote and on the number that actually voted, both by binary
+gender and year of birth as well as additional indicators. Let our goal for this
+chapter be to analyse turnout by gender and age group graphically. To achieve
+this we will first need to download the two files and parse the CSV data.</p>
+<div id="download-files-from-within-r" class="section level3" number="9.3.1">
+<h3><span class="header-section-number">9.3.1</span> Download files from within R</h3>
+<p>Your first instinct could be, to download the files manually and then parse
+them. This will work just fine but we could also download the files directly
+from our code. Due to the small number of files in this example, this may not
+even be the most efficient way, but when you start handling larger amounts of
+files or want to regularly update files, downloading them from within your code
+will be the safer and more efficient way.</p>
+<p>Firstly, we should download the HTML file containing the links to the CSV files
+and extract the first two links following the header “Tabellen zur
+Weiterverwendung” using the tools we already have at our disposal. To understand
+the construction of the css selector, please have another look into chapter
+<a href="css-selectors-developer-tools.html#css">5.1</a>. Note that this is only one of many possible selectors that can
+achieve the goal of selecting the two links of interest.</p>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="R3.html#cb160-1" aria-hidden="true" tabindex="-1"></a>website <span class="ot">&lt;-</span> <span class="st">&quot;https://www.bundeswahlleiter.de/bundestagswahlen/2017/ergebnisse/repraesentative-wahlstatistik.html&quot;</span> <span class="sc">%&gt;%</span></span>
+<span id="cb160-2"><a href="R3.html#cb160-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_html</span>()</span>
+<span id="cb160-3"><a href="R3.html#cb160-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb160-4"><a href="R3.html#cb160-4" aria-hidden="true" tabindex="-1"></a>a_nodes <span class="ot">&lt;-</span> website <span class="sc">%&gt;%</span> </span>
+<span id="cb160-5"><a href="R3.html#cb160-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;ul[style=&#39;list-style-type:none&#39;] &gt; li:first-child &gt; a, ul[style=&#39;list-style-type:none&#39;] &gt; li:nth-child(2) &gt; a&quot;</span>)</span>
+<span id="cb160-6"><a href="R3.html#cb160-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb160-7"><a href="R3.html#cb160-7" aria-hidden="true" tabindex="-1"></a>a_nodes</span>
+<span id="cb160-8"><a href="R3.html#cb160-8" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (2)}</span></span>
+<span id="cb160-9"><a href="R3.html#cb160-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;a data-file-extension=&quot;CSV&quot; data-file-size=&quot;40,53 kB&quot; title=&quot;Link zur CS ...</span></span>
+<span id="cb160-10"><a href="R3.html#cb160-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;a data-file-extension=&quot;CSV&quot; data-file-size=&quot;68,82 kB&quot; title=&quot;Link zur CS ...</span></span>
+<span id="cb160-11"><a href="R3.html#cb160-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb160-12"><a href="R3.html#cb160-12" aria-hidden="true" tabindex="-1"></a>links <span class="ot">&lt;-</span> a_nodes <span class="sc">%&gt;%</span></span>
+<span id="cb160-13"><a href="R3.html#cb160-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_attr</span>(<span class="at">name =</span> <span class="st">&quot;href&quot;</span>)</span>
+<span id="cb160-14"><a href="R3.html#cb160-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb160-15"><a href="R3.html#cb160-15" aria-hidden="true" tabindex="-1"></a>links</span>
+<span id="cb160-16"><a href="R3.html#cb160-16" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;../../../dam/jcr/38972966-dc3d-40fa-91d7-6599d913f5e9/btw17_rws_bw2.csv&quot; </span></span>
+<span id="cb160-17"><a href="R3.html#cb160-17" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &quot;../../../dam/jcr/a67208c0-2a2b-41aa-abb8-204b09e73b6b/btw17_rws_bst2.csv&quot;</span></span></code></pre></div>
+<p>We achieved our goal of extracting the links, but we also see, that these are
+not complete as they are missing their base URL. This works on the website, as
+the link is relative. To access the files directly, we need an absolute link
+though. As before (sub section <a href="rvest3.html#sub-pgs">7.2.2</a>) we can use the function <code>str_c()</code>
+to construct the complete URLs. If we give <code>str_c()</code> a vector as one of it’s
+input arguments, the function will repeat the string connection for each element
+in the vector. In this case we can ignore the “../../../” part of the link as it
+will work regardless. To remove the part we could apply some of the functions
+from the stringr package. For this we would need some basic knowledge in string
+manipulation and regular expressions. If you want to further follow the road of
+Web Scraping, you absolutely should acquire this knowledge at some point, but it
+lies outside the scope of this introduction. A good starting point could be the
+chapter on string from “R for Data Science” by Wickham and Grolemund:
+<a href="https://r4ds.had.co.nz/strings.html" target="_blank">https://r4ds.had.co.nz/strings.html</a></p>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="R3.html#cb161-1" aria-hidden="true" tabindex="-1"></a>links <span class="ot">&lt;-</span> <span class="fu">str_c</span>(<span class="st">&quot;https://www.bundeswahlleiter.de/&quot;</span>, links)</span>
+<span id="cb161-2"><a href="R3.html#cb161-2" aria-hidden="true" tabindex="-1"></a>links</span>
+<span id="cb161-3"><a href="R3.html#cb161-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;https://www.bundeswahlleiter.de/../../../dam/jcr/38972966-dc3d-40fa-91d7-6599d913f5e9/btw17_rws_bw2.csv&quot; </span></span>
+<span id="cb161-4"><a href="R3.html#cb161-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &quot;https://www.bundeswahlleiter.de/../../../dam/jcr/a67208c0-2a2b-41aa-abb8-204b09e73b6b/btw17_rws_bst2.csv&quot;</span></span></code></pre></div>
+<p>Now that we we have complete absolute links, we can download the files to our
+hard drive. To achieve this, we can use the base R function <code>download.file()</code>.
+We have to specify an URL as it’s first argument as well as a path and file name
+for the <code>destfile</code> argument. When no path is given, the file is saved in the
+directory where your R script is located.</p>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="R3.html#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(links[<span class="dv">1</span>], <span class="at">destfile =</span>  <span class="st">&quot;eligible.csv&quot;</span>)</span>
+<span id="cb162-2"><a href="R3.html#cb162-2" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(links[<span class="dv">2</span>], <span class="at">destfile =</span>  <span class="st">&quot;turnout.csv&quot;</span>)</span></code></pre></div>
+<p>We could also have used <code>read_csv()</code> to parse the CSV files directly from the
+web. Still, sometimes it may be a good idea to download the files to our hard
+drives, as we only have to do this once and thus decrease traffic for the server
+and also increase the efficiency of our code. But this is only a benefit, if we
+run the download once and not every time we rerun our script. So you should
+maybe comment out the lines where the download occurs after it was successful.
+In chapter (good_practice) we will discuss a way to do this more elegantly.</p>
+</div>
+<div id="parsing-the-csv-files" class="section level3" number="9.3.2">
+<h3><span class="header-section-number">9.3.2</span> Parsing the csv files</h3>
+<p>Now we can parse the downloaded CSV files into R objects. But first let’s have a
+look at the CSV files. You can open them in a text editor of your choosing or
+directly in RStudio. Importing them into Excel or a similar spreadsheet software
+is not a valid option here, as we want to see the raw contents of the file and
+not a representation of the data.</p>
+<p>Looking at eligible.csv we notice at least two things. Firstly, the delimiter
+used here is not a comma but a semicolon. The default CSV style discussed above
+is common in those countries where a “.” is used as the decimal point. Thus the
+“,” is available to be used as a delimiter. In countries where the “,” is used
+as a decimal point, it is not available and thus the “;” is used as a delimiter.
+The function <code>read_csv2()</code> can be used in this case. Even more general is
+<code>read_delim()</code> as the delimiting character can be defined as an argument.
+Secondly, we see that the first 8 lines are neither column names or data but
+contain comments on the CSV file itself. We have to tell <code>read_csv2()</code> so ignore
+these lines. We could use the argument <code>skip</code> to tell R to ignore the first 8
+lines. But as these comments are neatly introduced with an <code>#</code> we can use the
+<code>comment</code> argument instead and specify the <code>#</code> as the identifier for comments,
+which then will be ignored.</p>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="R3.html#cb163-1" aria-hidden="true" tabindex="-1"></a>eligible_tbl <span class="ot">&lt;-</span> <span class="fu">read_csv2</span>(<span class="st">&quot;eligible.csv&quot;</span>, <span class="at">comment =</span> <span class="st">&quot;#&quot;</span>)</span>
+<span id="cb163-2"><a href="R3.html#cb163-2" aria-hidden="true" tabindex="-1"></a><span class="do">## ℹ Using &#39;,&#39; as decimal and &#39;.&#39; as grouping mark. Use `read_delim()` for more control.</span></span>
+<span id="cb163-3"><a href="R3.html#cb163-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb163-4"><a href="R3.html#cb163-4" aria-hidden="true" tabindex="-1"></a><span class="do">## ── Column specification ────────────────────────────────────────────────────────</span></span>
+<span id="cb163-5"><a href="R3.html#cb163-5" aria-hidden="true" tabindex="-1"></a><span class="do">## cols(</span></span>
+<span id="cb163-6"><a href="R3.html#cb163-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   Land = col_character(),</span></span>
+<span id="cb163-7"><a href="R3.html#cb163-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   Geschlecht = col_character(),</span></span>
+<span id="cb163-8"><a href="R3.html#cb163-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   Geburtsjahresgruppe = col_character(),</span></span>
+<span id="cb163-9"><a href="R3.html#cb163-9" aria-hidden="true" tabindex="-1"></a><span class="do">##   Wahlberechtigte = col_double(),</span></span>
+<span id="cb163-10"><a href="R3.html#cb163-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   `Wahlberechtigte ohne Wahlscheinvermerk` = col_double(),</span></span>
+<span id="cb163-11"><a href="R3.html#cb163-11" aria-hidden="true" tabindex="-1"></a><span class="do">##   `Wahlberechtigte mit Wahlscheinvermerk` = col_double(),</span></span>
+<span id="cb163-12"><a href="R3.html#cb163-12" aria-hidden="true" tabindex="-1"></a><span class="do">##   `Wähler/-innen` = col_double(),</span></span>
+<span id="cb163-13"><a href="R3.html#cb163-13" aria-hidden="true" tabindex="-1"></a><span class="do">##   `Wähler/-innen ohne Wahlschein` = col_double(),</span></span>
+<span id="cb163-14"><a href="R3.html#cb163-14" aria-hidden="true" tabindex="-1"></a><span class="do">##   `Wähler/-innen mit Wahlschein` = col_double(),</span></span>
+<span id="cb163-15"><a href="R3.html#cb163-15" aria-hidden="true" tabindex="-1"></a><span class="do">##   Wahlbeteiligung = col_double()</span></span>
+<span id="cb163-16"><a href="R3.html#cb163-16" aria-hidden="true" tabindex="-1"></a><span class="do">## )</span></span>
+<span id="cb163-17"><a href="R3.html#cb163-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-18"><a href="R3.html#cb163-18" aria-hidden="true" tabindex="-1"></a>eligible_tbl</span>
+<span id="cb163-19"><a href="R3.html#cb163-19" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 627 x 10</span></span>
+<span id="cb163-20"><a href="R3.html#cb163-20" aria-hidden="true" tabindex="-1"></a><span class="do">##    Land  Geschlecht Geburtsjahresgr… Wahlberechtigte `Wahlberechtigt…</span></span>
+<span id="cb163-21"><a href="R3.html#cb163-21" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;                      &lt;dbl&gt;            &lt;dbl&gt;</span></span>
+<span id="cb163-22"><a href="R3.html#cb163-22" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Bund  Summe      Summe                   61688485         47595800</span></span>
+<span id="cb163-23"><a href="R3.html#cb163-23" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Bund  Summe      1997 - 1999              2045501          1709333</span></span>
+<span id="cb163-24"><a href="R3.html#cb163-24" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Bund  Summe      1993 - 1996              2902998          2295723</span></span>
+<span id="cb163-25"><a href="R3.html#cb163-25" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Bund  Summe      1988 - 1992              4206014          3311417</span></span>
+<span id="cb163-26"><a href="R3.html#cb163-26" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Bund  Summe      1983 - 1987              4302277          3455795</span></span>
+<span id="cb163-27"><a href="R3.html#cb163-27" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Bund  Summe      1978 - 1982              4264347          3490155</span></span>
+<span id="cb163-28"><a href="R3.html#cb163-28" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Bund  Summe      1973 - 1977              3953481          3273575</span></span>
+<span id="cb163-29"><a href="R3.html#cb163-29" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Bund  Summe      1968 - 1972              5230865          4232089</span></span>
+<span id="cb163-30"><a href="R3.html#cb163-30" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Bund  Summe      1958 - 1967             12396299          9581842</span></span>
+<span id="cb163-31"><a href="R3.html#cb163-31" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Bund  Summe      1948 - 1957              9487267          6950185</span></span>
+<span id="cb163-32"><a href="R3.html#cb163-32" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 617 more rows, and 5 more variables: `Wahlberechtigte mit</span></span>
+<span id="cb163-33"><a href="R3.html#cb163-33" aria-hidden="true" tabindex="-1"></a><span class="do">## #   Wahlscheinvermerk` &lt;dbl&gt;, `Wähler/-innen` &lt;dbl&gt;, `Wähler/-innen ohne</span></span>
+<span id="cb163-34"><a href="R3.html#cb163-34" aria-hidden="true" tabindex="-1"></a><span class="do">## #   Wahlschein` &lt;dbl&gt;, `Wähler/-innen mit Wahlschein` &lt;dbl&gt;,</span></span>
+<span id="cb163-35"><a href="R3.html#cb163-35" aria-hidden="true" tabindex="-1"></a><span class="do">## #   Wahlbeteiligung &lt;dbl&gt;</span></span>
+<span id="cb163-36"><a href="R3.html#cb163-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-37"><a href="R3.html#cb163-37" aria-hidden="true" tabindex="-1"></a>turnout_tbl <span class="ot">&lt;-</span> <span class="fu">read_csv2</span>(<span class="st">&quot;turnout.csv&quot;</span>, <span class="at">comment =</span> <span class="st">&quot;#&quot;</span>)</span>
+<span id="cb163-38"><a href="R3.html#cb163-38" aria-hidden="true" tabindex="-1"></a><span class="do">## ℹ Using &#39;,&#39; as decimal and &#39;.&#39; as grouping mark. Use `read_delim()` for more control.</span></span>
+<span id="cb163-39"><a href="R3.html#cb163-39" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb163-40"><a href="R3.html#cb163-40" aria-hidden="true" tabindex="-1"></a><span class="do">## ── Column specification ────────────────────────────────────────────────────────</span></span>
+<span id="cb163-41"><a href="R3.html#cb163-41" aria-hidden="true" tabindex="-1"></a><span class="do">## cols(</span></span>
+<span id="cb163-42"><a href="R3.html#cb163-42" aria-hidden="true" tabindex="-1"></a><span class="do">##   Land = col_character(),</span></span>
+<span id="cb163-43"><a href="R3.html#cb163-43" aria-hidden="true" tabindex="-1"></a><span class="do">##   `Erst-/Zweitstimme` = col_double(),</span></span>
+<span id="cb163-44"><a href="R3.html#cb163-44" aria-hidden="true" tabindex="-1"></a><span class="do">##   Geschlecht = col_character(),</span></span>
+<span id="cb163-45"><a href="R3.html#cb163-45" aria-hidden="true" tabindex="-1"></a><span class="do">##   Geburtsjahresgruppe = col_character(),</span></span>
+<span id="cb163-46"><a href="R3.html#cb163-46" aria-hidden="true" tabindex="-1"></a><span class="do">##   Summe = col_double(),</span></span>
+<span id="cb163-47"><a href="R3.html#cb163-47" aria-hidden="true" tabindex="-1"></a><span class="do">##   Ungültig = col_double(),</span></span>
+<span id="cb163-48"><a href="R3.html#cb163-48" aria-hidden="true" tabindex="-1"></a><span class="do">##   CDU = col_double(),</span></span>
+<span id="cb163-49"><a href="R3.html#cb163-49" aria-hidden="true" tabindex="-1"></a><span class="do">##   SPD = col_double(),</span></span>
+<span id="cb163-50"><a href="R3.html#cb163-50" aria-hidden="true" tabindex="-1"></a><span class="do">##   `DIE LINKE` = col_double(),</span></span>
+<span id="cb163-51"><a href="R3.html#cb163-51" aria-hidden="true" tabindex="-1"></a><span class="do">##   GRÜNE = col_double(),</span></span>
+<span id="cb163-52"><a href="R3.html#cb163-52" aria-hidden="true" tabindex="-1"></a><span class="do">##   CSU = col_double(),</span></span>
+<span id="cb163-53"><a href="R3.html#cb163-53" aria-hidden="true" tabindex="-1"></a><span class="do">##   FDP = col_double(),</span></span>
+<span id="cb163-54"><a href="R3.html#cb163-54" aria-hidden="true" tabindex="-1"></a><span class="do">##   AfD = col_double(),</span></span>
+<span id="cb163-55"><a href="R3.html#cb163-55" aria-hidden="true" tabindex="-1"></a><span class="do">##   Sonstige = col_double(),</span></span>
+<span id="cb163-56"><a href="R3.html#cb163-56" aria-hidden="true" tabindex="-1"></a><span class="do">##   `dar. NPD` = col_double(),</span></span>
+<span id="cb163-57"><a href="R3.html#cb163-57" aria-hidden="true" tabindex="-1"></a><span class="do">##   `dar. FREIE WÄHLER` = col_double()</span></span>
+<span id="cb163-58"><a href="R3.html#cb163-58" aria-hidden="true" tabindex="-1"></a><span class="do">## )</span></span>
+<span id="cb163-59"><a href="R3.html#cb163-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-60"><a href="R3.html#cb163-60" aria-hidden="true" tabindex="-1"></a>turnout_tbl</span>
+<span id="cb163-61"><a href="R3.html#cb163-61" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 798 x 16</span></span>
+<span id="cb163-62"><a href="R3.html#cb163-62" aria-hidden="true" tabindex="-1"></a><span class="do">##    Land  `Erst-/Zweitsti… Geschlecht Geburtsjahresgr…  Summe Ungültig    CDU</span></span>
+<span id="cb163-63"><a href="R3.html#cb163-63" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;             &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;</span></span>
+<span id="cb163-64"><a href="R3.html#cb163-64" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Bund                 1 Summe      Summe            4.70e7   586726 1.40e7</span></span>
+<span id="cb163-65"><a href="R3.html#cb163-65" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Bund                 1 Summe      1993 - 1999      3.37e6    37704 8.19e5</span></span>
+<span id="cb163-66"><a href="R3.html#cb163-66" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Bund                 1 Summe      1983 - 1992      6.04e6    58687 1.51e6</span></span>
+<span id="cb163-67"><a href="R3.html#cb163-67" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Bund                 1 Summe      1973 - 1982      6.23e6    62068 1.74e6</span></span>
+<span id="cb163-68"><a href="R3.html#cb163-68" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Bund                 1 Summe      1958 - 1972      1.39e7   146749 3.81e6</span></span>
+<span id="cb163-69"><a href="R3.html#cb163-69" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Bund                 1 Summe      1948 - 1957      7.69e6   103820 2.31e6</span></span>
+<span id="cb163-70"><a href="R3.html#cb163-70" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Bund                 1 Summe      1947 und früher  9.73e6   177697 3.84e6</span></span>
+<span id="cb163-71"><a href="R3.html#cb163-71" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Bund                 1 m          Summe            2.28e7   274037 6.30e6</span></span>
+<span id="cb163-72"><a href="R3.html#cb163-72" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Bund                 1 m          1993 - 1999      1.69e6    20330 4.02e5</span></span>
+<span id="cb163-73"><a href="R3.html#cb163-73" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Bund                 1 m          1983 - 1992      3.00e6    29800 7.07e5</span></span>
+<span id="cb163-74"><a href="R3.html#cb163-74" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 788 more rows, and 9 more variables: SPD &lt;dbl&gt;, `DIE LINKE` &lt;dbl&gt;,</span></span>
+<span id="cb163-75"><a href="R3.html#cb163-75" aria-hidden="true" tabindex="-1"></a><span class="do">## #   GRÜNE &lt;dbl&gt;, CSU &lt;dbl&gt;, FDP &lt;dbl&gt;, AfD &lt;dbl&gt;, Sonstige &lt;dbl&gt;, `dar.</span></span>
+<span id="cb163-76"><a href="R3.html#cb163-76" aria-hidden="true" tabindex="-1"></a><span class="do">## #   NPD` &lt;dbl&gt;, `dar. FREIE WÄHLER` &lt;dbl&gt;</span></span></code></pre></div>
 
+</div>
 </div>
 </div>
             </section>
@@ -312,7 +616,7 @@ Web Scraping using R
         </div>
       </div>
 <a href="good-practice.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="project.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="R4.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -334,7 +638,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/webscraping-tures/webscraping-tures.github.io/09_R3.Rmd",
+"link": "https://github.com/webscraping-tures/webscraping-tures.github.io/09-project1.Rmd",
 "text": "Edit"
 },
 "history": {
