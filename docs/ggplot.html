@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>12 Regular expressions | Web Scraping using R</title>
-  <meta name="description" content="12 Regular expressions | Web Scraping using R" />
+  <title>11 Graphical analysis with ggplot | Web Scraping using R</title>
+  <meta name="description" content="11 Graphical analysis with ggplot | Web Scraping using R" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="12 Regular expressions | Web Scraping using R" />
+  <meta property="og:title" content="11 Graphical analysis with ggplot | Web Scraping using R" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="webscraping-tures/webscraping-tures.github.io" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="12 Regular expressions | Web Scraping using R" />
+  <meta name="twitter:title" content="11 Graphical analysis with ggplot | Web Scraping using R" />
   
   
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="ggplot.html"/>
-
+<link rel="prev" href="dplyr.html"/>
+<link rel="next" href="regex.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -342,45 +342,27 @@ Web Scraping using R
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="regex" class="section level1" number="12">
-<h1><span class="header-section-number">12</span> Regular expressions</h1>
+<div id="ggplot" class="section level1" number="11">
+<h1><span class="header-section-number">11</span> Graphical analysis with ggplot</h1>
 <p>WIP!</p>
-<div id="str_detect" class="section level2" number="12.1">
-<h2><span class="header-section-number">12.1</span> str_detect()</h2>
+<div id="ggplot-syntax" class="section level2" number="11.1">
+<h2><span class="header-section-number">11.1</span> ggplot syntax</h2>
 </div>
-<div id="basic-pattern-matching" class="section level2" number="12.2">
-<h2><span class="header-section-number">12.2</span> Basic pattern matching</h2>
-<div id="literal-characters" class="section level3" number="12.2.1">
-<h3><span class="header-section-number">12.2.1</span> Literal characters</h3>
+<div id="aesthtetics" class="section level2" number="11.2">
+<h2><span class="header-section-number">11.2</span> Aesthtetics</h2>
+<div id="continuous" class="section level3" number="11.2.1">
+<h3><span class="header-section-number">11.2.1</span> Continuous</h3>
 </div>
-<div id="escaping-metacharacters" class="section level3" number="12.2.2">
-<h3><span class="header-section-number">12.2.2</span> Escaping metacharacters</h3>
+<div id="continuous-x-continuous" class="section level3" number="11.2.2">
+<h3><span class="header-section-number">11.2.2</span> Continuous x Continuous</h3>
 </div>
-<div id="character-classes" class="section level3" number="12.2.3">
-<h3><span class="header-section-number">12.2.3</span> Character classes</h3>
-</div>
-<div id="anchors" class="section level3" number="12.2.4">
-<h3><span class="header-section-number">12.2.4</span> Anchors</h3>
-</div>
-<div id="quantifiers" class="section level3" number="12.2.5">
-<h3><span class="header-section-number">12.2.5</span> Quantifiers</h3>
-</div>
-<div id="groups" class="section level3" number="12.2.6">
-<h3><span class="header-section-number">12.2.6</span> Groups</h3>
+<div id="discrete-x-continuous" class="section level3" number="11.2.3">
+<h3><span class="header-section-number">11.2.3</span> Discrete x Continuous</h3>
 </div>
 </div>
-<div id="practical-application" class="section level2" number="12.3">
-<h2><span class="header-section-number">12.3</span> Practical application</h2>
-<div id="str_count" class="section level3" number="12.3.1">
-<h3><span class="header-section-number">12.3.1</span> str_count()</h3>
-</div>
-<div id="str_extract-str_match" class="section level3" number="12.3.2">
-<h3><span class="header-section-number">12.3.2</span> str_extract() &amp; str_match()</h3>
-</div>
-<div id="str_replace" class="section level3" number="12.3.3">
-<h3><span class="header-section-number">12.3.3</span> str_replace()</h3>
+<div id="tuning-the-output" class="section level2" number="11.3">
+<h2><span class="header-section-number">11.3</span> Tuning the output</h2>
 
-</div>
 </div>
 </div>
             </section>
@@ -388,8 +370,8 @@ Web Scraping using R
           </div>
         </div>
       </div>
-<a href="ggplot.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="dplyr.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="regex.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -411,7 +393,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/webscraping-tures/webscraping-tures.github.io/12-regex.Rmd",
+"link": "https://github.com/webscraping-tures/webscraping-tures.github.io/11-ggplot2.Rmd",
 "text": "Edit"
 },
 "history": {

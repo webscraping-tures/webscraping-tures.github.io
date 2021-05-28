@@ -1,0 +1,35 @@
+# Regular expressions {#regex}
+
+``` {r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+knitr::opts_chunk$set(cache = TRUE)
+knitr::opts_chunk$set(cache.path = 'cache/')
+```
+
+WIP!
+
+## str_detect()
+
+
+## Basic pattern matching
+
+### Literal characters
+
+### Escaping metacharacters
+
+### Character classes
+
+### Anchors
+
+### Quantifiers
+
+### Groups
+
+
+## Practical application
+
+### str_count()
+
+### str_extract() & str_match()
+
+### str_replace()

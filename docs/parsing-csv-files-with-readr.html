@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>10 Parsing csv files with readr | Web Scraping using R</title>
+  <meta name="description" content="10 Parsing csv files with readr | Web Scraping using R" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="10 Parsing csv files with readr | Web Scraping using R" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  <meta name="github-repo" content="webscraping-tures/webscraping-tures.github.io" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="10 Parsing csv files with readr | Web Scraping using R" />
+  
+  
+  
+
+<meta name="author" content="Jakob Tures" />
+
+
+<meta name="date" content="2021-05-27" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="R3.html"/>
+
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+Web Scraping using R
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#what-is-web-scraping"><i class="fa fa-check"></i>What is web scraping?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#course-contents"><i class="fa fa-check"></i>Course contents</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#technical-requirements"><i class="fa fa-check"></i>Technical requirements</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#conventions"><i class="fa fa-check"></i>Conventions</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#colophon"><i class="fa fa-check"></i>Colophon</a></li>
+</ul></li>
+<li class="part"><span><b>I Basics</b></span></li>
+<li class="chapter" data-level="1" data-path="html.html"><a href="html.html"><i class="fa fa-check"></i><b>1</b> HTML as a cornerstone of the internet</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="html.html"><a href="html.html#html-tags"><i class="fa fa-check"></i><b>1.1</b> HTML-Tags</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="html.html"><a href="html.html#hello_world.html"><i class="fa fa-check"></i><b>1.1.1</b> hello_world.html</a></li>
+<li class="chapter" data-level="1.1.2" data-path="html.html"><a href="html.html#important-tags"><i class="fa fa-check"></i><b>1.1.2</b> Important tags</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="html.html"><a href="html.html#attribute"><i class="fa fa-check"></i><b>1.2</b> Attributes</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="html.html"><a href="html.html#links"><i class="fa fa-check"></i><b>1.2.1</b> Links</a></li>
+<li class="chapter" data-level="1.2.2" data-path="html.html"><a href="html.html#images"><i class="fa fa-check"></i><b>1.2.2</b> Images</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="html.html"><a href="html.html#entities"><i class="fa fa-check"></i><b>1.3</b> Entities</a></li>
+</ul></li>
+<li class="part"><span><b>II R Basics &amp; Tidyverse</b></span></li>
+<li class="chapter" data-level="2" data-path="R1.html"><a href="R1.html"><i class="fa fa-check"></i><b>2</b> R &amp; R Studio</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="R1.html"><a href="R1.html#installing-r"><i class="fa fa-check"></i><b>2.1</b> Installing R</a></li>
+<li class="chapter" data-level="2.2" data-path="R1.html"><a href="R1.html#rstudio"><i class="fa fa-check"></i><b>2.2</b> RStudio</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="R1.html"><a href="R1.html#overview"><i class="fa fa-check"></i><b>2.2.1</b> Overview</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="R1.html"><a href="R1.html#hello-world"><i class="fa fa-check"></i><b>2.3</b> Hello World!</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="R1.html"><a href="R1.html#calculating-with-r"><i class="fa fa-check"></i><b>2.3.1</b> Calculating with R</a></li>
+<li class="chapter" data-level="2.3.2" data-path="R1.html"><a href="R1.html#comparison-operators"><i class="fa fa-check"></i><b>2.3.2</b> Comparison operators</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="R1.html"><a href="R1.html#objects"><i class="fa fa-check"></i><b>2.4</b> Objects</a></li>
+<li class="chapter" data-level="2.5" data-path="R1.html"><a href="R1.html#vectors"><i class="fa fa-check"></i><b>2.5</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="R1.html"><a href="R1.html#subsetting"><i class="fa fa-check"></i><b>2.5.1</b> Subsetting</a></li>
+<li class="chapter" data-level="2.5.2" data-path="R1.html"><a href="R1.html#types-of-vectors"><i class="fa fa-check"></i><b>2.5.2</b> Types of vectors</a></li>
+<li class="chapter" data-level="2.5.3" data-path="R1.html"><a href="R1.html#a-brief-look-at-lists"><i class="fa fa-check"></i><b>2.5.3</b> A brief look at lists</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="R1.html"><a href="R1.html#functions"><i class="fa fa-check"></i><b>2.6</b> Functions</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="R1.html"><a href="R1.html#help"><i class="fa fa-check"></i><b>2.6.1</b> Help</a></li>
+<li class="chapter" data-level="2.6.2" data-path="R1.html"><a href="R1.html#examples-basic-statistical-functions"><i class="fa fa-check"></i><b>2.6.2</b> Examples: Basic statistical functions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="R1.html"><a href="R1.html#ifelse-statements"><i class="fa fa-check"></i><b>2.7</b> If/Else statements</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="R2.html"><a href="R2.html"><i class="fa fa-check"></i><b>3</b> RStudio in practice &amp; the tidyverse</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="R2.html"><a href="R2.html#rstudio-workflow"><i class="fa fa-check"></i><b>3.1</b> RStudio Workflow</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="R2.html"><a href="R2.html#r-scripts"><i class="fa fa-check"></i><b>3.1.1</b> R Scripts</a></li>
+<li class="chapter" data-level="3.1.2" data-path="R2.html"><a href="R2.html#projects"><i class="fa fa-check"></i><b>3.1.2</b> Projects</a></li>
+<li class="chapter" data-level="3.1.3" data-path="R2.html"><a href="R2.html#comments"><i class="fa fa-check"></i><b>3.1.3</b> Comments</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="R2.html"><a href="R2.html#r-packages"><i class="fa fa-check"></i><b>3.2</b> R packages</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="R2.html"><a href="R2.html#installing-and-loading-packages"><i class="fa fa-check"></i><b>3.2.1</b> Installing and loading packages</a></li>
+<li class="chapter" data-level="3.2.2" data-path="R2.html"><a href="R2.html#namespaces"><i class="fa fa-check"></i><b>3.2.2</b> Namespaces</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="R2.html"><a href="R2.html#tidyverse"><i class="fa fa-check"></i><b>3.3</b> Tidyverse</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="R2.html"><a href="R2.html#tibbles"><i class="fa fa-check"></i><b>3.3.1</b> Tibbles</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="R2.html"><a href="R2.html#additional-resources"><i class="fa fa-check"></i><b>3.4</b> Additional resources</a></li>
+</ul></li>
+<li class="part"><span><b>III Scraping</b></span></li>
+<li class="chapter" data-level="4" data-path="rvest1.html"><a href="rvest1.html"><i class="fa fa-check"></i><b>4</b> First scraping with rvest</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="rvest1.html"><a href="rvest1.html#the-rvest-package"><i class="fa fa-check"></i><b>4.1</b> The rvest package</a></li>
+<li class="chapter" data-level="4.2" data-path="rvest1.html"><a href="rvest1.html#hello_world.html-1"><i class="fa fa-check"></i><b>4.2</b> hello_world.html</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="rvest1.html"><a href="rvest1.html#read_html"><i class="fa fa-check"></i><b>4.2.1</b> read_html()</a></li>
+<li class="chapter" data-level="4.2.2" data-path="rvest1.html"><a href="rvest1.html#html_nodes"><i class="fa fa-check"></i><b>4.2.2</b> html_nodes()</a></li>
+<li class="chapter" data-level="4.2.3" data-path="rvest1.html"><a href="rvest1.html#html_text"><i class="fa fa-check"></i><b>4.2.3</b> html_text()</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="rvest1.html"><a href="rvest1.html#countries-of-the-world"><i class="fa fa-check"></i><b>4.3</b> Countries of the World</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="rvest1.html"><a href="rvest1.html#country-names"><i class="fa fa-check"></i><b>4.3.1</b> Country names</a></li>
+<li class="chapter" data-level="4.3.2" data-path="rvest1.html"><a href="rvest1.html#capitals-population-and-area"><i class="fa fa-check"></i><b>4.3.2</b> Capitals, population and area</a></li>
+<li class="chapter" data-level="4.3.3" data-path="rvest1.html"><a href="rvest1.html#merge-into-one-tibble"><i class="fa fa-check"></i><b>4.3.3</b> Merge into one tibble</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html"><i class="fa fa-check"></i><b>5</b> CSS selectors &amp; Developer Tools</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#css"><i class="fa fa-check"></i><b>5.1</b> CSS selectors</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#classes"><i class="fa fa-check"></i><b>5.1.1</b> Classes</a></li>
+<li class="chapter" data-level="5.1.2" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#ids"><i class="fa fa-check"></i><b>5.1.2</b> IDs</a></li>
+<li class="chapter" data-level="5.1.3" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#attributes"><i class="fa fa-check"></i><b>5.1.3</b> Attributes</a></li>
+<li class="chapter" data-level="5.1.4" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#hierarchy-levels"><i class="fa fa-check"></i><b>5.1.4</b> Hierarchy levels</a></li>
+<li class="chapter" data-level="5.1.5" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#further-selectors"><i class="fa fa-check"></i><b>5.1.5</b> Further selectors</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#developer-tools"><i class="fa fa-check"></i><b>5.2</b> Developer Tools</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="rvest2.html"><a href="rvest2.html"><i class="fa fa-check"></i><b>6</b> Scraping of tables &amp; dynamic websites</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="rvest2.html"><a href="rvest2.html#scraping-of-tables"><i class="fa fa-check"></i><b>6.1</b> Scraping of tables</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="rvest2.html"><a href="rvest2.html#table-with-css-selectors-from-wikipedia"><i class="fa fa-check"></i><b>6.1.1</b> Table with CSS selectors from Wikipedia</a></li>
+<li class="chapter" data-level="6.1.2" data-path="rvest2.html"><a href="rvest2.html#scraping-multiple-tables"><i class="fa fa-check"></i><b>6.1.2</b> Scraping multiple tables</a></li>
+<li class="chapter" data-level="6.1.3" data-path="rvest2.html"><a href="rvest2.html#tabellen-mit-nas"><i class="fa fa-check"></i><b>6.1.3</b> Tabellen mit NAs</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="rvest2.html"><a href="rvest2.html#dynamische-websites"><i class="fa fa-check"></i><b>6.2</b> Dynamische Websites</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="rvest2.html"><a href="rvest2.html#html-forms-and-html-queries"><i class="fa fa-check"></i><b>6.2.1</b> HTML forms and HTML queries</a></li>
+<li class="chapter" data-level="6.2.2" data-path="rvest2.html"><a href="rvest2.html#html-forms"><i class="fa fa-check"></i><b>6.2.2</b> HTML forms</a></li>
+<li class="chapter" data-level="6.2.3" data-path="rvest2.html"><a href="rvest2.html#the-query"><i class="fa fa-check"></i><b>6.2.3</b> The query</a></li>
+<li class="chapter" data-level="6.2.4" data-path="rvest2.html"><a href="rvest2.html#manipulating-the-query-and-scraping-the-result"><i class="fa fa-check"></i><b>6.2.4</b> Manipulating the query and scraping the result</a></li>
+<li class="chapter" data-level="6.2.5" data-path="rvest2.html"><a href="rvest2.html#additional-resources-1"><i class="fa fa-check"></i><b>6.2.5</b> Additional resources</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="rvest3.html"><a href="rvest3.html"><i class="fa fa-check"></i><b>7</b> Scraping of multi-page websites</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="rvest3.html"><a href="rvest3.html#index-pages"><i class="fa fa-check"></i><b>7.1</b> Index-pages</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="rvest3.html"><a href="rvest3.html#scraping-of-the-index"><i class="fa fa-check"></i><b>7.1.1</b> Scraping of the index</a></li>
+<li class="chapter" data-level="7.1.2" data-path="rvest3.html"><a href="rvest3.html#iteration-with-map"><i class="fa fa-check"></i><b>7.1.2</b> Iteration with map()</a></li>
+<li class="chapter" data-level="7.1.3" data-path="rvest3.html"><a href="rvest3.html#scraping-the-sub-pages"><i class="fa fa-check"></i><b>7.1.3</b> Scraping the sub-pages</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="rvest3.html"><a href="rvest3.html#pagination"><i class="fa fa-check"></i><b>7.2</b> Pagination</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="rvest3.html"><a href="rvest3.html#the-query-1"><i class="fa fa-check"></i><b>7.2.1</b> The query</a></li>
+<li class="chapter" data-level="7.2.2" data-path="rvest3.html"><a href="rvest3.html#sub-pgs"><i class="fa fa-check"></i><b>7.2.2</b> Scraping the sub-pages</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>IV Practical application</b></span></li>
+<li class="chapter" data-level="8" data-path="good-practice.html"><a href="good-practice.html"><i class="fa fa-check"></i><b>8</b> Good practice</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="good-practice.html"><a href="good-practice.html#legality"><i class="fa fa-check"></i><b>8.1</b> Legality?</a></li>
+<li class="chapter" data-level="8.2" data-path="good-practice.html"><a href="good-practice.html#responsibility"><i class="fa fa-check"></i><b>8.2</b> Responsibility!</a></li>
+<li class="chapter" data-level="8.3" data-path="good-practice.html"><a href="good-practice.html#how-to-behave"><i class="fa fa-check"></i><b>8.3</b> How to behave?</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="R3.html"><a href="R3.html"><i class="fa fa-check"></i><b>9</b> Sample project I</a></li>
+<li class="chapter" data-level="10" data-path="parsing-csv-files-with-readr.html"><a href="parsing-csv-files-with-readr.html"><i class="fa fa-check"></i><b>10</b> Parsing csv files with readr</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="parsing-csv-files-with-readr.html"><a href="parsing-csv-files-with-readr.html#csv-files"><i class="fa fa-check"></i><b>10.1</b> CSV files</a></li>
+<li class="chapter" data-level="10.2" data-path="parsing-csv-files-with-readr.html"><a href="parsing-csv-files-with-readr.html#parsing-a-csv-file"><i class="fa fa-check"></i><b>10.2</b> Parsing a CSV file</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="parsing-csv-files-with-readr.html"><a href="parsing-csv-files-with-readr.html#running-example"><i class="fa fa-check"></i><b>10.2.1</b> Running example</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="parsing-csv-files-with-readr.html"><a href="parsing-csv-files-with-readr.html#transformation-with-dplyr"><i class="fa fa-check"></i><b>10.3</b> Transformation with dplyr</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="parsing-csv-files-with-readr.html"><a href="parsing-csv-files-with-readr.html#filter"><i class="fa fa-check"></i><b>10.3.1</b> <code>filter()</code></a></li>
+<li class="chapter" data-level="10.3.2" data-path="parsing-csv-files-with-readr.html"><a href="parsing-csv-files-with-readr.html#select"><i class="fa fa-check"></i><b>10.3.2</b> <code>select()</code></a></li>
+<li class="chapter" data-level="10.3.3" data-path="parsing-csv-files-with-readr.html"><a href="parsing-csv-files-with-readr.html#rename"><i class="fa fa-check"></i><b>10.3.3</b> <code>rename()</code></a></li>
+<li class="chapter" data-level="10.3.4" data-path="parsing-csv-files-with-readr.html"><a href="parsing-csv-files-with-readr.html#mutate"><i class="fa fa-check"></i><b>10.3.4</b> <code>mutate()</code></a></li>
+<li class="chapter" data-level="10.3.5" data-path="parsing-csv-files-with-readr.html"><a href="parsing-csv-files-with-readr.html#summarise-group_by"><i class="fa fa-check"></i><b>10.3.5</b> <code>summarise()</code> &amp; <code>group_by()</code></a></li>
+<li class="chapter" data-level="10.3.6" data-path="parsing-csv-files-with-readr.html"><a href="parsing-csv-files-with-readr.html#forcats"><i class="fa fa-check"></i><b>10.3.6</b> forcats</a></li>
+<li class="chapter" data-level="10.3.7" data-path="parsing-csv-files-with-readr.html"><a href="parsing-csv-files-with-readr.html#join"><i class="fa fa-check"></i><b>10.3.7</b> <code>*_join()</code></a></li>
+<li class="chapter" data-level="10.3.8" data-path="parsing-csv-files-with-readr.html"><a href="parsing-csv-files-with-readr.html#computations-and-summaries-for-the-running-example"><i class="fa fa-check"></i><b>10.3.8</b> Computations and summaries for the running example</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="parsing-csv-files-with-readr.html"><a href="parsing-csv-files-with-readr.html#graphical-analysis-with-ggplot"><i class="fa fa-check"></i><b>10.4</b> Graphical analysis with ggplot</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Web Scraping using R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="parsing-csv-files-with-readr" class="section level1" number="10">
+<h1><span class="header-section-number">10</span> Parsing csv files with readr</h1>
+<div id="csv-files" class="section level2" number="10.1">
+<h2><span class="header-section-number">10.1</span> CSV files</h2>
+<p>By now we have a good grip on how to scrape the contents of typical HTML
+documents, like tables, lists or textual contents. In some cases, the data we
+are interested may also be provided as data files which can directly be used in
+R, like XML, JSON or CSV files. In these cases, it is often the more efficient
+approach to just download such a file instead of scraping the data directly from
+the site. Also, the data in the file may not even be displayed in full on the
+website itself and downloading the data file thus may open up additional
+analytical possibilities.</p>
+<p>One of the more widespread types of data files, are <em>CSV</em> files –
+comma-separated values. While they are limited to the display of
+two-dimensional tables, their simplicity and portability makes them one of the
+most used formats for this type of data. You can open and write CSV files with
+statistical software, spreadsheet software like Excel and with even the most
+basic text editor.</p>
+<p>A simple CSV file may look like this:</p>
+<pre><code>column1, column2, column3
+data1_1, data1_2, data1_3
+data2_1, data2_2, data2_3
+data3_1, data3_2, data3_3</code></pre>
+<p>In essence, CSV files are tables. The rows of the table are delimited by line
+breaks, the columns by commas.</p>
+<p>Often the first row represents the column names, as in the example above
+(<code>column1, column2, column3</code>). Be aware, that this is not necessarily always the
+case. A CSV file may not contain any column names at all, and start with a first
+row of data cells. This is a vital difference when it comes to parsing the file,
+as discussed further below. Like every row, the row of column names, if present,
+is delimited by a line break.</p>
+</div>
+<div id="parsing-a-csv-file" class="section level2" number="10.2">
+<h2><span class="header-section-number">10.2</span> Parsing a CSV file</h2>
+<p>To convert the data contained in the CSV file into a format we can use for data
+analysis we have to <em>parse</em> it first. The function used for parsing
+“understands” the representation of a table in the CSV syntax, can discern
+column names from data cells, assigns data cells to the correct rows and columns
+and returns an R object representing the table. <code>read.csv()</code> from base R returns
+a data frame while <code>read_csv()</code> from the readr package, which we will use here,
+returns a tibble.</p>
+<p>As readr is part of the core tidyverse we can just load the tidyverse package.
+We will also need rvest soon, so let us begin with loading both libraries.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="parsing-csv-files-with-readr.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-2"><a href="parsing-csv-files-with-readr.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span></code></pre></div>
+<p>The readr function <code>read_csv()</code> takes a CSV file as it’s first argument. To test
+it, we can also use <em>literal data</em> for the file argument. So we can pass the
+example defined above as a string – contained in <code>"</code> – as the <code>file</code>argument.
+We won’t do this much in practice, but it serves as a good first example.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="parsing-csv-files-with-readr.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(</span>
+<span id="cb3-2"><a href="parsing-csv-files-with-readr.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;column1, column2, column3</span></span>
+<span id="cb3-3"><a href="parsing-csv-files-with-readr.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="st">data1_1, data1_2, data1_3</span></span>
+<span id="cb3-4"><a href="parsing-csv-files-with-readr.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="st">data2_1, data2_2, data2_3</span></span>
+<span id="cb3-5"><a href="parsing-csv-files-with-readr.html#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="st">data3_1, data3_2, data3_3&quot;</span></span>
+<span id="cb3-6"><a href="parsing-csv-files-with-readr.html#cb3-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-7"><a href="parsing-csv-files-with-readr.html#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 x 3</span></span>
+<span id="cb3-8"><a href="parsing-csv-files-with-readr.html#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   column1 column2 column3</span></span>
+<span id="cb3-9"><a href="parsing-csv-files-with-readr.html#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  </span></span>
+<span id="cb3-10"><a href="parsing-csv-files-with-readr.html#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 data1_1 data1_2 data1_3</span></span>
+<span id="cb3-11"><a href="parsing-csv-files-with-readr.html#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 data2_1 data2_2 data2_3</span></span>
+<span id="cb3-12"><a href="parsing-csv-files-with-readr.html#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 data3_1 data3_2 data3_3</span></span></code></pre></div>
+<p><code>read_csv()</code> guesses the column types by the data entered. Here all three
+columns were automatically defined as character vectors. Automatic guessing
+works reliably in most situations. Let’s try a CSV with multiple different
+column types:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="parsing-csv-files-with-readr.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(</span>
+<span id="cb4-2"><a href="parsing-csv-files-with-readr.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;name, age, size, retired</span></span>
+<span id="cb4-3"><a href="parsing-csv-files-with-readr.html#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="st">Peter, 42, 1.68, FALSE</span></span>
+<span id="cb4-4"><a href="parsing-csv-files-with-readr.html#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="st">Paul, 84, 1.82, TRUE</span></span>
+<span id="cb4-5"><a href="parsing-csv-files-with-readr.html#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="st">Mary, 24, 1.74, FALSE&quot;</span></span>
+<span id="cb4-6"><a href="parsing-csv-files-with-readr.html#cb4-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-7"><a href="parsing-csv-files-with-readr.html#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 x 4</span></span>
+<span id="cb4-8"><a href="parsing-csv-files-with-readr.html#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   name    age  size retired</span></span>
+<span id="cb4-9"><a href="parsing-csv-files-with-readr.html#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt;  </span></span>
+<span id="cb4-10"><a href="parsing-csv-files-with-readr.html#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Peter    42  1.68 FALSE  </span></span>
+<span id="cb4-11"><a href="parsing-csv-files-with-readr.html#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Paul     84  1.82 TRUE   </span></span>
+<span id="cb4-12"><a href="parsing-csv-files-with-readr.html#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 Mary     24  1.74 FALSE</span></span></code></pre></div>
+<p><code>read_csv()</code> correctly guessed that the first column is of type character, the
+third of the type double and the fourth is a logical vector. It also guessed
+that the second column should be of the type double, i.e. floating point
+numbers. This will do, but we could redefine this vector as integer manually by
+using the <code>col_types</code> argument. This will not be necessary in most situations
+but could increase computational speed with very large datasets, as integers can
+be saved more efficiently. More on the definition of column types can be found
+in the help file.</p>
+<p>What happens when we have CSV data without column names defined in the first
+line?</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="parsing-csv-files-with-readr.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(</span>
+<span id="cb5-2"><a href="parsing-csv-files-with-readr.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;Peter, 42, 1.68, FALSE</span></span>
+<span id="cb5-3"><a href="parsing-csv-files-with-readr.html#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="st">Paul, 84, 1.82, TRUE</span></span>
+<span id="cb5-4"><a href="parsing-csv-files-with-readr.html#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="st">Mary, 24, 1.74, FALSE&quot;</span></span>
+<span id="cb5-5"><a href="parsing-csv-files-with-readr.html#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-6"><a href="parsing-csv-files-with-readr.html#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 2 x 4</span></span>
+<span id="cb5-7"><a href="parsing-csv-files-with-readr.html#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   Peter  `42` `1.68` `FALSE`</span></span>
+<span id="cb5-8"><a href="parsing-csv-files-with-readr.html#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt;  </span></span>
+<span id="cb5-9"><a href="parsing-csv-files-with-readr.html#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Paul     84   1.82 TRUE   </span></span>
+<span id="cb5-10"><a href="parsing-csv-files-with-readr.html#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Mary     24   1.74 FALSE</span></span></code></pre></div>
+<p><code>read_csv()</code> can not by itself discern if the authors of the CSV file intended
+the first line to be used for names or not. If there are no column names in the
+CSV data, as in this case, we have to explicitly tell <code>read_csv()</code> not to use
+the first line for column names ourselves. We can do this by specifying the
+<code>col_names()</code> argument as <code>FALSE</code>, instead of the default <code>TRUE</code>. In this case,
+read_csv() chooses default names for the columns, which we can change later on.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="parsing-csv-files-with-readr.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(</span>
+<span id="cb6-2"><a href="parsing-csv-files-with-readr.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;Peter, 42, 1.68, FALSE</span></span>
+<span id="cb6-3"><a href="parsing-csv-files-with-readr.html#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="st">Paul, 84, 1.82, TRUE</span></span>
+<span id="cb6-4"><a href="parsing-csv-files-with-readr.html#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="st">Mary, 24, 1.74, FALSE&quot;</span>,</span>
+<span id="cb6-5"><a href="parsing-csv-files-with-readr.html#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="at">col_names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb6-6"><a href="parsing-csv-files-with-readr.html#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 x 4</span></span>
+<span id="cb6-7"><a href="parsing-csv-files-with-readr.html#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   X1       X2    X3 X4   </span></span>
+<span id="cb6-8"><a href="parsing-csv-files-with-readr.html#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt;</span></span>
+<span id="cb6-9"><a href="parsing-csv-files-with-readr.html#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Peter    42  1.68 FALSE</span></span>
+<span id="cb6-10"><a href="parsing-csv-files-with-readr.html#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Paul     84  1.82 TRUE </span></span>
+<span id="cb6-11"><a href="parsing-csv-files-with-readr.html#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 Mary     24  1.74 FALSE</span></span></code></pre></div>
+<div id="running-example" class="section level3" number="10.2.1">
+<h3><span class="header-section-number">10.2.1</span> Running example</h3>
+<p>Let us look at some real CSV files to download, parse and use as running
+examples for data transformation and visualization in the remaining chapter.</p>
+<p>The website
+<a href="https://www.bundeswahlleiter.de/bundestagswahlen/2017/ergebnisse/repraesentative-wahlstatistik.html" target="_blank">https://www.bundeswahlleiter.de/bundestagswahlen/2017/ergebnisse/repraesentative-wahlstatistik.html</a>
+holds multiple CSV files containing inferential statistics on the German federal
+election held in 2017. Among them, two files with statistics on the number of
+people eligible to vote and on the number that actually voted, both by binary
+gender and year of birth as well as additional indicators. Let our goal for this
+chapter be to analyse turnout by gender and age group graphically. To achieve
+this we will first need to download the two files and parse the CSV data.</p>
+<div id="download-files-from-within-r" class="section level4" number="10.2.1.1">
+<h4><span class="header-section-number">10.2.1.1</span> Download files from within R</h4>
+<p>Your first instinct could be, to download the files manually and then parse
+them. This will work just fine but we could also download the files directly
+from our code. Due to the small number of files in this example, this may not
+even be the most efficient way, but when you start handling larger amounts of
+files or want to regularly update files, downloading them from within your code
+will be the safer and more efficient way.</p>
+<p>Firstly, we should download the HTML file containing the links to the CSV files
+and extract the first two links following the header “Tabellen zur
+Weiterverwendung” using the tools we already have at our disposal. To understand
+the construction of the css selector, please have another look into chapter
+<a href="css-selectors-developer-tools.html#css">5.1</a>. Note that this is only one of many possible selectors that can
+achieve the goal of selecting the two links of interest.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="parsing-csv-files-with-readr.html#cb7-1" aria-hidden="true" tabindex="-1"></a>website <span class="ot">&lt;-</span> <span class="st">&quot;https://www.bundeswahlleiter.de/bundestagswahlen/2017/ergebnisse/repraesentative-wahlstatistik.html&quot;</span> <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="parsing-csv-files-with-readr.html#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_html</span>()</span>
+<span id="cb7-3"><a href="parsing-csv-files-with-readr.html#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="parsing-csv-files-with-readr.html#cb7-4" aria-hidden="true" tabindex="-1"></a>a_nodes <span class="ot">&lt;-</span> website <span class="sc">%&gt;%</span> </span>
+<span id="cb7-5"><a href="parsing-csv-files-with-readr.html#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;ul[style=&#39;list-style-type:none&#39;] &gt; li:first-child &gt; a, ul[style=&#39;list-style-type:none&#39;] &gt; li:nth-child(2) &gt; a&quot;</span>)</span>
+<span id="cb7-6"><a href="parsing-csv-files-with-readr.html#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="parsing-csv-files-with-readr.html#cb7-7" aria-hidden="true" tabindex="-1"></a>a_nodes</span>
+<span id="cb7-8"><a href="parsing-csv-files-with-readr.html#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (2)}</span></span>
+<span id="cb7-9"><a href="parsing-csv-files-with-readr.html#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;a data-file-extension=&quot;CSV&quot; data-file-size=&quot;40,53 kB&quot; title=&quot;Link zur CS ...</span></span>
+<span id="cb7-10"><a href="parsing-csv-files-with-readr.html#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;a data-file-extension=&quot;CSV&quot; data-file-size=&quot;68,82 kB&quot; title=&quot;Link zur CS ...</span></span>
+<span id="cb7-11"><a href="parsing-csv-files-with-readr.html#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="parsing-csv-files-with-readr.html#cb7-12" aria-hidden="true" tabindex="-1"></a>links <span class="ot">&lt;-</span> a_nodes <span class="sc">%&gt;%</span></span>
+<span id="cb7-13"><a href="parsing-csv-files-with-readr.html#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_attr</span>(<span class="at">name =</span> <span class="st">&quot;href&quot;</span>)</span>
+<span id="cb7-14"><a href="parsing-csv-files-with-readr.html#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="parsing-csv-files-with-readr.html#cb7-15" aria-hidden="true" tabindex="-1"></a>links</span>
+<span id="cb7-16"><a href="parsing-csv-files-with-readr.html#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;../../../dam/jcr/38972966-dc3d-40fa-91d7-6599d913f5e9/btw17_rws_bw2.csv&quot; </span></span>
+<span id="cb7-17"><a href="parsing-csv-files-with-readr.html#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &quot;../../../dam/jcr/a67208c0-2a2b-41aa-abb8-204b09e73b6b/btw17_rws_bst2.csv&quot;</span></span></code></pre></div>
+<p>We achieved our goal of extracting the links, but we also see, that these are
+not complete as they are missing their base URL. This works on the website, as
+the link is relative. To access the files directly, we need an absolute link
+though. As before (sub section <a href="rvest3.html#sub-pgs">7.2.2</a>) we can use the function <code>str_c()</code>
+to construct the complete URLs. If we give <code>str_c()</code> a vector as one of it’s
+input arguments, the function will repeat the string connection for each element
+in the vector. In this case we can ignore the “../../../” part of the link as it
+will work regardless. To remove the part we could apply some of the functions
+from the stringr package. For this we would need some basic knowledge in string
+manipulation and regular expressions. If you want to further follow the road of
+Web Scraping, you absolutely should acquire this knowledge at some point, but it
+lies outside the scope of this introduction. A good starting point could be the
+chapter on string from “R for Data Science” by Wickham and Grolemund:
+<a href="https://r4ds.had.co.nz/strings.html" target="_blank">https://r4ds.had.co.nz/strings.html</a></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="parsing-csv-files-with-readr.html#cb8-1" aria-hidden="true" tabindex="-1"></a>links <span class="ot">&lt;-</span> <span class="fu">str_c</span>(<span class="st">&quot;https://www.bundeswahlleiter.de/&quot;</span>, links)</span>
+<span id="cb8-2"><a href="parsing-csv-files-with-readr.html#cb8-2" aria-hidden="true" tabindex="-1"></a>links</span>
+<span id="cb8-3"><a href="parsing-csv-files-with-readr.html#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;https://www.bundeswahlleiter.de/../../../dam/jcr/38972966-dc3d-40fa-91d7-6599d913f5e9/btw17_rws_bw2.csv&quot; </span></span>
+<span id="cb8-4"><a href="parsing-csv-files-with-readr.html#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &quot;https://www.bundeswahlleiter.de/../../../dam/jcr/a67208c0-2a2b-41aa-abb8-204b09e73b6b/btw17_rws_bst2.csv&quot;</span></span></code></pre></div>
+<p>Now that we we have complete absolute links, we can download the files to our
+hard drive. To achieve this, we can use the base R function <code>download.file()</code>.
+We have to specify an URL as it’s first argument as well as a path and file name
+for the <code>destfile</code> argument. When no path is given, the file is saved in the
+directory where your R script is located.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="parsing-csv-files-with-readr.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(links[<span class="dv">1</span>], <span class="at">destfile =</span>  <span class="st">&quot;eligible.csv&quot;</span>)</span>
+<span id="cb9-2"><a href="parsing-csv-files-with-readr.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(links[<span class="dv">2</span>], <span class="at">destfile =</span>  <span class="st">&quot;turnout.csv&quot;</span>)</span></code></pre></div>
+<p>We could also have used <code>read_csv()</code> to parse the CSV files directly from the
+web. Still, sometimes it may be a good idea to download the files to our hard
+drives, as we only have to do this once and thus decrease traffic for the server
+and also increase the efficiency of our code. But this is only a benefit, if we
+run the download once and not every time we rerun our script. So you should
+maybe comment out the lines where the download occurs after it was successful.
+In chapter (good_practice) we will discuss a way to do this more elegantly.</p>
+</div>
+<div id="parsing-the-csv-files" class="section level4" number="10.2.1.2">
+<h4><span class="header-section-number">10.2.1.2</span> Parsing the csv files</h4>
+<p>Now we can parse the downloaded CSV files into R objects. But first let’s have a
+look at the CSV files. You can open them in a text editor of your choosing or
+directly in RStudio. Importing them into Excel or a similar spreadsheet software
+is not a valid option here, as we want to see the raw contents of the file and
+not a representation of the data.</p>
+<p>Looking at eligible.csv we notice at least two things. Firstly, the delimiter
+used here is not a comma but a semicolon. The default CSV style discussed above
+is common in those countries where a “.” is used as the decimal point. Thus the
+“,” is available to be used as a delimiter. In countries where the “,” is used
+as a decimal point, it is not available and thus the “;” is used as a delimiter.
+The function <code>read_csv2()</code> can be used in this case. Even more general is
+<code>read_delim()</code> as the delimiting character can be defined as an argument.
+Secondly, we see that the first 8 lines are neither column names or data but
+contain comments on the CSV file itself. We have to tell <code>read_csv2()</code> so ignore
+these lines. We could use the argument <code>skip</code> to tell R to ignore the first 8
+lines. But as these comments are neatly introduced with an <code>#</code> we can use the
+<code>comment</code> argument instead and specify the <code>#</code> as the identifier for comments,
+which then will be ignored.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="parsing-csv-files-with-readr.html#cb10-1" aria-hidden="true" tabindex="-1"></a>eligible_tbl <span class="ot">&lt;-</span> <span class="fu">read_csv2</span>(<span class="st">&quot;eligible.csv&quot;</span>, <span class="at">comment =</span> <span class="st">&quot;#&quot;</span>)</span>
+<span id="cb10-2"><a href="parsing-csv-files-with-readr.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="do">## ℹ Using &#39;,&#39; as decimal and &#39;.&#39; as grouping mark. Use `read_delim()` for more control.</span></span>
+<span id="cb10-3"><a href="parsing-csv-files-with-readr.html#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb10-4"><a href="parsing-csv-files-with-readr.html#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="do">## ── Column specification ────────────────────────────────────────────────────────</span></span>
+<span id="cb10-5"><a href="parsing-csv-files-with-readr.html#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="do">## cols(</span></span>
+<span id="cb10-6"><a href="parsing-csv-files-with-readr.html#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   Land = col_character(),</span></span>
+<span id="cb10-7"><a href="parsing-csv-files-with-readr.html#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   Geschlecht = col_character(),</span></span>
+<span id="cb10-8"><a href="parsing-csv-files-with-readr.html#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   Geburtsjahresgruppe = col_character(),</span></span>
+<span id="cb10-9"><a href="parsing-csv-files-with-readr.html#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="do">##   Wahlberechtigte = col_double(),</span></span>
+<span id="cb10-10"><a href="parsing-csv-files-with-readr.html#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   `Wahlberechtigte ohne Wahlscheinvermerk` = col_double(),</span></span>
+<span id="cb10-11"><a href="parsing-csv-files-with-readr.html#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="do">##   `Wahlberechtigte mit Wahlscheinvermerk` = col_double(),</span></span>
+<span id="cb10-12"><a href="parsing-csv-files-with-readr.html#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="do">##   `Wähler/-innen` = col_double(),</span></span>
+<span id="cb10-13"><a href="parsing-csv-files-with-readr.html#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="do">##   `Wähler/-innen ohne Wahlschein` = col_double(),</span></span>
+<span id="cb10-14"><a href="parsing-csv-files-with-readr.html#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="do">##   `Wähler/-innen mit Wahlschein` = col_double(),</span></span>
+<span id="cb10-15"><a href="parsing-csv-files-with-readr.html#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="do">##   Wahlbeteiligung = col_double()</span></span>
+<span id="cb10-16"><a href="parsing-csv-files-with-readr.html#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="do">## )</span></span>
+<span id="cb10-17"><a href="parsing-csv-files-with-readr.html#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-18"><a href="parsing-csv-files-with-readr.html#cb10-18" aria-hidden="true" tabindex="-1"></a>eligible_tbl</span>
+<span id="cb10-19"><a href="parsing-csv-files-with-readr.html#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 627 x 10</span></span>
+<span id="cb10-20"><a href="parsing-csv-files-with-readr.html#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="do">##    Land  Geschlecht Geburtsjahresgr… Wahlberechtigte `Wahlberechtigt…</span></span>
+<span id="cb10-21"><a href="parsing-csv-files-with-readr.html#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;                      &lt;dbl&gt;            &lt;dbl&gt;</span></span>
+<span id="cb10-22"><a href="parsing-csv-files-with-readr.html#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Bund  Summe      Summe                   61688485         47595800</span></span>
+<span id="cb10-23"><a href="parsing-csv-files-with-readr.html#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Bund  Summe      1997 - 1999              2045501          1709333</span></span>
+<span id="cb10-24"><a href="parsing-csv-files-with-readr.html#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Bund  Summe      1993 - 1996              2902998          2295723</span></span>
+<span id="cb10-25"><a href="parsing-csv-files-with-readr.html#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Bund  Summe      1988 - 1992              4206014          3311417</span></span>
+<span id="cb10-26"><a href="parsing-csv-files-with-readr.html#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Bund  Summe      1983 - 1987              4302277          3455795</span></span>
+<span id="cb10-27"><a href="parsing-csv-files-with-readr.html#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Bund  Summe      1978 - 1982              4264347          3490155</span></span>
+<span id="cb10-28"><a href="parsing-csv-files-with-readr.html#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Bund  Summe      1973 - 1977              3953481          3273575</span></span>
+<span id="cb10-29"><a href="parsing-csv-files-with-readr.html#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Bund  Summe      1968 - 1972              5230865          4232089</span></span>
+<span id="cb10-30"><a href="parsing-csv-files-with-readr.html#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Bund  Summe      1958 - 1967             12396299          9581842</span></span>
+<span id="cb10-31"><a href="parsing-csv-files-with-readr.html#cb10-31" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Bund  Summe      1948 - 1957              9487267          6950185</span></span>
+<span id="cb10-32"><a href="parsing-csv-files-with-readr.html#cb10-32" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 617 more rows, and 5 more variables: `Wahlberechtigte mit</span></span>
+<span id="cb10-33"><a href="parsing-csv-files-with-readr.html#cb10-33" aria-hidden="true" tabindex="-1"></a><span class="do">## #   Wahlscheinvermerk` &lt;dbl&gt;, `Wähler/-innen` &lt;dbl&gt;, `Wähler/-innen ohne</span></span>
+<span id="cb10-34"><a href="parsing-csv-files-with-readr.html#cb10-34" aria-hidden="true" tabindex="-1"></a><span class="do">## #   Wahlschein` &lt;dbl&gt;, `Wähler/-innen mit Wahlschein` &lt;dbl&gt;,</span></span>
+<span id="cb10-35"><a href="parsing-csv-files-with-readr.html#cb10-35" aria-hidden="true" tabindex="-1"></a><span class="do">## #   Wahlbeteiligung &lt;dbl&gt;</span></span>
+<span id="cb10-36"><a href="parsing-csv-files-with-readr.html#cb10-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-37"><a href="parsing-csv-files-with-readr.html#cb10-37" aria-hidden="true" tabindex="-1"></a>turnout_tbl <span class="ot">&lt;-</span> <span class="fu">read_csv2</span>(<span class="st">&quot;turnout.csv&quot;</span>, <span class="at">comment =</span> <span class="st">&quot;#&quot;</span>)</span>
+<span id="cb10-38"><a href="parsing-csv-files-with-readr.html#cb10-38" aria-hidden="true" tabindex="-1"></a><span class="do">## ℹ Using &#39;,&#39; as decimal and &#39;.&#39; as grouping mark. Use `read_delim()` for more control.</span></span>
+<span id="cb10-39"><a href="parsing-csv-files-with-readr.html#cb10-39" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb10-40"><a href="parsing-csv-files-with-readr.html#cb10-40" aria-hidden="true" tabindex="-1"></a><span class="do">## ── Column specification ────────────────────────────────────────────────────────</span></span>
+<span id="cb10-41"><a href="parsing-csv-files-with-readr.html#cb10-41" aria-hidden="true" tabindex="-1"></a><span class="do">## cols(</span></span>
+<span id="cb10-42"><a href="parsing-csv-files-with-readr.html#cb10-42" aria-hidden="true" tabindex="-1"></a><span class="do">##   Land = col_character(),</span></span>
+<span id="cb10-43"><a href="parsing-csv-files-with-readr.html#cb10-43" aria-hidden="true" tabindex="-1"></a><span class="do">##   `Erst-/Zweitstimme` = col_double(),</span></span>
+<span id="cb10-44"><a href="parsing-csv-files-with-readr.html#cb10-44" aria-hidden="true" tabindex="-1"></a><span class="do">##   Geschlecht = col_character(),</span></span>
+<span id="cb10-45"><a href="parsing-csv-files-with-readr.html#cb10-45" aria-hidden="true" tabindex="-1"></a><span class="do">##   Geburtsjahresgruppe = col_character(),</span></span>
+<span id="cb10-46"><a href="parsing-csv-files-with-readr.html#cb10-46" aria-hidden="true" tabindex="-1"></a><span class="do">##   Summe = col_double(),</span></span>
+<span id="cb10-47"><a href="parsing-csv-files-with-readr.html#cb10-47" aria-hidden="true" tabindex="-1"></a><span class="do">##   Ungültig = col_double(),</span></span>
+<span id="cb10-48"><a href="parsing-csv-files-with-readr.html#cb10-48" aria-hidden="true" tabindex="-1"></a><span class="do">##   CDU = col_double(),</span></span>
+<span id="cb10-49"><a href="parsing-csv-files-with-readr.html#cb10-49" aria-hidden="true" tabindex="-1"></a><span class="do">##   SPD = col_double(),</span></span>
+<span id="cb10-50"><a href="parsing-csv-files-with-readr.html#cb10-50" aria-hidden="true" tabindex="-1"></a><span class="do">##   `DIE LINKE` = col_double(),</span></span>
+<span id="cb10-51"><a href="parsing-csv-files-with-readr.html#cb10-51" aria-hidden="true" tabindex="-1"></a><span class="do">##   GRÜNE = col_double(),</span></span>
+<span id="cb10-52"><a href="parsing-csv-files-with-readr.html#cb10-52" aria-hidden="true" tabindex="-1"></a><span class="do">##   CSU = col_double(),</span></span>
+<span id="cb10-53"><a href="parsing-csv-files-with-readr.html#cb10-53" aria-hidden="true" tabindex="-1"></a><span class="do">##   FDP = col_double(),</span></span>
+<span id="cb10-54"><a href="parsing-csv-files-with-readr.html#cb10-54" aria-hidden="true" tabindex="-1"></a><span class="do">##   AfD = col_double(),</span></span>
+<span id="cb10-55"><a href="parsing-csv-files-with-readr.html#cb10-55" aria-hidden="true" tabindex="-1"></a><span class="do">##   Sonstige = col_double(),</span></span>
+<span id="cb10-56"><a href="parsing-csv-files-with-readr.html#cb10-56" aria-hidden="true" tabindex="-1"></a><span class="do">##   `dar. NPD` = col_double(),</span></span>
+<span id="cb10-57"><a href="parsing-csv-files-with-readr.html#cb10-57" aria-hidden="true" tabindex="-1"></a><span class="do">##   `dar. FREIE WÄHLER` = col_double()</span></span>
+<span id="cb10-58"><a href="parsing-csv-files-with-readr.html#cb10-58" aria-hidden="true" tabindex="-1"></a><span class="do">## )</span></span>
+<span id="cb10-59"><a href="parsing-csv-files-with-readr.html#cb10-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-60"><a href="parsing-csv-files-with-readr.html#cb10-60" aria-hidden="true" tabindex="-1"></a>turnout_tbl</span>
+<span id="cb10-61"><a href="parsing-csv-files-with-readr.html#cb10-61" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 798 x 16</span></span>
+<span id="cb10-62"><a href="parsing-csv-files-with-readr.html#cb10-62" aria-hidden="true" tabindex="-1"></a><span class="do">##    Land  `Erst-/Zweitsti… Geschlecht Geburtsjahresgr…  Summe Ungültig    CDU</span></span>
+<span id="cb10-63"><a href="parsing-csv-files-with-readr.html#cb10-63" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;             &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;</span></span>
+<span id="cb10-64"><a href="parsing-csv-files-with-readr.html#cb10-64" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Bund                 1 Summe      Summe            4.70e7   586726 1.40e7</span></span>
+<span id="cb10-65"><a href="parsing-csv-files-with-readr.html#cb10-65" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Bund                 1 Summe      1993 - 1999      3.37e6    37704 8.19e5</span></span>
+<span id="cb10-66"><a href="parsing-csv-files-with-readr.html#cb10-66" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Bund                 1 Summe      1983 - 1992      6.04e6    58687 1.51e6</span></span>
+<span id="cb10-67"><a href="parsing-csv-files-with-readr.html#cb10-67" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Bund                 1 Summe      1973 - 1982      6.23e6    62068 1.74e6</span></span>
+<span id="cb10-68"><a href="parsing-csv-files-with-readr.html#cb10-68" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Bund                 1 Summe      1958 - 1972      1.39e7   146749 3.81e6</span></span>
+<span id="cb10-69"><a href="parsing-csv-files-with-readr.html#cb10-69" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Bund                 1 Summe      1948 - 1957      7.69e6   103820 2.31e6</span></span>
+<span id="cb10-70"><a href="parsing-csv-files-with-readr.html#cb10-70" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Bund                 1 Summe      1947 und früher  9.73e6   177697 3.84e6</span></span>
+<span id="cb10-71"><a href="parsing-csv-files-with-readr.html#cb10-71" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Bund                 1 m          Summe            2.28e7   274037 6.30e6</span></span>
+<span id="cb10-72"><a href="parsing-csv-files-with-readr.html#cb10-72" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Bund                 1 m          1993 - 1999      1.69e6    20330 4.02e5</span></span>
+<span id="cb10-73"><a href="parsing-csv-files-with-readr.html#cb10-73" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Bund                 1 m          1983 - 1992      3.00e6    29800 7.07e5</span></span>
+<span id="cb10-74"><a href="parsing-csv-files-with-readr.html#cb10-74" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 788 more rows, and 9 more variables: SPD &lt;dbl&gt;, `DIE LINKE` &lt;dbl&gt;,</span></span>
+<span id="cb10-75"><a href="parsing-csv-files-with-readr.html#cb10-75" aria-hidden="true" tabindex="-1"></a><span class="do">## #   GRÜNE &lt;dbl&gt;, CSU &lt;dbl&gt;, FDP &lt;dbl&gt;, AfD &lt;dbl&gt;, Sonstige &lt;dbl&gt;, `dar.</span></span>
+<span id="cb10-76"><a href="parsing-csv-files-with-readr.html#cb10-76" aria-hidden="true" tabindex="-1"></a><span class="do">## #   NPD` &lt;dbl&gt;, `dar. FREIE WÄHLER` &lt;dbl&gt;</span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="transformation-with-dplyr" class="section level2" number="10.3">
+<h2><span class="header-section-number">10.3</span> Transformation with dplyr</h2>
+<p>At this point you should have a look at both tibbles either by clicking on them
+in the environment tab or by writing <code>View(eligible_tbl)</code> and
+<code>View(turnout_tbl)</code>.</p>
+<p>A quick sidenote: You will notice, that most of the values we will compute in
+this chapter are already present in eligible.csv. We will soon drop those and
+compute them ourselves for the sake of having a good introductory example into
+data transformation. In a real world scenario we would most probably just use
+the values for turnout percentages etc. already present in the data.</p>
+<p>In the following, we will use several functions from the tidyverse package
+dplyr to filter observations, select columns and add new columns as
+computations of existing ones.</p>
+<div id="filter" class="section level3" number="10.3.1">
+<h3><span class="header-section-number">10.3.1</span> <code>filter()</code></h3>
+<p>As a first step, we should limit our tibbles to the observations we actually
+need. For this example we should limit ourselves to an analysis on the federal
+level. Thus we can drop all observations referring to the individual states. We
+will also drop the totals for the gender and year of birth columns and compute
+them ourselves later on.</p>
+<p>To filter on the observations we need and drop the remainder, we can use the
+function <code>filter()</code>. It takes the tibble or data frame to be filtered as it’s
+first argument – which we don’t need to specify when using the pipe – and one
+or multiple expressions that specify which observations are to be filtered.</p>
+<p>To filter only those observations that have the value “Bund” for the column
+“Land”, we can write:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="parsing-csv-files-with-readr.html#cb11-1" aria-hidden="true" tabindex="-1"></a>eligible_tbl <span class="sc">%&gt;%</span> </span>
+<span id="cb11-2"><a href="parsing-csv-files-with-readr.html#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Land <span class="sc">==</span> <span class="st">&quot;Bund&quot;</span>)</span>
+<span id="cb11-3"><a href="parsing-csv-files-with-readr.html#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 33 x 10</span></span>
+<span id="cb11-4"><a href="parsing-csv-files-with-readr.html#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="do">##    Land  Geschlecht Geburtsjahresgr… Wahlberechtigte `Wahlberechtigt…</span></span>
+<span id="cb11-5"><a href="parsing-csv-files-with-readr.html#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;                      &lt;dbl&gt;            &lt;dbl&gt;</span></span>
+<span id="cb11-6"><a href="parsing-csv-files-with-readr.html#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Bund  Summe      Summe                   61688485         47595800</span></span>
+<span id="cb11-7"><a href="parsing-csv-files-with-readr.html#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Bund  Summe      1997 - 1999              2045501          1709333</span></span>
+<span id="cb11-8"><a href="parsing-csv-files-with-readr.html#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Bund  Summe      1993 - 1996              2902998          2295723</span></span>
+<span id="cb11-9"><a href="parsing-csv-files-with-readr.html#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Bund  Summe      1988 - 1992              4206014          3311417</span></span>
+<span id="cb11-10"><a href="parsing-csv-files-with-readr.html#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Bund  Summe      1983 - 1987              4302277          3455795</span></span>
+<span id="cb11-11"><a href="parsing-csv-files-with-readr.html#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Bund  Summe      1978 - 1982              4264347          3490155</span></span>
+<span id="cb11-12"><a href="parsing-csv-files-with-readr.html#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Bund  Summe      1973 - 1977              3953481          3273575</span></span>
+<span id="cb11-13"><a href="parsing-csv-files-with-readr.html#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Bund  Summe      1968 - 1972              5230865          4232089</span></span>
+<span id="cb11-14"><a href="parsing-csv-files-with-readr.html#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Bund  Summe      1958 - 1967             12396299          9581842</span></span>
+<span id="cb11-15"><a href="parsing-csv-files-with-readr.html#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Bund  Summe      1948 - 1957              9487267          6950185</span></span>
+<span id="cb11-16"><a href="parsing-csv-files-with-readr.html#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 23 more rows, and 5 more variables: `Wahlberechtigte mit</span></span>
+<span id="cb11-17"><a href="parsing-csv-files-with-readr.html#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="do">## #   Wahlscheinvermerk` &lt;dbl&gt;, `Wähler/-innen` &lt;dbl&gt;, `Wähler/-innen ohne</span></span>
+<span id="cb11-18"><a href="parsing-csv-files-with-readr.html#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="do">## #   Wahlschein` &lt;dbl&gt;, `Wähler/-innen mit Wahlschein` &lt;dbl&gt;,</span></span>
+<span id="cb11-19"><a href="parsing-csv-files-with-readr.html#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="do">## #   Wahlbeteiligung &lt;dbl&gt;</span></span></code></pre></div>
+<p>Thus only the observations for “Bund” remain in the tibble. Or in other words,
+those observations for whom the expression <code>Land == "Bund"</code> is returned as
+<code>TRUE</code>. Besides <code>==</code>, all other comparison operators can be used and we can
+chain multiple expressions to be filtered upon in one call of <code>filter()</code>. So, to
+filter on those observations who refer to the “Bund” and don’t have a sum for
+the gender and year of birth columns, we can write:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="parsing-csv-files-with-readr.html#cb12-1" aria-hidden="true" tabindex="-1"></a>eligible_tbl <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="parsing-csv-files-with-readr.html#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Land <span class="sc">==</span> <span class="st">&quot;Bund&quot;</span>, Geschlecht <span class="sc">!=</span> <span class="st">&quot;Summe&quot;</span>, Geburtsjahresgruppe <span class="sc">!=</span> <span class="st">&quot;Summe&quot;</span>)</span>
+<span id="cb12-3"><a href="parsing-csv-files-with-readr.html#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 20 x 10</span></span>
+<span id="cb12-4"><a href="parsing-csv-files-with-readr.html#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="do">##    Land  Geschlecht Geburtsjahresgr… Wahlberechtigte `Wahlberechtigt…</span></span>
+<span id="cb12-5"><a href="parsing-csv-files-with-readr.html#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;                      &lt;dbl&gt;            &lt;dbl&gt;</span></span>
+<span id="cb12-6"><a href="parsing-csv-files-with-readr.html#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Bund  m          1997 - 1999              1046360           893024</span></span>
+<span id="cb12-7"><a href="parsing-csv-files-with-readr.html#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Bund  m          1993 - 1996              1479600          1210140</span></span>
+<span id="cb12-8"><a href="parsing-csv-files-with-readr.html#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Bund  m          1988 - 1992              2143419          1725440</span></span>
+<span id="cb12-9"><a href="parsing-csv-files-with-readr.html#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Bund  m          1983 - 1987              2185551          1777746</span></span>
+<span id="cb12-10"><a href="parsing-csv-files-with-readr.html#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Bund  m          1978 - 1982              2147986          1772715</span></span>
+<span id="cb12-11"><a href="parsing-csv-files-with-readr.html#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Bund  m          1973 - 1977              1990144          1655475</span></span>
+<span id="cb12-12"><a href="parsing-csv-files-with-readr.html#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Bund  m          1968 - 1972              2630344          2157384</span></span>
+<span id="cb12-13"><a href="parsing-csv-files-with-readr.html#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Bund  m          1958 - 1967              6205978          4896721</span></span>
+<span id="cb12-14"><a href="parsing-csv-files-with-readr.html#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Bund  m          1948 - 1957              4602052          3418179</span></span>
+<span id="cb12-15"><a href="parsing-csv-files-with-readr.html#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Bund  m          1947 und früher          5381355          3865963</span></span>
+<span id="cb12-16"><a href="parsing-csv-files-with-readr.html#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 11 Bund  w          1997 - 1999               999140           816309</span></span>
+<span id="cb12-17"><a href="parsing-csv-files-with-readr.html#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 12 Bund  w          1993 - 1996              1423399          1085584</span></span>
+<span id="cb12-18"><a href="parsing-csv-files-with-readr.html#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 13 Bund  w          1988 - 1992              2062596          1585978</span></span>
+<span id="cb12-19"><a href="parsing-csv-files-with-readr.html#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 14 Bund  w          1983 - 1987              2116726          1678049</span></span>
+<span id="cb12-20"><a href="parsing-csv-files-with-readr.html#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 15 Bund  w          1978 - 1982              2116362          1717440</span></span>
+<span id="cb12-21"><a href="parsing-csv-files-with-readr.html#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 16 Bund  w          1973 - 1977              1963337          1618100</span></span>
+<span id="cb12-22"><a href="parsing-csv-files-with-readr.html#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 17 Bund  w          1968 - 1972              2600522          2074705</span></span>
+<span id="cb12-23"><a href="parsing-csv-files-with-readr.html#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="do">## 18 Bund  w          1958 - 1967              6190321          4685122</span></span>
+<span id="cb12-24"><a href="parsing-csv-files-with-readr.html#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="do">## 19 Bund  w          1948 - 1957              4885215          3532006</span></span>
+<span id="cb12-25"><a href="parsing-csv-files-with-readr.html#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="do">## 20 Bund  w          1947 und früher          7518080          5429723</span></span>
+<span id="cb12-26"><a href="parsing-csv-files-with-readr.html#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 5 more variables: `Wahlberechtigte mit Wahlscheinvermerk` &lt;dbl&gt;,</span></span>
+<span id="cb12-27"><a href="parsing-csv-files-with-readr.html#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="do">## #   `Wähler/-innen` &lt;dbl&gt;, `Wähler/-innen ohne Wahlschein` &lt;dbl&gt;,</span></span>
+<span id="cb12-28"><a href="parsing-csv-files-with-readr.html#cb12-28" aria-hidden="true" tabindex="-1"></a><span class="do">## #   `Wähler/-innen mit Wahlschein` &lt;dbl&gt;, Wahlbeteiligung &lt;dbl&gt;</span></span></code></pre></div>
+<p>We can also use logical operators – <code>&amp;</code> for “and”, <code>|</code> for “or” – when
+combining expressions to be filtered upon. So instead of <code>Geschlecht = "Summe"</code>
+another approach would be to filter those that have “m” or “w” as values. To
+demonstrate this, let us filter the object <code>turnout_tbl</code>as well. Here we have an
+additional column we have to filter for called “Erst-/Zweitstimme”. I propose
+we only analyse the party votes.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="parsing-csv-files-with-readr.html#cb13-1" aria-hidden="true" tabindex="-1"></a>turnout_tbl <span class="sc">%&gt;%</span> </span>
+<span id="cb13-2"><a href="parsing-csv-files-with-readr.html#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Land <span class="sc">==</span> <span class="st">&quot;Bund&quot;</span>,</span>
+<span id="cb13-3"><a href="parsing-csv-files-with-readr.html#cb13-3" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">Erst-/Zweitstimme</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">2</span>,</span>
+<span id="cb13-4"><a href="parsing-csv-files-with-readr.html#cb13-4" aria-hidden="true" tabindex="-1"></a>         Geschlecht <span class="sc">==</span> <span class="st">&quot;m&quot;</span> <span class="sc">|</span> Geschlecht <span class="sc">==</span> <span class="st">&quot;w&quot;</span>,</span>
+<span id="cb13-5"><a href="parsing-csv-files-with-readr.html#cb13-5" aria-hidden="true" tabindex="-1"></a>         Geburtsjahresgruppe <span class="sc">!=</span> <span class="st">&quot;Summe&quot;</span>)</span>
+<span id="cb13-6"><a href="parsing-csv-files-with-readr.html#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 12 x 16</span></span>
+<span id="cb13-7"><a href="parsing-csv-files-with-readr.html#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="do">##    Land  `Erst-/Zweitsti… Geschlecht Geburtsjahresgr…  Summe Ungültig    CDU</span></span>
+<span id="cb13-8"><a href="parsing-csv-files-with-readr.html#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;             &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;</span></span>
+<span id="cb13-9"><a href="parsing-csv-files-with-readr.html#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Bund                 2 m          1993 - 1999      1.69e6    13189 3.00e5</span></span>
+<span id="cb13-10"><a href="parsing-csv-files-with-readr.html#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Bund                 2 m          1983 - 1992      3.00e6    19674 5.55e5</span></span>
+<span id="cb13-11"><a href="parsing-csv-files-with-readr.html#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Bund                 2 m          1973 - 1982      3.09e6    19901 6.66e5</span></span>
+<span id="cb13-12"><a href="parsing-csv-files-with-readr.html#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Bund                 2 m          1958 - 1972      6.93e6    47053 1.54e6</span></span>
+<span id="cb13-13"><a href="parsing-csv-files-with-readr.html#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Bund                 2 m          1948 - 1957      3.74e6    34896 8.75e5</span></span>
+<span id="cb13-14"><a href="parsing-csv-files-with-readr.html#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Bund                 2 m          1947 und früher  4.30e6    65480 1.36e6</span></span>
+<span id="cb13-15"><a href="parsing-csv-files-with-readr.html#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Bund                 2 w          1993 - 1999      1.67e6    11114 3.65e5</span></span>
+<span id="cb13-16"><a href="parsing-csv-files-with-readr.html#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Bund                 2 w          1983 - 1992      3.04e6    20091 7.31e5</span></span>
+<span id="cb13-17"><a href="parsing-csv-files-with-readr.html#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Bund                 2 w          1973 - 1982      3.14e6    22593 8.53e5</span></span>
+<span id="cb13-18"><a href="parsing-csv-files-with-readr.html#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Bund                 2 w          1958 - 1972      6.99e6    56535 1.89e6</span></span>
+<span id="cb13-19"><a href="parsing-csv-files-with-readr.html#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 11 Bund                 2 w          1948 - 1957      3.95e6    45878 1.19e6</span></span>
+<span id="cb13-20"><a href="parsing-csv-files-with-readr.html#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 12 Bund                 2 w          1947 und früher  5.43e6   104446 2.12e6</span></span>
+<span id="cb13-21"><a href="parsing-csv-files-with-readr.html#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 9 more variables: SPD &lt;dbl&gt;, `DIE LINKE` &lt;dbl&gt;, GRÜNE &lt;dbl&gt;,</span></span>
+<span id="cb13-22"><a href="parsing-csv-files-with-readr.html#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="do">## #   CSU &lt;dbl&gt;, FDP &lt;dbl&gt;, AfD &lt;dbl&gt;, Sonstige &lt;dbl&gt;, `dar. NPD` &lt;dbl&gt;, `dar.</span></span>
+<span id="cb13-23"><a href="parsing-csv-files-with-readr.html#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="do">## #   FREIE WÄHLER` &lt;dbl&gt;</span></span></code></pre></div>
+<p>When we create rather long function calls with many arguments, it is often a
+good idea to insert some line breaks to keep your code easily readable, as seen
+above.</p>
+<p>Let’s have another look at this line: <code>`Erst-/Zweitstimme` == 2,</code>. You will
+notice, that the name of the column is enclosed by <em>backticks</em> <code>`</code>. In
+general, object and variable (ie. column) names in R can only contain letters,
+numbers, points and underscores and have to start with a letter. It is possible
+to have names that violate those rules, but these have to enclosed in backticks.
+As you can see, “Erst-/Zweitstimme” contains two characters that are not allowed
+in R names. <code>turnout_tbl</code> also contains the column “DIE LINKE”. The usage of
+whitespace in names is also not allowed. So to address this column in our code,
+we would have to write <code></code>DIE LINKE<code></code>.</p>
+</div>
+<div id="select" class="section level3" number="10.3.2">
+<h3><span class="header-section-number">10.3.2</span> <code>select()</code></h3>
+<p>We should also limit our tibbles to the set of columns we will actually use.</p>
+<p>Looking at <code>eligible_tbl</code>, we will only need the first four columns. We can use
+the function <code>select()</code> to “select” the columns we need by name.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="parsing-csv-files-with-readr.html#cb14-1" aria-hidden="true" tabindex="-1"></a>eligible_tbl <span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a href="parsing-csv-files-with-readr.html#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Land, Geschlecht, Geburtsjahresgruppe, Wahlberechtigte)</span>
+<span id="cb14-3"><a href="parsing-csv-files-with-readr.html#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 627 x 4</span></span>
+<span id="cb14-4"><a href="parsing-csv-files-with-readr.html#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="do">##    Land  Geschlecht Geburtsjahresgruppe Wahlberechtigte</span></span>
+<span id="cb14-5"><a href="parsing-csv-files-with-readr.html#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;                         &lt;dbl&gt;</span></span>
+<span id="cb14-6"><a href="parsing-csv-files-with-readr.html#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Bund  Summe      Summe                      61688485</span></span>
+<span id="cb14-7"><a href="parsing-csv-files-with-readr.html#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Bund  Summe      1997 - 1999                 2045501</span></span>
+<span id="cb14-8"><a href="parsing-csv-files-with-readr.html#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Bund  Summe      1993 - 1996                 2902998</span></span>
+<span id="cb14-9"><a href="parsing-csv-files-with-readr.html#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Bund  Summe      1988 - 1992                 4206014</span></span>
+<span id="cb14-10"><a href="parsing-csv-files-with-readr.html#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Bund  Summe      1983 - 1987                 4302277</span></span>
+<span id="cb14-11"><a href="parsing-csv-files-with-readr.html#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Bund  Summe      1978 - 1982                 4264347</span></span>
+<span id="cb14-12"><a href="parsing-csv-files-with-readr.html#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Bund  Summe      1973 - 1977                 3953481</span></span>
+<span id="cb14-13"><a href="parsing-csv-files-with-readr.html#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Bund  Summe      1968 - 1972                 5230865</span></span>
+<span id="cb14-14"><a href="parsing-csv-files-with-readr.html#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Bund  Summe      1958 - 1967                12396299</span></span>
+<span id="cb14-15"><a href="parsing-csv-files-with-readr.html#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Bund  Summe      1948 - 1957                 9487267</span></span>
+<span id="cb14-16"><a href="parsing-csv-files-with-readr.html#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 617 more rows</span></span></code></pre></div>
+<p>If, as in this case, the columns we want so select follow each other in their
+positions in the tibble, we can also use a shorter “from:to” notation, that
+saves us somy typing.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="parsing-csv-files-with-readr.html#cb15-1" aria-hidden="true" tabindex="-1"></a>eligible_tbl <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="parsing-csv-files-with-readr.html#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Land<span class="sc">:</span>Wahlberechtigte)</span>
+<span id="cb15-3"><a href="parsing-csv-files-with-readr.html#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 627 x 4</span></span>
+<span id="cb15-4"><a href="parsing-csv-files-with-readr.html#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="do">##    Land  Geschlecht Geburtsjahresgruppe Wahlberechtigte</span></span>
+<span id="cb15-5"><a href="parsing-csv-files-with-readr.html#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;                         &lt;dbl&gt;</span></span>
+<span id="cb15-6"><a href="parsing-csv-files-with-readr.html#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Bund  Summe      Summe                      61688485</span></span>
+<span id="cb15-7"><a href="parsing-csv-files-with-readr.html#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Bund  Summe      1997 - 1999                 2045501</span></span>
+<span id="cb15-8"><a href="parsing-csv-files-with-readr.html#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Bund  Summe      1993 - 1996                 2902998</span></span>
+<span id="cb15-9"><a href="parsing-csv-files-with-readr.html#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Bund  Summe      1988 - 1992                 4206014</span></span>
+<span id="cb15-10"><a href="parsing-csv-files-with-readr.html#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Bund  Summe      1983 - 1987                 4302277</span></span>
+<span id="cb15-11"><a href="parsing-csv-files-with-readr.html#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Bund  Summe      1978 - 1982                 4264347</span></span>
+<span id="cb15-12"><a href="parsing-csv-files-with-readr.html#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Bund  Summe      1973 - 1977                 3953481</span></span>
+<span id="cb15-13"><a href="parsing-csv-files-with-readr.html#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Bund  Summe      1968 - 1972                 5230865</span></span>
+<span id="cb15-14"><a href="parsing-csv-files-with-readr.html#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Bund  Summe      1958 - 1967                12396299</span></span>
+<span id="cb15-15"><a href="parsing-csv-files-with-readr.html#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Bund  Summe      1948 - 1957                 9487267</span></span>
+<span id="cb15-16"><a href="parsing-csv-files-with-readr.html#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 617 more rows</span></span></code></pre></div>
+<p>At this point we can combine the filtering of rows and selection of columns in
+the pipe and assign the result to a new object. But first, let us think about
+again about which columns we will actually need. Above we selected the first
+four columns from <code>turnout_tbl</code>. But we do not actually need the column “Land”
+after we filtered for the rows containing the federal state level as it contains
+no useful information anymore. So we can drop the column, if we filter first.
+Order matters! For <code>turnout_tbl</code> this is also true but extends to the column
+“Erst-/Zweitstimme” which also only contains one value after filtering.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="parsing-csv-files-with-readr.html#cb16-1" aria-hidden="true" tabindex="-1"></a>eligible_tbl <span class="ot">&lt;-</span> eligible_tbl <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="parsing-csv-files-with-readr.html#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Land <span class="sc">==</span> <span class="st">&quot;Bund&quot;</span>, </span>
+<span id="cb16-3"><a href="parsing-csv-files-with-readr.html#cb16-3" aria-hidden="true" tabindex="-1"></a>         Geschlecht <span class="sc">!=</span> <span class="st">&quot;Summe&quot;</span>,</span>
+<span id="cb16-4"><a href="parsing-csv-files-with-readr.html#cb16-4" aria-hidden="true" tabindex="-1"></a>         Geburtsjahresgruppe <span class="sc">!=</span> <span class="st">&quot;Summe&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-5"><a href="parsing-csv-files-with-readr.html#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Geschlecht<span class="sc">:</span>Wahlberechtigte)</span>
+<span id="cb16-6"><a href="parsing-csv-files-with-readr.html#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="parsing-csv-files-with-readr.html#cb16-7" aria-hidden="true" tabindex="-1"></a>turnout_tbl <span class="ot">&lt;-</span> turnout_tbl <span class="sc">%&gt;%</span> </span>
+<span id="cb16-8"><a href="parsing-csv-files-with-readr.html#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Land <span class="sc">==</span> <span class="st">&quot;Bund&quot;</span>,</span>
+<span id="cb16-9"><a href="parsing-csv-files-with-readr.html#cb16-9" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">Erst-/Zweitstimme</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">2</span>,</span>
+<span id="cb16-10"><a href="parsing-csv-files-with-readr.html#cb16-10" aria-hidden="true" tabindex="-1"></a>         Geschlecht <span class="sc">==</span> <span class="st">&quot;m&quot;</span> <span class="sc">|</span> Geschlecht <span class="sc">==</span> <span class="st">&quot;w&quot;</span>,</span>
+<span id="cb16-11"><a href="parsing-csv-files-with-readr.html#cb16-11" aria-hidden="true" tabindex="-1"></a>         Geburtsjahresgruppe <span class="sc">!=</span> <span class="st">&quot;Summe&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-12"><a href="parsing-csv-files-with-readr.html#cb16-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Geschlecht<span class="sc">:</span>Summe)</span></code></pre></div>
+</div>
+<div id="rename" class="section level3" number="10.3.3">
+<h3><span class="header-section-number">10.3.3</span> <code>rename()</code></h3>
+<p>As we are working in english, it makes sense to also rename the columns using
+english wordings. Also, we have to write down the column names several time
+during analysis, so we should use names that are short but concise to limit
+unnecessary typing while maintaining recognisability. Imagine writing
+“Geburtsjahresgruppe” several times in your code, and you will know why
+renaming is approriate here. Also the column “Summe” in <code>turnout_tbl</code> does not
+describe what the values stored in it refer to. We should change this.</p>
+<p>One approach to renaming is using the function <code>rename()</code> from dplyr. The
+function takes the data to applied to as its first argument – passed by the
+pipe in this case – followed by one or more arguments in the form
+<code>new_name = old_name</code>.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="parsing-csv-files-with-readr.html#cb17-1" aria-hidden="true" tabindex="-1"></a>eligible_tbl <span class="ot">&lt;-</span> eligible_tbl <span class="sc">%&gt;%</span> </span>
+<span id="cb17-2"><a href="parsing-csv-files-with-readr.html#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">gender =</span> Geschlecht,</span>
+<span id="cb17-3"><a href="parsing-csv-files-with-readr.html#cb17-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">ybirth =</span> Geburtsjahresgruppe,</span>
+<span id="cb17-4"><a href="parsing-csv-files-with-readr.html#cb17-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">eligible =</span> Wahlberechtigte)</span>
+<span id="cb17-5"><a href="parsing-csv-files-with-readr.html#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="parsing-csv-files-with-readr.html#cb17-6" aria-hidden="true" tabindex="-1"></a>eligible_tbl</span>
+<span id="cb17-7"><a href="parsing-csv-files-with-readr.html#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 20 x 3</span></span>
+<span id="cb17-8"><a href="parsing-csv-files-with-readr.html#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="do">##    gender ybirth          eligible</span></span>
+<span id="cb17-9"><a href="parsing-csv-files-with-readr.html#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;  &lt;chr&gt;              &lt;dbl&gt;</span></span>
+<span id="cb17-10"><a href="parsing-csv-files-with-readr.html#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 m      1997 - 1999      1046360</span></span>
+<span id="cb17-11"><a href="parsing-csv-files-with-readr.html#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 m      1993 - 1996      1479600</span></span>
+<span id="cb17-12"><a href="parsing-csv-files-with-readr.html#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 m      1988 - 1992      2143419</span></span>
+<span id="cb17-13"><a href="parsing-csv-files-with-readr.html#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 m      1983 - 1987      2185551</span></span>
+<span id="cb17-14"><a href="parsing-csv-files-with-readr.html#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 m      1978 - 1982      2147986</span></span>
+<span id="cb17-15"><a href="parsing-csv-files-with-readr.html#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 m      1973 - 1977      1990144</span></span>
+<span id="cb17-16"><a href="parsing-csv-files-with-readr.html#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 m      1968 - 1972      2630344</span></span>
+<span id="cb17-17"><a href="parsing-csv-files-with-readr.html#cb17-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 m      1958 - 1967      6205978</span></span>
+<span id="cb17-18"><a href="parsing-csv-files-with-readr.html#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 m      1948 - 1957      4602052</span></span>
+<span id="cb17-19"><a href="parsing-csv-files-with-readr.html#cb17-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 m      1947 und früher  5381355</span></span>
+<span id="cb17-20"><a href="parsing-csv-files-with-readr.html#cb17-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 11 w      1997 - 1999       999140</span></span>
+<span id="cb17-21"><a href="parsing-csv-files-with-readr.html#cb17-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 12 w      1993 - 1996      1423399</span></span>
+<span id="cb17-22"><a href="parsing-csv-files-with-readr.html#cb17-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 13 w      1988 - 1992      2062596</span></span>
+<span id="cb17-23"><a href="parsing-csv-files-with-readr.html#cb17-23" aria-hidden="true" tabindex="-1"></a><span class="do">## 14 w      1983 - 1987      2116726</span></span>
+<span id="cb17-24"><a href="parsing-csv-files-with-readr.html#cb17-24" aria-hidden="true" tabindex="-1"></a><span class="do">## 15 w      1978 - 1982      2116362</span></span>
+<span id="cb17-25"><a href="parsing-csv-files-with-readr.html#cb17-25" aria-hidden="true" tabindex="-1"></a><span class="do">## 16 w      1973 - 1977      1963337</span></span>
+<span id="cb17-26"><a href="parsing-csv-files-with-readr.html#cb17-26" aria-hidden="true" tabindex="-1"></a><span class="do">## 17 w      1968 - 1972      2600522</span></span>
+<span id="cb17-27"><a href="parsing-csv-files-with-readr.html#cb17-27" aria-hidden="true" tabindex="-1"></a><span class="do">## 18 w      1958 - 1967      6190321</span></span>
+<span id="cb17-28"><a href="parsing-csv-files-with-readr.html#cb17-28" aria-hidden="true" tabindex="-1"></a><span class="do">## 19 w      1948 - 1957      4885215</span></span>
+<span id="cb17-29"><a href="parsing-csv-files-with-readr.html#cb17-29" aria-hidden="true" tabindex="-1"></a><span class="do">## 20 w      1947 und früher  7518080</span></span>
+<span id="cb17-30"><a href="parsing-csv-files-with-readr.html#cb17-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-31"><a href="parsing-csv-files-with-readr.html#cb17-31" aria-hidden="true" tabindex="-1"></a>turnout_tbl <span class="ot">&lt;-</span> turnout_tbl <span class="sc">%&gt;%</span> </span>
+<span id="cb17-32"><a href="parsing-csv-files-with-readr.html#cb17-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">gender =</span> Geschlecht,</span>
+<span id="cb17-33"><a href="parsing-csv-files-with-readr.html#cb17-33" aria-hidden="true" tabindex="-1"></a>         <span class="at">ybirth =</span> Geburtsjahresgruppe,</span>
+<span id="cb17-34"><a href="parsing-csv-files-with-readr.html#cb17-34" aria-hidden="true" tabindex="-1"></a>         <span class="at">turnout =</span> Summe)</span>
+<span id="cb17-35"><a href="parsing-csv-files-with-readr.html#cb17-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-36"><a href="parsing-csv-files-with-readr.html#cb17-36" aria-hidden="true" tabindex="-1"></a>turnout_tbl</span>
+<span id="cb17-37"><a href="parsing-csv-files-with-readr.html#cb17-37" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 12 x 3</span></span>
+<span id="cb17-38"><a href="parsing-csv-files-with-readr.html#cb17-38" aria-hidden="true" tabindex="-1"></a><span class="do">##    gender ybirth          turnout</span></span>
+<span id="cb17-39"><a href="parsing-csv-files-with-readr.html#cb17-39" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;  &lt;chr&gt;             &lt;dbl&gt;</span></span>
+<span id="cb17-40"><a href="parsing-csv-files-with-readr.html#cb17-40" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 m      1993 - 1999     1694779</span></span>
+<span id="cb17-41"><a href="parsing-csv-files-with-readr.html#cb17-41" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 m      1983 - 1992     3001418</span></span>
+<span id="cb17-42"><a href="parsing-csv-files-with-readr.html#cb17-42" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 m      1973 - 1982     3089525</span></span>
+<span id="cb17-43"><a href="parsing-csv-files-with-readr.html#cb17-43" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 m      1958 - 1972     6930258</span></span>
+<span id="cb17-44"><a href="parsing-csv-files-with-readr.html#cb17-44" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 m      1948 - 1957     3741274</span></span>
+<span id="cb17-45"><a href="parsing-csv-files-with-readr.html#cb17-45" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 m      1947 und früher 4300726</span></span>
+<span id="cb17-46"><a href="parsing-csv-files-with-readr.html#cb17-46" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 w      1993 - 1999     1674861</span></span>
+<span id="cb17-47"><a href="parsing-csv-files-with-readr.html#cb17-47" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 w      1983 - 1992     3038245</span></span>
+<span id="cb17-48"><a href="parsing-csv-files-with-readr.html#cb17-48" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 w      1973 - 1982     3137743</span></span>
+<span id="cb17-49"><a href="parsing-csv-files-with-readr.html#cb17-49" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 w      1958 - 1972     6987768</span></span>
+<span id="cb17-50"><a href="parsing-csv-files-with-readr.html#cb17-50" aria-hidden="true" tabindex="-1"></a><span class="do">## 11 w      1948 - 1957     3951857</span></span>
+<span id="cb17-51"><a href="parsing-csv-files-with-readr.html#cb17-51" aria-hidden="true" tabindex="-1"></a><span class="do">## 12 w      1947 und früher 5427886</span></span></code></pre></div>
+</div>
+<div id="mutate" class="section level3" number="10.3.4">
+<h3><span class="header-section-number">10.3.4</span> <code>mutate()</code></h3>
+<p>We will now leave our running example for a short time and look at how to
+compute new variables in a tibble from existing ones, using <code>mutate()</code> from
+dplyr.</p>
+<p>For this purpose, let us create a new simple tibble on voter turnout. Note that
+the entered data is purely illustrational and has no meaning. We will return to
+the real data shortly.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="parsing-csv-files-with-readr.html#cb18-1" aria-hidden="true" tabindex="-1"></a>exmpl_tbl <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb18-2"><a href="parsing-csv-files-with-readr.html#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">gender =</span> <span class="fu">c</span>(<span class="st">&quot;m&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="st">&quot;w&quot;</span>, <span class="st">&quot;w&quot;</span>),</span>
+<span id="cb18-3"><a href="parsing-csv-files-with-readr.html#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">ybirth =</span> <span class="fu">c</span>(<span class="st">&quot;1993 - 1999&quot;</span>, <span class="st">&quot;1983 - 1992&quot;</span>, <span class="st">&quot;1993 - 1999&quot;</span>, <span class="st">&quot;1983 - 1992&quot;</span>),</span>
+<span id="cb18-4"><a href="parsing-csv-files-with-readr.html#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">eligible =</span> <span class="fu">c</span>(<span class="dv">100000</span>, <span class="dv">100000</span>, <span class="dv">100000</span>, <span class="dv">100000</span>),</span>
+<span id="cb18-5"><a href="parsing-csv-files-with-readr.html#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">turnout_person =</span> <span class="fu">c</span>(<span class="dv">40000</span>, <span class="dv">50000</span>, <span class="dv">60000</span>, <span class="dv">70000</span>),</span>
+<span id="cb18-6"><a href="parsing-csv-files-with-readr.html#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">turnout_mail =</span> <span class="fu">c</span> (<span class="dv">35000</span>, <span class="dv">30000</span>, <span class="dv">25000</span>, <span class="dv">20000</span>)</span>
+<span id="cb18-7"><a href="parsing-csv-files-with-readr.html#cb18-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-8"><a href="parsing-csv-files-with-readr.html#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="parsing-csv-files-with-readr.html#cb18-9" aria-hidden="true" tabindex="-1"></a>exmpl_tbl</span>
+<span id="cb18-10"><a href="parsing-csv-files-with-readr.html#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 4 x 5</span></span>
+<span id="cb18-11"><a href="parsing-csv-files-with-readr.html#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="do">##   gender ybirth      eligible turnout_person turnout_mail</span></span>
+<span id="cb18-12"><a href="parsing-csv-files-with-readr.html#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;  &lt;chr&gt;          &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;</span></span>
+<span id="cb18-13"><a href="parsing-csv-files-with-readr.html#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 m      1993 - 1999   100000          40000        35000</span></span>
+<span id="cb18-14"><a href="parsing-csv-files-with-readr.html#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 m      1983 - 1992   100000          50000        30000</span></span>
+<span id="cb18-15"><a href="parsing-csv-files-with-readr.html#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 w      1993 - 1999   100000          60000        25000</span></span>
+<span id="cb18-16"><a href="parsing-csv-files-with-readr.html#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 w      1983 - 1992   100000          70000        20000</span></span></code></pre></div>
+<p>In this hypothetical data, we have different columns for people who voted in
+person and who voted by mail. We do not care about this difference in voting
+method in this example and want one column that combines both. We can achieve
+this by using <code>mutate()</code>. The function takes the data to be manipulated as its
+first argument, followed by one or multiple arguments defining the new columns
+to be created. We can create this new columns as computations involving the
+columns already present. To calculate the total turnout we could write:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="parsing-csv-files-with-readr.html#cb19-1" aria-hidden="true" tabindex="-1"></a>exmpl_tbl <span class="sc">%&gt;%</span> </span>
+<span id="cb19-2"><a href="parsing-csv-files-with-readr.html#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">turnout =</span> turnout_person <span class="sc">+</span> turnout_mail)</span>
+<span id="cb19-3"><a href="parsing-csv-files-with-readr.html#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 4 x 6</span></span>
+<span id="cb19-4"><a href="parsing-csv-files-with-readr.html#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   gender ybirth      eligible turnout_person turnout_mail turnout</span></span>
+<span id="cb19-5"><a href="parsing-csv-files-with-readr.html#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;  &lt;chr&gt;          &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span id="cb19-6"><a href="parsing-csv-files-with-readr.html#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 m      1993 - 1999   100000          40000        20000   60000</span></span>
+<span id="cb19-7"><a href="parsing-csv-files-with-readr.html#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 m      1983 - 1992   200000          70000        40000  110000</span></span>
+<span id="cb19-8"><a href="parsing-csv-files-with-readr.html#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 w      1993 - 1999   100000          60000        15000   75000</span></span>
+<span id="cb19-9"><a href="parsing-csv-files-with-readr.html#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 w      1983 - 1992   200000          90000        35000  125000</span></span></code></pre></div>
+<p>We can also immediately start calculating with new columns in the same pipe. So
+to calculate the turnout percentage:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="parsing-csv-files-with-readr.html#cb20-1" aria-hidden="true" tabindex="-1"></a>exmpl_tbl <span class="sc">%&gt;%</span> </span>
+<span id="cb20-2"><a href="parsing-csv-files-with-readr.html#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb20-3"><a href="parsing-csv-files-with-readr.html#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout =</span> turnout_person <span class="sc">+</span> turnout_mail,</span>
+<span id="cb20-4"><a href="parsing-csv-files-with-readr.html#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_pct =</span> turnout <span class="sc">/</span> eligible</span>
+<span id="cb20-5"><a href="parsing-csv-files-with-readr.html#cb20-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb20-6"><a href="parsing-csv-files-with-readr.html#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 4 x 7</span></span>
+<span id="cb20-7"><a href="parsing-csv-files-with-readr.html#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   gender ybirth      eligible turnout_person turnout_mail turnout turnout_pct</span></span>
+<span id="cb20-8"><a href="parsing-csv-files-with-readr.html#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;  &lt;chr&gt;          &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;</span></span>
+<span id="cb20-9"><a href="parsing-csv-files-with-readr.html#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 m      1993 - 1999   100000          40000        20000   60000       0.6  </span></span>
+<span id="cb20-10"><a href="parsing-csv-files-with-readr.html#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 m      1983 - 1992   200000          70000        40000  110000       0.55 </span></span>
+<span id="cb20-11"><a href="parsing-csv-files-with-readr.html#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 w      1993 - 1999   100000          60000        15000   75000       0.75 </span></span>
+<span id="cb20-12"><a href="parsing-csv-files-with-readr.html#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 w      1983 - 1992   200000          90000        35000  125000       0.625</span></span></code></pre></div>
+<p>As we no longer need <code>turnout_person</code> and <code>turnout_mail</code> we could drop them by
+using <code>select()</code> in a last step. Instead of telling <code>select()</code> which columns we
+want to keep, we can also tell it which noot to keep by adding a <code>-</code> before the
+column names.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="parsing-csv-files-with-readr.html#cb21-1" aria-hidden="true" tabindex="-1"></a>exmpl_tbl <span class="ot">&lt;-</span> exmpl_tbl <span class="sc">%&gt;%</span> </span>
+<span id="cb21-2"><a href="parsing-csv-files-with-readr.html#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb21-3"><a href="parsing-csv-files-with-readr.html#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout =</span> turnout_person <span class="sc">+</span> turnout_mail,</span>
+<span id="cb21-4"><a href="parsing-csv-files-with-readr.html#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_pct =</span> turnout <span class="sc">/</span> eligible</span>
+<span id="cb21-5"><a href="parsing-csv-files-with-readr.html#cb21-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-6"><a href="parsing-csv-files-with-readr.html#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>turnout_person, <span class="sc">-</span>turnout_mail)</span>
+<span id="cb21-7"><a href="parsing-csv-files-with-readr.html#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="parsing-csv-files-with-readr.html#cb21-8" aria-hidden="true" tabindex="-1"></a>exmpl_tbl</span>
+<span id="cb21-9"><a href="parsing-csv-files-with-readr.html#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 4 x 5</span></span>
+<span id="cb21-10"><a href="parsing-csv-files-with-readr.html#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   gender ybirth      eligible turnout turnout_pct</span></span>
+<span id="cb21-11"><a href="parsing-csv-files-with-readr.html#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;  &lt;chr&gt;          &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;</span></span>
+<span id="cb21-12"><a href="parsing-csv-files-with-readr.html#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 m      1993 - 1999   100000   60000       0.6  </span></span>
+<span id="cb21-13"><a href="parsing-csv-files-with-readr.html#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 m      1983 - 1992   200000  110000       0.55 </span></span>
+<span id="cb21-14"><a href="parsing-csv-files-with-readr.html#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 w      1993 - 1999   100000   75000       0.75 </span></span>
+<span id="cb21-15"><a href="parsing-csv-files-with-readr.html#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 w      1983 - 1992   200000  125000       0.625</span></span></code></pre></div>
+<p>Note that <code>mutate()</code> is not limited to basic arithmetic operations. Many
+functions can be applied within <code>mutate()</code>, for example <code>sum()</code> or <code>mean()</code> to
+only name a few examples we already know.</p>
+</div>
+<div id="summarise-group_by" class="section level3" number="10.3.5">
+<h3><span class="header-section-number">10.3.5</span> <code>summarise()</code> &amp; <code>group_by()</code></h3>
+<p><code>summarise()</code> can be used to calculate summary statistics for a whole tibble.
+The syntax is similar to <code>mutate()</code>. Let us compute the total number of persons
+eligible to vote:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="parsing-csv-files-with-readr.html#cb22-1" aria-hidden="true" tabindex="-1"></a>exmpl_tbl <span class="sc">%&gt;%</span> </span>
+<span id="cb22-2"><a href="parsing-csv-files-with-readr.html#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">eligible_total =</span> <span class="fu">sum</span>(eligible))</span>
+<span id="cb22-3"><a href="parsing-csv-files-with-readr.html#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 1 x 1</span></span>
+<span id="cb22-4"><a href="parsing-csv-files-with-readr.html#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   eligible_total</span></span>
+<span id="cb22-5"><a href="parsing-csv-files-with-readr.html#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="do">##            &lt;dbl&gt;</span></span>
+<span id="cb22-6"><a href="parsing-csv-files-with-readr.html#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 1         600000</span></span></code></pre></div>
+<p>As you can see, the result is a new tibble, containing only the summary
+statistics we requested.</p>
+<p>We also can compute multiple summary statistics in one step. Please note, that
+the overall mean for turnout percentage can be computed as the mean of the
+turnout percentages per group in this case only because all four groups are
+exactly of the same size (<span class="math inline">\(n = 100000\)</span>). We will later look into computing the
+same measure with our real data.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="parsing-csv-files-with-readr.html#cb23-1" aria-hidden="true" tabindex="-1"></a>exmpl_tbl <span class="sc">%&gt;%</span> </span>
+<span id="cb23-2"><a href="parsing-csv-files-with-readr.html#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb23-3"><a href="parsing-csv-files-with-readr.html#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">eligible_total =</span> <span class="fu">sum</span>(eligible),</span>
+<span id="cb23-4"><a href="parsing-csv-files-with-readr.html#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_total =</span> <span class="fu">sum</span>(turnout),</span>
+<span id="cb23-5"><a href="parsing-csv-files-with-readr.html#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_pct_mean =</span> <span class="fu">mean</span>(turnout_pct)</span>
+<span id="cb23-6"><a href="parsing-csv-files-with-readr.html#cb23-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb23-7"><a href="parsing-csv-files-with-readr.html#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 1 x 3</span></span>
+<span id="cb23-8"><a href="parsing-csv-files-with-readr.html#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   eligible_total turnout_total turnout_pct_mean</span></span>
+<span id="cb23-9"><a href="parsing-csv-files-with-readr.html#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="do">##            &lt;dbl&gt;         &lt;dbl&gt;            &lt;dbl&gt;</span></span>
+<span id="cb23-10"><a href="parsing-csv-files-with-readr.html#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 1         600000        370000            0.631</span></span></code></pre></div>
+<p>Often we are interested in summaries grouped by the value of one or more other
+variables. We might be interested in computing these summary statistics not for
+the complete tibble but by gender. For this purpose, we can group the data by
+the gender column using <code>group_by()</code> and then compute the summary statistics
+separately for each group. As always with dplyr functions, <code>group_by()</code> needs
+the data that shall be grouped as the first argument, followed by one or
+multiple variables to group by.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="parsing-csv-files-with-readr.html#cb24-1" aria-hidden="true" tabindex="-1"></a>exmpl_tbl <span class="sc">%&gt;%</span> </span>
+<span id="cb24-2"><a href="parsing-csv-files-with-readr.html#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-3"><a href="parsing-csv-files-with-readr.html#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb24-4"><a href="parsing-csv-files-with-readr.html#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">eligible_total =</span> <span class="fu">sum</span>(eligible),</span>
+<span id="cb24-5"><a href="parsing-csv-files-with-readr.html#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_total =</span> <span class="fu">sum</span>(turnout),</span>
+<span id="cb24-6"><a href="parsing-csv-files-with-readr.html#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_pct_mean =</span> <span class="fu">mean</span>(turnout_pct)</span>
+<span id="cb24-7"><a href="parsing-csv-files-with-readr.html#cb24-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb24-8"><a href="parsing-csv-files-with-readr.html#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 2 x 4</span></span>
+<span id="cb24-9"><a href="parsing-csv-files-with-readr.html#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="do">##   gender eligible_total turnout_total turnout_pct_mean</span></span>
+<span id="cb24-10"><a href="parsing-csv-files-with-readr.html#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="do">## * &lt;chr&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;dbl&gt;</span></span>
+<span id="cb24-11"><a href="parsing-csv-files-with-readr.html#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 m              300000        170000            0.575</span></span>
+<span id="cb24-12"><a href="parsing-csv-files-with-readr.html#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 w              300000        200000            0.688</span></span></code></pre></div>
+<p>Let us create a final example, with two variables to group by. Let us assume
+we have the turnout percentages by gender and age group for two elections. We
+also again assume the same group size, i.e. the same “n”, for all observations.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="parsing-csv-files-with-readr.html#cb25-1" aria-hidden="true" tabindex="-1"></a>exmpl_tbl_2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb25-2"><a href="parsing-csv-files-with-readr.html#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">election =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>),</span>
+<span id="cb25-3"><a href="parsing-csv-files-with-readr.html#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">gender =</span> <span class="fu">c</span>(<span class="st">&quot;m&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="st">&quot;w&quot;</span>, <span class="st">&quot;w&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="st">&quot;w&quot;</span>, <span class="st">&quot;w&quot;</span>),</span>
+<span id="cb25-4"><a href="parsing-csv-files-with-readr.html#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">ybirth =</span> <span class="fu">c</span>(<span class="st">&quot;1993 - 1999&quot;</span>, <span class="st">&quot;1983 - 1992&quot;</span>, <span class="st">&quot;1993 - 1999&quot;</span>, <span class="st">&quot;1983 - 1992&quot;</span>, <span class="st">&quot;1993 - 1999&quot;</span>, <span class="st">&quot;1983 - 1992&quot;</span>, <span class="st">&quot;1993 - 1999&quot;</span>, <span class="st">&quot;1983 - 1992&quot;</span>),</span>
+<span id="cb25-5"><a href="parsing-csv-files-with-readr.html#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">turnout_pct =</span> <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">0.55</span>, <span class="fl">0.75</span>, <span class="fl">0.625</span>, <span class="fl">0.7</span>, <span class="fl">0.65</span>, <span class="fl">0.85</span>, <span class="fl">0.725</span>)</span>
+<span id="cb25-6"><a href="parsing-csv-files-with-readr.html#cb25-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb25-7"><a href="parsing-csv-files-with-readr.html#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-8"><a href="parsing-csv-files-with-readr.html#cb25-8" aria-hidden="true" tabindex="-1"></a>exmpl_tbl_2</span>
+<span id="cb25-9"><a href="parsing-csv-files-with-readr.html#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 8 x 4</span></span>
+<span id="cb25-10"><a href="parsing-csv-files-with-readr.html#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   election gender ybirth      turnout_pct</span></span>
+<span id="cb25-11"><a href="parsing-csv-files-with-readr.html#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="do">##      &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;             &lt;dbl&gt;</span></span>
+<span id="cb25-12"><a href="parsing-csv-files-with-readr.html#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 1        1 m      1993 - 1999       0.6  </span></span>
+<span id="cb25-13"><a href="parsing-csv-files-with-readr.html#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 2        1 m      1983 - 1992       0.55 </span></span>
+<span id="cb25-14"><a href="parsing-csv-files-with-readr.html#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 3        1 w      1993 - 1999       0.75 </span></span>
+<span id="cb25-15"><a href="parsing-csv-files-with-readr.html#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 4        1 w      1983 - 1992       0.625</span></span>
+<span id="cb25-16"><a href="parsing-csv-files-with-readr.html#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 5        2 m      1993 - 1999       0.7  </span></span>
+<span id="cb25-17"><a href="parsing-csv-files-with-readr.html#cb25-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 6        2 m      1983 - 1992       0.65 </span></span>
+<span id="cb25-18"><a href="parsing-csv-files-with-readr.html#cb25-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 7        2 w      1993 - 1999       0.85 </span></span>
+<span id="cb25-19"><a href="parsing-csv-files-with-readr.html#cb25-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 8        2 w      1983 - 1992       0.725</span></span></code></pre></div>
+<p>To compute the mean turnout percentages by gender for each election separately,
+we can group by election and gender.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="parsing-csv-files-with-readr.html#cb26-1" aria-hidden="true" tabindex="-1"></a>exmpl_tbl_2 <span class="sc">%&gt;%</span> </span>
+<span id="cb26-2"><a href="parsing-csv-files-with-readr.html#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(election, gender) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-3"><a href="parsing-csv-files-with-readr.html#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb26-4"><a href="parsing-csv-files-with-readr.html#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_pct_mean =</span> <span class="fu">mean</span>(turnout_pct)</span>
+<span id="cb26-5"><a href="parsing-csv-files-with-readr.html#cb26-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb26-6"><a href="parsing-csv-files-with-readr.html#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="do">## `summarise()` has grouped output by &#39;election&#39;. You can override using the `.groups` argument.</span></span>
+<span id="cb26-7"><a href="parsing-csv-files-with-readr.html#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 4 x 3</span></span>
+<span id="cb26-8"><a href="parsing-csv-files-with-readr.html#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="do">## # Groups:   election [2]</span></span>
+<span id="cb26-9"><a href="parsing-csv-files-with-readr.html#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="do">##   election gender turnout_pct_mean</span></span>
+<span id="cb26-10"><a href="parsing-csv-files-with-readr.html#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="do">##      &lt;dbl&gt; &lt;chr&gt;             &lt;dbl&gt;</span></span>
+<span id="cb26-11"><a href="parsing-csv-files-with-readr.html#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 1        1 m                 0.575</span></span>
+<span id="cb26-12"><a href="parsing-csv-files-with-readr.html#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 2        1 w                 0.688</span></span>
+<span id="cb26-13"><a href="parsing-csv-files-with-readr.html#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 3        2 m                 0.675</span></span>
+<span id="cb26-14"><a href="parsing-csv-files-with-readr.html#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 4        2 w                 0.788</span></span></code></pre></div>
+<p>There is a peculiarity to the way <code>group_by()</code> works with <code>summarise()</code> that can
+cause headaches, if we are not aware of it. In general any <code>summarise()</code>
+function following a <code>group_by()</code> will calculate the summary statistic and then
+remove one level of grouping. In the examples where we only had one level of
+grouping, this essentially meant, that the data was ungrouped after
+<code>summarise()</code>. In the last example we had two levels of grouping. So after the
+computation of the mean turnout percentage by <code>election</code> and <code>gender</code>, the
+grouping by <code>gender</code> was removed, but the grouping by <code>election</code> remained in
+effect. We can see this in the output, where R informs us about the column by
+which the data is grouped and the number of groups in the output:
+<code>## # Groups:   election [2]</code>. Another <code>summarise()</code> function would compute the
+statistic by <code>election</code> and then remove this level also. We can also use
+<code>ungroup()</code> to remove all grouping from a tibble. In the case of this example,
+this does not make a practical difference as we only compute the summary and
+move on. If we assign the results of a summary to an object for later use in
+data analysis, we have to think about removing groups though.</p>
+</div>
+<div id="forcats" class="section level3" number="10.3.6">
+<h3><span class="header-section-number">10.3.6</span> forcats</h3>
+<p>We will now return to our running example. Before we begin computing the values
+we are interested in, we first have to deal with the differences in the year of
+birth column between both tibbles. As you might have already noticed, the
+categories included in the <code>eligible_tbl</code> tibble are more fine grained than in
+<code>turnout_tbl</code>. As we will soon join both tibbles into one, we need this data
+aggregated to the same level. Luckily, we can always aggregate data to a higher
+level. To achieve this, we will take a slight detour into dealing with
+categorical or <em>factor</em> variables in R.</p>
+<p>The tidyverse includes the package forcats, which gives us the tools to work
+with categorical variables, commonly called factor variables in R. As it is a
+part of the core tidyverse, it is already loaded in our R session.</p>
+<p>A factor variable is a variable that can only take a finite number of predefined
+categories. The year of birth groupings included in our tibbles can be seen as
+factor variables as we have a finite number of groups or factors. We need to
+aggregate the groups in <code>eligible_tbl</code> to the level of groupings present in
+<code>turnout_tbl</code> before we can join both tibbles.</p>
+<p>Right now, <code>ybirth</code> is not defined as a factor but as a character vector. The
+first step would thus be, to transform the column into a factor. To achieve this
+we can use the forcats function <code>as_factor()</code>. We can do this inside of the
+<code>mutate()</code> function.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="parsing-csv-files-with-readr.html#cb27-1" aria-hidden="true" tabindex="-1"></a>eligible_tbl <span class="ot">&lt;-</span> eligible_tbl <span class="sc">%&gt;%</span> </span>
+<span id="cb27-2"><a href="parsing-csv-files-with-readr.html#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb27-3"><a href="parsing-csv-files-with-readr.html#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">ybirth =</span> <span class="fu">as_factor</span>(ybirth)</span>
+<span id="cb27-4"><a href="parsing-csv-files-with-readr.html#cb27-4" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb27-5"><a href="parsing-csv-files-with-readr.html#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-6"><a href="parsing-csv-files-with-readr.html#cb27-6" aria-hidden="true" tabindex="-1"></a>eligible_tbl</span>
+<span id="cb27-7"><a href="parsing-csv-files-with-readr.html#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 20 x 3</span></span>
+<span id="cb27-8"><a href="parsing-csv-files-with-readr.html#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="do">##    gender ybirth          eligible</span></span>
+<span id="cb27-9"><a href="parsing-csv-files-with-readr.html#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;  &lt;fct&gt;              &lt;dbl&gt;</span></span>
+<span id="cb27-10"><a href="parsing-csv-files-with-readr.html#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 m      1997 - 1999      1046360</span></span>
+<span id="cb27-11"><a href="parsing-csv-files-with-readr.html#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 m      1993 - 1996      1479600</span></span>
+<span id="cb27-12"><a href="parsing-csv-files-with-readr.html#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 m      1988 - 1992      2143419</span></span>
+<span id="cb27-13"><a href="parsing-csv-files-with-readr.html#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 m      1983 - 1987      2185551</span></span>
+<span id="cb27-14"><a href="parsing-csv-files-with-readr.html#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 m      1978 - 1982      2147986</span></span>
+<span id="cb27-15"><a href="parsing-csv-files-with-readr.html#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 m      1973 - 1977      1990144</span></span>
+<span id="cb27-16"><a href="parsing-csv-files-with-readr.html#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 m      1968 - 1972      2630344</span></span>
+<span id="cb27-17"><a href="parsing-csv-files-with-readr.html#cb27-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 m      1958 - 1967      6205978</span></span>
+<span id="cb27-18"><a href="parsing-csv-files-with-readr.html#cb27-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 m      1948 - 1957      4602052</span></span>
+<span id="cb27-19"><a href="parsing-csv-files-with-readr.html#cb27-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 m      1947 und früher  5381355</span></span>
+<span id="cb27-20"><a href="parsing-csv-files-with-readr.html#cb27-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 11 w      1997 - 1999       999140</span></span>
+<span id="cb27-21"><a href="parsing-csv-files-with-readr.html#cb27-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 12 w      1993 - 1996      1423399</span></span>
+<span id="cb27-22"><a href="parsing-csv-files-with-readr.html#cb27-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 13 w      1988 - 1992      2062596</span></span>
+<span id="cb27-23"><a href="parsing-csv-files-with-readr.html#cb27-23" aria-hidden="true" tabindex="-1"></a><span class="do">## 14 w      1983 - 1987      2116726</span></span>
+<span id="cb27-24"><a href="parsing-csv-files-with-readr.html#cb27-24" aria-hidden="true" tabindex="-1"></a><span class="do">## 15 w      1978 - 1982      2116362</span></span>
+<span id="cb27-25"><a href="parsing-csv-files-with-readr.html#cb27-25" aria-hidden="true" tabindex="-1"></a><span class="do">## 16 w      1973 - 1977      1963337</span></span>
+<span id="cb27-26"><a href="parsing-csv-files-with-readr.html#cb27-26" aria-hidden="true" tabindex="-1"></a><span class="do">## 17 w      1968 - 1972      2600522</span></span>
+<span id="cb27-27"><a href="parsing-csv-files-with-readr.html#cb27-27" aria-hidden="true" tabindex="-1"></a><span class="do">## 18 w      1958 - 1967      6190321</span></span>
+<span id="cb27-28"><a href="parsing-csv-files-with-readr.html#cb27-28" aria-hidden="true" tabindex="-1"></a><span class="do">## 19 w      1948 - 1957      4885215</span></span>
+<span id="cb27-29"><a href="parsing-csv-files-with-readr.html#cb27-29" aria-hidden="true" tabindex="-1"></a><span class="do">## 20 w      1947 und früher  7518080</span></span></code></pre></div>
+<p>We can see, that the column is now a factor variable. To check which factors
+were created, we can use the base function <code>levels()</code>. Note that in this
+example, we use the <code>tibble$column</code> notation to apply the function to a
+specific column in the tibble.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="parsing-csv-files-with-readr.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(eligible_tbl<span class="sc">$</span>ybirth)</span>
+<span id="cb28-2"><a href="parsing-csv-files-with-readr.html#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] &quot;1997 - 1999&quot;     &quot;1993 - 1996&quot;     &quot;1988 - 1992&quot;     &quot;1983 - 1987&quot;    </span></span>
+<span id="cb28-3"><a href="parsing-csv-files-with-readr.html#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [5] &quot;1978 - 1982&quot;     &quot;1973 - 1977&quot;     &quot;1968 - 1972&quot;     &quot;1958 - 1967&quot;    </span></span>
+<span id="cb28-4"><a href="parsing-csv-files-with-readr.html#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [9] &quot;1948 - 1957&quot;     &quot;1947 und früher&quot;</span></span></code></pre></div>
+<p>Let’s compare these to the levels for <code>ybirth</code> in <code>turnout_tbl</code>, which we also have
+to transform into a factor variable first.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="parsing-csv-files-with-readr.html#cb29-1" aria-hidden="true" tabindex="-1"></a>turnout_tbl <span class="ot">&lt;-</span> turnout_tbl <span class="sc">%&gt;%</span> </span>
+<span id="cb29-2"><a href="parsing-csv-files-with-readr.html#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb29-3"><a href="parsing-csv-files-with-readr.html#cb29-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">ybirth =</span> <span class="fu">as_factor</span>(ybirth)</span>
+<span id="cb29-4"><a href="parsing-csv-files-with-readr.html#cb29-4" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb29-5"><a href="parsing-csv-files-with-readr.html#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-6"><a href="parsing-csv-files-with-readr.html#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(turnout_tbl<span class="sc">$</span>ybirth)</span>
+<span id="cb29-7"><a href="parsing-csv-files-with-readr.html#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;1993 - 1999&quot;     &quot;1983 - 1992&quot;     &quot;1973 - 1982&quot;     &quot;1958 - 1972&quot;    </span></span>
+<span id="cb29-8"><a href="parsing-csv-files-with-readr.html#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [5] &quot;1948 - 1957&quot;     &quot;1947 und früher&quot;</span></span></code></pre></div>
+<p>To be able to join both tibbles by gender and year of birth, the factor
+variables need to have the same levels. Thus we first need to recode the
+factors present in <code>eligible_tbl</code>. A convenient approach when reducing the
+number of factors is to use the forcats function <code>fct_collapse()</code>.
+<code>fct_recode()</code> can achieve the same goal, but would be more typing intensive and
+is more appropriate if we only want to change the levels of single factors or
+just occasionally combine two factors into one. <code>fct_collapse()</code> takes the data
+to be manipulated as its first argument and then a number of arguments in the
+form <code>new_factor = c("old_factor_1", "old_factor_2", ...)</code>.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="parsing-csv-files-with-readr.html#cb30-1" aria-hidden="true" tabindex="-1"></a>eligible_tbl <span class="ot">&lt;-</span> eligible_tbl <span class="sc">%&gt;%</span> </span>
+<span id="cb30-2"><a href="parsing-csv-files-with-readr.html#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb30-3"><a href="parsing-csv-files-with-readr.html#cb30-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">ybirth =</span> <span class="fu">fct_collapse</span>(ybirth,</span>
+<span id="cb30-4"><a href="parsing-csv-files-with-readr.html#cb30-4" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;1993 - 1999&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;1997 - 1999&quot;</span>, <span class="st">&quot;1993 - 1996&quot;</span>),</span>
+<span id="cb30-5"><a href="parsing-csv-files-with-readr.html#cb30-5" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;1983 - 1992&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;1988 - 1992&quot;</span>, <span class="st">&quot;1983 - 1987&quot;</span>),</span>
+<span id="cb30-6"><a href="parsing-csv-files-with-readr.html#cb30-6" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;1973 - 1982&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;1978 - 1982&quot;</span>, <span class="st">&quot;1973 - 1977&quot;</span>),</span>
+<span id="cb30-7"><a href="parsing-csv-files-with-readr.html#cb30-7" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;1958 - 1972&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;1968 - 1972&quot;</span>, <span class="st">&quot;1958 - 1967&quot;</span>)</span>
+<span id="cb30-8"><a href="parsing-csv-files-with-readr.html#cb30-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb30-9"><a href="parsing-csv-files-with-readr.html#cb30-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb30-10"><a href="parsing-csv-files-with-readr.html#cb30-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-11"><a href="parsing-csv-files-with-readr.html#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(eligible_tbl<span class="sc">$</span>ybirth)</span>
+<span id="cb30-12"><a href="parsing-csv-files-with-readr.html#cb30-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;1993 - 1999&quot;     &quot;1983 - 1992&quot;     &quot;1973 - 1982&quot;     &quot;1958 - 1972&quot;    </span></span>
+<span id="cb30-13"><a href="parsing-csv-files-with-readr.html#cb30-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [5] &quot;1948 - 1957&quot;     &quot;1947 und früher&quot;</span></span></code></pre></div>
+<p>We have now recoded the number of factors to the levels present in
+<code>turnout_tbl</code>. But to be sure we can always test it.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="parsing-csv-files-with-readr.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(<span class="fu">levels</span>(eligible_tbl<span class="sc">$</span>ybirth) <span class="sc">==</span> <span class="fu">levels</span>(turnout_tbl<span class="sc">$</span>ybirth))</span>
+<span id="cb31-2"><a href="parsing-csv-files-with-readr.html#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span></code></pre></div>
+<p><code>all()</code> tests if the expression it is used on is <code>TRUE</code> for each element – or
+in this case level – that is compared and returns <code>FALSE</code> if at least one
+comparison is <code>FALSE</code>.</p>
+<p>Let’s have another look at <code>eligible_tbl</code>.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="parsing-csv-files-with-readr.html#cb32-1" aria-hidden="true" tabindex="-1"></a>eligible_tbl</span>
+<span id="cb32-2"><a href="parsing-csv-files-with-readr.html#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 20 x 3</span></span>
+<span id="cb32-3"><a href="parsing-csv-files-with-readr.html#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    gender ybirth          eligible</span></span>
+<span id="cb32-4"><a href="parsing-csv-files-with-readr.html#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;  &lt;fct&gt;              &lt;dbl&gt;</span></span>
+<span id="cb32-5"><a href="parsing-csv-files-with-readr.html#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 m      1993 - 1999      1046360</span></span>
+<span id="cb32-6"><a href="parsing-csv-files-with-readr.html#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 m      1993 - 1999      1479600</span></span>
+<span id="cb32-7"><a href="parsing-csv-files-with-readr.html#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 m      1983 - 1992      2143419</span></span>
+<span id="cb32-8"><a href="parsing-csv-files-with-readr.html#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 m      1983 - 1992      2185551</span></span>
+<span id="cb32-9"><a href="parsing-csv-files-with-readr.html#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 m      1973 - 1982      2147986</span></span>
+<span id="cb32-10"><a href="parsing-csv-files-with-readr.html#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 m      1973 - 1982      1990144</span></span>
+<span id="cb32-11"><a href="parsing-csv-files-with-readr.html#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 m      1958 - 1972      2630344</span></span>
+<span id="cb32-12"><a href="parsing-csv-files-with-readr.html#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 m      1958 - 1972      6205978</span></span>
+<span id="cb32-13"><a href="parsing-csv-files-with-readr.html#cb32-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 m      1948 - 1957      4602052</span></span>
+<span id="cb32-14"><a href="parsing-csv-files-with-readr.html#cb32-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 m      1947 und früher  5381355</span></span>
+<span id="cb32-15"><a href="parsing-csv-files-with-readr.html#cb32-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 11 w      1993 - 1999       999140</span></span>
+<span id="cb32-16"><a href="parsing-csv-files-with-readr.html#cb32-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 12 w      1993 - 1999      1423399</span></span>
+<span id="cb32-17"><a href="parsing-csv-files-with-readr.html#cb32-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 13 w      1983 - 1992      2062596</span></span>
+<span id="cb32-18"><a href="parsing-csv-files-with-readr.html#cb32-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 14 w      1983 - 1992      2116726</span></span>
+<span id="cb32-19"><a href="parsing-csv-files-with-readr.html#cb32-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 15 w      1973 - 1982      2116362</span></span>
+<span id="cb32-20"><a href="parsing-csv-files-with-readr.html#cb32-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 16 w      1973 - 1982      1963337</span></span>
+<span id="cb32-21"><a href="parsing-csv-files-with-readr.html#cb32-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 17 w      1958 - 1972      2600522</span></span>
+<span id="cb32-22"><a href="parsing-csv-files-with-readr.html#cb32-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 18 w      1958 - 1972      6190321</span></span>
+<span id="cb32-23"><a href="parsing-csv-files-with-readr.html#cb32-23" aria-hidden="true" tabindex="-1"></a><span class="do">## 19 w      1948 - 1957      4885215</span></span>
+<span id="cb32-24"><a href="parsing-csv-files-with-readr.html#cb32-24" aria-hidden="true" tabindex="-1"></a><span class="do">## 20 w      1947 und früher  7518080</span></span></code></pre></div>
+<p>While we have recoded the factors, we still need to aggregate the numbers of
+eligible voters. We can achieve this by using <code>summarise()</code>in conjunction with
+<code>group_by()</code>. If we group the observations by <code>gender</code> and <code>ybirth</code> we can
+compute the totals for each group using <code>sum()</code>.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="parsing-csv-files-with-readr.html#cb33-1" aria-hidden="true" tabindex="-1"></a>eligible_tbl <span class="ot">&lt;-</span> eligible_tbl <span class="sc">%&gt;%</span> </span>
+<span id="cb33-2"><a href="parsing-csv-files-with-readr.html#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender, ybirth) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-3"><a href="parsing-csv-files-with-readr.html#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">eligible =</span> <span class="fu">sum</span>(eligible))</span>
+<span id="cb33-4"><a href="parsing-csv-files-with-readr.html#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="do">## `summarise()` has grouped output by &#39;gender&#39;. You can override using the `.groups` argument.</span></span>
+<span id="cb33-5"><a href="parsing-csv-files-with-readr.html#cb33-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-6"><a href="parsing-csv-files-with-readr.html#cb33-6" aria-hidden="true" tabindex="-1"></a>eligible_tbl</span>
+<span id="cb33-7"><a href="parsing-csv-files-with-readr.html#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 12 x 3</span></span>
+<span id="cb33-8"><a href="parsing-csv-files-with-readr.html#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="do">## # Groups:   gender [2]</span></span>
+<span id="cb33-9"><a href="parsing-csv-files-with-readr.html#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="do">##    gender ybirth          eligible</span></span>
+<span id="cb33-10"><a href="parsing-csv-files-with-readr.html#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;  &lt;fct&gt;              &lt;dbl&gt;</span></span>
+<span id="cb33-11"><a href="parsing-csv-files-with-readr.html#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 m      1993 - 1999      2525960</span></span>
+<span id="cb33-12"><a href="parsing-csv-files-with-readr.html#cb33-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 m      1983 - 1992      4328970</span></span>
+<span id="cb33-13"><a href="parsing-csv-files-with-readr.html#cb33-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 m      1973 - 1982      4138130</span></span>
+<span id="cb33-14"><a href="parsing-csv-files-with-readr.html#cb33-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 m      1958 - 1972      8836322</span></span>
+<span id="cb33-15"><a href="parsing-csv-files-with-readr.html#cb33-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 m      1948 - 1957      4602052</span></span>
+<span id="cb33-16"><a href="parsing-csv-files-with-readr.html#cb33-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 m      1947 und früher  5381355</span></span>
+<span id="cb33-17"><a href="parsing-csv-files-with-readr.html#cb33-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 w      1993 - 1999      2422539</span></span>
+<span id="cb33-18"><a href="parsing-csv-files-with-readr.html#cb33-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 w      1983 - 1992      4179322</span></span>
+<span id="cb33-19"><a href="parsing-csv-files-with-readr.html#cb33-19" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 w      1973 - 1982      4079699</span></span>
+<span id="cb33-20"><a href="parsing-csv-files-with-readr.html#cb33-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 w      1958 - 1972      8790843</span></span>
+<span id="cb33-21"><a href="parsing-csv-files-with-readr.html#cb33-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 11 w      1948 - 1957      4885215</span></span>
+<span id="cb33-22"><a href="parsing-csv-files-with-readr.html#cb33-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 12 w      1947 und früher  7518080</span></span></code></pre></div>
+<p>We have grouped the data by <code>gender</code>and <code>ybirth</code> and then used <code>summarise()</code>
+once. This means that one level of grouping has been removed, but the grouping
+by <code>gender</code>remains. The output also informs us about this:
+<code>## # Groups:   gender [2]</code>. As in this case we assign the results of the
+summary to an object, it could be a good idea to remove the grouping now. We
+will later compute additional summary statistics with <code>summarise()</code> and those
+would still be grouped by <code>gender</code> if we don’t remove the grouping at some
+point, as the grouping is carried forward, even after joining the two tibbles
+into a new object in the next section.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="parsing-csv-files-with-readr.html#cb34-1" aria-hidden="true" tabindex="-1"></a>eligible_tbl <span class="ot">&lt;-</span> <span class="fu">ungroup</span>(eligible_tbl)</span>
+<span id="cb34-2"><a href="parsing-csv-files-with-readr.html#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="parsing-csv-files-with-readr.html#cb34-3" aria-hidden="true" tabindex="-1"></a>eligible_tbl</span>
+<span id="cb34-4"><a href="parsing-csv-files-with-readr.html#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 12 x 3</span></span>
+<span id="cb34-5"><a href="parsing-csv-files-with-readr.html#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="do">##    gender ybirth          eligible</span></span>
+<span id="cb34-6"><a href="parsing-csv-files-with-readr.html#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;  &lt;fct&gt;              &lt;dbl&gt;</span></span>
+<span id="cb34-7"><a href="parsing-csv-files-with-readr.html#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 m      1993 - 1999      2525960</span></span>
+<span id="cb34-8"><a href="parsing-csv-files-with-readr.html#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 m      1983 - 1992      4328970</span></span>
+<span id="cb34-9"><a href="parsing-csv-files-with-readr.html#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 m      1973 - 1982      4138130</span></span>
+<span id="cb34-10"><a href="parsing-csv-files-with-readr.html#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 m      1958 - 1972      8836322</span></span>
+<span id="cb34-11"><a href="parsing-csv-files-with-readr.html#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 m      1948 - 1957      4602052</span></span>
+<span id="cb34-12"><a href="parsing-csv-files-with-readr.html#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 m      1947 und früher  5381355</span></span>
+<span id="cb34-13"><a href="parsing-csv-files-with-readr.html#cb34-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 w      1993 - 1999      2422539</span></span>
+<span id="cb34-14"><a href="parsing-csv-files-with-readr.html#cb34-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 w      1983 - 1992      4179322</span></span>
+<span id="cb34-15"><a href="parsing-csv-files-with-readr.html#cb34-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 w      1973 - 1982      4079699</span></span>
+<span id="cb34-16"><a href="parsing-csv-files-with-readr.html#cb34-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 w      1958 - 1972      8790843</span></span>
+<span id="cb34-17"><a href="parsing-csv-files-with-readr.html#cb34-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 11 w      1948 - 1957      4885215</span></span>
+<span id="cb34-18"><a href="parsing-csv-files-with-readr.html#cb34-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 12 w      1947 und früher  7518080</span></span></code></pre></div>
+</div>
+<div id="join" class="section level3" number="10.3.7">
+<h3><span class="header-section-number">10.3.7</span> <code>*_join()</code></h3>
+<p>At this point, we still have to distinct tibbles. For our analysis it will be
+easier, to join both tibbles into one. Dplyr provides multiple functions for
+joining two tibbles, i.e. <code>inner_join()</code>, <code>left_join()</code>, <code>right_join()</code> and
+<code>full_join()</code>. They differ in how observations are handled that appear in one
+but not the other tibble. As we have assured, that both tibbles match in their
+observations – we have one observation for each birthyear grouping for each
+gender – these differences do not really matter at this point. But if you are
+interested in the details, a good starting point could be:
+<a href="https://r4ds.had.co.nz/relational-data.html#mutating-joins" target="_blank">https://r4ds.had.co.nz/relational-data.html#mutating-joins</a></p>
+<p>As stated, the four functions will lead to the same result in the case of our
+running example, so let us just use <code>full_join()</code>. We have to pass three
+arguments to the function. The two tibbles that shall be joined and one or
+multiple key variables by which to join them. In our example unique observations
+are defined by the <code>gender</code> in combination with the <code>ybirth</code> column. We want to
+join those rows in <code>eligible_tbl</code> to those in <code>turnout_tbl</code> that have the same
+combination of <code>gender</code> and <code>ybirth</code> to match the values for the columns
+<code>eligible</code> and <code>turnout</code>. For example we want to match the values for people
+eligible to vote and who actually voted for all males born between 1983 – 1992,
+for all females born between 1973 – 1982 and so on.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="parsing-csv-files-with-readr.html#cb35-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">full_join</span>(eligible_tbl, turnout_tbl, <span class="at">key =</span> <span class="fu">c</span>(<span class="st">&quot;gender&quot;</span>, <span class="st">&quot;ybirth&quot;</span>))</span>
+<span id="cb35-2"><a href="parsing-csv-files-with-readr.html#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Joining, by = c(&quot;gender&quot;, &quot;ybirth&quot;)</span></span>
+<span id="cb35-3"><a href="parsing-csv-files-with-readr.html#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="parsing-csv-files-with-readr.html#cb35-4" aria-hidden="true" tabindex="-1"></a>data</span>
+<span id="cb35-5"><a href="parsing-csv-files-with-readr.html#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 12 x 4</span></span>
+<span id="cb35-6"><a href="parsing-csv-files-with-readr.html#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    gender ybirth          eligible turnout</span></span>
+<span id="cb35-7"><a href="parsing-csv-files-with-readr.html#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;  &lt;fct&gt;              &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span id="cb35-8"><a href="parsing-csv-files-with-readr.html#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 m      1993 - 1999      2525960 1694779</span></span>
+<span id="cb35-9"><a href="parsing-csv-files-with-readr.html#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 m      1983 - 1992      4328970 3001418</span></span>
+<span id="cb35-10"><a href="parsing-csv-files-with-readr.html#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 m      1973 - 1982      4138130 3089525</span></span>
+<span id="cb35-11"><a href="parsing-csv-files-with-readr.html#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 m      1958 - 1972      8836322 6930258</span></span>
+<span id="cb35-12"><a href="parsing-csv-files-with-readr.html#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 m      1948 - 1957      4602052 3741274</span></span>
+<span id="cb35-13"><a href="parsing-csv-files-with-readr.html#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 m      1947 und früher  5381355 4300726</span></span>
+<span id="cb35-14"><a href="parsing-csv-files-with-readr.html#cb35-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 w      1993 - 1999      2422539 1674861</span></span>
+<span id="cb35-15"><a href="parsing-csv-files-with-readr.html#cb35-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 w      1983 - 1992      4179322 3038245</span></span>
+<span id="cb35-16"><a href="parsing-csv-files-with-readr.html#cb35-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 w      1973 - 1982      4079699 3137743</span></span>
+<span id="cb35-17"><a href="parsing-csv-files-with-readr.html#cb35-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 w      1958 - 1972      8790843 6987768</span></span>
+<span id="cb35-18"><a href="parsing-csv-files-with-readr.html#cb35-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 11 w      1948 - 1957      4885215 3951857</span></span>
+<span id="cb35-19"><a href="parsing-csv-files-with-readr.html#cb35-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 12 w      1947 und früher  7518080 5427886</span></span></code></pre></div>
+</div>
+<div id="computations-and-summaries-for-the-running-example" class="section level3" number="10.3.8">
+<h3><span class="header-section-number">10.3.8</span> Computations and summaries for the running example</h3>
+<p>We can now begin analysing the data we have collected and prepared.</p>
+<p>We should first add an additional column to the tibble, in which we calculate
+the relative turnout by gender and age group. To achieve this we can apply
+<code>mutate()</code>.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="parsing-csv-files-with-readr.html#cb36-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> </span>
+<span id="cb36-2"><a href="parsing-csv-files-with-readr.html#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">turnout_pct =</span> turnout <span class="sc">/</span> eligible)</span>
+<span id="cb36-3"><a href="parsing-csv-files-with-readr.html#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="parsing-csv-files-with-readr.html#cb36-4" aria-hidden="true" tabindex="-1"></a>data</span>
+<span id="cb36-5"><a href="parsing-csv-files-with-readr.html#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 12 x 5</span></span>
+<span id="cb36-6"><a href="parsing-csv-files-with-readr.html#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    gender ybirth          eligible turnout turnout_pct</span></span>
+<span id="cb36-7"><a href="parsing-csv-files-with-readr.html#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;  &lt;fct&gt;              &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;</span></span>
+<span id="cb36-8"><a href="parsing-csv-files-with-readr.html#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 m      1993 - 1999      2525960 1694779       0.671</span></span>
+<span id="cb36-9"><a href="parsing-csv-files-with-readr.html#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 m      1983 - 1992      4328970 3001418       0.693</span></span>
+<span id="cb36-10"><a href="parsing-csv-files-with-readr.html#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 m      1973 - 1982      4138130 3089525       0.747</span></span>
+<span id="cb36-11"><a href="parsing-csv-files-with-readr.html#cb36-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 m      1958 - 1972      8836322 6930258       0.784</span></span>
+<span id="cb36-12"><a href="parsing-csv-files-with-readr.html#cb36-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 m      1948 - 1957      4602052 3741274       0.813</span></span>
+<span id="cb36-13"><a href="parsing-csv-files-with-readr.html#cb36-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 m      1947 und früher  5381355 4300726       0.799</span></span>
+<span id="cb36-14"><a href="parsing-csv-files-with-readr.html#cb36-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 w      1993 - 1999      2422539 1674861       0.691</span></span>
+<span id="cb36-15"><a href="parsing-csv-files-with-readr.html#cb36-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 w      1983 - 1992      4179322 3038245       0.727</span></span>
+<span id="cb36-16"><a href="parsing-csv-files-with-readr.html#cb36-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 w      1973 - 1982      4079699 3137743       0.769</span></span>
+<span id="cb36-17"><a href="parsing-csv-files-with-readr.html#cb36-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 w      1958 - 1972      8790843 6987768       0.795</span></span>
+<span id="cb36-18"><a href="parsing-csv-files-with-readr.html#cb36-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 11 w      1948 - 1957      4885215 3951857       0.809</span></span>
+<span id="cb36-19"><a href="parsing-csv-files-with-readr.html#cb36-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 12 w      1947 und früher  7518080 5427886       0.722</span></span></code></pre></div>
+<p>Looking at the relative turnout, it seems that there are systematic differences.
+Firstly, it appears that turnout raises with age, although the oldest group in
+the data breaks this pattern by showing lower relative turnout than the second
+oldest. Secondly, it also appear, that women have a higher relative turnout than
+men. But this kind of first analysis by eye can be easily misleading. Although
+we have only few observations and variables, we also have differences in group
+sizes (the people eligible to vote by gender and by year of birth) which might
+lead to a biased perception of the actual patterns in the data. Also, if we had
+a larger data set, this kind of analysis by eye would get virtually impossible.</p>
+<p>Two basic tools to summarise the data into more digestible representations of
+the patterns contained within are summary statistics and graphical analysis. We
+will look at how to plot data graphically soon. But before this, we can apply
+the knowledge on summary statistics we have already gained to this data.</p>
+<p>The most basic summary, would be to calculate the totals for our variables.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="parsing-csv-files-with-readr.html#cb37-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span> </span>
+<span id="cb37-2"><a href="parsing-csv-files-with-readr.html#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb37-3"><a href="parsing-csv-files-with-readr.html#cb37-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">eligible_total =</span> <span class="fu">sum</span>(eligible),</span>
+<span id="cb37-4"><a href="parsing-csv-files-with-readr.html#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_total =</span> <span class="fu">sum</span>(turnout)</span>
+<span id="cb37-5"><a href="parsing-csv-files-with-readr.html#cb37-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb37-6"><a href="parsing-csv-files-with-readr.html#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 1 x 2</span></span>
+<span id="cb37-7"><a href="parsing-csv-files-with-readr.html#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   eligible_total turnout_total</span></span>
+<span id="cb37-8"><a href="parsing-csv-files-with-readr.html#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="do">##            &lt;dbl&gt;         &lt;dbl&gt;</span></span>
+<span id="cb37-9"><a href="parsing-csv-files-with-readr.html#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 1       61688487      46976340</span></span></code></pre></div>
+<p>More interesting than these absolute values would be to compute the overall
+relative turnout percentage. In this case we can not simply use
+<code>mean(turnout_pct)</code>. The group sizes of our observations differ (n = <code>eligible</code>)
+and thus the mean would be biased. There are at least two ways, we can compute
+the correct mean.</p>
+<p><code>summarise()</code> returns a tibble, which we can manipulate further. We could thus
+add a <code>mutate()</code> to the pipe in which we compute the relative turnout from the
+absolute totals we just computed through <code>summarise()</code>.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="parsing-csv-files-with-readr.html#cb38-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span> </span>
+<span id="cb38-2"><a href="parsing-csv-files-with-readr.html#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb38-3"><a href="parsing-csv-files-with-readr.html#cb38-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">eligible_total =</span> <span class="fu">sum</span>(eligible),</span>
+<span id="cb38-4"><a href="parsing-csv-files-with-readr.html#cb38-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_total =</span> <span class="fu">sum</span>(turnout)</span>
+<span id="cb38-5"><a href="parsing-csv-files-with-readr.html#cb38-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-6"><a href="parsing-csv-files-with-readr.html#cb38-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">turnout_pct_mean =</span> turnout_total <span class="sc">/</span> eligible_total)</span>
+<span id="cb38-7"><a href="parsing-csv-files-with-readr.html#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 1 x 3</span></span>
+<span id="cb38-8"><a href="parsing-csv-files-with-readr.html#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   eligible_total turnout_total turnout_pct_mean</span></span>
+<span id="cb38-9"><a href="parsing-csv-files-with-readr.html#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="do">##            &lt;dbl&gt;         &lt;dbl&gt;            &lt;dbl&gt;</span></span>
+<span id="cb38-10"><a href="parsing-csv-files-with-readr.html#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 1       61688487      46976340            0.762</span></span></code></pre></div>
+<p>We could also compute the mean from the turnout percentages by observation we
+computed earlier, but instead of <code>mean()</code> we have to use <code>weighted.mean()</code>. The
+function takes a vector of weights as an argument. In our case we can pass the
+<code>eligible</code> column to it, correcting the calculation of the mean by the different
+group sizes.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="parsing-csv-files-with-readr.html#cb39-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span> </span>
+<span id="cb39-2"><a href="parsing-csv-files-with-readr.html#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb39-3"><a href="parsing-csv-files-with-readr.html#cb39-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">eligible_total =</span> <span class="fu">sum</span>(eligible),</span>
+<span id="cb39-4"><a href="parsing-csv-files-with-readr.html#cb39-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_total =</span> <span class="fu">sum</span>(turnout),</span>
+<span id="cb39-5"><a href="parsing-csv-files-with-readr.html#cb39-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_pct_mean =</span> <span class="fu">weighted.mean</span>(turnout_pct, <span class="at">w =</span> eligible)</span>
+<span id="cb39-6"><a href="parsing-csv-files-with-readr.html#cb39-6" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb39-7"><a href="parsing-csv-files-with-readr.html#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 1 x 3</span></span>
+<span id="cb39-8"><a href="parsing-csv-files-with-readr.html#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   eligible_total turnout_total turnout_pct_mean</span></span>
+<span id="cb39-9"><a href="parsing-csv-files-with-readr.html#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="do">##            &lt;dbl&gt;         &lt;dbl&gt;            &lt;dbl&gt;</span></span>
+<span id="cb39-10"><a href="parsing-csv-files-with-readr.html#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 1       61688487      46976340            0.762</span></span></code></pre></div>
+<p>The mean turnout percentage is 0.76%. This can serve as our baseline for
+deciding which group percentages – by gender and by year of birth – are above
+or below average.</p>
+<p>Let us compute turnout percentages by gender, by combining <code>summarise()</code> with
+<code>group_by(gender)</code>.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="parsing-csv-files-with-readr.html#cb40-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb40-2"><a href="parsing-csv-files-with-readr.html#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender) <span class="sc">%&gt;%</span> </span>
+<span id="cb40-3"><a href="parsing-csv-files-with-readr.html#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb40-4"><a href="parsing-csv-files-with-readr.html#cb40-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">eligible_total =</span> <span class="fu">sum</span>(eligible),</span>
+<span id="cb40-5"><a href="parsing-csv-files-with-readr.html#cb40-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_total =</span> <span class="fu">sum</span>(turnout),</span>
+<span id="cb40-6"><a href="parsing-csv-files-with-readr.html#cb40-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_pct_mean =</span> <span class="fu">weighted.mean</span>(turnout_pct, <span class="at">w =</span> eligible)</span>
+<span id="cb40-7"><a href="parsing-csv-files-with-readr.html#cb40-7" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb40-8"><a href="parsing-csv-files-with-readr.html#cb40-8" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 2 x 4</span></span>
+<span id="cb40-9"><a href="parsing-csv-files-with-readr.html#cb40-9" aria-hidden="true" tabindex="-1"></a><span class="do">##   gender eligible_total turnout_total turnout_pct_mean</span></span>
+<span id="cb40-10"><a href="parsing-csv-files-with-readr.html#cb40-10" aria-hidden="true" tabindex="-1"></a><span class="do">## * &lt;chr&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;dbl&gt;</span></span>
+<span id="cb40-11"><a href="parsing-csv-files-with-readr.html#cb40-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 m            29812789      22757980            0.763</span></span>
+<span id="cb40-12"><a href="parsing-csv-files-with-readr.html#cb40-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 w            31875698      24218360            0.760</span></span></code></pre></div>
+<p>Overall, the turnout percentages for women and men are more or less the same,
+while being slightly higher for men. Both genders are very close to the overall
+mean. This contradicts the first impression we gained looking at the data above
+and is an argument against a general gender difference in turnout.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="parsing-csv-files-with-readr.html#cb41-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb41-2"><a href="parsing-csv-files-with-readr.html#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ybirth) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-3"><a href="parsing-csv-files-with-readr.html#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb41-4"><a href="parsing-csv-files-with-readr.html#cb41-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">eligible_total =</span> <span class="fu">sum</span>(eligible),</span>
+<span id="cb41-5"><a href="parsing-csv-files-with-readr.html#cb41-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_total =</span> <span class="fu">sum</span>(turnout),</span>
+<span id="cb41-6"><a href="parsing-csv-files-with-readr.html#cb41-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_pct_mean =</span> <span class="fu">weighted.mean</span>(turnout_pct, <span class="at">w =</span> eligible)</span>
+<span id="cb41-7"><a href="parsing-csv-files-with-readr.html#cb41-7" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb41-8"><a href="parsing-csv-files-with-readr.html#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 6 x 4</span></span>
+<span id="cb41-9"><a href="parsing-csv-files-with-readr.html#cb41-9" aria-hidden="true" tabindex="-1"></a><span class="do">##   ybirth          eligible_total turnout_total turnout_pct_mean</span></span>
+<span id="cb41-10"><a href="parsing-csv-files-with-readr.html#cb41-10" aria-hidden="true" tabindex="-1"></a><span class="do">## * &lt;fct&gt;                    &lt;dbl&gt;         &lt;dbl&gt;            &lt;dbl&gt;</span></span>
+<span id="cb41-11"><a href="parsing-csv-files-with-readr.html#cb41-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 1993 - 1999            4948499       3369640            0.681</span></span>
+<span id="cb41-12"><a href="parsing-csv-files-with-readr.html#cb41-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 1983 - 1992            8508292       6039663            0.710</span></span>
+<span id="cb41-13"><a href="parsing-csv-files-with-readr.html#cb41-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 1973 - 1982            8217829       6227268            0.758</span></span>
+<span id="cb41-14"><a href="parsing-csv-files-with-readr.html#cb41-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 1958 - 1972           17627165      13918026            0.790</span></span>
+<span id="cb41-15"><a href="parsing-csv-files-with-readr.html#cb41-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 1948 - 1957            9487267       7693131            0.811</span></span>
+<span id="cb41-16"><a href="parsing-csv-files-with-readr.html#cb41-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 1947 und früher       12899435       9728612            0.754</span></span></code></pre></div>
+<p>The differences by year of birth groups independent of gender we spotted
+earlier, seem to hold. The older a group, the higher the relative turnout. The
+two youngest groups lie substantially below the overall average, the third is
+near the average and people born between 1948 – 1972 have a substantially
+higher than average relative turnout. The exception to the overall pattern is
+the oldest age group whose relative turnout lies slightly below average.</p>
+<p>By now we can conclude, that overall there are no systematic gender differences
+in relative turnout while there seems to be clear pattern regarding the age
+groups. We will now turn to graphical analysis and explore if the overall
+pattern might still be more complex than suggested by these summaries.</p>
+</div>
+</div>
+<div id="graphical-analysis-with-ggplot" class="section level2" number="10.4">
+<h2><span class="header-section-number">10.4</span> Graphical analysis with ggplot</h2>
+<p>We will use the core tidyverse package ggplot2 for graphical analysis.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="parsing-csv-files-with-readr.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> data) <span class="sc">+</span></span>
+<span id="cb42-2"><a href="parsing-csv-files-with-readr.html#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> eligible, <span class="at">y =</span> turnout)) <span class="sc">+</span></span>
+<span id="cb42-3"><a href="parsing-csv-files-with-readr.html#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> eligible, <span class="at">y =</span> turnout)) <span class="sc">+</span></span>
+<span id="cb42-4"><a href="parsing-csv-files-with-readr.html#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">x =</span> eligible, <span class="at">y =</span> turnout))</span>
+<span id="cb42-5"><a href="parsing-csv-files-with-readr.html#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="do">## `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</span></span></code></pre></div>
+<p><img src="webscraping-R_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="parsing-csv-files-with-readr.html#cb43-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb43-2"><a href="parsing-csv-files-with-readr.html#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender) <span class="sc">%&gt;%</span> </span>
+<span id="cb43-3"><a href="parsing-csv-files-with-readr.html#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb43-4"><a href="parsing-csv-files-with-readr.html#cb43-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">eligible_total =</span> <span class="fu">sum</span>(eligible),</span>
+<span id="cb43-5"><a href="parsing-csv-files-with-readr.html#cb43-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_total =</span> <span class="fu">sum</span>(turnout),</span>
+<span id="cb43-6"><a href="parsing-csv-files-with-readr.html#cb43-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_pct_mean =</span> <span class="fu">weighted.mean</span>(turnout_pct, <span class="at">w =</span> eligible)</span>
+<span id="cb43-7"><a href="parsing-csv-files-with-readr.html#cb43-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb43-8"><a href="parsing-csv-files-with-readr.html#cb43-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb43-9"><a href="parsing-csv-files-with-readr.html#cb43-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> gender, <span class="at">y =</span> turnout_pct_mean))</span></code></pre></div>
+<p><img src="webscraping-R_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="parsing-csv-files-with-readr.html#cb44-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb44-2"><a href="parsing-csv-files-with-readr.html#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ybirth) <span class="sc">%&gt;%</span> </span>
+<span id="cb44-3"><a href="parsing-csv-files-with-readr.html#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb44-4"><a href="parsing-csv-files-with-readr.html#cb44-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">eligible_total =</span> <span class="fu">sum</span>(eligible),</span>
+<span id="cb44-5"><a href="parsing-csv-files-with-readr.html#cb44-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_total =</span> <span class="fu">sum</span>(turnout),</span>
+<span id="cb44-6"><a href="parsing-csv-files-with-readr.html#cb44-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_pct_mean =</span> <span class="fu">weighted.mean</span>(turnout_pct, <span class="at">w =</span> eligible)</span>
+<span id="cb44-7"><a href="parsing-csv-files-with-readr.html#cb44-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb44-8"><a href="parsing-csv-files-with-readr.html#cb44-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb44-9"><a href="parsing-csv-files-with-readr.html#cb44-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> ybirth, <span class="at">y =</span> turnout_pct_mean))</span></code></pre></div>
+<p><img src="webscraping-R_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="parsing-csv-files-with-readr.html#cb45-1" aria-hidden="true" tabindex="-1"></a>overall_turnout_mean <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> </span>
+<span id="cb45-2"><a href="parsing-csv-files-with-readr.html#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb45-3"><a href="parsing-csv-files-with-readr.html#cb45-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_pct_mean =</span> <span class="fu">weighted.mean</span>(turnout_pct, <span class="at">w =</span> eligible)</span>
+<span id="cb45-4"><a href="parsing-csv-files-with-readr.html#cb45-4" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-5"><a href="parsing-csv-files-with-readr.html#cb45-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>()</span>
+<span id="cb45-6"><a href="parsing-csv-files-with-readr.html#cb45-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-7"><a href="parsing-csv-files-with-readr.html#cb45-7" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb45-8"><a href="parsing-csv-files-with-readr.html#cb45-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ybirth) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-9"><a href="parsing-csv-files-with-readr.html#cb45-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb45-10"><a href="parsing-csv-files-with-readr.html#cb45-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_pct_mean =</span> <span class="fu">weighted.mean</span>(turnout_pct, <span class="at">w =</span> eligible)</span>
+<span id="cb45-11"><a href="parsing-csv-files-with-readr.html#cb45-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-12"><a href="parsing-csv-files-with-readr.html#cb45-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb45-13"><a href="parsing-csv-files-with-readr.html#cb45-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> ybirth, <span class="at">y =</span> turnout_pct_mean)) <span class="sc">+</span></span>
+<span id="cb45-14"><a href="parsing-csv-files-with-readr.html#cb45-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> overall_turnout_mean)</span></code></pre></div>
+<p><img src="webscraping-R_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
+<p>turnout_pct_mean =</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="parsing-csv-files-with-readr.html#cb46-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb46-2"><a href="parsing-csv-files-with-readr.html#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb46-3"><a href="parsing-csv-files-with-readr.html#cb46-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> ybirth, <span class="at">y =</span> turnout_pct, <span class="at">fill =</span> gender), <span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span></span>
+<span id="cb46-4"><a href="parsing-csv-files-with-readr.html#cb46-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> overall_turnout_mean)</span></code></pre></div>
+<p><img src="webscraping-R_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="parsing-csv-files-with-readr.html#cb47-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb47-2"><a href="parsing-csv-files-with-readr.html#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb47-3"><a href="parsing-csv-files-with-readr.html#cb47-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> ybirth, <span class="at">y =</span> turnout_pct, <span class="at">fill =</span> gender, <span class="at">colour =</span> eligible), <span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span></span>
+<span id="cb47-4"><a href="parsing-csv-files-with-readr.html#cb47-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> overall_turnout_mean) <span class="sc">+</span></span>
+<span id="cb47-5"><a href="parsing-csv-files-with-readr.html#cb47-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x =</span> ybirth, <span class="at">y =</span> turnout_pct, <span class="at">fill =</span> gender, <span class="at">label =</span> eligible), <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="dv">1</span>), <span class="at">hjust =</span> <span class="sc">-</span><span class="dv">2</span>, <span class="at">angle =</span> <span class="sc">-</span><span class="dv">90</span>)</span>
+<span id="cb47-6"><a href="parsing-csv-files-with-readr.html#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning: Ignoring unknown aesthetics: fill</span></span></code></pre></div>
+<p><img src="webscraping-R_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="parsing-csv-files-with-readr.html#cb48-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb48-2"><a href="parsing-csv-files-with-readr.html#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> ybirth, <span class="at">y =</span> turnout_pct, <span class="at">fill =</span> gender)) <span class="sc">+</span></span>
+<span id="cb48-3"><a href="parsing-csv-files-with-readr.html#cb48-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">colour =</span> eligible), <span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span></span>
+<span id="cb48-4"><a href="parsing-csv-files-with-readr.html#cb48-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> overall_turnout_mean) <span class="sc">+</span></span>
+<span id="cb48-5"><a href="parsing-csv-files-with-readr.html#cb48-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> eligible), <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="dv">1</span>), <span class="at">hjust =</span> <span class="sc">-</span><span class="dv">2</span>, <span class="at">angle =</span> <span class="sc">-</span><span class="dv">90</span>) <span class="sc">+</span></span>
+<span id="cb48-6"><a href="parsing-csv-files-with-readr.html#cb48-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span></code></pre></div>
+<p><img src="webscraping-R_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
+<ul>
+<li>syntax
+<ul>
+<li>aes()</li>
+</ul></li>
+<li>important types
+<ul>
+<li>onedimensional
+<ul>
+<li>barcounts</li>
+<li>density</li>
+</ul></li>
+<li>twodimensional
+<ul>
+<li>line</li>
+<li>smoothed line</li>
+<li>?</li>
+</ul></li>
+<li>by groups
+<ul>
+<li>colour</li>
+<li>facets</li>
+</ul></li>
+</ul></li>
+<li>pattern of gender differences by age group
+<ul>
+<li>why are m and w more or less equal overall?</li>
+<li>-&gt; large group of old women with low turnout?</li>
+</ul></li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="R3.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/webscraping-tures/webscraping-tures.github.io/09-project1.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

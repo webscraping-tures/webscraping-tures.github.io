@@ -24,7 +24,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2021-05-06" />
+<meta name="date" content="2021-05-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -264,17 +264,64 @@ Web Scraping using R
 <li class="chapter" data-level="7.2" data-path="rvest3.html"><a href="rvest3.html#pagination"><i class="fa fa-check"></i><b>7.2</b> Pagination</a>
 <ul>
 <li class="chapter" data-level="7.2.1" data-path="rvest3.html"><a href="rvest3.html#the-query-1"><i class="fa fa-check"></i><b>7.2.1</b> The query</a></li>
-<li class="chapter" data-level="7.2.2" data-path="rvest3.html"><a href="rvest3.html#scraping-the-sub-pages-1"><i class="fa fa-check"></i><b>7.2.2</b> Scraping the sub-pages</a></li>
+<li class="chapter" data-level="7.2.2" data-path="rvest3.html"><a href="rvest3.html#sub-pgs"><i class="fa fa-check"></i><b>7.2.2</b> Scraping the sub-pages</a></li>
 </ul></li>
 </ul></li>
-<li class="part"><span><b>IV Practical application</b></span></li>
-<li class="chapter" data-level="8" data-path="good-practice.html"><a href="good-practice.html"><i class="fa fa-check"></i><b>8</b> Good practice</a></li>
-<li class="chapter" data-level="9" data-path="R3.html"><a href="R3.html"><i class="fa fa-check"></i><b>9</b> Data transformation and graphical analysis</a>
+<li class="chapter" data-level="8" data-path="good-practice.html"><a href="good-practice.html"><i class="fa fa-check"></i><b>8</b> Good practice</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="R3.html"><a href="R3.html#transformation-with-dplyr"><i class="fa fa-check"></i><b>9.1</b> Transformation with dplyr</a></li>
-<li class="chapter" data-level="9.2" data-path="R3.html"><a href="R3.html#graphical-analysis-with-ggplot"><i class="fa fa-check"></i><b>9.2</b> Graphical analysis with ggplot</a></li>
+<li class="chapter" data-level="8.1" data-path="good-practice.html"><a href="good-practice.html#legality"><i class="fa fa-check"></i><b>8.1</b> Legality?</a></li>
+<li class="chapter" data-level="8.2" data-path="good-practice.html"><a href="good-practice.html#responsibility"><i class="fa fa-check"></i><b>8.2</b> Responsibility!</a></li>
+<li class="chapter" data-level="8.3" data-path="good-practice.html"><a href="good-practice.html#good-practice"><i class="fa fa-check"></i><b>8.3</b> Good practice</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="project.html"><a href="project.html"><i class="fa fa-check"></i><b>10</b> Sample project</a></li>
+<li class="chapter" data-level="9" data-path="files.html"><a href="files.html"><i class="fa fa-check"></i><b>9</b> Downloading and saving files</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="files.html"><a href="files.html#csv-files"><i class="fa fa-check"></i><b>9.1</b> CSV files</a></li>
+<li class="chapter" data-level="9.2" data-path="files.html"><a href="files.html#parsing-a-csv-file"><i class="fa fa-check"></i><b>9.2</b> Parsing a CSV file</a></li>
+<li class="chapter" data-level="9.3" data-path="files.html"><a href="files.html#running-example"><i class="fa fa-check"></i><b>9.3</b> Running example</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="files.html"><a href="files.html#download-files-from-within-r"><i class="fa fa-check"></i><b>9.3.1</b> Download files from within R</a></li>
+<li class="chapter" data-level="9.3.2" data-path="files.html"><a href="files.html#parsing-the-csv-files"><i class="fa fa-check"></i><b>9.3.2</b> Parsing the csv files</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>IV Data analysis</b></span></li>
+<li class="chapter" data-level="10" data-path="dplyr.html"><a href="dplyr.html"><i class="fa fa-check"></i><b>10</b> Transformation with dplyr</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="dplyr.html"><a href="dplyr.html#filter"><i class="fa fa-check"></i><b>10.1</b> <code>filter()</code></a></li>
+<li class="chapter" data-level="10.2" data-path="dplyr.html"><a href="dplyr.html#select"><i class="fa fa-check"></i><b>10.2</b> <code>select()</code></a></li>
+<li class="chapter" data-level="10.3" data-path="dplyr.html"><a href="dplyr.html#rename"><i class="fa fa-check"></i><b>10.3</b> <code>rename()</code></a></li>
+<li class="chapter" data-level="10.4" data-path="dplyr.html"><a href="dplyr.html#mutate"><i class="fa fa-check"></i><b>10.4</b> <code>mutate()</code></a></li>
+<li class="chapter" data-level="10.5" data-path="dplyr.html"><a href="dplyr.html#summarise-group_by"><i class="fa fa-check"></i><b>10.5</b> <code>summarise()</code> &amp; <code>group_by()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="ggplot.html"><a href="ggplot.html"><i class="fa fa-check"></i><b>11</b> Graphical analysis with ggplot</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="ggplot.html"><a href="ggplot.html#ggplot-syntax"><i class="fa fa-check"></i><b>11.1</b> ggplot syntax</a></li>
+<li class="chapter" data-level="11.2" data-path="ggplot.html"><a href="ggplot.html#aesthtetics"><i class="fa fa-check"></i><b>11.2</b> Aesthtetics</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="ggplot.html"><a href="ggplot.html#continuous"><i class="fa fa-check"></i><b>11.2.1</b> Continuous</a></li>
+<li class="chapter" data-level="11.2.2" data-path="ggplot.html"><a href="ggplot.html#continuous-x-continuous"><i class="fa fa-check"></i><b>11.2.2</b> Continuous x Continuous</a></li>
+<li class="chapter" data-level="11.2.3" data-path="ggplot.html"><a href="ggplot.html#discrete-x-continuous"><i class="fa fa-check"></i><b>11.2.3</b> Discrete x Continuous</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="ggplot.html"><a href="ggplot.html#tuning-the-output"><i class="fa fa-check"></i><b>11.3</b> Tuning the output</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="regex.html"><a href="regex.html"><i class="fa fa-check"></i><b>12</b> Regular expressions</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="regex.html"><a href="regex.html#str_detect"><i class="fa fa-check"></i><b>12.1</b> str_detect()</a></li>
+<li class="chapter" data-level="12.2" data-path="regex.html"><a href="regex.html#basic-pattern-matching"><i class="fa fa-check"></i><b>12.2</b> Basic pattern matching</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="regex.html"><a href="regex.html#literal-characters"><i class="fa fa-check"></i><b>12.2.1</b> Literal characters</a></li>
+<li class="chapter" data-level="12.2.2" data-path="regex.html"><a href="regex.html#escaping-metacharacters"><i class="fa fa-check"></i><b>12.2.2</b> Escaping metacharacters</a></li>
+<li class="chapter" data-level="12.2.3" data-path="regex.html"><a href="regex.html#character-classes"><i class="fa fa-check"></i><b>12.2.3</b> Character classes</a></li>
+<li class="chapter" data-level="12.2.4" data-path="regex.html"><a href="regex.html#anchors"><i class="fa fa-check"></i><b>12.2.4</b> Anchors</a></li>
+<li class="chapter" data-level="12.2.5" data-path="regex.html"><a href="regex.html#quantifiers"><i class="fa fa-check"></i><b>12.2.5</b> Quantifiers</a></li>
+<li class="chapter" data-level="12.2.6" data-path="regex.html"><a href="regex.html#groups"><i class="fa fa-check"></i><b>12.2.6</b> Groups</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="regex.html"><a href="regex.html#practical-application"><i class="fa fa-check"></i><b>12.3</b> Practical application</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="regex.html"><a href="regex.html#str_count"><i class="fa fa-check"></i><b>12.3.1</b> str_count()</a></li>
+<li class="chapter" data-level="12.3.2" data-path="regex.html"><a href="regex.html#str_extract-str_match"><i class="fa fa-check"></i><b>12.3.2</b> str_extract() &amp; str_match()</a></li>
+<li class="chapter" data-level="12.3.3" data-path="regex.html"><a href="regex.html#str_replace"><i class="fa fa-check"></i><b>12.3.3</b> str_replace()</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -577,21 +624,21 @@ for <code>mean</code> and <code>sd</code>. Just writing <code>rnorm()</code> wil
 followed by <code>=</code> and the value to be provided. Note that, since <code>rnorm()</code> draws
 random numbers, your output will differ from the output presented here.</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="R1.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
-<span id="cb36-2"><a href="R1.html#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  0.9163263 -0.6709938  0.7685378  0.3568964 -0.5726529  0.3027808</span></span>
-<span id="cb36-3"><a href="R1.html#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7] -0.9336805 -1.4970583 -0.7386025 -0.9185746</span></span></code></pre></div>
+<span id="cb36-2"><a href="R1.html#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  0.007553035 -1.037169419 -0.015358429 -0.416800347  1.363897353</span></span>
+<span id="cb36-3"><a href="R1.html#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [6] -0.621258153 -0.289662500 -0.381331090 -0.643143706 -1.361002481</span></span></code></pre></div>
 <p>In the same vein, additional arguments that are allowed by the function can
 be defined, instead of using their default values.</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="R1.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="fl">0.5</span>)</span>
-<span id="cb37-2"><a href="R1.html#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  9.600285  9.591219 12.035315  9.818112  9.908060  9.583184 10.147536</span></span>
-<span id="cb37-3"><a href="R1.html#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [8] 10.053590 10.117315 10.140186</span></span></code></pre></div>
+<span id="cb37-2"><a href="R1.html#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  9.473832  9.506829 10.158233 10.292377  9.380318  9.255087 10.293221</span></span>
+<span id="cb37-3"><a href="R1.html#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [8] 10.308997 10.779805 10.276337</span></span></code></pre></div>
 <p>We can also skip writing the names of arguments in many cases. As the <code>n</code>
 argument is the first listed in the function’s parentheses, R also understands
 the call, if we just provide the value to be used as the first argument. You
 will often encounter the convention that the first argument is written without
 its name and any further arguments are written in full.</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="R1.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="fl">0.5</span>)</span>
-<span id="cb38-2"><a href="R1.html#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  9.549023  9.125467  9.838277  9.989322 10.594859 10.546628 10.366899</span></span>
-<span id="cb38-3"><a href="R1.html#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [8]  9.861486 10.307058 10.192276</span></span></code></pre></div>
+<span id="cb38-2"><a href="R1.html#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] 10.606688  9.891549 10.132835  9.780325 10.149460  9.817817 10.205443</span></span>
+<span id="cb38-3"><a href="R1.html#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [8] 10.653673 10.332274 10.087875</span></span></code></pre></div>
 </div>
 <div id="examples-basic-statistical-functions" class="section level3" number="2.6.2">
 <h3><span class="header-section-number">2.6.2</span> Examples: Basic statistical functions</h3>
