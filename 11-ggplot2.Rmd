@@ -1,12 +1,14 @@
 # Graphical analysis with ggplot {#ggplot}
 
+
 ``` {r, include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
 knitr::opts_chunk$set(cache = TRUE)
 knitr::opts_chunk$set(cache.path = 'cache/')
+
+knitr::opts_chunk$set(eval = FALSE)
 ```
 
-WIP!
 
 ## ggplot syntax
 
@@ -19,3 +21,107 @@ WIP!
 ### Discrete x Continuous
 
 ## Tuning the output
+
+
+
+
+
+``` {r}
+ggplot(data = data) +
+  geom_point(aes(x = eligible, y = turnout)) +
+  geom_line(aes(x = eligible, y = turnout)) +
+  geom_smooth(aes(x = eligible, y = turnout))
+```
+
+
+
+``` {r}
+data %>%
+  group_by(gender) %>% 
+  summarise(
+    eligible_total = sum(eligible),
+    turnout_total = sum(turnout),
+    turnout_pct_mean = weighted.mean(turnout_pct, w = eligible)
+  ) %>% 
+  ggplot() +
+  geom_col(aes(x = gender, y = turnout_pct_mean))
+```
+
+``` {r}
+data %>%
+  group_by(ybirth) %>% 
+  summarise(
+    eligible_total = sum(eligible),
+    turnout_total = sum(turnout),
+    turnout_pct_mean = weighted.mean(turnout_pct, w = eligible)
+  ) %>% 
+  ggplot() +
+  geom_col(aes(x = ybirth, y = turnout_pct_mean))
+```
+
+``` {r}
+overall_turnout_mean <- data %>% 
+  summarise(
+    turnout_pct_mean = weighted.mean(turnout_pct, w = eligible)
+  ) %>% 
+  unlist()
+
+data %>%
+  group_by(ybirth) %>% 
+  summarise(
+    turnout_pct_mean = weighted.mean(turnout_pct, w = eligible)
+  ) %>% 
+  ggplot() +
+  geom_col(aes(x = ybirth, y = turnout_pct_mean)) +
+  geom_hline(yintercept = overall_turnout_mean)
+```
+
+turnout_pct_mean = 
+  
+  
+  ``` {r}
+data %>%
+  ggplot() +
+  geom_col(aes(x = ybirth, y = turnout_pct, fill = gender), position = "dodge") +
+  geom_hline(yintercept = overall_turnout_mean)
+```
+
+
+
+``` {r}
+data %>%
+  ggplot() +
+  geom_col(aes(x = ybirth, y = turnout_pct, fill = gender, colour = eligible), position = "dodge") +
+  geom_hline(yintercept = overall_turnout_mean) +
+  geom_text(aes(x = ybirth, y = turnout_pct, fill = gender, label = eligible), position = position_dodge(width = 1), hjust = -2, angle = -90)
+```
+
+
+``` {r}
+data %>%
+  ggplot(aes(x = ybirth, y = turnout_pct, fill = gender)) +
+  geom_col(aes(colour = eligible), position = "dodge") +
+  geom_hline(yintercept = overall_turnout_mean) +
+  geom_text(aes(label = eligible), position = position_dodge(width = 1), hjust = -2, angle = -90) +
+  scale_y_continuous(limits = c(0, 1))
+```
+
+
+* syntax
+* aes()
+* important types
+* onedimensional
+* barcounts
+* density
+* twodimensional
+* line
+* smoothed line
+* ?
+  * by groups
+* colour
+* facets
+
+* pattern of gender differences by age group
+* why are m and w more or less equal overall?
+  * -> large group of old women with low turnout?
+  

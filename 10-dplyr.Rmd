@@ -2,19 +2,325 @@
 
 # Transformation with dplyr {#dplyr}
 
-WIP!
+``` {r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+knitr::opts_chunk$set(cache = TRUE)
+knitr::opts_chunk$set(cache.path = 'cache/')
+
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+At this point you should have a look at both tibbles either by clicking on them
+in the environment tab or by writing `View(eligible_tbl)` and 
+`View(turnout_tbl)`.
+
+A quick sidenote: You will notice, that most of the values we will compute in
+this chapter are already present in eligible.csv. We will soon drop those and
+compute them ourselves for the sake of having a good introductory example into
+data transformation. In a real world scenario we would most probably just use
+the values for turnout percentages etc. already present in the data.
+
+In the following, we will use several functions from the tidyverse package
+dplyr to filter observations, select columns and add new columns as 
+computations of existing ones.
 
 ## `filter()`
 
+As a first step, we should limit our tibbles to the observations we actually
+need. For this example we should limit ourselves to an analysis on the federal
+level. Thus we can drop all observations referring to the individual states. We
+will also drop the totals for the gender and year of birth columns and compute
+them ourselves later on.
+
+To filter on the observations we need and drop the remainder, we can use the
+function `filter()`. It takes the tibble or data frame to be filtered as it's
+first argument -- which we don't need to specify when using the pipe -- and one
+or multiple expressions that specify which observations are to be filtered.
+
+To filter only those observations that have the value "Bund" for the column
+"Land", we can write:
+  
+  ``` {r}
+eligible_tbl %>% 
+  filter(Land == "Bund")
+```
+
+Thus only the observations for "Bund" remain in the tibble. Or in other words,
+those observations for whom the expression `Land == "Bund"` is returned as 
+`TRUE`. Besides `==`, all other comparison operators can be used and we can
+chain multiple expressions to be filtered upon in one call of `filter()`. So, to
+filter on those observations who refer to the "Bund" and don't have a sum for
+the gender and year of birth columns, we can write:
+
+``` {r}
+eligible_tbl %>% 
+  filter(Land == "Bund", Geschlecht != "Summe", Geburtsjahresgruppe != "Summe")
+```
+
+We can also use logical operators -- `&` for "and", `|` for "or" -- when
+combining expressions to be filtered upon. So instead of `Geschlecht = "Summe"`
+another approach would be to filter those that have "m" or "w" as values. To
+demonstrate this, let us filter the object `turnout_tbl`as well. Here we have an
+additional column we have to filter for called "Erst-/Zweitstimme". I propose
+we only analyse the party votes.
+
+``` {r}
+turnout_tbl %>% 
+  filter(Land == "Bund",
+         `Erst-/Zweitstimme` == 2,
+         Geschlecht == "m" | Geschlecht == "w",
+         Geburtsjahresgruppe != "Summe")
+```
+
+When we create rather long function calls with many arguments, it is often a
+good idea to insert some line breaks to keep your code easily readable, as seen
+above.
+
+Let's have another look at this line: `` `Erst-/Zweitstimme` == 2,``. You will
+notice, that the name of the column is enclosed by *backticks* `` ` ``. In
+general, object and variable (ie. column) names in R can only contain letters,
+numbers, points and underscores and have to start with a letter. It is possible
+to have names that violate those rules, but these have to enclosed in backticks.
+As you can see, "Erst-/Zweitstimme" contains two characters that are not allowed
+in R names. `turnout_tbl` also contains the column "DIE LINKE". The usage of
+whitespace in names is also not allowed. So to address this column in our code,
+we would have to write ` `DIE LINKE` `.
+
 ## `select()`
+
+We should also limit our tibbles to the set of columns we will actually use.
+
+Looking at `eligible_tbl`, we will only need the first four columns. We can use
+the function `select()` to "select" the columns we need by name.
+
+``` {r}
+eligible_tbl %>% 
+  select(Land, Geschlecht, Geburtsjahresgruppe, Wahlberechtigte)
+```
+
+If, as in this case, the columns we want so select follow each other in their
+positions in the tibble, we can also use a shorter "from:to" notation, that
+saves us somy typing.
+
+``` {r}
+eligible_tbl %>% 
+  select(Land:Wahlberechtigte)
+```
+
+At this point we can combine the filtering of rows and selection of columns in
+the pipe and assign the result to a new object. But first, let us think about
+again about which columns we will actually need. Above we selected the first
+four columns from `turnout_tbl`. But we do not actually need the column "Land"
+after we filtered for the rows containing the federal state level as it contains
+no useful information anymore. So we can drop the column, if we filter first.
+Order matters! For `turnout_tbl` this is also true but extends to the column
+"Erst-/Zweitstimme" which also only contains one value after filtering.
+
+``` {r}
+eligible_tbl <- eligible_tbl %>% 
+  filter(Land == "Bund", 
+         Geschlecht != "Summe",
+         Geburtsjahresgruppe != "Summe") %>%
+  select(Geschlecht:Wahlberechtigte)
+
+turnout_tbl <- turnout_tbl %>% 
+  filter(Land == "Bund",
+         `Erst-/Zweitstimme` == 2,
+         Geschlecht == "m" | Geschlecht == "w",
+         Geburtsjahresgruppe != "Summe") %>% 
+  select(Geschlecht:Summe)
+```
 
 
 ## `rename()`
 
+As we are working in english, it makes sense to also rename the columns using
+english wordings. Also, we have to write down the column names several time
+during analysis, so we should use names that are short but concise to limit
+unnecessary typing while maintaining recognisability. Imagine writing
+"Geburtsjahresgruppe" several times in your code, and you will know why
+renaming is approriate here. Also the column "Summe" in `turnout_tbl` does not
+describe what the values stored in it refer to. We should change this.
+
+One approach to renaming is using the function `rename()` from dplyr. The
+function takes the data to applied to as its first argument -- passed by the
+pipe in this case -- followed by one or more arguments in the form
+`new_name = old_name`. 
+
+``` {r}
+eligible_tbl <- eligible_tbl %>% 
+  rename(gender = Geschlecht,
+         ybirth = Geburtsjahresgruppe,
+         eligible = Wahlberechtigte)
+
+eligible_tbl
+
+turnout_tbl <- turnout_tbl %>% 
+  rename(gender = Geschlecht,
+         ybirth = Geburtsjahresgruppe,
+         turnout = Summe)
+
+turnout_tbl
+```
+
+
 
 ## `mutate()`
 
+We will now leave our running example for a short time and look at how to
+compute new variables in a tibble from existing ones, using `mutate()` from
+dplyr.
+
+For this purpose, let us create a new simple tibble on voter turnout. Note that
+the entered data is purely illustrational and has no meaning. We will return to
+the real data shortly.
+
+``` {r}
+exmpl_tbl <- tibble(
+  gender = c("m", "m", "w", "w"),
+  ybirth = c("1993 - 1999", "1983 - 1992", "1993 - 1999", "1983 - 1992"),
+  eligible = c(100000, 100000, 100000, 100000),
+  turnout_person = c(40000, 50000, 60000, 70000),
+  turnout_mail = c (35000, 30000, 25000, 20000)
+)
+
+exmpl_tbl
+```
+
+In this hypothetical data, we have different columns for people who voted in
+person and who voted by mail. We do not care about this difference in voting
+method in this example and want one column that combines both. We can achieve
+this by using `mutate()`. The function takes the data to be manipulated as its
+first argument, followed by one or multiple arguments defining the new columns
+to be created. We can create this new columns as computations involving the
+columns already present. To calculate the total turnout we could write:
+  
+  ``` {r}
+exmpl_tbl %>% 
+  mutate(turnout = turnout_person + turnout_mail)
+```
+
+We can also immediately start calculating with new columns in the same pipe. So
+to calculate the turnout percentage:
+  
+  ``` {r}
+exmpl_tbl %>% 
+  mutate(
+    turnout = turnout_person + turnout_mail,
+    turnout_pct = turnout / eligible
+  )
+```
+
+
+As we no longer need `turnout_person` and `turnout_mail` we could drop them by
+using `select()` in a last step. Instead of telling `select()` which columns we
+want to keep, we can also tell it which noot to keep by adding a `-` before the
+column names. 
+
+``` {r}
+exmpl_tbl <- exmpl_tbl %>% 
+  mutate(
+    turnout = turnout_person + turnout_mail,
+    turnout_pct = turnout / eligible
+  ) %>% 
+  select(-turnout_person, -turnout_mail)
+
+exmpl_tbl
+```
+
+Note that `mutate()` is not limited to basic arithmetic operations. Many
+functions can be applied within `mutate()`, for example `sum()` or `mean()` to
+only name a few examples we already know.
+
 
 ## `summarise()` & `group_by()`
+
+`summarise()` can be used to calculate summary statistics for a whole tibble.
+The syntax is similar to `mutate()`. Let us compute the total number of persons
+eligible to vote:
+  
+  ``` {r}
+exmpl_tbl %>% 
+  summarise(eligible_total = sum(eligible))
+```
+
+As you can see, the result is a new tibble, containing only the summary
+statistics we requested. 
+
+We also can compute multiple summary statistics in one step. Please note, that
+the overall mean for turnout percentage can be computed as the mean of the
+turnout percentages per group in this case only because all four groups are
+exactly of the same size ($n = 100000$). We will later look into computing the
+same measure with our real data.
+
+``` {r}
+exmpl_tbl %>% 
+  summarise(
+    eligible_total = sum(eligible),
+    turnout_total = sum(turnout),
+    turnout_pct_mean = mean(turnout_pct)
+  )
+```
+
+Often we are interested in summaries grouped by the value of one or more other
+variables. We might be interested in computing these summary statistics not for
+the complete tibble but by gender. For this purpose, we can group the data by
+the gender column using `group_by()` and then compute the summary statistics
+separately for each group. As always with dplyr functions, `group_by()` needs
+the data that shall be grouped as the first argument, followed by one or
+multiple variables to group by. 
+
+``` {r}
+exmpl_tbl %>% 
+  group_by(gender) %>% 
+  summarise(
+    eligible_total = sum(eligible),
+    turnout_total = sum(turnout),
+    turnout_pct_mean = mean(turnout_pct)
+  )
+```
+
+Let us create a final example, with two variables to group by. Let us assume
+we have the turnout percentages by gender and age group for two elections. We
+also again assume the same group size, i.e. the same "n", for all observations.
+
+``` {r}
+exmpl_tbl_2 <- tibble(
+  election = c(1, 1, 1, 1, 2, 2, 2, 2),
+  gender = c("m", "m", "w", "w", "m", "m", "w", "w"),
+  ybirth = c("1993 - 1999", "1983 - 1992", "1993 - 1999", "1983 - 1992", "1993 - 1999", "1983 - 1992", "1993 - 1999", "1983 - 1992"),
+  turnout_pct = c(0.6, 0.55, 0.75, 0.625, 0.7, 0.65, 0.85, 0.725)
+)
+
+exmpl_tbl_2
+```
+
+To compute the mean turnout percentages by gender for each election separately,
+we can group by election and gender.
+
+``` {r}
+exmpl_tbl_2 %>% 
+  group_by(election, gender) %>% 
+  summarise(
+    turnout_pct_mean = mean(turnout_pct)
+  )
+```
+
+There is a peculiarity to the way `group_by()` works with `summarise()` that can
+cause headaches, if we are not aware of it. In general any `summarise()`
+function following a `group_by()` will calculate the summary statistic and then
+remove one level of grouping. In the examples where we only had one level of
+grouping, this essentially meant, that the data was ungrouped after 
+`summarise()`. In the last example we had two levels of grouping. So after the
+computation of the mean turnout percentage by `election` and `gender`, the
+grouping by `gender` was removed, but the grouping by `election` remained in
+effect. We can see this in the output, where R informs us about the column by
+which the data is grouped and the number of groups in the output:
+  `## # Groups:   election [2]`. Another `summarise()` function would compute the
+statistic by `election` and then remove this level also. We can also use
+`ungroup()` to remove all grouping from a tibble. In the case of this example,
+this does not make a practical difference as we only compute the summary and
+move on. If we assign the results of a summary to an object for later use in
+data analysis, we have to think about removing groups though.
 
 
