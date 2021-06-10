@@ -6,7 +6,7 @@ knitr::opts_chunk$set(cache = TRUE)
 knitr::opts_chunk$set(cache.path = 'cache/')
 ```
 
-WIP!
+WIP! Content is due to change!
 
  If you want to further follow the road of
 Web Scraping, you absolutely should acquire this knowledge at some point, but it

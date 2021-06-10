@@ -10,6 +10,10 @@ knitr::opts_chunk$set(cache.path = 'cache/')
 knitr::opts_chunk$set(eval = FALSE)
 ```
 
+WIP! Content is due to change!
+
+
+
 At this point you should have a look at both tibbles either by clicking on them
 in the environment tab or by writing `View(eligible_tbl)` and 
 `View(turnout_tbl)`.

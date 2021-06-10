@@ -6,6 +6,9 @@ knitr::opts_chunk$set(cache = TRUE)
 knitr::opts_chunk$set(cache.path = 'cache/')
 ```
 
+WIP! Content is due to change!
+
+
 In this section we will concern ourselves with downloading files from within our
 R scripts as well as saving the scraping results locally for reuse without the
 need to scrape the data again. As the examples below will show the download of
