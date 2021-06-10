@@ -300,7 +300,7 @@ file name used for saving as its second.
 write_csv(data, "peter_paul_mary.csv")
 ```
 
-The resulting file look like this:
+The resulting file looks like this:
 
 ```
 name,age,size,retired
@@ -331,12 +331,6 @@ We can load objects stored as .RData files by using `load()` on this file.
 load("peter_paul_mary.RData")
 ```
 
-Remember that you still have to load the packages required to work with a
-specific type of objext. E.g. you can only work with tibbles if you also have a
-tidyverse package loaded.
 
-Whether we save HTML files or results from an analysis locally, we still need to
-document every step of our work in our script. We may comment out the lines
-where we first downloaded the file and refer to the local file after this, but
-the download step still absolutely has to be a part of the script to ensure
-transparency and reproducibility.
+
+Scarping code should still be part of the script, commented out
