@@ -8,6 +8,12 @@ knitr::opts_chunk$set(cache.path = 'cache/')
 
 WIP!
 
+ If you want to further follow the road of
+Web Scraping, you absolutely should acquire this knowledge at some point, but it
+lies outside the scope of this introduction. A good starting point could be the
+chapter on string from "R for Data Science" by Wickham and Grolemund:
+<https://r4ds.had.co.nz/strings.html>{target="_blank"}
+
 ## str_detect()
 
 

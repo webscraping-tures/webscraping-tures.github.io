@@ -1,0 +1,342 @@
+# Downloading and saving files {#files}
+
+``` {r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+knitr::opts_chunk$set(cache = TRUE)
+knitr::opts_chunk$set(cache.path = 'cache/')
+```
+
+In this section we will concern ourselves with downloading files from within our
+R scripts as well as saving the scraping results locally for reuse without the
+need to scrape the data again. As the examples below will show the download of
+CSV files and saving is also often done as CSV, but more on this in the last
+subsection, we should at first talk briefly about what CSV files are and how we
+can use them in R.
+
+
+## CSV files
+
+One of the more widespread types of data files we will encounter on the
+internet, are *CSV* files -- comma-separated values. While they are limited to
+the display of two-dimensional tables, their simplicity and portability makes
+them one of the most used formats for this type of data. You can open and write
+CSV files with statistical software, spreadsheet software like Excel and with
+even the most basic text editor.
+
+A simple CSV file may look like this:
+
+```
+column1, column2, column3
+data1_1, data1_2, data1_3
+data2_1, data2_2, data2_3
+data3_1, data3_2, data3_3
+```
+
+In essence, CSV files are tables. The rows of the table are delimited by line
+breaks, the columns by commas. 
+
+Often the first row represents the column names, as in the example above
+(`column1, column2, column3`). Be aware, that this is not necessarily always the
+case. A CSV file may not contain any column names at all, and start with a first
+row of data cells. This is a vital difference when it comes to parsing the file.
+The row of column names, if present, also ends with a line break. 
+
+
+### Parsing a CSV file
+
+To convert the data contained in the CSV file into a format we can use for data
+analysis we have to *parse* it first. The function used for parsing
+"understands" the representation of a table in the CSV syntax, can discern
+column names from data cells, assigns data cells to the correct rows and columns
+and returns an R object representing the table. `read.csv()` from base R returns
+a data frame while `read_csv()` from the readr package, which we will use here,
+returns a tibble.
+
+As readr is part of the core tidyverse we can just load the tidyverse package.
+We will also need rvest soon, so let us begin with loading both libraries.
+
+``` {r}
+library(tidyverse)
+library(rvest)
+```
+
+The readr function `read_csv()` takes a CSV file as it's first argument. To test
+it, we can also use *literal data* for the file argument. So we can pass the
+example defined above as a string -- contained in `"` -- as the `file`argument.
+We won't do this much in practice, but it serves as a good first example.
+
+``` {r}
+read_csv(
+"column1, column2, column3
+data1_1, data1_2, data1_3
+data2_1, data2_2, data2_3
+data3_1, data3_2, data3_3"
+)
+```
+
+`read_csv()` guesses the column types by the data entered. Here all three
+columns were automatically defined as character vectors. Automatic guessing
+works reliably in most situations. Let's try a CSV with multiple different 
+column types:
+
+``` {r}
+read_csv(
+"name, age, size, retired
+Peter, 42, 1.68, FALSE
+Paul, 84, 1.82, TRUE
+Mary, 24, 1.74, FALSE"
+)
+```
+
+`read_csv()` correctly guessed that the first column is of type character, the
+third of the type double and the fourth is a logical vector. It also guessed
+that the second column should be of the type double, i.e. floating point
+numbers. This will do, but we could redefine this vector as integer manually by
+using the `col_types` argument. This will not be necessary in most situations
+but could increase computational speed with very large datasets, as integers can
+be saved more efficiently. More on the definition of column types can be found
+in the help file.
+
+What happens when we have CSV data without column names defined in the first
+line?
+
+``` {r}
+read_csv(
+"Peter, 42, 1.68, FALSE
+Paul, 84, 1.82, TRUE
+Mary, 24, 1.74, FALSE"
+)
+```
+
+`read_csv()` can not by itself discern if the authors of the CSV file intended
+the first line to be used for names or not. If there are no column names in the
+CSV data, as in this case, we have to explicitly tell `read_csv()` not to use
+the first line for column names We can do this by specifying the `col_names()`
+argument as `FALSE`, instead of the default `TRUE`. In this case, `read_csv()`
+chooses default names for the columns, which we can change later on.
+
+``` {r}
+read_csv(
+"Peter, 42, 1.68, FALSE
+Paul, 84, 1.82, TRUE
+Mary, 24, 1.74, FALSE",
+col_names = FALSE)
+```
+
+
+
+## Downloading files
+
+Let us look at some real CSV files to download and parse.
+
+The website 
+<https://www.bundeswahlleiter.de/bundestagswahlen/2017/ergebnisse/repraesentative-wahlstatistik.html>{target="_blank"}
+holds multiple CSV files containing inferential statistics on the German federal
+election held in 2017. Among them, two files with statistics on the number of
+people eligible to vote and on the number that actually voted, both by binary
+gender and year of birth as well as additional indicators. 
+
+Your first instinct could be, to download the files manually and then parse
+them. This will work just fine but we could also download the files directly
+from our code. Due to the small number of files in this example, this may not
+even be the most efficient way, but when you start handling larger amounts of
+files or want to regularly update files, downloading them from within your code
+will be the safer and more efficient way.
+
+Firstly, we should download the HTML file containing the links to the CSV files
+and extract the first two links following the header "Tabellen zur 
+Weiterverwendung" using the tools we already have at our disposal. To understand
+the construction of the css selector, please have another look into chapter
+\@ref(css). Note that this is only one of many possible selectors that can
+achieve the goal of selecting the two links of interest.
+
+``` {r}
+website <- "https://www.bundeswahlleiter.de/bundestagswahlen/2017/ergebnisse/repraesentative-wahlstatistik.html" %>%
+  read_html()
+
+a_nodes <- website %>% 
+  html_nodes(css = "ul[style='list-style-type:none'] > li:first-child > a, ul[style='list-style-type:none'] > li:nth-child(2) > a")
+
+a_nodes
+
+links <- a_nodes %>%
+  html_attr(name = "href")
+
+links
+```
+
+We achieved our goal of extracting the links, but we also see, that these are
+not complete as they are missing their base URL. This works on the website, as
+the link is relative. To access the files directly, we need an absolute link --
+the full path -- though. As before (sub section \@ref(sub-pgs)) we can use the
+function `str_c()` to construct the complete URLs. If we give `str_c()` a vector
+as one of it's input arguments, the function will repeat the string connection
+for each element in the vector. For this example we can ignore the "../../../"
+part of the link as it will work regardless. To remove the part we could apply
+some of the functions from the stringr package. For this we would need some
+basic knowledge in string manipulation and regular expressions, which we will
+gain in chapter \@ref(regex). So for now, we will just use the links as they
+come.
+
+``` {r}
+links <- str_c("https://www.bundeswahlleiter.de/", links)
+links
+```
+
+Now that we we have complete absolute links, we can download the files to our
+hard drive. To achieve this, we can use the base R function `download.file()`.
+We have to specify an URL as it's first argument as well as a path and file name
+for the `destfile` argument. When no path is given, the file is saved in the
+directory where your R script is located.
+
+``` {r}
+download.file(links[1], destfile =  "eligible.csv")
+download.file(links[2], destfile =  "turnout.csv")
+```
+
+We could also have used `read_csv()` to parse the CSV files directly from the
+web. Still, sometimes it may be a good idea to download the files to our hard
+drives, as we only have to do this once and thus decrease traffic for the server
+and also increase the efficiency of our code. But this is only a benefit, if we
+run the download once and not every time we rerun our script. So you should
+maybe comment out the lines where the download occurs after it was successful.
+In chapter \ref@(good_practice) we will discuss a way to do this more elegantly.
+
+### Parsing the csv files  
+
+Now we can parse the downloaded CSV files into R objects. But first let's have a
+look at the CSV files. You can open them in a text editor of your choosing or
+directly in RStudio. Importing them into Excel or a similar spreadsheet software
+is not a valid option here, as we want to see the raw contents of the file and
+not a representation of the data.
+
+Looking at eligible.csv we notice at least two things. Firstly, the delimiter
+used here is not a comma but a semicolon. The default CSV style discussed above
+is common in those countries where a "." is used as the decimal point. Thus the
+"," is available to be used as a delimiter. In countries where the "," is used
+as a decimal point, it is not available and thus the ";" is used as a delimiter.
+The function `read_csv2()` can be used in this case. Even more general is
+`read_delim()` as the delimiting character can be defined as an argument.
+Secondly, we see that the first 8 lines are neither column names or data but
+contain comments on the CSV file itself. We have to tell `read_csv2()` to ignore
+these lines. We could use the argument `skip` to tell R to ignore the first 8
+lines. But as these comments are neatly introduced with an `#` we can use the
+`comment` argument instead and specify the `#` as the identifier for comments,
+which then will be ignored.
+
+``` {r}
+eligible_tbl <- read_csv2("eligible.csv", comment = "#")
+
+eligible_tbl
+
+turnout_tbl <- read_csv2("turnout.csv", comment = "#")
+
+turnout_tbl
+```
+
+## Saving data files
+
+In my opinion, the best approach to data analysis in terms of reproducibility is
+to have one script in which you load your raw data, do all your data cleaning,
+transform your data, do all statistical and graphical analysis and also all
+exports of tables and graphics. This ensures that anyone who has access to your
+script and the raw data can reproduce every step you undertook in your analysis,
+one of the cornerstones of transparency and reproducibility of scientific works.
+From this angle, we seldom need to save the results of our data analysis in a
+file. The script -- the .R file -- is enough.
+
+Nevertheless, there are situations in which saving results becomes reasonable or
+even necessary. One of these is Web Scraping, for at least two reasons. Firstly,
+we should try to minimize the traffic we create on the websites we scrape (see
+\@ref(good_practice)). If we re-run the `read_html()` function every time we run
+our script, we also re-download all of the HTML data in each re-run. This puts
+unnecessary load on the servers and also slows down our script, which becomes
+more relevant the more data you are scraping from the web. Secondly, websites
+change all the time. The data you scraped today me be changed or even gone
+tomorrow. Also if the structure of the site changes, you CSS selectors and URLs
+may not work anymore. 
+
+So for both reasons, it may be appropriate to save the all of our downloaded
+HTML data locally, so we can reload it for re-runs of our script and to archive
+the point in time we downloaded the data we used for our analysis.
+
+The most straightforward approach could be to use the `download.file()` function
+directly on the URL and thus copy the original HTML data exactly.
+
+``` {r}
+download.file("https://webscraping-tures.github.io/hello_world.html", "hello_world_local.html")
+```
+
+We could run this line once and after this just use `read_html()` on the local
+file.
+
+``` {r}
+hello_world <- read_html("hello_world_local.html")
+```
+
+In most situations we don't need to save the results of our transformations and
+analysis. Re-running the script on the original data we have now saved locally
+is enough to ensure that the work can be reproduced. But if we are still
+interested in saving the results of our analysis to a local file, we could
+use `write_csv()` from stringr or save the data in the native R format .RData.
+
+Let's create an example object we want to save first:
+
+``` {r}
+data <- tibble(
+  name = c("Peter", "Paul", "Mary"),
+  age = c(42, 84, 24),
+  size = c(1.68, 1.82, 1.74),
+  retired = c(FALSE, TRUE, FALSE)
+)
+```
+
+`write_csv()` is an appropriate format for saving tibbles or data frames and has
+the advantage of being readable by most software that deals with data, not just
+by R. It takes the object to be saved as it's first argument and the path and 
+file name used for saving as its second.
+
+``` {r}
+write_csv(data, "peter_paul_mary.csv")
+```
+
+The resulting file look like this:
+
+```
+name,age,size,retired
+Peter,42,1.68,FALSE
+Paul,84,1.82,TRUE
+Mary,24,1.74,FALSE
+```
+
+If we want semicolons as a delimiter we could also use `write_csv2()`. To load
+the resulting file we would just use `read_csv()` or `read_csv2()`. 
+
+The downside to using CSV files is that the definition of column types -- e.g.
+character, numeric or integer -- is lost and may have to be redefined when
+reloading the data. Also more complex objects like lists, can not be saved as a
+CSV. So we may use the data format native to R, .RData.
+
+The `save()` function also takes the name of the object -- or multiple objects
+-- to be saved as its first argument. We also have to specify a file name (and
+possibly path) in the `file = ` argument.
+
+``` {r}
+save(data, file =  "peter_paul_mary.RData")
+```
+
+We can load objects stored as .RData files by using `load()` on this file.
+
+``` {r}
+load("peter_paul_mary.RData")
+```
+
+Remember that you still have to load the packages required to work with a
+specific type of objext. E.g. you can only work with tibbles if you also have a
+tidyverse package loaded.
+
+Whether we save HTML files or results from an analysis locally, we still need to
+document every step of our work in our script. We may comment out the lines
+where we first downloaded the file and refer to the local file after this, but
+the download step still absolutely has to be a part of the script to ensure
+transparency and reproducibility.

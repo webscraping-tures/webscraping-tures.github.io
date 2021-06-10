@@ -1,0 +1,32 @@
+# Good practice {#good_practice}
+
+``` {r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+knitr::opts_chunk$set(cache = TRUE)
+knitr::opts_chunk$set(cache.path = 'cache/')
+```
+
+
+## Legality?
+
+* its grey
+* german case?
+
+
+## Responsibility!
+
+* its a privilege and we have to treat it this way to remain a privilege
+* robots.txt
+* when in doubt, contact the admins
+  * or get legal advice is possible
+* think about what you really need
+* test your code on a small scale
+
+## Good practice
+
+* follow robots.txt
+* download only what you need
+  * and only once (if possible)
+  * example for checking if file is already present
+* set waiting times
+
