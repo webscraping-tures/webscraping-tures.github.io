@@ -24,7 +24,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2021-06-08" />
+<meta name="date" content="2021-06-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -351,19 +351,19 @@ several sub-pages in one step. In this session we will look at two common
 variations. Index pages and pagination.</p>
 <div id="index-pages" class="section level2" number="7.1">
 <h2><span class="header-section-number">7.1</span> Index-pages</h2>
-<p>An index page, in this context, means a website on which links to the various
-sub-pages are listed. We can imagine this as a kind of table of contents.</p>
+<p>An index page, in this context, is a website on which links to the various
+sub-pages are listed. We can think of this as a table of contents.</p>
 <p>The website for the tidyverse packages serves as an example:
 <a href="https://www.tidyverse.org/packages/" target="_&quot;blank&quot;">https://www.tidyverse.org/packages/</a>.
 Under the point “Core tidyverse” the eight packages are listed, which are loaded
 in R with <code>library(tidyverse)</code>. In addition to the name and icon, a short
 description of the package and a link to further information, are part of the
 list.</p>
-<p>Let’s look at one of the sub-pages for the core packages. Since they all have the
-same structure, you can choose any package as an example. It could be our
+<p>Let’s look at one of the sub-pages for the core packages. Since they all have
+the same structure, you can choose any package as an example. It could be our
 scraping goal to create a table with the names of the core packages, the current
 version number, and the links to CRAN and the matching chapter in “R for Data
-Science” by Hadley and Wickham. By now we have all the tools to extract this
+Science” by Wickham and Grolemund. By now we have all the tools to extract this
 data from the websites. We could now “manually” scrape the individual sub-pages
 and merge the data. It would be more practical, however, if we could start from
 the index page and scrape all eight sub-pages and the data of interest they
@@ -448,12 +448,12 @@ the above example, we can use <code>map_dbl()</code>:</p>
 <span id="cb137-3"><a href="rvest3.html#cb137-3" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(x, round)</span>
 <span id="cb137-4"><a href="rvest3.html#cb137-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1 1 2 2</span></span></code></pre></div>
 <p>Or for a character vector we can apply <code>map_chr()</code>. The function <code>toupper()</code>
-used here, puts out the input as uppercase letters.</p>
+used here, puts returns the input as uppercase letters.</p>
 <div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="rvest3.html#cb138-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;abc&quot;</span>, <span class="st">&quot;def&quot;</span>, <span class="st">&quot;gah&quot;</span>)</span>
 <span id="cb138-2"><a href="rvest3.html#cb138-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb138-3"><a href="rvest3.html#cb138-3" aria-hidden="true" tabindex="-1"></a><span class="fu">map_chr</span>(x, toupper)</span>
 <span id="cb138-4"><a href="rvest3.html#cb138-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;ABC&quot; &quot;DEF&quot; &quot;GAH&quot;</span></span></code></pre></div>
-<p>If we want to change further arguments of the applied function, they are
+<p>If we want to change the arguments of the applied function, the arguments are
 listed after the name of the function. Here, the number of decimal places to be
 rounded is set from the default value of 0 to 1.</p>
 <div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="rvest3.html#cb139-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.28</span>, <span class="fl">1.46</span>, <span class="fl">1.64</span>, <span class="fl">1.82</span>)</span>
@@ -464,20 +464,23 @@ rounded is set from the default value of 0 to 1.</p>
 only be a first introduction. For a more detailed introduction to For Loops and
 the map functions, I recommend the chapter on “Iteration” from “R for Data
 Science”:
-<a href="https://r4ds.had.co.nz/iteration.html" target="_blank">https://r4ds.had.co.nz/iteration.html</a></p>
+<a href="https://r4ds.had.co.nz/iteration.html" target="_blank">https://r4ds.had.co.nz/iteration.html</a>
+For a more interactive German introduction, I recommend the section “Schleifen”
+in the StartR app by Fabian Class:
+<a href="https://shiny.lmes.uni-potsdam.de/startR/#section-schleifen" target_="blank">https://shiny.lmes.uni-potsdam.de/startR/#section-schleifen</a></p>
 </div>
 <div id="scraping-the-sub-pages" class="section level3" number="7.1.3">
 <h3><span class="header-section-number">7.1.3</span> Scraping the sub-pages</h3>
-<p>We can now use <code>map()</code> to parse all sub-pages in one step. As input, we enter the
+<p>We can now use <code>map()</code> to parse all sub-pages in one step. As input, we use the
 character vector that contains the URLs of the sub-pages, and as the function to
 be applied, the familiar <code>read_html()</code>. For each of the eight URLs, the function
 is applied to the respective URL one after the other. As output we get a list of
 the eight parsed sub-pages.</p>
 <div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="rvest3.html#cb140-1" aria-hidden="true" tabindex="-1"></a>pages <span class="ot">&lt;-</span> links <span class="sc">%&gt;%</span> </span>
 <span id="cb140-2"><a href="rvest3.html#cb140-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(read_html)</span></code></pre></div>
-<p>If we look at the sub-pages in the browser, we can see that the HTML structure is
-identical for each sub-page in terms of the information we are interested in –
-name, version number and CRAN as well as “R for Data Science” links. We can
+<p>If we look at the sub-pages in the browser, we can see that the HTML structure
+is identical for each sub-page in terms of the information we are interested in
+– name, version number and CRAN as well as “R for Data Science” links. We can
 therefore extract the data for each of them using the same CSS selectors.</p>
 <div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="rvest3.html#cb141-1" aria-hidden="true" tabindex="-1"></a>pages <span class="sc">%&gt;%</span> </span>
 <span id="cb141-2"><a href="rvest3.html#cb141-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(html_node, <span class="at">css =</span> <span class="st">&quot;a.navbar-brand&quot;</span>) <span class="sc">%&gt;%</span> </span>
@@ -487,8 +490,9 @@ therefore extract the data for each of them using the same CSS selectors.</p>
 <p>The name of the package is displayed in the menu bar in the upper section of the
 pages. This is enclosed by an <code>&lt;a&gt;</code> tag. For example, for
 <a href="https://ggplot2.tidyverse.org/" target="_blank">https://ggplot2.tidyverse.org/</a>
-this is: <code>&lt;a class="navbar-brand" href="index.html"&gt;ggplot2&lt;/a&gt;</code>. We can
-construct a selector in a simple way. One possible option is the one used here.</p>
+this is: <code>&lt;a class="navbar-brand" href="index.html"&gt;ggplot2&lt;/a&gt;</code>. The CSS
+selector used here is one of the possible options to retireve the desired
+information.</p>
 <p>So what happens in detail in the code shown? The input is the previously created
 list with the eight parsed websites. In the second line, by using <code>map()</code>, the
 function <code>html_node()</code> with the argument <code>css = "a.navbar-brand"</code> is applied to
@@ -502,7 +506,7 @@ character vector is returned as output.</p>
 <span id="cb142-2"><a href="rvest3.html#cb142-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(html_node, <span class="at">css =</span> <span class="st">&quot;span.version.version-default&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb142-3"><a href="rvest3.html#cb142-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_chr</span>(html_text)</span>
 <span id="cb142-4"><a href="rvest3.html#cb142-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;3.3.2&quot;      &quot;1.0.6&quot;      &quot;1.1.3&quot;      &quot;1.4.0&quot;      &quot;0.3.4&quot;     </span></span>
-<span id="cb142-5"><a href="rvest3.html#cb142-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [6] &quot;3.1.1&quot;      &quot;1.4.0.9000&quot; &quot;0.5.1&quot;</span></span></code></pre></div>
+<span id="cb142-5"><a href="rvest3.html#cb142-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [6] &quot;3.1.2&quot;      &quot;1.4.0.9000&quot; &quot;0.5.1&quot;</span></span></code></pre></div>
 <p>The extraction of the current version number of the packages works the same way.
 For ggplot2, these are contained in the following tag:
 <code>&lt;span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version"&gt;3.3.2&lt;/span&gt;</code>.
@@ -540,9 +544,9 @@ use both class names, but this is also a matter of taste.</p>
 <p>The extraction of the links also follows the same basic principle. The selector
 is a little more complicated, but can easily be understood using the WDTs. We
 select the <code>&lt;a&gt;</code> tags of the first and fourth <code>&lt;li&gt;</code> children of the unordered
-list of the class <code>list-unstyled</code>. Here we apply the function <code>html_attr()</code>
+list with the class <code>list-unstyled</code>. Here we apply the function <code>html_attr()</code>
 with the argument <code>name = "href"</code> to each of the eight selected nodes to get the
-data of interest, the URL of the links.</p>
+data of interest, the URLs of the links.</p>
 <p>If we are only interested in the final result, we can also extract the data of
 the sub-pages directly during the creation of a tibble:</p>
 <div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="rvest3.html#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
@@ -567,7 +571,7 @@ the sub-pages directly during the creation of a tibble:</p>
 <span id="cb144-20"><a href="rvest3.html#cb144-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 tidyr   1.1.3     https://cloud.r-project.org/… https://r4ds.had.co.nz/tidy-d…</span></span>
 <span id="cb144-21"><a href="rvest3.html#cb144-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 readr   1.4.0     https://cloud.r-project.org/… http://r4ds.had.co.nz/data-im…</span></span>
 <span id="cb144-22"><a href="rvest3.html#cb144-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 purrr   0.3.4     https://cloud.r-project.org/… http://r4ds.had.co.nz/iterati…</span></span>
-<span id="cb144-23"><a href="rvest3.html#cb144-23" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 tibble  3.1.1     https://cloud.r-project.org/… https://r4ds.had.co.nz/tibble…</span></span>
+<span id="cb144-23"><a href="rvest3.html#cb144-23" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 tibble  3.1.2     https://cloud.r-project.org/… https://r4ds.had.co.nz/tibble…</span></span>
 <span id="cb144-24"><a href="rvest3.html#cb144-24" aria-hidden="true" tabindex="-1"></a><span class="do">## 7 stringr 1.4.0.90… https://cloud.r-project.org/… http://r4ds.had.co.nz/strings…</span></span>
 <span id="cb144-25"><a href="rvest3.html#cb144-25" aria-hidden="true" tabindex="-1"></a><span class="do">## 8 forcats 0.5.1     https://cloud.r-project.org/… http://r4ds.had.co.nz/factors…</span></span></code></pre></div>
 </div>
@@ -581,7 +585,7 @@ are accessible and navigable via the numbered links and the forward/back arrows
 at the bottom of the browser content. This is “pagination in action” and we
 encounter similar variants on many websites.</p>
 <p>In the press release archive of the website of the Brandenburg state parliament,
-pagination is also used to distribute the releases over several sub-pages. To
+pagination is used to distribute the releases over several sub-pages. To
 illustrate the scraping of such a website, we can, for example, aim at scraping
 the date, title and further link for all press releases from 2020 and summarise
 them in a tibble.</p>
@@ -617,14 +621,14 @@ sub-pages there are and adjust this accordingly. If we extract the page number i
 the R code, this can be easily generalised to other years with different page
 numbers. If, on the other hand, the goal were to scrape the messages from 2021,
 we would have to check again whether the page number has changed every time we
-repeat the process over the course of the year. By extracting it in the code,
-this step is eliminated and we can run the script regularly with minimal effort
-and be sure that it remains functional.</p>
+repeat the process over the course of the year, as new press releases are added.
+By extracting it in the code, this step is eliminated and we can run the script
+regularly with minimal effort and be sure that it remains functional.</p>
 <p>The links to the sub-pages, are contained in the HTML code in an unordered list
 (<code>&lt;ul&gt;</code>). The penultimate list element <code>&lt;li&gt;</code> contains the page number of the
 last page, here “12”. Please note that the last list element is the “Forward”
-button. With this information we can construct a selector and extract the page
-number.</p>
+button. With this information we can construct a selector and extract the
+highest page number, as the second to last list element.</p>
 <div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="rvest3.html#cb145-1" aria-hidden="true" tabindex="-1"></a>website <span class="ot">&lt;-</span> <span class="st">&quot;https://www.landtag.brandenburg.de/de/aktuelles/presse/pressemitteilungsarchiv/archiv_pressemitteilungen_2020/980521&quot;</span> <span class="sc">%&gt;%</span> </span>
 <span id="cb145-2"><a href="rvest3.html#cb145-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_html</span>()</span>
 <span id="cb145-3"><a href="rvest3.html#cb145-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -633,9 +637,9 @@ number.</p>
 <span id="cb145-6"><a href="rvest3.html#cb145-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb145-7"><a href="rvest3.html#cb145-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.numeric</span>()</span></code></pre></div>
 <p>In the last line of code above, you again see the function <code>as.numeric()</code>.
-Remember, that <code>html_text()</code> always returns a character vector. But since we
-need the value as a number to be able to calculate with it in R, we still have
-to convert it into a number.</p>
+Remember, that <code>html_text()</code> always returns a character vector. Since we need a
+numeric value to be able to calculate with it in R, we have to convert it into a
+number.</p>
 <p>Now we can start constructing the links to all sub-pages directly in our R
 script. To do this, we need two components that we can then combine to create
 the URLs. First we have to define the constant part of the URL, the base URL. In
@@ -689,12 +693,13 @@ irrelevant whether the components of the date are separated with “.”, “/�
 or spaces. Even written out or abbreviated month names can be processed by
 lubridate.</p>
 <div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="rvest3.html#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span></code></pre></div>
-<pre><code>test &lt;- pages %&gt;% 
-  map(html_nodes, css = &quot;p.date&quot;) %&gt;% 
-  map(html_text) %&gt;% 
-  unlist() %&gt;% 
-  dmy() %&gt;% 
-  head(n = 5)</code></pre>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="rvest3.html#cb149-1" aria-hidden="true" tabindex="-1"></a>pages <span class="sc">%&gt;%</span> </span>
+<span id="cb149-2"><a href="rvest3.html#cb149-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(html_nodes, <span class="at">css =</span> <span class="st">&quot;p.date&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb149-3"><a href="rvest3.html#cb149-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(html_text) <span class="sc">%&gt;%</span> </span>
+<span id="cb149-4"><a href="rvest3.html#cb149-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb149-5"><a href="rvest3.html#cb149-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dmy</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb149-6"><a href="rvest3.html#cb149-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span>
+<span id="cb149-7"><a href="rvest3.html#cb149-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;2020-12-30&quot; &quot;2020-12-17&quot; &quot;2020-12-11&quot; &quot;2020-12-10&quot; &quot;2020-12-04&quot;</span></span></code></pre></div>
 <p>More about the handling of dates and times in R as well as the further
 possibilities opened up by lubridate, can be found in the corresponding chapter
 in “R for Data Science”:
@@ -730,10 +735,10 @@ next line. If we use <code>str_c()</code> within the pipe, it receives the extra
 part of the URLs as the first argument.
 <code>str_c("https://www.landtag.brandenburg.de")</code> would therefore lead to the end
 part of the URL being appended before “<a href="https://www.landtag.brandenburg.de" class="uri">https://www.landtag.brandenburg.de</a>”.
-However, logically we want this to happen the other way round. To do this, we
-need to tell <code>str_c()</code>, to use the data passed through the pipe as the second
-argument. We can achieve this by using <code>.</code>. <code>.</code> stands for the data passed
-through the pipe. This way we can combine the URLs correctly:</p>
+However, we want this to happen the other way round. To do this, we need to tell
+<code>str_c()</code>, to use the data passed through the pipe as the second argument. We
+can achieve this by using <code>.</code>. <code>.</code> refers to the data passed through the pipe.
+In this way we can combine the URLs correctly:</p>
 <div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="rvest3.html#cb152-1" aria-hidden="true" tabindex="-1"></a>pages <span class="sc">%&gt;%</span> </span>
 <span id="cb152-2"><a href="rvest3.html#cb152-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(html_nodes, <span class="at">css =</span> <span class="st">&quot;li.ce.ce-teaser &gt; a&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb152-3"><a href="rvest3.html#cb152-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(html_attr, <span class="at">name =</span> <span class="st">&quot;href&quot;</span>) <span class="sc">%&gt;%</span> </span>

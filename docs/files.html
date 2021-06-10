@@ -24,7 +24,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2021-06-08" />
+<meta name="date" content="2021-06-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -346,6 +346,7 @@ Web Scraping using R
             <section class="normal" id="section-">
 <div id="files" class="section level1" number="8">
 <h1><span class="header-section-number">8</span> Downloading and saving files</h1>
+<p>WIP! Content is due to change!</p>
 <p>In this section we will concern ourselves with downloading files from within our
 R scripts as well as saving the scraping results locally for reuse without the
 need to scrape the data again. As the examples below will show the download of
@@ -668,7 +669,7 @@ the advantage of being readable by most software that deals with data, not just
 by R. It takes the object to be saved as it’s first argument and the path and
 file name used for saving as its second.</p>
 <div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="files.html#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(data, <span class="st">&quot;peter_paul_mary.csv&quot;</span>)</span></code></pre></div>
-<p>The resulting file look like this:</p>
+<p>The resulting file looks like this:</p>
 <pre><code>name,age,size,retired
 Peter,42,1.68,FALSE
 Paul,84,1.82,TRUE
@@ -685,14 +686,7 @@ possibly path) in the <code>file =</code> argument.</p>
 <div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="files.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(data, <span class="at">file =</span>  <span class="st">&quot;peter_paul_mary.RData&quot;</span>)</span></code></pre></div>
 <p>We can load objects stored as .RData files by using <code>load()</code> on this file.</p>
 <div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="files.html#cb170-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;peter_paul_mary.RData&quot;</span>)</span></code></pre></div>
-<p>Remember that you still have to load the packages required to work with a
-specific type of objext. E.g. you can only work with tibbles if you also have a
-tidyverse package loaded.</p>
-<p>Whether we save HTML files or results from an analysis locally, we still need to
-document every step of our work in our script. We may comment out the lines
-where we first downloaded the file and refer to the local file after this, but
-the download step still absolutely has to be a part of the script to ensure
-transparency and reproducibility.</p>
+<p>Scarping code should still be part of the script, commented out</p>
 
 </div>
 </div>

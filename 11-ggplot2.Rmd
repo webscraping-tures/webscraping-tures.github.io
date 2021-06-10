@@ -9,6 +9,8 @@ knitr::opts_chunk$set(cache.path = 'cache/')
 knitr::opts_chunk$set(eval = FALSE)
 ```
 
+WIP! Content is due to change!
+
 
 ## ggplot syntax
 
