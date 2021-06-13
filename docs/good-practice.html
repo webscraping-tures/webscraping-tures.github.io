@@ -24,7 +24,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2021-06-10" />
+<meta name="date" content="2021-06-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -281,9 +281,14 @@ Web Scraping using R
 </ul></li>
 <li class="chapter" data-level="9" data-path="good-practice.html"><a href="good-practice.html"><i class="fa fa-check"></i><b>9</b> Good practice</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="good-practice.html"><a href="good-practice.html#legality"><i class="fa fa-check"></i><b>9.1</b> Legality?</a></li>
-<li class="chapter" data-level="9.2" data-path="good-practice.html"><a href="good-practice.html#responsibility"><i class="fa fa-check"></i><b>9.2</b> Responsibility!</a></li>
-<li class="chapter" data-level="9.3" data-path="good-practice.html"><a href="good-practice.html#good-practice"><i class="fa fa-check"></i><b>9.3</b> Good practice</a></li>
+<li class="chapter" data-level="9.1" data-path="good-practice.html"><a href="good-practice.html#we-are-no-web-crawlers"><i class="fa fa-check"></i><b>9.1</b> We are no web crawlers</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="good-practice.html"><a href="good-practice.html#on-robots.txt-files"><i class="fa fa-check"></i><b>9.1.1</b> On robots.txt files</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="good-practice.html"><a href="good-practice.html#reduce-traffic"><i class="fa fa-check"></i><b>9.2</b> Reduce traffic</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="good-practice.html"><a href="good-practice.html#waiting-times-in-action"><i class="fa fa-check"></i><b>9.2.1</b> Waiting times in action</a></li>
+</ul></li>
 </ul></li>
 <li class="part"><span><b>IV Data analysis</b></span></li>
 <li class="chapter" data-level="10" data-path="dplyr.html"><a href="dplyr.html"><i class="fa fa-check"></i><b>10</b> Transformation with dplyr</a>
@@ -347,38 +352,168 @@ Web Scraping using R
 <div id="good_practice" class="section level1" number="9">
 <h1><span class="header-section-number">9</span> Good practice</h1>
 <p>WIP! Content is due to change!</p>
-<div id="legality" class="section level2" number="9.1">
-<h2><span class="header-section-number">9.1</span> Legality?</h2>
+<p>This chapter concerns itself with questions on a good practice of web scraping
+and how to scrape responsibly. There is no wrong or right answer to these
+questions. But in my view, it is a privilege that we are able to access this
+wealth of data and we should treat it this way. Why? We have a responsibility
+towards the persons, institutions and companies whose data we collect to respect
+certain boundaries and guidelines of data collection, which might have been set
+by themselves or which we might have formulated for ourselves.</p>
+<p>I will not talk about the legal situation concerning web scraping. Firstly, I am
+not an expert on the legalities and do not feel equipped to give any responsible
+advice. Secondly, this is a relatively new field and legal rules might change.
+Thirdly, the specific rules you have to adhere to may very well depend on the
+context of your scraping project. Maybe it is allowed to collect certain data
+for use in a scientific project but for use in a commercial one. Maybe certain
+types of data are not allowed to be collected at all. When in doubt, try to get
+advice from your superiors or experts on the legal questions surrounding web
+scraping and privacy laws.</p>
+<p>But I also believe, that if we follow some basic principles of good practice, we
+can design our web scraping projects in a way that is respectful to the owners
+of the data we aim to collect and to our own standards of responsible data
+collection. So to boil it down:</p>
 <ul>
-<li>its grey</li>
-<li>german case?</li>
+<li><p>Rule #1 of the scrape club: Scrape responsibly and with respect to the data
+sources</p></li>
+<li><p>Rule #2 of the scrape club: Scrape responsibly and with respect to the data
+sources!</p></li>
 </ul>
+<div id="we-are-no-web-crawlers" class="section level2" number="9.1">
+<h2><span class="header-section-number">9.1</span> We are no web crawlers</h2>
+<p>Web crawlers (also known as web spiders or robots), are pieces of software that
+aim at collecting and indexing all content on the internet. Web crawlers are for
+example operated by search engines, where their aim is to index the content of
+the web and make it accessible via their search interface, but can obviously
+also be put to more nefarious use.</p>
+<p>Now, we are not web crawlers. Is is not our aim to indiscriminately and
+systematically collect every piece of data on the web. Web scraping is aimed at
+extracting some specific data as precisely as possible and analysing the
+collected data in a specific usage context, in my case scientific research.</p>
+<p>What does this imply for a good practice of web scraping?</p>
+<p><strong>Collect only what we need</strong></p>
+<p>This means that we have to think hard about which pieces of data we actually
+have to collect to meet our aims, <em>before</em> we start collecting. We seldom need
+every subpage of a website, so we can only download those that contain data of
+interest.</p>
+<p><strong>Anonmysation of personal data</strong></p>
+<p>When we are collecting personal data that could be used to identify these
+persons we should anonymise any information, that could lead to identification.
+This primary concerns real names in customer reviews, forums and so on. I would
+argue that this should also extend to user names in general. Most of the times
+we do not need the actual names and any simple numeric identifier constructed by
+us would suffice to discern users during the analysis. If we can not directly
+anonymise the data during collection, we should do this after collection.
+Especially if results of the analysis or a constructed data set are to be
+publicly released, anonymisation is paramount.</p>
+<p><strong>robots.txt</strong></p>
+<p>Many websites have set up a file called robots.txt on their servers which is
+predominantly aimed at informing automatic web crawlers on which parts of the
+website they are allowed to collect. While the robots.txt files may ask the
+crawlers to stay out of certain subfolders of a website, they have no power in
+actually stopping them. If the crawler is polite, it will follow the guidelines
+of the robots.txt.</p>
+<p>It may be up to debate, if web scrapers should follow the robots.txt guidelines,
+as we have already established that we are no web crawlers. In my opinion we
+should at least take a look at these files when planning a project. If the data
+we plan to collect is excluded in the guidelines, we have to decide if we still
+want to go forward. Is the collection of this specific piece of data really
+necessary? Do I have support by superiors or my employer? We can also always
+contact the website operator, describe our project and kindly ask for
+permission.</p>
+<div id="on-robots.txt-files" class="section level3" number="9.1.1">
+<h3><span class="header-section-number">9.1.1</span> On robots.txt files</h3>
+<p>The robots.txt files are usually accessible by appending the URL of the mainpage
+of a website. If you do not find a robots.txt in this way for a website you are
+interested in, there most probably is none. For example to access the robots.txt
+file for the website <a href="https://www.wahlrecht.de/" target="_blank">https://www.wahlrecht.de/</a> we can use the
+URL <a href="https://www.wahlrecht.de/robots.txt" class="uri">https://www.wahlrecht.de/robots.txt</a>{target_blank}.</p>
+<p>Let us briefly look at the structure of this file. Its first block looks like
+this:</p>
+<pre><code>User-agent: *
+Disallow: /cgi-bin/
+Disallow: /temp/
+Disallow: /ueberhang/wpb/
+Disallow: /ueberhang/chronic/</code></pre>
+<p>The field “User-agent” defines to which crawlers the rules apply to. "*" is
+short for everyone. The “Disallow” fields define, which subdirectories of the
+website may not be accessed by the particular User-agent. So in this case,
+no User-agent may access the subdirectories “/cgi-bin/”, “/temp/” and so on.</p>
+<p>Let’s continue to the second block:</p>
+<pre><code>User-Agent: Pixray-Seeker
+Disallow: /</code></pre>
+<p>Here a specific User-agent is defined, so the rules that follow only refer to
+the crawler “Pixray-Seeker”. Here there is only one Disallow rule, namely “/”.
+“/” is short for “everything”. So the Pixray-Seeker crawler is not to allowed to
+access any content on the website.</p>
 </div>
-<div id="responsibility" class="section level2" number="9.2">
-<h2><span class="header-section-number">9.2</span> Responsibility!</h2>
-<ul>
-<li>its a privilege and we have to treat it this way to remain a privilege</li>
-<li>robots.txt</li>
-<li>when in doubt, contact the admins
-<ul>
-<li>or get legal advice is possible</li>
-</ul></li>
-<li>think about what you really need</li>
-<li>test your code on a small scale</li>
-</ul>
 </div>
-<div id="good-practice" class="section level2" number="9.3">
-<h2><span class="header-section-number">9.3</span> Good practice</h2>
-<ul>
-<li>follow robots.txt</li>
-<li>download only what you need
-<ul>
-<li>and only once (if possible)</li>
-<li>example for checking if file is already present</li>
-</ul></li>
-<li>set waiting times</li>
-</ul>
+<div id="reduce-traffic" class="section level2" number="9.2">
+<h2><span class="header-section-number">9.2</span> Reduce traffic</h2>
+<p>Everytime a website is accessed, traffic is generated. Traffic here refers to
+the transfer of the HTML data from the server the website is hosted on to our
+PCs. This produces monetary costs on the side of the providers of the website.
+Also many websites are financed thorugh advertisements. When we download the
+website directly from R using <code>read_html()</code> we are circumventing the add
+display in browser and thus the provider will get no revenue. Both may
+seem negligible in many cases, but if we aim to act respectful to the
+website providers, we should reduce unnecessary traffic when we are able to.</p>
+<p><strong>Collect only once (if possible)</strong></p>
+<p>The most simple step we can undertook is to not download the HTML code everytime
+we re-run our script. This reduces traffic and also makes our code faster to
+execute. See chapter <a href="files.html#files">8</a> on how to save the downloaded HTML files.</p>
+<p><strong>Test, test, test</strong></p>
+<p>We should also test our code on a small scale before finally running it on large
+amounts of data. If our aim is to download a large number of websites and/or
+files, we should make sure that our code actually works. While there are
+problems in our code – and there will be – we may create a lot of unnecessary
+traffic during bugfixing. If we instead test our code until we are sure it will
+run without errors on a single instead of multiple pages, we will reduce traffic
+and again also reduce the time we have to wait for the downloads to finish.</p>
+<p><strong>Set waiting times</strong></p>
+<p>If we are downloading many pages or files, it also may be a good idea to slow
+down the process on our end by setting a waiting time between each download. In
+this way we spread our traffic over time. Also, if a server detects unusually
+large amounts of site requests it may even block our IP, which would make us
+unable to continue our downloads. Waiting between each request can potentially
+prevent this. A waiting time between 2–5 seconds should be enough in most
+cases. Sometimes the robots.txt also gives a guideline on a desired waiting
+time for a specific site.</p>
+<div id="waiting-times-in-action" class="section level3" number="9.2.1">
+<h3><span class="header-section-number">9.2.1</span> Waiting times in action</h3>
+<p>Let us have another look on the first example from chapter <a href="rvest3.html#rvest3">7</a> to see
+how to set waiting times in practice when downloading multiple pages with
+`read_html()``.</p>
+<p>Firstly, let us generate the list of links we want to download like we did in
+chapter <a href="rvest3.html#rvest3">7</a>.</p>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="good-practice.html#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb173-2"><a href="good-practice.html#cb173-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span>
+<span id="cb173-3"><a href="good-practice.html#cb173-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb173-4"><a href="good-practice.html#cb173-4" aria-hidden="true" tabindex="-1"></a>website <span class="ot">&lt;-</span> <span class="st">&quot;https://www.tidyverse.org/packages/&quot;</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb173-5"><a href="good-practice.html#cb173-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_html</span>()</span>
+<span id="cb173-6"><a href="good-practice.html#cb173-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb173-7"><a href="good-practice.html#cb173-7" aria-hidden="true" tabindex="-1"></a>a_nodes <span class="ot">&lt;-</span> website <span class="sc">%&gt;%</span> </span>
+<span id="cb173-8"><a href="good-practice.html#cb173-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;div.package &gt; a&quot;</span>)</span>
+<span id="cb173-9"><a href="good-practice.html#cb173-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb173-10"><a href="good-practice.html#cb173-10" aria-hidden="true" tabindex="-1"></a>links <span class="ot">&lt;-</span> a_nodes <span class="sc">%&gt;%</span></span>
+<span id="cb173-11"><a href="good-practice.html#cb173-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_attr</span>(<span class="at">name =</span> <span class="st">&quot;href&quot;</span>)</span></code></pre></div>
+<p>To let R wait for several seconds, we can use the base R function <code>Sys.sleep()</code>,
+which takes the seconds to wait as its only argument. As we want the <code>map()</code>
+function to add the waiting time before each <code>read_html()</code> iteration, we have
+to include <code>Sys.sleep()</code> into the iteration process. We can achieve this by
+defining a multi-line function using the <code>~ {...}</code> notation. Each new line
+enclosed by the <code>{}</code> is run once for each iteration over the object we pass to
+<code>map</code>. So in this case, for each element of the <code>links</code> object, R first waits
+for two seconds and than uses <code>read_html()</code> on the element of <code>links</code>. So in
+effect we added a waiting time of two seconds between each iteration. Note that
+<code>read_html()</code> has to come last if we want this short notation to work.</p>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="good-practice.html#cb174-1" aria-hidden="true" tabindex="-1"></a>pages <span class="ot">&lt;-</span> links <span class="sc">%&gt;%</span> </span>
+<span id="cb174-2"><a href="good-practice.html#cb174-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span> {</span>
+<span id="cb174-3"><a href="good-practice.html#cb174-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">Sys.sleep</span>(<span class="dv">2</span>)</span>
+<span id="cb174-4"><a href="good-practice.html#cb174-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">read_html</span>(.x)</span>
+<span id="cb174-5"><a href="good-practice.html#cb174-5" aria-hidden="true" tabindex="-1"></a>  })</span></code></pre></div>
+<p>Munzert zitieren!</p>
 
+</div>
 </div>
 </div>
 

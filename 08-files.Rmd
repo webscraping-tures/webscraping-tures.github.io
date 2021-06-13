@@ -58,7 +58,7 @@ returns a tibble.
 As readr is part of the core tidyverse we can just load the tidyverse package.
 We will also need rvest soon, so let us begin with loading both libraries.
 
-``` {r}
+``` {r, message = FALSE}
 library(tidyverse)
 library(rvest)
 ```

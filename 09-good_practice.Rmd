@@ -8,26 +8,205 @@ knitr::opts_chunk$set(cache.path = 'cache/')
 
 WIP! Content is due to change!
 
-## Legality?
 
-* its grey
-* german case?
+This chapter concerns itself with questions on a good practice of web scraping
+and how to scrape responsibly. There is no wrong or right answer to these
+questions. But in my view, it is a privilege that we are able to access this
+wealth of data and we should treat it this way. Why? We have a responsibility
+towards the persons, institutions and companies whose data we collect to respect
+certain boundaries and guidelines of data collection, which might have been set
+by themselves or which we might have formulated for ourselves. 
+
+I will not talk about the legal situation concerning web scraping. Firstly, I am
+not an expert on the legalities and do not feel equipped to give any responsible
+advice. Secondly, this is a relatively new field and legal rules might change.
+Thirdly, the specific rules you have to adhere to may very well depend on the
+context of your scraping project. Maybe it is allowed to collect certain data
+for use in a scientific project but for use in a commercial one. Maybe certain
+types of data are not allowed to be collected at all. When in doubt, try to get
+advice from your superiors or experts on the legal questions surrounding web
+scraping and privacy laws.
+
+But I also believe, that if we follow some basic principles of good practice, we
+can design our web scraping projects in a way that is respectful to the owners
+of the data we aim to collect and to our own standards of responsible data
+collection. So to boil it down:
+
+* Rule #1 of the scrape club: Scrape responsibly and with respect to the data
+sources
+
+* Rule #2 of the scrape club: Scrape responsibly and with respect to the data
+sources!
 
 
-## Responsibility!
+## We are no web crawlers
 
-* its a privilege and we have to treat it this way to remain a privilege
-* robots.txt
-* when in doubt, contact the admins
-  * or get legal advice is possible
-* think about what you really need
-* test your code on a small scale
+Web crawlers (also known as web spiders or robots), are pieces of software that
+aim at collecting and indexing all content on the internet. Web crawlers are for
+example operated by search engines, where their aim is to index the content of
+the web and make it accessible via their search interface, but can obviously
+also be put to more nefarious use. 
 
-## Good practice
+Now, we are not web crawlers. Is is not our aim to indiscriminately and
+systematically collect every piece of data on the web. Web scraping is aimed at
+extracting some specific data as precisely as possible and analysing the
+collected data in a specific usage context, in my case scientific research.
 
-* follow robots.txt
-* download only what you need
-  * and only once (if possible)
-  * example for checking if file is already present
-* set waiting times
+What does this imply for a good practice of web scraping?
 
+**Collect only what we need**
+
+This means that we have to think hard about which pieces of data we actually
+have to collect to meet our aims, *before* we start collecting. We seldom need
+every subpage of a website, so we can only download those that contain data of
+interest.
+
+**Anonmysation of personal data**
+
+When we are collecting personal data that could be used to identify these
+persons we should anonymise any information, that could lead to identification.
+This primary concerns real names in customer reviews, forums and so on. I would
+argue that this should also extend to user names in general. Most of the times
+we do not need the actual names and any simple numeric identifier constructed by
+us would suffice to discern users during the analysis. If we can not directly
+anonymise the data during collection, we should do this after collection.
+Especially if results of the analysis or a constructed data set are to be
+publicly released, anonymisation is paramount.
+
+**robots.txt**
+
+Many websites have set up a file called robots.txt on their servers which is
+predominantly aimed at informing automatic web crawlers on which parts of the
+website they are allowed to collect. While the robots.txt files may ask the
+crawlers to stay out of certain subfolders of a website, they have no power in
+actually stopping them. If the crawler is polite, it will follow the guidelines
+of the robots.txt.
+
+It may be up to debate, if web scrapers should follow the robots.txt guidelines,
+as we have already established that we are no web crawlers. In my opinion we
+should at least take a look at these files when planning a project. If the data
+we plan to collect is excluded in the guidelines, we have to decide if we still
+want to go forward. Is the collection of this specific piece of data really
+necessary? Do I have support by superiors or my employer? We can also always
+contact the website operator, describe our project and kindly ask for
+permission.
+
+### On robots.txt files
+
+The robots.txt files are usually accessible by appending the URL of the mainpage
+of a website. If you do not find a robots.txt in this way for a website you are
+interested in, there most probably is none. For example to access the robots.txt
+file for the website <https://www.wahlrecht.de/>{target=_blank} we can use the
+URL <https://www.wahlrecht.de/robots.txt>{target_blank}. 
+
+Let us briefly look at the structure of this file. Its first block looks like
+this:
+
+```
+User-agent: *
+Disallow: /cgi-bin/
+Disallow: /temp/
+Disallow: /ueberhang/wpb/
+Disallow: /ueberhang/chronic/
+```
+
+The field "User-agent" defines to which crawlers the rules apply to. "*" is
+short for everyone. The "Disallow" fields define, which subdirectories of the
+website may not be accessed by the particular User-agent. So in this case,
+no User-agent may access the subdirectories "/cgi-bin/", "/temp/" and so on.
+
+Let's continue to the second block:
+
+```
+User-Agent: Pixray-Seeker
+Disallow: /
+```
+
+Here a specific User-agent is defined, so the rules that follow only refer to
+the crawler "Pixray-Seeker". Here there is only one Disallow rule, namely "/".
+"/" is short for "everything". So the Pixray-Seeker crawler is not to allowed to
+access any content on the website. 
+
+
+## Reduce traffic
+
+Everytime a website is accessed, traffic is generated. Traffic here refers to
+the transfer of the HTML data from the server the website is hosted on to our
+PCs. This produces monetary costs on the side of the providers of the website.
+Also many websites are financed thorugh advertisements. When we download the
+website directly from R using `read_html()` we are circumventing the add
+display in browser and thus the provider will get no revenue. Both may
+seem negligible in many cases, but if we aim to act respectful to the
+website providers, we should reduce unnecessary traffic when we are able to.
+
+**Collect only once (if possible)**
+
+The most simple step we can undertook is to not download the HTML code everytime
+we re-run our script. This reduces traffic and also makes our code faster to
+execute. See chapter \@ref(files) on how to save the downloaded HTML files.
+
+**Test, test, test**
+
+We should also test our code on a small scale before finally running it on large
+amounts of data. If our aim is to download a large number of websites and/or
+files, we should make sure that our code actually works. While there are
+problems in our code -- and there will be -- we may create a lot of unnecessary
+traffic during bugfixing. If we instead test our code until we are sure it will
+run without errors on a single instead of multiple pages, we will reduce traffic
+and again also reduce the time we have to wait for the downloads to finish.
+
+**Set waiting times**
+
+If we are downloading many pages or files, it also may be a good idea to slow
+down the process on our end by setting a waiting time between each download. In
+this way we spread our traffic over time. Also, if a server detects unusually
+large amounts of site requests it may even block our IP, which would make us
+unable to continue our downloads. Waiting between each request can potentially
+prevent this. A waiting time between 2--5 seconds should be enough in most
+cases. Sometimes the robots.txt also gives a guideline on a desired waiting
+time for a specific site.
+
+### Waiting times in action
+
+Let us have another look on the first example from chapter \@ref(rvest3) to see
+how to set waiting times in practice when downloading multiple pages with
+`read_html()``.
+
+Firstly, let us generate the list of links we want to download like we did in
+chapter \@ref(rvest3).
+
+``` {r, message = FALSE}
+library(tidyverse)
+library(rvest)
+
+website <- "https://www.tidyverse.org/packages/" %>% 
+  read_html()
+
+a_nodes <- website %>% 
+  html_nodes(css = "div.package > a")
+
+links <- a_nodes %>%
+  html_attr(name = "href")
+```
+
+To let R wait for several seconds, we can use the base R function `Sys.sleep()`,
+which takes the seconds to wait as its only argument. As we want the `map()`
+function to add the waiting time before each `read_html()` iteration, we have
+to include `Sys.sleep()` into the iteration process. We can achieve this by
+defining a multi-line function using the `~ {...}` notation. Each new line
+enclosed by the `{}` is run once for each iteration over the object we pass to
+`map`. So in this case, for each element of the `links` object, R first waits
+for two seconds and than uses `read_html()` on the element of `links`. So in
+effect we added a waiting time of two seconds between each iteration. Note that
+`read_html()` has to come last if we want this short notation to work.
+
+``` {r}
+pages <- links %>% 
+  map(~ {
+    Sys.sleep(2)
+    read_html(.x)
+  })
+```
+
+
+Munzert zitieren!
