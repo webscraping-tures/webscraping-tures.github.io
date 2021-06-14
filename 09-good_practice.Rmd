@@ -6,8 +6,6 @@ knitr::opts_chunk$set(cache = TRUE)
 knitr::opts_chunk$set(cache.path = 'cache/')
 ```
 
-WIP! Content is due to change!
-
 
 This chapter concerns itself with questions regarding good practice of web
 scraping and how to scrape responsibly. There is no wrong or right answer to
@@ -60,17 +58,44 @@ have to collect to meet our aims, *before* we start collecting. We seldom need
 every subpage of a website, so we should only download those that contain data
 of interest.
 
-**Anonymization of personal data**
+**Use an API if there is one**
+
+Some websites may give us access to an API, an
+*application programming interface*. APIs in the web context are mostly used for
+allowing third party sites and applications to access the services a website
+provides. For example YouTube's IFrame player API is used when a YouTube Video
+is embedded in a third party site. The API gives accesss to the video and much
+of YouTube's functionality. Another example would be Twitter's API that can be
+used by tweet reader apps to access your tweets. 
+
+In many cases, we can use these APIs to directly access the data we are
+interested in instead of scraping it out the HTML code. Sometimes the APIs are
+openly accessible, sometimes we have to apply for access first. For example, if
+we want to use Twitter's API to collect tweets for scientific analysis, we have
+to fill out a form, describing our project and the planned data usage and then
+await approval. This extra work might gain us a more direct access to more clean
+data. Also, if we use an API we automatically play by the rules of the provider.
+
+So, if there is an API we can access and it also gives us access to the data we
+are interested in, it might be a good idea to use the API instead of
+"traditional" scraping techniques. The technical details of accessing APIs are
+beyond the scope of this introduction. Also APIs differ in their functionality.
+So the first step should always be, to read the APIs documentation. You can also
+check, if there already is an R package that simplifies access to an API, e.g.
+TwitteR or Rfacebook, before you start writing your own scripts to access an
+API.
+
+**Anonymisation of personal data**
 
 Whenever we are collecting personal data that could be used to identify these
-persons, we should anonymize any information that could lead to identification.
+persons, we should anonymise any information that could lead to identification.
 This primarily concerns real names in customer reviews, forums and so on. I
 would argue that this should also extend to user names in general. Most of the
 time, we do not need the actual names and any simple numeric identifier
 constructed by us would suffice to discern users during the analysis. If we
-cannot directly anonymize the data during collection, we should do this after
+cannot directly anonymise the data during collection, we should do this after
 collection.  Especially if results of the analysis or a constructed data set are
-to be publicly released, anonymization is paramount.
+to be publicly released, anonymisation is paramount.
 
 **robots.txt**
 
