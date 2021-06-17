@@ -12,7 +12,7 @@ WIP! Content is due to change!
 
 ## ggplot syntax
 
-## Aesthtetics
+## Aesthetics
 
 ### Continuous
 

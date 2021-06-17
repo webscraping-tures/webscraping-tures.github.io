@@ -85,11 +85,11 @@ downloading-files
 parsing-the-csv-files
 saving-data-files
 good_practice
-we-are-no-web-crawlers
+we-aint-no-web-crawlers
 on-robots.txt-files
 reduce-traffic
 waiting-times-in-action
-citation-and-additional-resource
+citation-and-an-additional-resource
 dplyr
 filter
 select

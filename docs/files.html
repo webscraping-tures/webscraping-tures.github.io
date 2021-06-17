@@ -281,7 +281,7 @@ Web Scraping using R
 </ul></li>
 <li class="chapter" data-level="9" data-path="good-practice.html"><a href="good-practice.html"><i class="fa fa-check"></i><b>9</b> Good practice</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="good-practice.html"><a href="good-practice.html#we-are-no-web-crawlers"><i class="fa fa-check"></i><b>9.1</b> We are no web crawlers</a>
+<li class="chapter" data-level="9.1" data-path="good-practice.html"><a href="good-practice.html#we-aint-no-web-crawlers"><i class="fa fa-check"></i><b>9.1</b> We ain’t no web crawlers</a>
 <ul>
 <li class="chapter" data-level="9.1.1" data-path="good-practice.html"><a href="good-practice.html#on-robots.txt-files"><i class="fa fa-check"></i><b>9.1.1</b> On robots.txt files</a></li>
 </ul></li>
@@ -289,7 +289,7 @@ Web Scraping using R
 <ul>
 <li class="chapter" data-level="9.2.1" data-path="good-practice.html"><a href="good-practice.html#waiting-times-in-action"><i class="fa fa-check"></i><b>9.2.1</b> Waiting times in action</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="good-practice.html"><a href="good-practice.html#citation-and-additional-resource"><i class="fa fa-check"></i><b>9.3</b> Citation and additional resource</a></li>
+<li class="chapter" data-level="9.3" data-path="good-practice.html"><a href="good-practice.html#citation-and-an-additional-resource"><i class="fa fa-check"></i><b>9.3</b> Citation and an additional resource</a></li>
 </ul></li>
 <li class="part"><span><b>IV Data analysis</b></span></li>
 <li class="chapter" data-level="10" data-path="dplyr.html"><a href="dplyr.html"><i class="fa fa-check"></i><b>10</b> Transformation with dplyr</a>
@@ -352,11 +352,10 @@ Web Scraping using R
             <section class="normal" id="section-">
 <div id="files" class="section level1" number="8">
 <h1><span class="header-section-number">8</span> Downloading and saving files</h1>
-<p>In this section we will concern ourselves with downloading files from within our
-R scripts, as well as saving the scraping results locally for reuse without the
-need to scrape the data again. Most data files you will encounter online are CSV
-files. We will first talk briefly about what CSV files are and how we can use
-them in R.</p>
+<p>In this section we will learn to download files from within our R scripts, and
+save the scraping results locally to be reused without the need to scrape the
+data again. Most data files you will deal with online are CSV files. To begin we
+will talk briefly about what CSV files are and how we can use them in R.</p>
 <div id="csv-files" class="section level2" number="8.1">
 <h2><span class="header-section-number">8.1</span> CSV files</h2>
 <p><em>CSV</em> stands for “comma-separated values”. While they are limited to the display
@@ -364,34 +363,36 @@ of two-dimensional tables, their simplicity and portability makes CSV files one
 of the most used formats for this type of data. You can open and write CSV files
 with statistical software, spreadsheet software like Excel, and even with the
 most basic text editor.</p>
-<p>A simple CSV file may look like this:</p>
+<p>A simple CSV file could look like this:</p>
 <pre><code>column1, column2, column3
 data1_1, data1_2, data1_3
 data2_1, data2_2, data2_3
 data3_1, data3_2, data3_3</code></pre>
-<p>In essence, CSV files are tables. The rows of the table are delimited by line
-breaks, the columns by commas.</p>
-<p>The first row usually represents the column names, as in the example above
+<p>In essence, CSV files are tables. The rows of the table are separated by line
+breaks, the columns are delimited by commas.</p>
+<p>The first row usually represents the column names, just as in the example above
 (<code>column1, column2, column3</code>). Be aware, that this isn’t necessarily always the
 case. A CSV file may not contain any column names at all, and start with a first
-row of data cells. This is a vital difference when it comes to parsing the file.</p>
+row of data cells. This is on of the vital differences when it comes to parsing
+the file.</p>
 <div id="parsing-a-csv-file" class="section level3" number="8.1.1">
 <h3><span class="header-section-number">8.1.1</span> Parsing a CSV file</h3>
 <p>To convert the data contained in the CSV file into a format we can use for data
-analysis we have to <em>parse</em> it first. The function used for parsing
-“understands” the representation of a table in the CSV syntax, can discern
-column names from data cells, assigns data cells to the correct rows and columns
-and returns an R object representing the table. <code>read.csv()</code> from base R returns
-a data frame while <code>read_csv()</code> from the readr package, which we will use here,
-returns a tibble.</p>
-<p>As readr is part of the core tidyverse we can just load the tidyverse package.
-We will also need rvest soon, so let us begin with loading both libraries.</p>
+analysis we have to <em>parse</em> it. The function used for parsing “understands” the
+representation of a table in the CSV syntax, can discern column names from data
+cells, assigns data cells to the correct rows and columns and returns an R
+object representing the table. <code>read_csv()</code>, from the readr package that we will
+use here, returns a tibble, while <code>read.csv()</code> from base R returns a data frame.</p>
+<p>Since readr is part of the core tidyverse, we can just load the tidyverse
+package. Soon we will also need rvest, so let us begin with loading both
+libraries.</p>
 <div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="files.html#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb155-2"><a href="files.html#cb155-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span></code></pre></div>
 <p>The readr function <code>read_csv()</code> takes a CSV file as its first argument. To test
 it, we can also use <em>literal data</em> for the file argument. So we can pass the
 example defined above as a string – contained in <code>"</code> – as the <code>file</code>argument.
-We won’t do this much in practice, but it serves as a good first example.</p>
+We will not be using this in practice much, but it serves well as a first
+example.</p>
 <div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="files.html#cb156-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(</span>
 <span id="cb156-2"><a href="files.html#cb156-2" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;column1, column2, column3</span></span>
 <span id="cb156-3"><a href="files.html#cb156-3" aria-hidden="true" tabindex="-1"></a><span class="st">data1_1, data1_2, data1_3</span></span>
@@ -404,10 +405,10 @@ We won’t do this much in practice, but it serves as a good first example.</p>
 <span id="cb156-10"><a href="files.html#cb156-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 data1_1 data1_2 data1_3</span></span>
 <span id="cb156-11"><a href="files.html#cb156-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 data2_1 data2_2 data2_3</span></span>
 <span id="cb156-12"><a href="files.html#cb156-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 data3_1 data3_2 data3_3</span></span></code></pre></div>
-<p><code>read_csv()</code> guesses the column types by the data entered. Here all three
-columns were automatically defined as character vectors. Automatic guessing
-works reliably in most situations. Let’s try a CSV with multiple different
-column types:</p>
+<p><code>read_csv()</code> guesses the column types by the data entered. All three columns
+were automatically defined as character vectors here. Automatic guessing works
+reliably in most situations. Let’s try a CSV with multiple different column
+types:</p>
 <div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="files.html#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(</span>
 <span id="cb157-2"><a href="files.html#cb157-2" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;name, age, size, retired</span></span>
 <span id="cb157-3"><a href="files.html#cb157-3" aria-hidden="true" tabindex="-1"></a><span class="st">Peter, 42, 1.68, FALSE</span></span>
@@ -423,11 +424,11 @@ column types:</p>
 <p><code>read_csv()</code> correctly guessed that the first column is of type character, the
 third of the type double and the fourth is a logical vector. It also guessed
 that the second column should be of the type double, i.e. floating point
-numbers. This will do, but we could redefine this vector as integer manually by
-using the <code>col_types</code> argument. This will not be necessary in most situations,
-but could increase computational speed with very large datasets, as integers can
-be saved more efficiently. More on the definition of column types can be found
-in the help file.</p>
+numbers. This will work, but we could redefine this vector as integer manually
+by using the <code>col_types</code> argument. This will not be necessary in most
+situations, but could increase computational speed with very large datasets, as
+integers can be saved more efficiently. More on the definition of column types
+can be found in the help file.</p>
 <p>What happens when we have CSV data without column names defined in the first
 line?</p>
 <div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="files.html#cb158-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(</span>
@@ -444,8 +445,8 @@ line?</p>
 the first line to be used for names or not. If there are no column names in the
 CSV data, as in this case, we have to explicitly tell <code>read_csv()</code> not to use
 the first line for column names. We can do this by specifying the <code>col_names()</code>
-argument as <code>FALSE</code>. In this case, <code>read_csv()</code> chooses default names for the
-columns, which we can change later on.</p>
+argument as <code>FALSE</code>; in this case, <code>read_csv()</code> chooses default names for the
+columns, which can be changed later on.</p>
 <div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="files.html#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(</span>
 <span id="cb159-2"><a href="files.html#cb159-2" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;Peter, 42, 1.68, FALSE</span></span>
 <span id="cb159-3"><a href="files.html#cb159-3" aria-hidden="true" tabindex="-1"></a><span class="st">Paul, 84, 1.82, TRUE</span></span>
@@ -465,21 +466,21 @@ columns, which we can change later on.</p>
 <p>The website
 <a href="https://www.bundeswahlleiter.de/bundestagswahlen/2017/ergebnisse/repraesentative-wahlstatistik.html" target="_blank">https://www.bundeswahlleiter.de/bundestagswahlen/2017/ergebnisse/repraesentative-wahlstatistik.html</a>
 holds multiple CSV files containing inferential statistics on the German federal
-election held in 2017. Among them, two files with statistics on the number of
-people eligible to vote and on the number that actually voted, both by binary
-gender, year of birth, and additional indicators.</p>
-<p>Your first instinct could be, to download the files manually and then parse
-them. This will work just fine, but we could also download the files directly
-from our code. Due to the small number of files in this example, this may not
-even be the most efficient way, but when you start handling larger amounts of
-files or want to regularly update files, downloading them from within your code
-will be the safer and more efficient way.</p>
-<p>First, we should download the HTML file containing the links to the CSV files
-and extract the first two links following the header “Tabellen zur
-Weiterverwendung” using the tools we already have at our disposal. To understand
-the construction of the css selector, please have another look into chapter
-<a href="css-selectors-developer-tools.html#css">5.1</a>. Note that this is only one of many possible selectors that can
-achieve the goal of selecting the two links of interest.</p>
+election held in 2017. Among these files are two files with statistics on the
+number of people eligible to vote and on the number that actually voted, both by
+binary gender, year of birth, and additional indicators.</p>
+<p>Your first impulse would be to download the files manually and then parse them.
+This will work just fine, but we could also download the files directly from our
+code. Due to the small number of files in this example, this may not even be the
+most efficient way, but when you start handling larger amounts of files or want
+to regularly update files, downloading them from within your code is a safer and
+more efficient option.</p>
+<p>To start, we will download the HTML file containing the links to the CSV files.
+The, using the tools at our disposal, we will extract the first two links
+following the header “Tabellen zur Weiterverwendung”. To understand the
+construction of the css selector, read chapter <a href="css-selectors-developer-tools.html#css">5.1</a>. Note that this is
+only one of many possible selectors that can achieve the selection of both links
+of interest.</p>
 <div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="files.html#cb160-1" aria-hidden="true" tabindex="-1"></a>website <span class="ot">&lt;-</span> <span class="st">&quot;https://www.bundeswahlleiter.de/bundestagswahlen/2017/ergebnisse/repraesentative-wahlstatistik.html&quot;</span> <span class="sc">%&gt;%</span></span>
 <span id="cb160-2"><a href="files.html#cb160-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_html</span>()</span>
 <span id="cb160-3"><a href="files.html#cb160-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -497,56 +498,55 @@ achieve the goal of selecting the two links of interest.</p>
 <span id="cb160-15"><a href="files.html#cb160-15" aria-hidden="true" tabindex="-1"></a>links</span>
 <span id="cb160-16"><a href="files.html#cb160-16" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;../../../dam/jcr/38972966-dc3d-40fa-91d7-6599d913f5e9/btw17_rws_bw2.csv&quot; </span></span>
 <span id="cb160-17"><a href="files.html#cb160-17" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &quot;../../../dam/jcr/a67208c0-2a2b-41aa-abb8-204b09e73b6b/btw17_rws_bst2.csv&quot;</span></span></code></pre></div>
-<p>We achieved our goal of extracting the links, but we also see, that these are
-not complete as they are missing their base URL. This works on the website, as
-the link is relative. To access the files directly, we need an absolute link –
-the full path – though. As before (sub section <a href="rvest3.html#sub-pgs">7.2.2</a>) we can use the
-function <code>str_c()</code> to construct the complete URLs. If we give <code>str_c()</code> a vector
-as one of its input arguments, the function will repeat the string connection
-for each element in the vector. For this example we can ignore the “../../../”
-part of the link as it will work regardless. To remove the part we could apply
-some of the functions from the stringr package. For this we would need some
-basic knowledge in string manipulation and regular expressions, which we will
-gain in chapter <a href="regex.html#regex">12</a>. So for now, we will just use the links as they
-come.</p>
+<p>We succeeded in extracting the links, but we can also see that these links are
+not complete since they are missing their base URL. This works on the website,
+as the link is relative. To access the files directly though, we need an
+absolute link – the full path. As before (sub section <a href="rvest3.html#sub-pgs">7.2.2</a>) we can
+use the function <code>str_c()</code> to construct the complete URLs. If we give <code>str_c()</code>
+a vector as one of its input arguments, the function will repeat the string
+connection for each element in the vector. For this example we can ignore the
+“../../../” part of the link as it will work regardless; to remove this part we
+could apply some of the functions from the stringr package. For this we need
+some basic knowledge in string manipulation and regular expressions, which we
+will gain in chapter <a href="regex.html#regex">12</a>. So for now, we will just use the links as
+they come.</p>
 <div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="files.html#cb161-1" aria-hidden="true" tabindex="-1"></a>links <span class="ot">&lt;-</span> <span class="fu">str_c</span>(<span class="st">&quot;https://www.bundeswahlleiter.de/&quot;</span>, links)</span>
 <span id="cb161-2"><a href="files.html#cb161-2" aria-hidden="true" tabindex="-1"></a>links</span>
 <span id="cb161-3"><a href="files.html#cb161-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;https://www.bundeswahlleiter.de/../../../dam/jcr/38972966-dc3d-40fa-91d7-6599d913f5e9/btw17_rws_bw2.csv&quot; </span></span>
 <span id="cb161-4"><a href="files.html#cb161-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &quot;https://www.bundeswahlleiter.de/../../../dam/jcr/a67208c0-2a2b-41aa-abb8-204b09e73b6b/btw17_rws_bst2.csv&quot;</span></span></code></pre></div>
 <p>Now that we have complete absolute links, we can download the files to our
-hard drive. To achieve this, we can use the base R function <code>download.file()</code>.
-We have to specify an URL as its first argument as well as a path and file name
-for the <code>destfile</code> argument. When no path is given, the file is saved in the
-directory where your R script is located.</p>
+hard drive using the base R function <code>download.file()</code>. We specify a URL as its
+first argument and also specify a path and file name for the <code>destfile</code>
+argument. When no path is given, the file is saved in the directory where your R
+script is located.</p>
 <div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="files.html#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(links[<span class="dv">1</span>], <span class="at">destfile =</span>  <span class="st">&quot;eligible.csv&quot;</span>)</span>
 <span id="cb162-2"><a href="files.html#cb162-2" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(links[<span class="dv">2</span>], <span class="at">destfile =</span>  <span class="st">&quot;turnout.csv&quot;</span>)</span></code></pre></div>
 <p>We could also have used <code>read_csv()</code> to parse the CSV files directly from the
-web. Still, sometimes it may be a good idea to download the files to our hard
-drives, as we only have to do this once and thus decrease traffic for the server
-and also increase the efficiency of our code. But this is only a benefit, if we
-run the download once and not every time we rerun our script. So you should
-maybe comment out the lines where the download occurs after it was successful.
-In chapter (good_practice) we will discuss a way to do this more elegantly.</p>
+web. However it may still sometimes be a good idea to download the files to our
+hard drives, since we only have to do this once; with this we decrease traffic
+for the server, as well as increase the efficiency of our code. This is only a
+benefit if we download only once and not every time we rerun our script. So we
+have to comment out the lines where the download occurs after it was successful.</p>
 <div id="parsing-the-csv-files" class="section level3" number="8.2.1">
 <h3><span class="header-section-number">8.2.1</span> Parsing the csv files</h3>
-<p>Now we can parse the downloaded CSV files into R objects. But first let’s have a
-look at the CSV files. You can open them in a text editor of your choosing or
-directly in RStudio. Importing them into Excel or a similar spreadsheet software
-is not a valid option here, as we want to see the raw contents of the file and
-not a representation of the data.</p>
+<p>Now we proceed to parse the downloaded CSV files into R objects. But first let’s
+have a look at the CSV files. You can open them in a text editor of your
+choosing or directly in RStudio. Importing them into Excel or a similar
+spreadsheet software is not a valid option here, as we want to see the raw
+contents of the file and not a representation of the data.</p>
 <p>Looking at eligible.csv, we notice at least two things: First, the delimiter
 used here is not a comma but a semicolon. The default CSV style discussed above
-is common in those countries where a “.” is used as the decimal point. Thus the
+is common in those countries where a “.” is used as the decimal point, thus the
 “,” is available to be used as a delimiter. In countries where the “,” is used
-as a decimal point, it is not available and thus the “;” is used as a delimiter.
-The function <code>read_csv2()</code> can be used in this case. Even more general is
-<code>read_delim()</code> as the delimiting character can be defined as an argument.
-Secondly, we see that the first 8 lines are neither column names nor data, but
-contain comments on the CSV file itself. We have to tell <code>read_csv2()</code> to ignore
-these lines. We could use the argument <code>skip</code> to tell R to ignore the first 8
-lines. But as these comments are neatly introduced with an <code>#</code> we can use the
-<code>comment</code> argument instead and specify the <code>#</code> as the identifier for comments,
-which then will be ignored.</p>
+as a decimal point, it is not available as a delimiter and therefore the “;” is
+used. The function <code>read_csv2()</code> can be used in this case. A more generalized
+function is <code>read_delim()</code>, because the delimiting character can freely be
+defined as an argument. Secondly, we see that the first 8 lines are neither
+column names nor data, but contain comments on the CSV file itself. We have to
+tell <code>read_csv2()</code> to ignore these lines. We could use the argument <code>skip</code> to
+tell R to ignore the first 8 lines; however, these comments are neatly
+introduced with an <code>#</code>, so we can use the <code>comment</code> argument instead and specify
+the <code>#</code> as the identifier for comments, which then will be ignored.</p>
 <div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="files.html#cb163-1" aria-hidden="true" tabindex="-1"></a>eligible_tbl <span class="ot">&lt;-</span> <span class="fu">read_csv2</span>(<span class="st">&quot;eligible.csv&quot;</span>, <span class="at">comment =</span> <span class="st">&quot;#&quot;</span>)</span>
 <span id="cb163-2"><a href="files.html#cb163-2" aria-hidden="true" tabindex="-1"></a><span class="do">## ℹ Using &#39;,&#39; as decimal and &#39;.&#39; as grouping mark. Use `read_delim()` for more control.</span></span>
 <span id="cb163-3"><a href="files.html#cb163-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
@@ -627,38 +627,37 @@ which then will be ignored.</p>
 </div>
 <div id="saving-data-files" class="section level2" number="8.3">
 <h2><span class="header-section-number">8.3</span> Saving data files</h2>
-<p>In my opinion, the best approach to data analysis in terms of reproducibility is
-to have one script in which you load your raw data, do all your data cleaning,
-transform your data, do all statistical and graphical analysis and also all
-exports of tables and graphics. This ensures that anyone who has access to your
-script and the raw data can reproduce every step you undertook in your analysis,
-one of the cornerstones of transparency and reproducibility of scientific works.
-From this angle, we seldom need to save the results of our data analysis in a
-file. The script – the .R file – is enough.</p>
-<p>Nevertheless, there are situations in which saving results becomes reasonable or
-even necessary. One of these is Web Scraping, for at least two reasons. Firstly,
-we should try to minimize the traffic we create on the websites we scrape (see
-@ref(good_practice)). If we re-run the <code>read_html()</code> function every time we run
-our script, we also re-download all of the HTML data in each re-run. This puts
-unnecessary load on the servers and also slows down our script, which becomes
-more relevant the more data you are scraping from the web. Secondly, websites
-change all the time. The data you scraped today may be changed or even gone
-tomorrow. Also if the structure of the site changes, your CSS selectors and URLs
-may not work anymore.</p>
-<p>So for both reasons, it may be appropriate to save all of our downloaded HTML
-data locally so that we can reload it for re-runs of our script without having
-to worry about changes to the source.</p>
-<p>The most straightforward approach could be to use the <code>download.file()</code> function
-directly on the URL and thus copy the original HTML data exactly.</p>
+<p>In my opinion, the best approach to data analysis in terms of reproducibility,
+is to have one script in which you load your raw data, do all your data
+cleaning, transform your data, do all statistical and graphical analysis and
+also all exports of tables and graphics. This ensures that anyone who has access
+to your script and the raw data can reproduce every step you undertook in your
+analysis, which one of the cornerstones of transparency and reproducibility of
+scientific works. When we take this approach, we seldom need to save the results
+of our data analysis in a file. The script – the .R file – is enough.</p>
+<p>Yet, there are situations where saving results becomes reasonable or even
+necessary. One of these is Web Scraping, for at least two reasons. To begin
+with, we will try to minimize the traffic we create on the websites we scrape
+(see @ref(good_practice)). If we re-run the <code>read_html()</code> function every time
+we run our script, we also re-download all of the HTML data in each re-run. This
+puts unnecessary load on the servers and also slows down our script, which
+becomes more relevant the more data you are scraping from the web. Another point
+to consider, is that websites change all the time. The data you scraped today
+may be changed or even gone tomorrow. You should also keep in mind that if the
+structure of the site changes, your CSS selectors and URLs may not work anymore.</p>
+<p>So for both of those reasons, it may be appropriate to save all of our
+downloaded HTML data locally, so that we can re-load it for re-runs of our
+script without having to worry about changes to the source.</p>
+<p>The most straightforward approach would be to use the <code>download.file()</code> function
+and apply it directly to the URL and thus copy the original HTML data exactly.</p>
 <div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="files.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">&quot;https://webscraping-tures.github.io/hello_world.html&quot;</span>, <span class="st">&quot;hello_world_local.html&quot;</span>)</span></code></pre></div>
-<p>We could run this line once and after this just use <code>read_html()</code> on the local
-file.</p>
+<p>We run this line once and afterwards just use <code>read_html()</code> on the local file.</p>
 <div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="files.html#cb165-1" aria-hidden="true" tabindex="-1"></a>hello_world <span class="ot">&lt;-</span> <span class="fu">read_html</span>(<span class="st">&quot;hello_world_local.html&quot;</span>)</span></code></pre></div>
 <p>In most situations we don’t need to save the results of our transformations and
-analysis. Re-running the script on the original data we have now saved locally
-is enough to ensure that the work can be reproduced. But if we are still
-interested in saving the results of our analysis to a local file, we could
-use <code>write_csv()</code> from stringr or save the data in the native R format .RData.</p>
+analysis. Re-running the script on the original data – we have now saved
+locally – is enough to ensure that the work can be reproduced. But if we are
+still interested in saving the results of our analysis to a local file, we could
+use <code>write_csv()</code> from stringr, or save the data in the native R format .RData.</p>
 <p>Let’s create an example object we want to save first:</p>
 <div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="files.html#cb166-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
 <span id="cb166-2"><a href="files.html#cb166-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> <span class="fu">c</span>(<span class="st">&quot;Peter&quot;</span>, <span class="st">&quot;Paul&quot;</span>, <span class="st">&quot;Mary&quot;</span>),</span>
@@ -666,33 +665,34 @@ use <code>write_csv()</code> from stringr or save the data in the native R forma
 <span id="cb166-4"><a href="files.html#cb166-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">size =</span> <span class="fu">c</span>(<span class="fl">1.68</span>, <span class="fl">1.82</span>, <span class="fl">1.74</span>),</span>
 <span id="cb166-5"><a href="files.html#cb166-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">retired =</span> <span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span>
 <span id="cb166-6"><a href="files.html#cb166-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<p><code>write_csv()</code> is an appropriate format for saving tibbles or data frames and has
-the advantage of being readable by most software that deals with data, not just
-by R. It takes the object to be saved as its first argument and the path and
-file name used for saving as its second.</p>
+<p><code>write_csv()</code> is an appropriate format for saving tibbles or data frames and on
+top of that has the advantage of being readable by most software that deals with
+data, not just by R. It takes the object to be saved as its first argument and
+the path and file name used for saving as its second argument.</p>
 <div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="files.html#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(data, <span class="st">&quot;peter_paul_mary.csv&quot;</span>)</span></code></pre></div>
 <p>The resulting file looks like this:</p>
 <pre><code>name,age,size,retired
 Peter,42,1.68,FALSE
 Paul,84,1.82,TRUE
 Mary,24,1.74,FALSE</code></pre>
-<p>If we want semicolons as a delimiter we could also use <code>write_csv2()</code>. To load
-the resulting file we would just use <code>read_csv()</code> or <code>read_csv2()</code>.</p>
+<p>If we want to use semicolons as a delimiter we could also use <code>write_csv2()</code>; to
+load the resulting file we would just use <code>read_csv()</code> or <code>read_csv2()</code>.</p>
 <p>The downside to using CSV files is that the definition of column types – e.g.
 character, numeric or integer – is lost and may have to be redefined when
 reloading the data. Also more complex objects like lists, can not be saved as a
-CSV. So we may use the data format native to R, .RData.</p>
+CSV, so we may use the data format native to R, .RData.</p>
 <p>The <code>save()</code> function also takes the name of the object – or multiple objects
 – to be saved as its first argument. We also have to specify a file name (and
 possibly path) in the <code>file =</code> argument.</p>
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="files.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(data, <span class="at">file =</span>  <span class="st">&quot;peter_paul_mary.RData&quot;</span>)</span></code></pre></div>
-<p>We can load objects stored as .RData files by using <code>load()</code> on this file.</p>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="files.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(data, <span class="at">file =</span> <span class="st">&quot;peter_paul_mary.RData&quot;</span>)</span></code></pre></div>
+<p>We can load objects stored as .RData files by using the <code>load()</code> function on
+this file.</p>
 <div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="files.html#cb170-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;peter_paul_mary.RData&quot;</span>)</span></code></pre></div>
-<p>Please note, that <code>save()</code> does not work when saving an object to which the
-result of <code>read_html()</code> is assigned to. It will save an object but if you load
+<p>Please note that <code>save()</code> does not work, when used on an object to which the
+result of <code>read_html()</code> is assigned to; it will save an object but if you load
 it, the object will be empty. The reasons for this are rather technical, but you
-should know that you will loose some of your work, if you try to do something
-like this:</p>
+should know that you will loose some of your work, if you do try something like
+this:</p>
 <div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="files.html#cb171-1" aria-hidden="true" tabindex="-1"></a>hello_world <span class="ot">&lt;-</span> <span class="fu">read_html</span>(<span class="st">&quot;https://webscraping-tures.github.io/hello_world.html&quot;</span>)</span>
 <span id="cb171-2"><a href="files.html#cb171-2" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(hello_world, <span class="st">&quot;hello_world.RData&quot;</span>)</span>
 <span id="cb171-3"><a href="files.html#cb171-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(hello_world)</span>
