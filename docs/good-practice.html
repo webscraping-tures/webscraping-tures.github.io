@@ -281,7 +281,7 @@ Web Scraping using R
 </ul></li>
 <li class="chapter" data-level="9" data-path="good-practice.html"><a href="good-practice.html"><i class="fa fa-check"></i><b>9</b> Good practice</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="good-practice.html"><a href="good-practice.html#we-are-no-web-crawlers"><i class="fa fa-check"></i><b>9.1</b> We are no web crawlers</a>
+<li class="chapter" data-level="9.1" data-path="good-practice.html"><a href="good-practice.html#we-aint-no-web-crawlers"><i class="fa fa-check"></i><b>9.1</b> We ain’t no web crawlers</a>
 <ul>
 <li class="chapter" data-level="9.1.1" data-path="good-practice.html"><a href="good-practice.html#on-robots.txt-files"><i class="fa fa-check"></i><b>9.1.1</b> On robots.txt files</a></li>
 </ul></li>
@@ -289,7 +289,7 @@ Web Scraping using R
 <ul>
 <li class="chapter" data-level="9.2.1" data-path="good-practice.html"><a href="good-practice.html#waiting-times-in-action"><i class="fa fa-check"></i><b>9.2.1</b> Waiting times in action</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="good-practice.html"><a href="good-practice.html#citation-and-additional-resource"><i class="fa fa-check"></i><b>9.3</b> Citation and additional resource</a></li>
+<li class="chapter" data-level="9.3" data-path="good-practice.html"><a href="good-practice.html#citation-and-an-additional-resource"><i class="fa fa-check"></i><b>9.3</b> Citation and an additional resource</a></li>
 </ul></li>
 <li class="part"><span><b>IV Data analysis</b></span></li>
 <li class="chapter" data-level="10" data-path="dplyr.html"><a href="dplyr.html"><i class="fa fa-check"></i><b>10</b> Transformation with dplyr</a>
@@ -352,104 +352,106 @@ Web Scraping using R
             <section class="normal" id="section-">
 <div id="good_practice" class="section level1" number="9">
 <h1><span class="header-section-number">9</span> Good practice</h1>
-<p>This chapter concerns itself with questions regarding good practice of web
-scraping and how to scrape responsibly. There is no wrong or right answer to
-these questions. But in my view, it is a privilege that we are able to access
-this wealth of data and we should treat it this way. Why? We have a
-responsibility towards the people, institutions and companies whose data we
-collect to respect certain boundaries and guidelines of data collection. These
-boundaries might have been set by others or might be constraints we impose upon
-ourselves.</p>
-<p>I will not talk about the legal situation concerning web scraping. Firstly, I am
-not an expert on the legalities and do not feel equipped to give any responsible
-advice. Secondly, this is a relatively new field and legal rules might change.
-Thirdly, the specific rules you have to adhere to may very well depend on the
-context of your scraping project. Maybe it is allowed to collect certain data
-for use in a scientific project but not for use in a commercial one. Maybe
-certain types of data are not allowed to be collected at all. When in doubt, try
-to get advice from your superiors or experts on the legal questions surrounding
-web scraping and privacy laws.</p>
+<p>In this following section, we will concern ourselves with questions regarding
+good practice of web scraping and how to scrape responsibly. There are no wrong
+or right answers to these questions. But in my view, it is a privilege that we
+are able to access this wealth of data and we should treat it as such. Why? We
+have a responsibility towards the people, institutions and companies whose data
+we collect to respect certain boundaries and guidelines of data collection.
+These boundaries might have been set by others or might be constraints we impose
+upon ourselves.</p>
+<p>I will not be talking about the legal situation concerning web scraping.
+First and foremost, I am not an expert on the legalities and do not feel
+equipped to give any responsible advice. Additionally, this is a relatively new
+field and legal rulings might change. On top of that, the specific rules you
+have to adhere to may very well depend on the context of your scraping project.
+It’s possible that it is allowed to collect certain data for use in a scientific
+project, but not for use in a commercial one. Certain types of data are not
+allowed to be collected at all. When in doubt, try to get advice from your
+superiors or experts on the legal questions surrounding web scraping and privacy
+laws.</p>
 <p>Nonetheless, if we follow some basic principles of good practice, we can design
 our web scraping projects in a way that is respectful to the owners of the data
-and to our own standards of responsible data collection. So to boil it down:</p>
+as well as true to our own standards of responsible data collection. So to boil
+it down:</p>
 <ul>
-<li><p>Rule #1 of the scrape club: Scrape responsibly and with respect to the data
+<li><p>Rule #1 of Scrape Club: Scrape responsibly and with respect to the data
 sources.</p></li>
-<li><p>Rule #2 of the scrape club: Scrape responsibly and with respect to the data
+<li><p>Rule #2 of Scrape Club: Scrape responsibly and with respect to the data
 sources!</p></li>
 </ul>
-<div id="we-are-no-web-crawlers" class="section level2" number="9.1">
-<h2><span class="header-section-number">9.1</span> We are no web crawlers</h2>
+<div id="we-aint-no-web-crawlers" class="section level2" number="9.1">
+<h2><span class="header-section-number">9.1</span> We ain’t no web crawlers</h2>
 <p>Web crawlers – also known as web spiders or robots – are pieces of software
 that aim at collecting and indexing all content on the internet. Web crawlers
-are, for example, operated by search engines whose aim is to index the content of
+are for example, operated by search engines whose aim is to index the content of
 the web and make it accessible via their search interface.</p>
-<p>We are not web crawlers. It is not our aim to indiscriminately and
-systematically collect every piece of data on the web. Web scraping is aimed at
-extracting some specific data as precisely as possible and analysing the
-collected data in a specific usage context, in our case scientific research.</p>
+<p>It is not our goal to indiscriminately and systematically collect every piece of
+data on the web. Web scraping is aimed at extracting some specific data as
+precisely as possible and analysing the collected data in a specific usage
+context, in our case scientific research. We are not web crawlers.</p>
 <p>What does this imply for a good practice of web scraping?</p>
-<p><strong>Collect only what we need</strong></p>
-<p>This means that we have to think hard about which pieces of data we actually
-have to collect to meet our aims, <em>before</em> we start collecting. We seldom need
-every subpage of a website, so we should only download those that contain data
-of interest.</p>
+<p><strong>Collect only what you need</strong></p>
+<p>This means that you have to think hard about which pieces of data you actually
+have to collect to meet your goals, <em>before</em> you start collecting. Rarely are
+all subpages of a website needed, so you should only download those that contain
+data of interest.</p>
 <p><strong>Use an API if there is one</strong></p>
-<p>Some websites may give us access to an API, an
+<p>Some websites may give you access to an API, an
 <em>application programming interface</em>. APIs in the web context are mostly used for
 allowing third party sites and applications to access the services a website
 provides. For example, YouTube’s IFrame player API is used when a YouTube Video
 is embedded in a third party site. The API gives accesss to the video and much
 of YouTube’s functionality. Another example would be Twitter’s API that can be
 used by tweet reader apps to access your tweets.</p>
-<p>In many cases, we can use these APIs to directly access the data we are
+<p>In many cases, you can use those APIs to directly access the data we are
 interested in instead of scraping the raw HTML code for it. Sometimes the APIs
-are openly accessible, sometimes we have to apply for access first. For example,
-if we want to use Twitter’s API to collect tweets for scientific analysis, we
-have to fill out a form, describing our project and the planned data usage, and
-then await approval. This extra work might gain us a more direct access to
-cleaner data. Additionally, if we use an API we automatically play by the rules
-of the provider.</p>
-<p>So, if there is an API we can access and it also gives us access to the data we
-are interested in, it might be a good idea to use the API instead of
-“traditional” scraping techniques. The technical details of accessing APIs are
-beyond the scope of this introduction. Also APIs can differ tremendously in
-their functionality. The first step should always be to read the APIs
-documentation. You can also check whether there already is an R package that
-simplifies access to an API, e.g. TwitteR or Rfacebook, before you start writing
-your own scripts to access an API.</p>
+are openly accessible, sometimes you have to apply for access first. Using the
+latter as an example, if you want to use Twitter’s API to collect tweets for
+scientific analysis, you have to fill out a form, describing your project and
+planned data usage, and then await approval. This extra work could potentially
+give you a more direct access to cleaner data. Additionally, if you use an API
+you automatically play by the rules of the provider.</p>
+<p>So, if there is an API you can access and it also gives you access to the data
+you are interested in, it is a good idea to use the API instead of “traditional”
+scraping techniques. The technical details of accessing APIs are beyond the
+scope of this introduction. Also APIs can differ tremendously in their
+functionality. The first step should always be to read the APIs documentation.
+You can also check whether there already is an R package that simplifies access
+to an API, e.g. TwitteR or Rfacebook, before you start writing your own scripts
+to access an API.</p>
 <p><strong>Anonymisation of personal data</strong></p>
-<p>Whenever we are collecting personal data that could be used to identify these
-persons, we should anonymise any information that could lead to identification.
-This primarily concerns real names in customer reviews, forums and so on. I
-would argue that this should also extend to user names in general. Most of the
-time, we do not need the actual names and any simple numeric identifier
-constructed by us would suffice to discern users during the analysis. If we
-cannot directly anonymise the data during collection, we should do this after
-collection. Especially if results of the analysis or a constructed data set are
-to be publicly released, anonymisation is paramount.</p>
+<p>Whenever we as web scrapers are collecting personal data that could be used to
+identify people, we ought to anonymise any information that could lead to
+identification; this primarily concerns real names in customer reviews, forums
+and so on. I would argue that this should also extend to user names in general.
+Most of the time, we do not need the actual names and any simple numeric
+identifier constructed by us would suffice to discern users during the analysis.
+If we cannot directly anonymise the data during collection, we should do this
+after collection. Especially if results of the analysis or a constructed data
+set are to be publicly released: anonymisation is paramount!</p>
 <p><strong>robots.txt</strong></p>
 <p>Many websites have set up a file called robots.txt on their servers which is
-predominantly aimed at informing automatic web crawlers on which parts of the
+predominantly aimed at informing automatic web crawlers which parts of the
 website they are allowed to collect. While the robots.txt files may ask the
 crawlers to stay out of certain subfolders of a website, they have no power in
 actually stopping them. If the crawler is polite, it will follow the guidelines
 of the robots.txt.</p>
 <p>It may be up to debate whether web scrapers should follow the robots.txt
-guidelines, as we have already established that we are no web crawlers. In my
-opinion we should at least take a look at these files when planning a
-project. If the data we plan to collect is excluded in the guidelines, we have
-to decide if we still want to go forward. Is the collection of this specific
-piece of data really necessary? Do I have support by superiors or my employer?
-We can also always contact the website operator, describe our project and kindly
-ask for permission.</p>
+guidelines, as we have already established that we are not web crawlers. In my
+opinion, we should at least take a look at these files when planning a project.
+If the data we plan to collect is excluded in the guidelines, we still have to
+decide if we want to go forward with the project: Is the collection of this
+specific piece of data really necessary? Do I have support by superiors or my
+employer? Can we contact the website operator, describe our project and kindly
+ask for permission?</p>
 <div id="on-robots.txt-files" class="section level3" number="9.1.1">
 <h3><span class="header-section-number">9.1.1</span> On robots.txt files</h3>
 <p>The robots.txt files are usually accessible by appending the URL of the mainpage
-of a website. If you do not find a robots.txt in this way for a website you are
-interested in, there most probably is none. For example to access the robots.txt
-file for the website <a href="https://www.wahlrecht.de/" target="_blank">https://www.wahlrecht.de/</a> we can use the
-URL <a href="https://www.wahlrecht.de/robots.txt" class="uri">https://www.wahlrecht.de/robots.txt</a>{target_blank}.</p>
+of a website. If you do not find a robots.txt in this manner, there most
+probably is none; e.g. to access the robots.txt file for the website
+<a href="https://www.wahlrecht.de/" target="_blank">https://www.wahlrecht.de/</a> we can use the URL
+<a href="https://www.wahlrecht.de/robots.txt" class="uri">https://www.wahlrecht.de/robots.txt</a>{target_blank}.</p>
 <p>Let us briefly look at the structure of this file. Its first block looks like
 this:</p>
 <pre><code>User-agent: *
@@ -461,51 +463,51 @@ Disallow: /ueberhang/chronic/</code></pre>
 short for everyone. The “Disallow” fields define which subdirectories of the
 website may not be accessed by the particular User-agent. So in this case, no
 User-agent may access the subdirectories “/cgi-bin/”, “/temp/”, and so on.</p>
-<p>Let’s continue to the second block:</p>
+<p>Let’s have a look at the second block:</p>
 <pre><code>User-Agent: Pixray-Seeker
 Disallow: /</code></pre>
 <p>Here a specific User-agent is defined, so the rules that follow only refer to
 the crawler “Pixray-Seeker”. Here there is only one Disallow rule, namely “/”.
-“/” is short for “everything”. So the Pixray-Seeker crawler is not to allowed to
-access any content on the website.</p>
+“/” is short for “everything”: therefore the Pixray-Seeker crawler is not
+allowed access to any content on the website.</p>
 </div>
 </div>
 <div id="reduce-traffic" class="section level2" number="9.2">
 <h2><span class="header-section-number">9.2</span> Reduce traffic</h2>
 <p>Every time a website is accessed, traffic is generated. Traffic here refers to
-the transfer of the HTML data from the website’s server to our computer. This
+the transfer of the HTML data from the website’s server to our computer, this
 produces monetary costs on the side of the providers of the website. Many
-websites are financed through advertisements. When we download the website
-directly from R using <code>read_html()</code>, we are circumventing the ad display in
+websites are financed through advertisements. When downloading the website
+directly from R using <code>read_html()</code>, we are circumventing the ad display in the
 browser and thus the provider will get no revenue. Both may seem negligible in
 many cases, but if we aim to act respectful to the website providers, we should
 reduce unnecessary traffic when we are able to.</p>
 <p><strong>Collect only once (if possible)</strong></p>
-<p>The most simple step we can undertake is to not download the HTML code every
+<p>The most simple step we can undertake is not to download the HTML code every
 time we re-run our script. This reduces traffic and also makes our code faster
 to execute. See chapter <a href="files.html#files">8</a> on how to save the downloaded HTML files.</p>
 <p><strong>Test, test, test</strong></p>
 <p>We should also test our code on a small scale before finally running it on large
 amounts of data. If our aim is to download a large number of websites and/or
-files, we should make sure that our code actually works. While there are
+files, we ought to make sure that our code actually works. While there are
 problems in our code – and there will be – we may create a lot of unnecessary
-traffic during bugfixing. If we instead test our code until we are sure it will
-run without errors on a single instead of multiple pages, we will reduce traffic
-and again also reduce the time we have to wait for the downloads to finish.</p>
+traffic during bugfixing. If we test our code until we are sure it will run
+without errors on a single instead of multiple pages, we will reduce traffic and
+again, also reduce the time we have to wait for the downloads to finish.</p>
 <p><strong>Set waiting times</strong></p>
 <p>If we are downloading many pages or files, it may also be a good idea to slow
 down the process on our end by setting a waiting time between each
-download. This will spread our traffic over time. If a server detects
+download, this will spread our traffic over time. If a server detects
 unusually large amounts of site requests, it may even block our IP which would
-make us unable to continue our downloads. Waiting between each request can
-potentially prevent this. A waiting time between 2-5 seconds should be enough in
-most cases. Sometimes the robots.txt also gives a guideline on a desired waiting
-time for a specific site.</p>
+make us unable to continue our downloads. Waiting a little while between each
+request is a eay to circumvent this. A waiting time between 2-5 seconds should
+be more enough in most cases. Sometimes the robots.txt also specifies desired
+waiting times for a specific site.</p>
 <div id="waiting-times-in-action" class="section level3" number="9.2.1">
 <h3><span class="header-section-number">9.2.1</span> Waiting times in action</h3>
 <p>Let us have another look on the first example from chapter <a href="rvest3.html#rvest3">7</a> to see
 how to set waiting times in practice when downloading multiple pages with
-`read_html()``.</p>
+<code>read_html()</code>.</p>
 <p>First, let us generate the list of links we want to download like we did in
 chapter <a href="rvest3.html#rvest3">7</a>.</p>
 <div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="good-practice.html#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -520,18 +522,18 @@ chapter <a href="rvest3.html#rvest3">7</a>.</p>
 <span id="cb174-10"><a href="good-practice.html#cb174-10" aria-hidden="true" tabindex="-1"></a>links <span class="ot">&lt;-</span> a_nodes <span class="sc">%&gt;%</span></span>
 <span id="cb174-11"><a href="good-practice.html#cb174-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_attr</span>(<span class="at">name =</span> <span class="st">&quot;href&quot;</span>)</span></code></pre></div>
 <p>To let R wait for several seconds, we can use the base R function <code>Sys.sleep()</code>
-which takes the seconds to wait as its only argument. As we want the <code>map()</code>
+which takes the seconds to wait as its only argument. Since we want the <code>map()</code>
 function to add the waiting time before each <code>read_html()</code> iteration, we have to
-include <code>Sys.sleep()</code> into the iteration process. We can achieve this by
-defining a multi-line formula using the <code>~ {...}</code> notation. The arguments passed
-to this formula can be accessed via any name starting with <code>.</code>, so we will just
-use <code>.x</code> in this case. Each new line enclosed by the <code>{}</code> is run once for each
-iteration over the object we pass to <code>map</code>. For each element of the <code>links</code>
-object, R first waits for two seconds and then uses <code>read_html()</code> on the element
-of <code>links</code>. So in effect we added a waiting time of two seconds between each
-iteration. Note that <code>read_html()</code> has to come last if we want this short
-notation to work because only the return value of the last function within the
-curly braces is assigned to <code>pages</code>.</p>
+include <code>Sys.sleep()</code> into the iteration process. We can achieve the addition of
+the waiting time by defining a multi-line formula using the <code>~ {...}</code> notation.
+The arguments passed to this formula can be accessed via any name starting with
+<code>.</code>, so we will just use <code>.x</code> in this case. Each new line enclosed by the <code>{}</code>
+is run once for each iteration over the object we pass on to <code>map</code>. For each
+element of the <code>links</code> object, R first waits for two seconds and then uses
+<code>read_html()</code> on the element of <code>links</code>. So in effect, we added a waiting time
+of two seconds between each iteration. Note that <code>read_html()</code> has to come last
+if we want this short notation to work because only the return value of the last
+function within the braces is assigned to <code>pages</code>.</p>
 <div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="good-practice.html#cb175-1" aria-hidden="true" tabindex="-1"></a>pages <span class="ot">&lt;-</span> links <span class="sc">%&gt;%</span> </span>
 <span id="cb175-2"><a href="good-practice.html#cb175-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span> {</span>
 <span id="cb175-3"><a href="good-practice.html#cb175-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">Sys.sleep</span>(<span class="dv">2</span>)</span>
@@ -539,14 +541,15 @@ curly braces is assigned to <code>pages</code>.</p>
 <span id="cb175-5"><a href="good-practice.html#cb175-5" aria-hidden="true" tabindex="-1"></a>  })</span></code></pre></div>
 </div>
 </div>
-<div id="citation-and-additional-resource" class="section level2" number="9.3">
-<h2><span class="header-section-number">9.3</span> Citation and additional resource</h2>
+<div id="citation-and-an-additional-resource" class="section level2" number="9.3">
+<h2><span class="header-section-number">9.3</span> Citation and an additional resource</h2>
 <p>Some of the ideas expressed above are in part based on the subchapter “9.3 Web
-scraping: Good practice” from: Munzert et. al (2015). Automated Data Collection
-with R. A Practical Guide to Web Scraping and Text Mining. Chichester: Wiley.
-The authors also describe some guidelines of a good practice of web scraping
-that in part overlap with the set of guidelines presented here but go beyond
-this in describing the technical implementation in R and also the legal
+scraping: Good practice” from:</p>
+<p>Munzert et. al (2015). Automated Data Collection with R. A Practical Guide to
+Web Scraping and Text Mining. Chichester: Wiley.</p>
+<p>The authors also describe some guidelines of a good practice of web scraping,
+that in part overlap with the set of guidelines presented here, but go beyond
+in describing the technical implementation in R and also the legal
 situation by way of some examples. A read is highly recommended.</p>
 
 </div>
