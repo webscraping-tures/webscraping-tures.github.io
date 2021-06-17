@@ -327,3 +327,16 @@ We can load objects stored as .RData files by using `load()` on this file.
 ``` {r}
 load("peter_paul_mary.RData")
 ```
+
+Please note, that `save()` does not work when saving an object to which the
+result of `read_html()` is assigned to. It will save an object but if you load
+it, the object will be empty. The reasons for this are rather technical, but you
+should know that you will loose some of your work, if you try to do something 
+like this:
+
+``` {r eval = FALSE}
+hello_world <- read_html("https://webscraping-tures.github.io/hello_world.html")
+save(hello_world, "hello_world.RData")
+rm(hello_world)
+load("hello_world.RData")
+```

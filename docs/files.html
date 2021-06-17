@@ -24,7 +24,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2021-06-13" />
+<meta name="date" content="2021-06-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -289,6 +289,7 @@ Web Scraping using R
 <ul>
 <li class="chapter" data-level="9.2.1" data-path="good-practice.html"><a href="good-practice.html#waiting-times-in-action"><i class="fa fa-check"></i><b>9.2.1</b> Waiting times in action</a></li>
 </ul></li>
+<li class="chapter" data-level="9.3" data-path="good-practice.html"><a href="good-practice.html#citation-and-additional-resource"><i class="fa fa-check"></i><b>9.3</b> Citation and additional resource</a></li>
 </ul></li>
 <li class="part"><span><b>IV Data analysis</b></span></li>
 <li class="chapter" data-level="10" data-path="dplyr.html"><a href="dplyr.html"><i class="fa fa-check"></i><b>10</b> Transformation with dplyr</a>
@@ -687,6 +688,15 @@ possibly path) in the <code>file =</code> argument.</p>
 <div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="files.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(data, <span class="at">file =</span>  <span class="st">&quot;peter_paul_mary.RData&quot;</span>)</span></code></pre></div>
 <p>We can load objects stored as .RData files by using <code>load()</code> on this file.</p>
 <div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="files.html#cb170-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;peter_paul_mary.RData&quot;</span>)</span></code></pre></div>
+<p>Please note, that <code>save()</code> does not work when saving an object to which the
+result of <code>read_html()</code> is assigned to. It will save an object but if you load
+it, the object will be empty. The reasons for this are rather technical, but you
+should know that you will loose some of your work, if you try to do something
+like this:</p>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="files.html#cb171-1" aria-hidden="true" tabindex="-1"></a>hello_world <span class="ot">&lt;-</span> <span class="fu">read_html</span>(<span class="st">&quot;https://webscraping-tures.github.io/hello_world.html&quot;</span>)</span>
+<span id="cb171-2"><a href="files.html#cb171-2" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(hello_world, <span class="st">&quot;hello_world.RData&quot;</span>)</span>
+<span id="cb171-3"><a href="files.html#cb171-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(hello_world)</span>
+<span id="cb171-4"><a href="files.html#cb171-4" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;hello_world.RData&quot;</span>)</span></code></pre></div>
 
 </div>
 </div>

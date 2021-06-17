@@ -63,27 +63,28 @@ of interest.
 Some websites may give us access to an API, an
 *application programming interface*. APIs in the web context are mostly used for
 allowing third party sites and applications to access the services a website
-provides. For example YouTube's IFrame player API is used when a YouTube Video
+provides. For example, YouTube's IFrame player API is used when a YouTube Video
 is embedded in a third party site. The API gives accesss to the video and much
 of YouTube's functionality. Another example would be Twitter's API that can be
 used by tweet reader apps to access your tweets. 
 
 In many cases, we can use these APIs to directly access the data we are
-interested in instead of scraping it out the HTML code. Sometimes the APIs are
-openly accessible, sometimes we have to apply for access first. For example, if
-we want to use Twitter's API to collect tweets for scientific analysis, we have
-to fill out a form, describing our project and the planned data usage and then
-await approval. This extra work might gain us a more direct access to more clean
-data. Also, if we use an API we automatically play by the rules of the provider.
+interested in instead of scraping the raw HTML code for it. Sometimes the APIs
+are openly accessible, sometimes we have to apply for access first. For example,
+if we want to use Twitter's API to collect tweets for scientific analysis, we
+have to fill out a form, describing our project and the planned data usage, and
+then await approval. This extra work might gain us a more direct access to
+cleaner data. Additionally, if we use an API we automatically play by the rules
+of the provider.
 
 So, if there is an API we can access and it also gives us access to the data we
 are interested in, it might be a good idea to use the API instead of
 "traditional" scraping techniques. The technical details of accessing APIs are
-beyond the scope of this introduction. Also APIs differ in their functionality.
-So the first step should always be, to read the APIs documentation. You can also
-check, if there already is an R package that simplifies access to an API, e.g.
-TwitteR or Rfacebook, before you start writing your own scripts to access an
-API.
+beyond the scope of this introduction. Also APIs can differ tremendously in
+their functionality. The first step should always be to read the APIs
+documentation. You can also check whether there already is an R package that
+simplifies access to an API, e.g. TwitteR or Rfacebook, before you start writing
+your own scripts to access an API.
 
 **Anonymisation of personal data**
 
@@ -236,4 +237,12 @@ pages <- links %>%
 ```
 
 
-Munzert zitieren!
+## Citation and additional resource
+
+Some of the ideas expressed above are in part based on the subchapter "9.3 Web 
+scraping: Good practice" from: Munzert et. al (2015). Automated Data Collection
+with R. A Practical Guide to Web Scraping and Text Mining. Chichester: Wiley.
+The authors also describe some guidelines of a good practice of web scraping
+that in part overlap with the set of guidelines presented here but go beyond
+this in describing the technical implementation in R and also the legal
+situation by way of some examples. A read is highly recommended.

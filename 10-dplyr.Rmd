@@ -6,11 +6,37 @@
 knitr::opts_chunk$set(collapse = TRUE)
 knitr::opts_chunk$set(cache = TRUE)
 knitr::opts_chunk$set(cache.path = 'cache/')
-
-knitr::opts_chunk$set(eval = FALSE)
 ```
 
 WIP! Content is due to change!
+
+``` {r}
+library(tidyverse)
+library(rvest)
+library(lubridate)
+```
+
+
+
+
+
+* mutate() to apply lubridate and remove "Ereignisort: "
+  * before that show some simple calculations
+* select() to remove raw data/time columns and maybe text
+* filter() for removing incomplete years
+  * "should have done this before downloading"
+* rename()
+* group_by() + summarize
+  * reports by year
+  * (reports by month)
+  * reports by district
+    * + relative to total
+  * mean/median for time of day
+
+
+
+
+
 
 
 
@@ -44,7 +70,7 @@ or multiple expressions that specify which observations are to be filtered.
 To filter only those observations that have the value "Bund" for the column
 "Land", we can write:
   
-  ``` {r}
+  ``` 
 eligible_tbl %>% 
   filter(Land == "Bund")
 ```
@@ -56,7 +82,7 @@ chain multiple expressions to be filtered upon in one call of `filter()`. So, to
 filter on those observations who refer to the "Bund" and don't have a sum for
 the gender and year of birth columns, we can write:
 
-``` {r}
+``` 
 eligible_tbl %>% 
   filter(Land == "Bund", Geschlecht != "Summe", Geburtsjahresgruppe != "Summe")
 ```
@@ -68,7 +94,7 @@ demonstrate this, let us filter the object `turnout_tbl`as well. Here we have an
 additional column we have to filter for called "Erst-/Zweitstimme". I propose
 we only analyse the party votes.
 
-``` {r}
+``` 
 turnout_tbl %>% 
   filter(Land == "Bund",
          `Erst-/Zweitstimme` == 2,
@@ -97,7 +123,7 @@ We should also limit our tibbles to the set of columns we will actually use.
 Looking at `eligible_tbl`, we will only need the first four columns. We can use
 the function `select()` to "select" the columns we need by name.
 
-``` {r}
+``` 
 eligible_tbl %>% 
   select(Land, Geschlecht, Geburtsjahresgruppe, Wahlberechtigte)
 ```
@@ -106,7 +132,7 @@ If, as in this case, the columns we want so select follow each other in their
 positions in the tibble, we can also use a shorter "from:to" notation, that
 saves us somy typing.
 
-``` {r}
+``` 
 eligible_tbl %>% 
   select(Land:Wahlberechtigte)
 ```
@@ -120,7 +146,7 @@ no useful information anymore. So we can drop the column, if we filter first.
 Order matters! For `turnout_tbl` this is also true but extends to the column
 "Erst-/Zweitstimme" which also only contains one value after filtering.
 
-``` {r}
+``` 
 eligible_tbl <- eligible_tbl %>% 
   filter(Land == "Bund", 
          Geschlecht != "Summe",
@@ -151,7 +177,7 @@ function takes the data to applied to as its first argument -- passed by the
 pipe in this case -- followed by one or more arguments in the form
 `new_name = old_name`. 
 
-``` {r}
+``` 
 eligible_tbl <- eligible_tbl %>% 
   rename(gender = Geschlecht,
          ybirth = Geburtsjahresgruppe,
@@ -179,7 +205,7 @@ For this purpose, let us create a new simple tibble on voter turnout. Note that
 the entered data is purely illustrational and has no meaning. We will return to
 the real data shortly.
 
-``` {r}
+``` 
 exmpl_tbl <- tibble(
   gender = c("m", "m", "w", "w"),
   ybirth = c("1993 - 1999", "1983 - 1992", "1993 - 1999", "1983 - 1992"),
@@ -199,7 +225,7 @@ first argument, followed by one or multiple arguments defining the new columns
 to be created. We can create this new columns as computations involving the
 columns already present. To calculate the total turnout we could write:
   
-  ``` {r}
+  ``` 
 exmpl_tbl %>% 
   mutate(turnout = turnout_person + turnout_mail)
 ```
@@ -207,7 +233,7 @@ exmpl_tbl %>%
 We can also immediately start calculating with new columns in the same pipe. So
 to calculate the turnout percentage:
   
-  ``` {r}
+  ``` 
 exmpl_tbl %>% 
   mutate(
     turnout = turnout_person + turnout_mail,
@@ -221,7 +247,7 @@ using `select()` in a last step. Instead of telling `select()` which columns we
 want to keep, we can also tell it which noot to keep by adding a `-` before the
 column names. 
 
-``` {r}
+``` 
 exmpl_tbl <- exmpl_tbl %>% 
   mutate(
     turnout = turnout_person + turnout_mail,
@@ -243,7 +269,7 @@ only name a few examples we already know.
 The syntax is similar to `mutate()`. Let us compute the total number of persons
 eligible to vote:
   
-  ``` {r}
+  ``` 
 exmpl_tbl %>% 
   summarise(eligible_total = sum(eligible))
 ```
@@ -257,7 +283,7 @@ turnout percentages per group in this case only because all four groups are
 exactly of the same size ($n = 100000$). We will later look into computing the
 same measure with our real data.
 
-``` {r}
+``` 
 exmpl_tbl %>% 
   summarise(
     eligible_total = sum(eligible),
@@ -274,7 +300,7 @@ separately for each group. As always with dplyr functions, `group_by()` needs
 the data that shall be grouped as the first argument, followed by one or
 multiple variables to group by. 
 
-``` {r}
+``` 
 exmpl_tbl %>% 
   group_by(gender) %>% 
   summarise(
@@ -288,7 +314,7 @@ Let us create a final example, with two variables to group by. Let us assume
 we have the turnout percentages by gender and age group for two elections. We
 also again assume the same group size, i.e. the same "n", for all observations.
 
-``` {r}
+``` 
 exmpl_tbl_2 <- tibble(
   election = c(1, 1, 1, 1, 2, 2, 2, 2),
   gender = c("m", "m", "w", "w", "m", "m", "w", "w"),
@@ -302,7 +328,7 @@ exmpl_tbl_2
 To compute the mean turnout percentages by gender for each election separately,
 we can group by election and gender.
 
-``` {r}
+``` 
 exmpl_tbl_2 %>% 
   group_by(election, gender) %>% 
   summarise(
