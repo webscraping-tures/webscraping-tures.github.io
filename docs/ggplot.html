@@ -24,7 +24,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2021-06-10" />
+<meta name="date" content="2021-06-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -281,9 +281,15 @@ Web Scraping using R
 </ul></li>
 <li class="chapter" data-level="9" data-path="good-practice.html"><a href="good-practice.html"><i class="fa fa-check"></i><b>9</b> Good practice</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="good-practice.html"><a href="good-practice.html#legality"><i class="fa fa-check"></i><b>9.1</b> Legality?</a></li>
-<li class="chapter" data-level="9.2" data-path="good-practice.html"><a href="good-practice.html#responsibility"><i class="fa fa-check"></i><b>9.2</b> Responsibility!</a></li>
-<li class="chapter" data-level="9.3" data-path="good-practice.html"><a href="good-practice.html#good-practice"><i class="fa fa-check"></i><b>9.3</b> Good practice</a></li>
+<li class="chapter" data-level="9.1" data-path="good-practice.html"><a href="good-practice.html#we-are-no-web-crawlers"><i class="fa fa-check"></i><b>9.1</b> We are no web crawlers</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="good-practice.html"><a href="good-practice.html#on-robots.txt-files"><i class="fa fa-check"></i><b>9.1.1</b> On robots.txt files</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="good-practice.html"><a href="good-practice.html#reduce-traffic"><i class="fa fa-check"></i><b>9.2</b> Reduce traffic</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="good-practice.html"><a href="good-practice.html#waiting-times-in-action"><i class="fa fa-check"></i><b>9.2.1</b> Waiting times in action</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="good-practice.html"><a href="good-practice.html#citation-and-additional-resource"><i class="fa fa-check"></i><b>9.3</b> Citation and additional resource</a></li>
 </ul></li>
 <li class="part"><span><b>IV Data analysis</b></span></li>
 <li class="chapter" data-level="10" data-path="dplyr.html"><a href="dplyr.html"><i class="fa fa-check"></i><b>10</b> Transformation with dplyr</a>
@@ -364,58 +370,58 @@ Web Scraping using R
 </div>
 <div id="tuning-the-output" class="section level2" number="11.3">
 <h2><span class="header-section-number">11.3</span> Tuning the output</h2>
-<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="ggplot.html#cb187-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> data) <span class="sc">+</span></span>
-<span id="cb187-2"><a href="ggplot.html#cb187-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> eligible, <span class="at">y =</span> turnout)) <span class="sc">+</span></span>
-<span id="cb187-3"><a href="ggplot.html#cb187-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> eligible, <span class="at">y =</span> turnout)) <span class="sc">+</span></span>
-<span id="cb187-4"><a href="ggplot.html#cb187-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">x =</span> eligible, <span class="at">y =</span> turnout))</span></code></pre></div>
-<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="ggplot.html#cb188-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
-<span id="cb188-2"><a href="ggplot.html#cb188-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender) <span class="sc">%&gt;%</span> </span>
-<span id="cb188-3"><a href="ggplot.html#cb188-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb188-4"><a href="ggplot.html#cb188-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">eligible_total =</span> <span class="fu">sum</span>(eligible),</span>
-<span id="cb188-5"><a href="ggplot.html#cb188-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_total =</span> <span class="fu">sum</span>(turnout),</span>
-<span id="cb188-6"><a href="ggplot.html#cb188-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_pct_mean =</span> <span class="fu">weighted.mean</span>(turnout_pct, <span class="at">w =</span> eligible)</span>
-<span id="cb188-7"><a href="ggplot.html#cb188-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb188-8"><a href="ggplot.html#cb188-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb188-9"><a href="ggplot.html#cb188-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> gender, <span class="at">y =</span> turnout_pct_mean))</span></code></pre></div>
-<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="ggplot.html#cb189-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
-<span id="cb189-2"><a href="ggplot.html#cb189-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ybirth) <span class="sc">%&gt;%</span> </span>
-<span id="cb189-3"><a href="ggplot.html#cb189-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb189-4"><a href="ggplot.html#cb189-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">eligible_total =</span> <span class="fu">sum</span>(eligible),</span>
-<span id="cb189-5"><a href="ggplot.html#cb189-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_total =</span> <span class="fu">sum</span>(turnout),</span>
-<span id="cb189-6"><a href="ggplot.html#cb189-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_pct_mean =</span> <span class="fu">weighted.mean</span>(turnout_pct, <span class="at">w =</span> eligible)</span>
-<span id="cb189-7"><a href="ggplot.html#cb189-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb189-8"><a href="ggplot.html#cb189-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb189-9"><a href="ggplot.html#cb189-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> ybirth, <span class="at">y =</span> turnout_pct_mean))</span></code></pre></div>
-<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="ggplot.html#cb190-1" aria-hidden="true" tabindex="-1"></a>overall_turnout_mean <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> </span>
-<span id="cb190-2"><a href="ggplot.html#cb190-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb190-3"><a href="ggplot.html#cb190-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_pct_mean =</span> <span class="fu">weighted.mean</span>(turnout_pct, <span class="at">w =</span> eligible)</span>
-<span id="cb190-4"><a href="ggplot.html#cb190-4" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb190-5"><a href="ggplot.html#cb190-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>()</span>
-<span id="cb190-6"><a href="ggplot.html#cb190-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb190-7"><a href="ggplot.html#cb190-7" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
-<span id="cb190-8"><a href="ggplot.html#cb190-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ybirth) <span class="sc">%&gt;%</span> </span>
-<span id="cb190-9"><a href="ggplot.html#cb190-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb190-10"><a href="ggplot.html#cb190-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_pct_mean =</span> <span class="fu">weighted.mean</span>(turnout_pct, <span class="at">w =</span> eligible)</span>
-<span id="cb190-11"><a href="ggplot.html#cb190-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb190-12"><a href="ggplot.html#cb190-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb190-13"><a href="ggplot.html#cb190-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> ybirth, <span class="at">y =</span> turnout_pct_mean)) <span class="sc">+</span></span>
-<span id="cb190-14"><a href="ggplot.html#cb190-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> overall_turnout_mean)</span></code></pre></div>
+<pre><code>ggplot(data = data) +
+  geom_point(aes(x = eligible, y = turnout)) +
+  geom_line(aes(x = eligible, y = turnout)) +
+  geom_smooth(aes(x = eligible, y = turnout))</code></pre>
+<pre><code>data %&gt;%
+  group_by(gender) %&gt;% 
+  summarise(
+    eligible_total = sum(eligible),
+    turnout_total = sum(turnout),
+    turnout_pct_mean = weighted.mean(turnout_pct, w = eligible)
+  ) %&gt;% 
+  ggplot() +
+  geom_col(aes(x = gender, y = turnout_pct_mean))</code></pre>
+<pre><code>data %&gt;%
+  group_by(ybirth) %&gt;% 
+  summarise(
+    eligible_total = sum(eligible),
+    turnout_total = sum(turnout),
+    turnout_pct_mean = weighted.mean(turnout_pct, w = eligible)
+  ) %&gt;% 
+  ggplot() +
+  geom_col(aes(x = ybirth, y = turnout_pct_mean))</code></pre>
+<pre><code>overall_turnout_mean &lt;- data %&gt;% 
+  summarise(
+    turnout_pct_mean = weighted.mean(turnout_pct, w = eligible)
+  ) %&gt;% 
+  unlist()
+
+data %&gt;%
+  group_by(ybirth) %&gt;% 
+  summarise(
+    turnout_pct_mean = weighted.mean(turnout_pct, w = eligible)
+  ) %&gt;% 
+  ggplot() +
+  geom_col(aes(x = ybirth, y = turnout_pct_mean)) +
+  geom_hline(yintercept = overall_turnout_mean)</code></pre>
 <p>turnout_pct_mean =</p>
-<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="ggplot.html#cb191-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
-<span id="cb191-2"><a href="ggplot.html#cb191-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb191-3"><a href="ggplot.html#cb191-3" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> ybirth, <span class="at">y =</span> turnout_pct, <span class="at">fill =</span> gender), <span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span></span>
-<span id="cb191-4"><a href="ggplot.html#cb191-4" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_hline</span>(<span class="at">yintercept =</span> overall_turnout_mean)</span></code></pre></div>
-<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="ggplot.html#cb192-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
-<span id="cb192-2"><a href="ggplot.html#cb192-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb192-3"><a href="ggplot.html#cb192-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> ybirth, <span class="at">y =</span> turnout_pct, <span class="at">fill =</span> gender, <span class="at">colour =</span> eligible), <span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span></span>
-<span id="cb192-4"><a href="ggplot.html#cb192-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> overall_turnout_mean) <span class="sc">+</span></span>
-<span id="cb192-5"><a href="ggplot.html#cb192-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x =</span> ybirth, <span class="at">y =</span> turnout_pct, <span class="at">fill =</span> gender, <span class="at">label =</span> eligible), <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="dv">1</span>), <span class="at">hjust =</span> <span class="sc">-</span><span class="dv">2</span>, <span class="at">angle =</span> <span class="sc">-</span><span class="dv">90</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="ggplot.html#cb193-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
-<span id="cb193-2"><a href="ggplot.html#cb193-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> ybirth, <span class="at">y =</span> turnout_pct, <span class="at">fill =</span> gender)) <span class="sc">+</span></span>
-<span id="cb193-3"><a href="ggplot.html#cb193-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">colour =</span> eligible), <span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span></span>
-<span id="cb193-4"><a href="ggplot.html#cb193-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> overall_turnout_mean) <span class="sc">+</span></span>
-<span id="cb193-5"><a href="ggplot.html#cb193-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> eligible), <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="dv">1</span>), <span class="at">hjust =</span> <span class="sc">-</span><span class="dv">2</span>, <span class="at">angle =</span> <span class="sc">-</span><span class="dv">90</span>) <span class="sc">+</span></span>
-<span id="cb193-6"><a href="ggplot.html#cb193-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span></code></pre></div>
+<pre><code>data %&gt;%
+ggplot() +
+geom_col(aes(x = ybirth, y = turnout_pct, fill = gender), position = &quot;dodge&quot;) +
+geom_hline(yintercept = overall_turnout_mean)</code></pre>
+<pre><code>data %&gt;%
+  ggplot() +
+  geom_col(aes(x = ybirth, y = turnout_pct, fill = gender, colour = eligible), position = &quot;dodge&quot;) +
+  geom_hline(yintercept = overall_turnout_mean) +
+  geom_text(aes(x = ybirth, y = turnout_pct, fill = gender, label = eligible), position = position_dodge(width = 1), hjust = -2, angle = -90)</code></pre>
+<pre><code>data %&gt;%
+  ggplot(aes(x = ybirth, y = turnout_pct, fill = gender)) +
+  geom_col(aes(colour = eligible), position = &quot;dodge&quot;) +
+  geom_hline(yintercept = overall_turnout_mean) +
+  geom_text(aes(label = eligible), position = position_dodge(width = 1), hjust = -2, angle = -90) +
+  scale_y_continuous(limits = c(0, 1))</code></pre>
 <ul>
 <li><p>syntax</p></li>
 <li><p>aes()</p></li>

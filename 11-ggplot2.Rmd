@@ -5,8 +5,6 @@
 knitr::opts_chunk$set(collapse = TRUE)
 knitr::opts_chunk$set(cache = TRUE)
 knitr::opts_chunk$set(cache.path = 'cache/')
-
-knitr::opts_chunk$set(eval = FALSE)
 ```
 
 WIP! Content is due to change!
@@ -28,7 +26,7 @@ WIP! Content is due to change!
 
 
 
-``` {r}
+``` 
 ggplot(data = data) +
   geom_point(aes(x = eligible, y = turnout)) +
   geom_line(aes(x = eligible, y = turnout)) +
@@ -37,7 +35,7 @@ ggplot(data = data) +
 
 
 
-``` {r}
+``` 
 data %>%
   group_by(gender) %>% 
   summarise(
@@ -49,7 +47,7 @@ data %>%
   geom_col(aes(x = gender, y = turnout_pct_mean))
 ```
 
-``` {r}
+``` 
 data %>%
   group_by(ybirth) %>% 
   summarise(
@@ -61,7 +59,7 @@ data %>%
   geom_col(aes(x = ybirth, y = turnout_pct_mean))
 ```
 
-``` {r}
+``` 
 overall_turnout_mean <- data %>% 
   summarise(
     turnout_pct_mean = weighted.mean(turnout_pct, w = eligible)
@@ -81,7 +79,7 @@ data %>%
 turnout_pct_mean = 
   
   
-  ``` {r}
+  ``` 
 data %>%
   ggplot() +
   geom_col(aes(x = ybirth, y = turnout_pct, fill = gender), position = "dodge") +
@@ -90,7 +88,7 @@ data %>%
 
 
 
-``` {r}
+``` 
 data %>%
   ggplot() +
   geom_col(aes(x = ybirth, y = turnout_pct, fill = gender, colour = eligible), position = "dodge") +
@@ -99,7 +97,7 @@ data %>%
 ```
 
 
-``` {r}
+``` 
 data %>%
   ggplot(aes(x = ybirth, y = turnout_pct, fill = gender)) +
   geom_col(aes(colour = eligible), position = "dodge") +

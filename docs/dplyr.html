@@ -24,7 +24,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2021-06-10" />
+<meta name="date" content="2021-06-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -281,9 +281,15 @@ Web Scraping using R
 </ul></li>
 <li class="chapter" data-level="9" data-path="good-practice.html"><a href="good-practice.html"><i class="fa fa-check"></i><b>9</b> Good practice</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="good-practice.html"><a href="good-practice.html#legality"><i class="fa fa-check"></i><b>9.1</b> Legality?</a></li>
-<li class="chapter" data-level="9.2" data-path="good-practice.html"><a href="good-practice.html#responsibility"><i class="fa fa-check"></i><b>9.2</b> Responsibility!</a></li>
-<li class="chapter" data-level="9.3" data-path="good-practice.html"><a href="good-practice.html#good-practice"><i class="fa fa-check"></i><b>9.3</b> Good practice</a></li>
+<li class="chapter" data-level="9.1" data-path="good-practice.html"><a href="good-practice.html#we-are-no-web-crawlers"><i class="fa fa-check"></i><b>9.1</b> We are no web crawlers</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="good-practice.html"><a href="good-practice.html#on-robots.txt-files"><i class="fa fa-check"></i><b>9.1.1</b> On robots.txt files</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="good-practice.html"><a href="good-practice.html#reduce-traffic"><i class="fa fa-check"></i><b>9.2</b> Reduce traffic</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="good-practice.html"><a href="good-practice.html#waiting-times-in-action"><i class="fa fa-check"></i><b>9.2.1</b> Waiting times in action</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="good-practice.html"><a href="good-practice.html#citation-and-additional-resource"><i class="fa fa-check"></i><b>9.3</b> Citation and additional resource</a></li>
 </ul></li>
 <li class="part"><span><b>IV Data analysis</b></span></li>
 <li class="chapter" data-level="10" data-path="dplyr.html"><a href="dplyr.html"><i class="fa fa-check"></i><b>10</b> Transformation with dplyr</a>
@@ -347,6 +353,33 @@ Web Scraping using R
 <div id="dplyr" class="section level1" number="10">
 <h1><span class="header-section-number">10</span> Transformation with dplyr</h1>
 <p>WIP! Content is due to change!</p>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="dplyr.html#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb176-2"><a href="dplyr.html#cb176-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span>
+<span id="cb176-3"><a href="dplyr.html#cb176-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span></code></pre></div>
+<ul>
+<li>mutate() to apply lubridate and remove “Ereignisort:”
+<ul>
+<li>before that show some simple calculations</li>
+</ul></li>
+<li>select() to remove raw data/time columns and maybe text</li>
+<li>filter() for removing incomplete years
+<ul>
+<li>“should have done this before downloading”</li>
+</ul></li>
+<li>rename()</li>
+<li>group_by() + summarize
+<ul>
+<li>reports by year</li>
+<li>(reports by month)</li>
+<li>reports by district
+<ul>
+<li><ul>
+<li>relative to total</li>
+</ul></li>
+</ul></li>
+<li>mean/median for time of day</li>
+</ul></li>
+</ul>
 <p>At this point you should have a look at both tibbles either by clicking on them
 in the environment tab or by writing <code>View(eligible_tbl)</code> and
 <code>View(turnout_tbl)</code>.</p>
@@ -371,27 +404,27 @@ first argument – which we don’t need to specify when using the pipe – and 
 or multiple expressions that specify which observations are to be filtered.</p>
 <p>To filter only those observations that have the value “Bund” for the column
 “Land”, we can write:</p>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="dplyr.html#cb171-1" aria-hidden="true" tabindex="-1"></a>eligible_tbl <span class="sc">%&gt;%</span> </span>
-<span id="cb171-2"><a href="dplyr.html#cb171-2" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(Land <span class="sc">==</span> <span class="st">&quot;Bund&quot;</span>)</span></code></pre></div>
+<pre><code>eligible_tbl %&gt;% 
+filter(Land == &quot;Bund&quot;)</code></pre>
 <p>Thus only the observations for “Bund” remain in the tibble. Or in other words,
 those observations for whom the expression <code>Land == "Bund"</code> is returned as
 <code>TRUE</code>. Besides <code>==</code>, all other comparison operators can be used and we can
 chain multiple expressions to be filtered upon in one call of <code>filter()</code>. So, to
 filter on those observations who refer to the “Bund” and don’t have a sum for
 the gender and year of birth columns, we can write:</p>
-<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="dplyr.html#cb172-1" aria-hidden="true" tabindex="-1"></a>eligible_tbl <span class="sc">%&gt;%</span> </span>
-<span id="cb172-2"><a href="dplyr.html#cb172-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Land <span class="sc">==</span> <span class="st">&quot;Bund&quot;</span>, Geschlecht <span class="sc">!=</span> <span class="st">&quot;Summe&quot;</span>, Geburtsjahresgruppe <span class="sc">!=</span> <span class="st">&quot;Summe&quot;</span>)</span></code></pre></div>
+<pre><code>eligible_tbl %&gt;% 
+  filter(Land == &quot;Bund&quot;, Geschlecht != &quot;Summe&quot;, Geburtsjahresgruppe != &quot;Summe&quot;)</code></pre>
 <p>We can also use logical operators – <code>&amp;</code> for “and”, <code>|</code> for “or” – when
 combining expressions to be filtered upon. So instead of <code>Geschlecht = "Summe"</code>
 another approach would be to filter those that have “m” or “w” as values. To
 demonstrate this, let us filter the object <code>turnout_tbl</code>as well. Here we have an
 additional column we have to filter for called “Erst-/Zweitstimme”. I propose
 we only analyse the party votes.</p>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="dplyr.html#cb173-1" aria-hidden="true" tabindex="-1"></a>turnout_tbl <span class="sc">%&gt;%</span> </span>
-<span id="cb173-2"><a href="dplyr.html#cb173-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Land <span class="sc">==</span> <span class="st">&quot;Bund&quot;</span>,</span>
-<span id="cb173-3"><a href="dplyr.html#cb173-3" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">Erst-/Zweitstimme</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">2</span>,</span>
-<span id="cb173-4"><a href="dplyr.html#cb173-4" aria-hidden="true" tabindex="-1"></a>         Geschlecht <span class="sc">==</span> <span class="st">&quot;m&quot;</span> <span class="sc">|</span> Geschlecht <span class="sc">==</span> <span class="st">&quot;w&quot;</span>,</span>
-<span id="cb173-5"><a href="dplyr.html#cb173-5" aria-hidden="true" tabindex="-1"></a>         Geburtsjahresgruppe <span class="sc">!=</span> <span class="st">&quot;Summe&quot;</span>)</span></code></pre></div>
+<pre><code>turnout_tbl %&gt;% 
+  filter(Land == &quot;Bund&quot;,
+         `Erst-/Zweitstimme` == 2,
+         Geschlecht == &quot;m&quot; | Geschlecht == &quot;w&quot;,
+         Geburtsjahresgruppe != &quot;Summe&quot;)</code></pre>
 <p>When we create rather long function calls with many arguments, it is often a
 good idea to insert some line breaks to keep your code easily readable, as seen
 above.</p>
@@ -410,13 +443,13 @@ we would have to write <code></code>DIE LINKE<code></code>.</p>
 <p>We should also limit our tibbles to the set of columns we will actually use.</p>
 <p>Looking at <code>eligible_tbl</code>, we will only need the first four columns. We can use
 the function <code>select()</code> to “select” the columns we need by name.</p>
-<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="dplyr.html#cb174-1" aria-hidden="true" tabindex="-1"></a>eligible_tbl <span class="sc">%&gt;%</span> </span>
-<span id="cb174-2"><a href="dplyr.html#cb174-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Land, Geschlecht, Geburtsjahresgruppe, Wahlberechtigte)</span></code></pre></div>
+<pre><code>eligible_tbl %&gt;% 
+  select(Land, Geschlecht, Geburtsjahresgruppe, Wahlberechtigte)</code></pre>
 <p>If, as in this case, the columns we want so select follow each other in their
 positions in the tibble, we can also use a shorter “from:to” notation, that
 saves us somy typing.</p>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="dplyr.html#cb175-1" aria-hidden="true" tabindex="-1"></a>eligible_tbl <span class="sc">%&gt;%</span> </span>
-<span id="cb175-2"><a href="dplyr.html#cb175-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Land<span class="sc">:</span>Wahlberechtigte)</span></code></pre></div>
+<pre><code>eligible_tbl %&gt;% 
+  select(Land:Wahlberechtigte)</code></pre>
 <p>At this point we can combine the filtering of rows and selection of columns in
 the pipe and assign the result to a new object. But first, let us think about
 again about which columns we will actually need. Above we selected the first
@@ -425,18 +458,18 @@ after we filtered for the rows containing the federal state level as it contains
 no useful information anymore. So we can drop the column, if we filter first.
 Order matters! For <code>turnout_tbl</code> this is also true but extends to the column
 “Erst-/Zweitstimme” which also only contains one value after filtering.</p>
-<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="dplyr.html#cb176-1" aria-hidden="true" tabindex="-1"></a>eligible_tbl <span class="ot">&lt;-</span> eligible_tbl <span class="sc">%&gt;%</span> </span>
-<span id="cb176-2"><a href="dplyr.html#cb176-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Land <span class="sc">==</span> <span class="st">&quot;Bund&quot;</span>, </span>
-<span id="cb176-3"><a href="dplyr.html#cb176-3" aria-hidden="true" tabindex="-1"></a>         Geschlecht <span class="sc">!=</span> <span class="st">&quot;Summe&quot;</span>,</span>
-<span id="cb176-4"><a href="dplyr.html#cb176-4" aria-hidden="true" tabindex="-1"></a>         Geburtsjahresgruppe <span class="sc">!=</span> <span class="st">&quot;Summe&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb176-5"><a href="dplyr.html#cb176-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Geschlecht<span class="sc">:</span>Wahlberechtigte)</span>
-<span id="cb176-6"><a href="dplyr.html#cb176-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb176-7"><a href="dplyr.html#cb176-7" aria-hidden="true" tabindex="-1"></a>turnout_tbl <span class="ot">&lt;-</span> turnout_tbl <span class="sc">%&gt;%</span> </span>
-<span id="cb176-8"><a href="dplyr.html#cb176-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Land <span class="sc">==</span> <span class="st">&quot;Bund&quot;</span>,</span>
-<span id="cb176-9"><a href="dplyr.html#cb176-9" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">Erst-/Zweitstimme</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">2</span>,</span>
-<span id="cb176-10"><a href="dplyr.html#cb176-10" aria-hidden="true" tabindex="-1"></a>         Geschlecht <span class="sc">==</span> <span class="st">&quot;m&quot;</span> <span class="sc">|</span> Geschlecht <span class="sc">==</span> <span class="st">&quot;w&quot;</span>,</span>
-<span id="cb176-11"><a href="dplyr.html#cb176-11" aria-hidden="true" tabindex="-1"></a>         Geburtsjahresgruppe <span class="sc">!=</span> <span class="st">&quot;Summe&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb176-12"><a href="dplyr.html#cb176-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Geschlecht<span class="sc">:</span>Summe)</span></code></pre></div>
+<pre><code>eligible_tbl &lt;- eligible_tbl %&gt;% 
+  filter(Land == &quot;Bund&quot;, 
+         Geschlecht != &quot;Summe&quot;,
+         Geburtsjahresgruppe != &quot;Summe&quot;) %&gt;%
+  select(Geschlecht:Wahlberechtigte)
+
+turnout_tbl &lt;- turnout_tbl %&gt;% 
+  filter(Land == &quot;Bund&quot;,
+         `Erst-/Zweitstimme` == 2,
+         Geschlecht == &quot;m&quot; | Geschlecht == &quot;w&quot;,
+         Geburtsjahresgruppe != &quot;Summe&quot;) %&gt;% 
+  select(Geschlecht:Summe)</code></pre>
 </div>
 <div id="rename" class="section level2" number="10.3">
 <h2><span class="header-section-number">10.3</span> <code>rename()</code></h2>
@@ -451,19 +484,19 @@ describe what the values stored in it refer to. We should change this.</p>
 function takes the data to applied to as its first argument – passed by the
 pipe in this case – followed by one or more arguments in the form
 <code>new_name = old_name</code>.</p>
-<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="dplyr.html#cb177-1" aria-hidden="true" tabindex="-1"></a>eligible_tbl <span class="ot">&lt;-</span> eligible_tbl <span class="sc">%&gt;%</span> </span>
-<span id="cb177-2"><a href="dplyr.html#cb177-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">gender =</span> Geschlecht,</span>
-<span id="cb177-3"><a href="dplyr.html#cb177-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">ybirth =</span> Geburtsjahresgruppe,</span>
-<span id="cb177-4"><a href="dplyr.html#cb177-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">eligible =</span> Wahlberechtigte)</span>
-<span id="cb177-5"><a href="dplyr.html#cb177-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb177-6"><a href="dplyr.html#cb177-6" aria-hidden="true" tabindex="-1"></a>eligible_tbl</span>
-<span id="cb177-7"><a href="dplyr.html#cb177-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb177-8"><a href="dplyr.html#cb177-8" aria-hidden="true" tabindex="-1"></a>turnout_tbl <span class="ot">&lt;-</span> turnout_tbl <span class="sc">%&gt;%</span> </span>
-<span id="cb177-9"><a href="dplyr.html#cb177-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">gender =</span> Geschlecht,</span>
-<span id="cb177-10"><a href="dplyr.html#cb177-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">ybirth =</span> Geburtsjahresgruppe,</span>
-<span id="cb177-11"><a href="dplyr.html#cb177-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">turnout =</span> Summe)</span>
-<span id="cb177-12"><a href="dplyr.html#cb177-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb177-13"><a href="dplyr.html#cb177-13" aria-hidden="true" tabindex="-1"></a>turnout_tbl</span></code></pre></div>
+<pre><code>eligible_tbl &lt;- eligible_tbl %&gt;% 
+  rename(gender = Geschlecht,
+         ybirth = Geburtsjahresgruppe,
+         eligible = Wahlberechtigte)
+
+eligible_tbl
+
+turnout_tbl &lt;- turnout_tbl %&gt;% 
+  rename(gender = Geschlecht,
+         ybirth = Geburtsjahresgruppe,
+         turnout = Summe)
+
+turnout_tbl</code></pre>
 </div>
 <div id="mutate" class="section level2" number="10.4">
 <h2><span class="header-section-number">10.4</span> <code>mutate()</code></h2>
@@ -473,15 +506,15 @@ dplyr.</p>
 <p>For this purpose, let us create a new simple tibble on voter turnout. Note that
 the entered data is purely illustrational and has no meaning. We will return to
 the real data shortly.</p>
-<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="dplyr.html#cb178-1" aria-hidden="true" tabindex="-1"></a>exmpl_tbl <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb178-2"><a href="dplyr.html#cb178-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">gender =</span> <span class="fu">c</span>(<span class="st">&quot;m&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="st">&quot;w&quot;</span>, <span class="st">&quot;w&quot;</span>),</span>
-<span id="cb178-3"><a href="dplyr.html#cb178-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">ybirth =</span> <span class="fu">c</span>(<span class="st">&quot;1993 - 1999&quot;</span>, <span class="st">&quot;1983 - 1992&quot;</span>, <span class="st">&quot;1993 - 1999&quot;</span>, <span class="st">&quot;1983 - 1992&quot;</span>),</span>
-<span id="cb178-4"><a href="dplyr.html#cb178-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">eligible =</span> <span class="fu">c</span>(<span class="dv">100000</span>, <span class="dv">100000</span>, <span class="dv">100000</span>, <span class="dv">100000</span>),</span>
-<span id="cb178-5"><a href="dplyr.html#cb178-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">turnout_person =</span> <span class="fu">c</span>(<span class="dv">40000</span>, <span class="dv">50000</span>, <span class="dv">60000</span>, <span class="dv">70000</span>),</span>
-<span id="cb178-6"><a href="dplyr.html#cb178-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">turnout_mail =</span> <span class="fu">c</span> (<span class="dv">35000</span>, <span class="dv">30000</span>, <span class="dv">25000</span>, <span class="dv">20000</span>)</span>
-<span id="cb178-7"><a href="dplyr.html#cb178-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb178-8"><a href="dplyr.html#cb178-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb178-9"><a href="dplyr.html#cb178-9" aria-hidden="true" tabindex="-1"></a>exmpl_tbl</span></code></pre></div>
+<pre><code>exmpl_tbl &lt;- tibble(
+  gender = c(&quot;m&quot;, &quot;m&quot;, &quot;w&quot;, &quot;w&quot;),
+  ybirth = c(&quot;1993 - 1999&quot;, &quot;1983 - 1992&quot;, &quot;1993 - 1999&quot;, &quot;1983 - 1992&quot;),
+  eligible = c(100000, 100000, 100000, 100000),
+  turnout_person = c(40000, 50000, 60000, 70000),
+  turnout_mail = c (35000, 30000, 25000, 20000)
+)
+
+exmpl_tbl</code></pre>
 <p>In this hypothetical data, we have different columns for people who voted in
 person and who voted by mail. We do not care about this difference in voting
 method in this example and want one column that combines both. We can achieve
@@ -489,27 +522,27 @@ this by using <code>mutate()</code>. The function takes the data to be manipulat
 first argument, followed by one or multiple arguments defining the new columns
 to be created. We can create this new columns as computations involving the
 columns already present. To calculate the total turnout we could write:</p>
-<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="dplyr.html#cb179-1" aria-hidden="true" tabindex="-1"></a>exmpl_tbl <span class="sc">%&gt;%</span> </span>
-<span id="cb179-2"><a href="dplyr.html#cb179-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">turnout =</span> turnout_person <span class="sc">+</span> turnout_mail)</span></code></pre></div>
+<pre><code>exmpl_tbl %&gt;% 
+mutate(turnout = turnout_person + turnout_mail)</code></pre>
 <p>We can also immediately start calculating with new columns in the same pipe. So
 to calculate the turnout percentage:</p>
-<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="dplyr.html#cb180-1" aria-hidden="true" tabindex="-1"></a>exmpl_tbl <span class="sc">%&gt;%</span> </span>
-<span id="cb180-2"><a href="dplyr.html#cb180-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(</span>
-<span id="cb180-3"><a href="dplyr.html#cb180-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">turnout =</span> turnout_person <span class="sc">+</span> turnout_mail,</span>
-<span id="cb180-4"><a href="dplyr.html#cb180-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">turnout_pct =</span> turnout <span class="sc">/</span> eligible</span>
-<span id="cb180-5"><a href="dplyr.html#cb180-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>exmpl_tbl %&gt;% 
+mutate(
+  turnout = turnout_person + turnout_mail,
+  turnout_pct = turnout / eligible
+)</code></pre>
 <p>As we no longer need <code>turnout_person</code> and <code>turnout_mail</code> we could drop them by
 using <code>select()</code> in a last step. Instead of telling <code>select()</code> which columns we
 want to keep, we can also tell it which noot to keep by adding a <code>-</code> before the
 column names.</p>
-<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="dplyr.html#cb181-1" aria-hidden="true" tabindex="-1"></a>exmpl_tbl <span class="ot">&lt;-</span> exmpl_tbl <span class="sc">%&gt;%</span> </span>
-<span id="cb181-2"><a href="dplyr.html#cb181-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb181-3"><a href="dplyr.html#cb181-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout =</span> turnout_person <span class="sc">+</span> turnout_mail,</span>
-<span id="cb181-4"><a href="dplyr.html#cb181-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_pct =</span> turnout <span class="sc">/</span> eligible</span>
-<span id="cb181-5"><a href="dplyr.html#cb181-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb181-6"><a href="dplyr.html#cb181-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>turnout_person, <span class="sc">-</span>turnout_mail)</span>
-<span id="cb181-7"><a href="dplyr.html#cb181-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb181-8"><a href="dplyr.html#cb181-8" aria-hidden="true" tabindex="-1"></a>exmpl_tbl</span></code></pre></div>
+<pre><code>exmpl_tbl &lt;- exmpl_tbl %&gt;% 
+  mutate(
+    turnout = turnout_person + turnout_mail,
+    turnout_pct = turnout / eligible
+  ) %&gt;% 
+  select(-turnout_person, -turnout_mail)
+
+exmpl_tbl</code></pre>
 <p>Note that <code>mutate()</code> is not limited to basic arithmetic operations. Many
 functions can be applied within <code>mutate()</code>, for example <code>sum()</code> or <code>mean()</code> to
 only name a few examples we already know.</p>
@@ -519,8 +552,8 @@ only name a few examples we already know.</p>
 <p><code>summarise()</code> can be used to calculate summary statistics for a whole tibble.
 The syntax is similar to <code>mutate()</code>. Let us compute the total number of persons
 eligible to vote:</p>
-<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="dplyr.html#cb182-1" aria-hidden="true" tabindex="-1"></a>exmpl_tbl <span class="sc">%&gt;%</span> </span>
-<span id="cb182-2"><a href="dplyr.html#cb182-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(<span class="at">eligible_total =</span> <span class="fu">sum</span>(eligible))</span></code></pre></div>
+<pre><code>exmpl_tbl %&gt;% 
+summarise(eligible_total = sum(eligible))</code></pre>
 <p>As you can see, the result is a new tibble, containing only the summary
 statistics we requested.</p>
 <p>We also can compute multiple summary statistics in one step. Please note, that
@@ -528,12 +561,12 @@ the overall mean for turnout percentage can be computed as the mean of the
 turnout percentages per group in this case only because all four groups are
 exactly of the same size (<span class="math inline">\(n = 100000\)</span>). We will later look into computing the
 same measure with our real data.</p>
-<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="dplyr.html#cb183-1" aria-hidden="true" tabindex="-1"></a>exmpl_tbl <span class="sc">%&gt;%</span> </span>
-<span id="cb183-2"><a href="dplyr.html#cb183-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb183-3"><a href="dplyr.html#cb183-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">eligible_total =</span> <span class="fu">sum</span>(eligible),</span>
-<span id="cb183-4"><a href="dplyr.html#cb183-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_total =</span> <span class="fu">sum</span>(turnout),</span>
-<span id="cb183-5"><a href="dplyr.html#cb183-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_pct_mean =</span> <span class="fu">mean</span>(turnout_pct)</span>
-<span id="cb183-6"><a href="dplyr.html#cb183-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<pre><code>exmpl_tbl %&gt;% 
+  summarise(
+    eligible_total = sum(eligible),
+    turnout_total = sum(turnout),
+    turnout_pct_mean = mean(turnout_pct)
+  )</code></pre>
 <p>Often we are interested in summaries grouped by the value of one or more other
 variables. We might be interested in computing these summary statistics not for
 the complete tibble but by gender. For this purpose, we can group the data by
@@ -541,31 +574,31 @@ the gender column using <code>group_by()</code> and then compute the summary sta
 separately for each group. As always with dplyr functions, <code>group_by()</code> needs
 the data that shall be grouped as the first argument, followed by one or
 multiple variables to group by.</p>
-<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="dplyr.html#cb184-1" aria-hidden="true" tabindex="-1"></a>exmpl_tbl <span class="sc">%&gt;%</span> </span>
-<span id="cb184-2"><a href="dplyr.html#cb184-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender) <span class="sc">%&gt;%</span> </span>
-<span id="cb184-3"><a href="dplyr.html#cb184-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb184-4"><a href="dplyr.html#cb184-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">eligible_total =</span> <span class="fu">sum</span>(eligible),</span>
-<span id="cb184-5"><a href="dplyr.html#cb184-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_total =</span> <span class="fu">sum</span>(turnout),</span>
-<span id="cb184-6"><a href="dplyr.html#cb184-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_pct_mean =</span> <span class="fu">mean</span>(turnout_pct)</span>
-<span id="cb184-7"><a href="dplyr.html#cb184-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<pre><code>exmpl_tbl %&gt;% 
+  group_by(gender) %&gt;% 
+  summarise(
+    eligible_total = sum(eligible),
+    turnout_total = sum(turnout),
+    turnout_pct_mean = mean(turnout_pct)
+  )</code></pre>
 <p>Let us create a final example, with two variables to group by. Let us assume
 we have the turnout percentages by gender and age group for two elections. We
 also again assume the same group size, i.e. the same “n”, for all observations.</p>
-<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="dplyr.html#cb185-1" aria-hidden="true" tabindex="-1"></a>exmpl_tbl_2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb185-2"><a href="dplyr.html#cb185-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">election =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>),</span>
-<span id="cb185-3"><a href="dplyr.html#cb185-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">gender =</span> <span class="fu">c</span>(<span class="st">&quot;m&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="st">&quot;w&quot;</span>, <span class="st">&quot;w&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="st">&quot;w&quot;</span>, <span class="st">&quot;w&quot;</span>),</span>
-<span id="cb185-4"><a href="dplyr.html#cb185-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">ybirth =</span> <span class="fu">c</span>(<span class="st">&quot;1993 - 1999&quot;</span>, <span class="st">&quot;1983 - 1992&quot;</span>, <span class="st">&quot;1993 - 1999&quot;</span>, <span class="st">&quot;1983 - 1992&quot;</span>, <span class="st">&quot;1993 - 1999&quot;</span>, <span class="st">&quot;1983 - 1992&quot;</span>, <span class="st">&quot;1993 - 1999&quot;</span>, <span class="st">&quot;1983 - 1992&quot;</span>),</span>
-<span id="cb185-5"><a href="dplyr.html#cb185-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">turnout_pct =</span> <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">0.55</span>, <span class="fl">0.75</span>, <span class="fl">0.625</span>, <span class="fl">0.7</span>, <span class="fl">0.65</span>, <span class="fl">0.85</span>, <span class="fl">0.725</span>)</span>
-<span id="cb185-6"><a href="dplyr.html#cb185-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb185-7"><a href="dplyr.html#cb185-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb185-8"><a href="dplyr.html#cb185-8" aria-hidden="true" tabindex="-1"></a>exmpl_tbl_2</span></code></pre></div>
+<pre><code>exmpl_tbl_2 &lt;- tibble(
+  election = c(1, 1, 1, 1, 2, 2, 2, 2),
+  gender = c(&quot;m&quot;, &quot;m&quot;, &quot;w&quot;, &quot;w&quot;, &quot;m&quot;, &quot;m&quot;, &quot;w&quot;, &quot;w&quot;),
+  ybirth = c(&quot;1993 - 1999&quot;, &quot;1983 - 1992&quot;, &quot;1993 - 1999&quot;, &quot;1983 - 1992&quot;, &quot;1993 - 1999&quot;, &quot;1983 - 1992&quot;, &quot;1993 - 1999&quot;, &quot;1983 - 1992&quot;),
+  turnout_pct = c(0.6, 0.55, 0.75, 0.625, 0.7, 0.65, 0.85, 0.725)
+)
+
+exmpl_tbl_2</code></pre>
 <p>To compute the mean turnout percentages by gender for each election separately,
 we can group by election and gender.</p>
-<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="dplyr.html#cb186-1" aria-hidden="true" tabindex="-1"></a>exmpl_tbl_2 <span class="sc">%&gt;%</span> </span>
-<span id="cb186-2"><a href="dplyr.html#cb186-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(election, gender) <span class="sc">%&gt;%</span> </span>
-<span id="cb186-3"><a href="dplyr.html#cb186-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb186-4"><a href="dplyr.html#cb186-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_pct_mean =</span> <span class="fu">mean</span>(turnout_pct)</span>
-<span id="cb186-5"><a href="dplyr.html#cb186-5" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<pre><code>exmpl_tbl_2 %&gt;% 
+  group_by(election, gender) %&gt;% 
+  summarise(
+    turnout_pct_mean = mean(turnout_pct)
+  )</code></pre>
 <p>There is a peculiarity to the way <code>group_by()</code> works with <code>summarise()</code> that can
 cause headaches, if we are not aware of it. In general any <code>summarise()</code>
 function following a <code>group_by()</code> will calculate the summary statistic and then

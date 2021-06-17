@@ -85,9 +85,11 @@ downloading-files
 parsing-the-csv-files
 saving-data-files
 good_practice
-legality
-responsibility
-good-practice
+we-are-no-web-crawlers
+on-robots.txt-files
+reduce-traffic
+waiting-times-in-action
+citation-and-additional-resource
 dplyr
 filter
 select
