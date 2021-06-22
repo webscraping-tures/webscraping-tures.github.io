@@ -110,7 +110,7 @@ sqrt(1764)
 6.480741 ^ 2
 ```
 
-### Comparison operators
+### Comparison operators {#comparison}
 
 We can use comparison operators to compare two values and receive the test
 result as output. To test if two values are equal, we write `==`. To test if 
