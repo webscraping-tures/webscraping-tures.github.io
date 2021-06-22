@@ -172,7 +172,7 @@ Web Scraping using R
 <li class="chapter" data-level="2.3" data-path="R1.html"><a href="R1.html#hello-world"><i class="fa fa-check"></i><b>2.3</b> Hello World!</a>
 <ul>
 <li class="chapter" data-level="2.3.1" data-path="R1.html"><a href="R1.html#calculating-with-r"><i class="fa fa-check"></i><b>2.3.1</b> Calculating with R</a></li>
-<li class="chapter" data-level="2.3.2" data-path="R1.html"><a href="R1.html#comparison-operators"><i class="fa fa-check"></i><b>2.3.2</b> Comparison operators</a></li>
+<li class="chapter" data-level="2.3.2" data-path="R1.html"><a href="R1.html#comparison"><i class="fa fa-check"></i><b>2.3.2</b> Comparison operators</a></li>
 </ul></li>
 <li class="chapter" data-level="2.4" data-path="R1.html"><a href="R1.html#objects"><i class="fa fa-check"></i><b>2.4</b> Objects</a></li>
 <li class="chapter" data-level="2.5" data-path="R1.html"><a href="R1.html#vectors"><i class="fa fa-check"></i><b>2.5</b> Vectors</a>
@@ -304,11 +304,19 @@ Web Scraping using R
 </ul></li>
 <li class="chapter" data-level="11" data-path="dplyr.html"><a href="dplyr.html"><i class="fa fa-check"></i><b>11</b> Transformation with dplyr</a>
 <ul>
-<li class="chapter" data-level="11.1" data-path="dplyr.html"><a href="dplyr.html#filter"><i class="fa fa-check"></i><b>11.1</b> <code>filter()</code></a></li>
+<li class="chapter" data-level="11.1" data-path="dplyr.html"><a href="dplyr.html#mutate"><i class="fa fa-check"></i><b>11.1</b> <code>mutate()</code></a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="dplyr.html"><a href="dplyr.html#computing-new-variables-from-existing-ones"><i class="fa fa-check"></i><b>11.1.1</b> Computing new variables from existing ones</a></li>
+<li class="chapter" data-level="11.1.2" data-path="dplyr.html"><a href="dplyr.html#cleaning-the-running-example"><i class="fa fa-check"></i><b>11.1.2</b> Cleaning the running example</a></li>
+</ul></li>
 <li class="chapter" data-level="11.2" data-path="dplyr.html"><a href="dplyr.html#select"><i class="fa fa-check"></i><b>11.2</b> <code>select()</code></a></li>
 <li class="chapter" data-level="11.3" data-path="dplyr.html"><a href="dplyr.html#rename"><i class="fa fa-check"></i><b>11.3</b> <code>rename()</code></a></li>
-<li class="chapter" data-level="11.4" data-path="dplyr.html"><a href="dplyr.html#mutate"><i class="fa fa-check"></i><b>11.4</b> <code>mutate()</code></a></li>
-<li class="chapter" data-level="11.5" data-path="dplyr.html"><a href="dplyr.html#summarise-group_by"><i class="fa fa-check"></i><b>11.5</b> <code>summarise()</code> &amp; <code>group_by()</code></a></li>
+<li class="chapter" data-level="11.4" data-path="dplyr.html"><a href="dplyr.html#filter"><i class="fa fa-check"></i><b>11.4</b> <code>filter()</code></a></li>
+<li class="chapter" data-level="11.5" data-path="dplyr.html"><a href="dplyr.html#summarise-group_by"><i class="fa fa-check"></i><b>11.5</b> <code>summarise()</code> &amp; <code>group_by()</code></a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="dplyr.html"><a href="dplyr.html#number-of-reports-by-groups"><i class="fa fa-check"></i><b>11.5.1</b> Number of reports by groups</a></li>
+<li class="chapter" data-level="11.5.2" data-path="dplyr.html"><a href="dplyr.html#summary-statistics-on-the-time"><i class="fa fa-check"></i><b>11.5.2</b> Summary statistics on the time</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="ggplot.html"><a href="ggplot.html"><i class="fa fa-check"></i><b>12</b> Graphical analysis with ggplot</a>
 <ul>
@@ -362,270 +370,654 @@ Web Scraping using R
             <section class="normal" id="section-">
 <div id="dplyr" class="section level1" number="11">
 <h1><span class="header-section-number">11</span> Transformation with dplyr</h1>
-<p>WIP! Content is due to change!</p>
+<p>In this chapter we will use several functions from the tidyverse package
+dplyr to clean the data we scraped in chapter <a href="scraping.html#scraping">10</a>, select the
+columns and filter the observations (rows) we need as well as compute some
+grouped summaries of the data.</p>
+<p>First, let us load the required packages. Dplyr is part of the core tidyverse.
+We will also need the package lubridate to deal with dates and times soon.</p>
 <div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="dplyr.html#cb188-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb188-2"><a href="dplyr.html#cb188-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span>
-<span id="cb188-3"><a href="dplyr.html#cb188-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span></code></pre></div>
-<ul>
-<li>mutate() to apply lubridate and remove “Ereignisort:”
-<ul>
-<li>before that show some simple calculations</li>
-</ul></li>
-<li>select() to remove raw data/time columns and maybe text</li>
-<li>filter() for removing incomplete years
-<ul>
-<li>“should have done this before downloading”</li>
-</ul></li>
-<li>rename()</li>
-<li>group_by() + summarize
-<ul>
-<li>reports by year</li>
-<li>(reports by month)</li>
-<li>reports by district
-<ul>
-<li><ul>
-<li>relative to total</li>
-</ul></li>
-</ul></li>
-<li>mean/median for time of day</li>
-</ul></li>
-</ul>
-<p>At this point you should have a look at both tibbles either by clicking on them
-in the environment tab or by writing <code>View(eligible_tbl)</code> and
-<code>View(turnout_tbl)</code>.</p>
-<p>A quick sidenote: You will notice, that most of the values we will compute in
-this chapter are already present in eligible.csv. We will soon drop those and
-compute them ourselves for the sake of having a good introductory example into
-data transformation. In a real world scenario we would most probably just use
-the values for turnout percentages etc. already present in the data.</p>
-<p>In the following, we will use several functions from the tidyverse package
-dplyr to filter observations, select columns and add new columns as
-computations of existing ones.</p>
-<div id="filter" class="section level2" number="11.1">
-<h2><span class="header-section-number">11.1</span> <code>filter()</code></h2>
-<p>As a first step, we should limit our tibbles to the observations we actually
-need. For this example we should limit ourselves to an analysis on the federal
-level. Thus we can drop all observations referring to the individual states. We
-will also drop the totals for the gender and year of birth columns and compute
-them ourselves later on.</p>
-<p>To filter on the observations we need and drop the remainder, we can use the
-function <code>filter()</code>. It takes the tibble or data frame to be filtered as it’s
-first argument – which we don’t need to specify when using the pipe – and one
-or multiple expressions that specify which observations are to be filtered.</p>
-<p>To filter only those observations that have the value “Bund” for the column
-“Land”, we can write:</p>
-<pre><code>eligible_tbl %&gt;% 
-filter(Land == &quot;Bund&quot;)</code></pre>
-<p>Thus only the observations for “Bund” remain in the tibble. Or in other words,
-those observations for whom the expression <code>Land == "Bund"</code> is returned as
-<code>TRUE</code>. Besides <code>==</code>, all other comparison operators can be used and we can
-chain multiple expressions to be filtered upon in one call of <code>filter()</code>. So, to
-filter on those observations who refer to the “Bund” and don’t have a sum for
-the gender and year of birth columns, we can write:</p>
-<pre><code>eligible_tbl %&gt;% 
-  filter(Land == &quot;Bund&quot;, Geschlecht != &quot;Summe&quot;, Geburtsjahresgruppe != &quot;Summe&quot;)</code></pre>
-<p>We can also use logical operators – <code>&amp;</code> for “and”, <code>|</code> for “or” – when
-combining expressions to be filtered upon. So instead of <code>Geschlecht = "Summe"</code>
-another approach would be to filter those that have “m” or “w” as values. To
-demonstrate this, let us filter the object <code>turnout_tbl</code>as well. Here we have an
-additional column we have to filter for called “Erst-/Zweitstimme”. I propose
-we only analyse the party votes.</p>
-<pre><code>turnout_tbl %&gt;% 
-  filter(Land == &quot;Bund&quot;,
-         `Erst-/Zweitstimme` == 2,
-         Geschlecht == &quot;m&quot; | Geschlecht == &quot;w&quot;,
-         Geburtsjahresgruppe != &quot;Summe&quot;)</code></pre>
-<p>When we create rather long function calls with many arguments, it is often a
-good idea to insert some line breaks to keep your code easily readable, as seen
-above.</p>
-<p>Let’s have another look at this line: <code>`Erst-/Zweitstimme` == 2,</code>. You will
-notice, that the name of the column is enclosed by <em>backticks</em> <code>`</code>. In
-general, object and variable (ie. column) names in R can only contain letters,
-numbers, points and underscores and have to start with a letter. It is possible
-to have names that violate those rules, but these have to enclosed in backticks.
-As you can see, “Erst-/Zweitstimme” contains two characters that are not allowed
-in R names. <code>turnout_tbl</code> also contains the column “DIE LINKE”. The usage of
-whitespace in names is also not allowed. So to address this column in our code,
-we would have to write <code></code>DIE LINKE<code></code>.</p>
-</div>
-<div id="select" class="section level2" number="11.2">
-<h2><span class="header-section-number">11.2</span> <code>select()</code></h2>
-<p>We should also limit our tibbles to the set of columns we will actually use.</p>
-<p>Looking at <code>eligible_tbl</code>, we will only need the first four columns. We can use
-the function <code>select()</code> to “select” the columns we need by name.</p>
-<pre><code>eligible_tbl %&gt;% 
-  select(Land, Geschlecht, Geburtsjahresgruppe, Wahlberechtigte)</code></pre>
-<p>If, as in this case, the columns we want so select follow each other in their
-positions in the tibble, we can also use a shorter “from:to” notation, that
-saves us somy typing.</p>
-<pre><code>eligible_tbl %&gt;% 
-  select(Land:Wahlberechtigte)</code></pre>
-<p>At this point we can combine the filtering of rows and selection of columns in
-the pipe and assign the result to a new object. But first, let us think about
-again about which columns we will actually need. Above we selected the first
-four columns from <code>turnout_tbl</code>. But we do not actually need the column “Land”
-after we filtered for the rows containing the federal state level as it contains
-no useful information anymore. So we can drop the column, if we filter first.
-Order matters! For <code>turnout_tbl</code> this is also true but extends to the column
-“Erst-/Zweitstimme” which also only contains one value after filtering.</p>
-<pre><code>eligible_tbl &lt;- eligible_tbl %&gt;% 
-  filter(Land == &quot;Bund&quot;, 
-         Geschlecht != &quot;Summe&quot;,
-         Geburtsjahresgruppe != &quot;Summe&quot;) %&gt;%
-  select(Geschlecht:Wahlberechtigte)
-
-turnout_tbl &lt;- turnout_tbl %&gt;% 
-  filter(Land == &quot;Bund&quot;,
-         `Erst-/Zweitstimme` == 2,
-         Geschlecht == &quot;m&quot; | Geschlecht == &quot;w&quot;,
-         Geburtsjahresgruppe != &quot;Summe&quot;) %&gt;% 
-  select(Geschlecht:Summe)</code></pre>
-</div>
-<div id="rename" class="section level2" number="11.3">
-<h2><span class="header-section-number">11.3</span> <code>rename()</code></h2>
-<p>As we are working in english, it makes sense to also rename the columns using
-english wordings. Also, we have to write down the column names several time
-during analysis, so we should use names that are short but concise to limit
-unnecessary typing while maintaining recognisability. Imagine writing
-“Geburtsjahresgruppe” several times in your code, and you will know why
-renaming is approriate here. Also the column “Summe” in <code>turnout_tbl</code> does not
-describe what the values stored in it refer to. We should change this.</p>
-<p>One approach to renaming is using the function <code>rename()</code> from dplyr. The
-function takes the data to applied to as its first argument – passed by the
-pipe in this case – followed by one or more arguments in the form
-<code>new_name = old_name</code>.</p>
-<pre><code>eligible_tbl &lt;- eligible_tbl %&gt;% 
-  rename(gender = Geschlecht,
-         ybirth = Geburtsjahresgruppe,
-         eligible = Wahlberechtigte)
-
-eligible_tbl
-
-turnout_tbl &lt;- turnout_tbl %&gt;% 
-  rename(gender = Geschlecht,
-         ybirth = Geburtsjahresgruppe,
-         turnout = Summe)
-
-turnout_tbl</code></pre>
-</div>
-<div id="mutate" class="section level2" number="11.4">
-<h2><span class="header-section-number">11.4</span> <code>mutate()</code></h2>
-<p>We will now leave our running example for a short time and look at how to
-compute new variables in a tibble from existing ones, using <code>mutate()</code> from
-dplyr.</p>
-<p>For this purpose, let us create a new simple tibble on voter turnout. Note that
-the entered data is purely illustrational and has no meaning. We will return to
-the real data shortly.</p>
-<pre><code>exmpl_tbl &lt;- tibble(
-  gender = c(&quot;m&quot;, &quot;m&quot;, &quot;w&quot;, &quot;w&quot;),
-  ybirth = c(&quot;1993 - 1999&quot;, &quot;1983 - 1992&quot;, &quot;1993 - 1999&quot;, &quot;1983 - 1992&quot;),
-  eligible = c(100000, 100000, 100000, 100000),
-  turnout_person = c(40000, 50000, 60000, 70000),
-  turnout_mail = c (35000, 30000, 25000, 20000)
-)
-
-exmpl_tbl</code></pre>
+<span id="cb188-2"><a href="dplyr.html#cb188-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span></code></pre></div>
+<div id="mutate" class="section level2" number="11.1">
+<h2><span class="header-section-number">11.1</span> <code>mutate()</code></h2>
+<div id="computing-new-variables-from-existing-ones" class="section level3" number="11.1.1">
+<h3><span class="header-section-number">11.1.1</span> Computing new variables from existing ones</h3>
+<p>Before we begin working on the running example, we will examine some simple
+examples on how to compute new variables in a tibble from existing ones, using
+<code>mutate()</code> from dplyr. For this purpose, let us create a new simple tibble on
+voter turnout. Note that the entered data is purely illustrational and has no
+meaning.</p>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="dplyr.html#cb189-1" aria-hidden="true" tabindex="-1"></a>exmpl_tbl <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb189-2"><a href="dplyr.html#cb189-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">ybirth =</span> <span class="fu">c</span>(<span class="st">&quot;1993 - 2002&quot;</span>, <span class="st">&quot;1983 - 1992&quot;</span>, <span class="st">&quot;1973 - 1982&quot;</span>, <span class="st">&quot;1963 - 1972&quot;</span>),</span>
+<span id="cb189-3"><a href="dplyr.html#cb189-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">eligible =</span> <span class="fu">c</span>(<span class="dv">100000</span>, <span class="dv">100000</span>, <span class="dv">100000</span>, <span class="dv">100000</span>),</span>
+<span id="cb189-4"><a href="dplyr.html#cb189-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">turnout_person =</span> <span class="fu">c</span>(<span class="dv">40000</span>, <span class="dv">50000</span>, <span class="dv">60000</span>, <span class="dv">70000</span>),</span>
+<span id="cb189-5"><a href="dplyr.html#cb189-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">turnout_mail =</span> <span class="fu">c</span> (<span class="dv">35000</span>, <span class="dv">30000</span>, <span class="dv">25000</span>, <span class="dv">20000</span>)</span>
+<span id="cb189-6"><a href="dplyr.html#cb189-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb189-7"><a href="dplyr.html#cb189-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb189-8"><a href="dplyr.html#cb189-8" aria-hidden="true" tabindex="-1"></a>exmpl_tbl</span>
+<span id="cb189-9"><a href="dplyr.html#cb189-9" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 4 x 4</span></span>
+<span id="cb189-10"><a href="dplyr.html#cb189-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   ybirth      eligible turnout_person turnout_mail</span></span>
+<span id="cb189-11"><a href="dplyr.html#cb189-11" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;          &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;</span></span>
+<span id="cb189-12"><a href="dplyr.html#cb189-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 1993 - 2002   100000          40000        35000</span></span>
+<span id="cb189-13"><a href="dplyr.html#cb189-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 1983 - 1992   100000          50000        30000</span></span>
+<span id="cb189-14"><a href="dplyr.html#cb189-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 1973 - 1982   100000          60000        25000</span></span>
+<span id="cb189-15"><a href="dplyr.html#cb189-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 1963 - 1972   100000          70000        20000</span></span></code></pre></div>
 <p>In this hypothetical data, we have different columns for people who voted in
-person and who voted by mail. We do not care about this difference in voting
-method in this example and want one column that combines both. We can achieve
-this by using <code>mutate()</code>. The function takes the data to be manipulated as its
-first argument, followed by one or multiple arguments defining the new columns
-to be created. We can create this new columns as computations involving the
-columns already present. To calculate the total turnout we could write:</p>
-<pre><code>exmpl_tbl %&gt;% 
-mutate(turnout = turnout_person + turnout_mail)</code></pre>
+person and who voted by mail by their year of birth. We do not actually care
+about the difference in voting method in this example and want one column that
+combines both. We can achieve this by using <code>mutate()</code>. The function takes the
+data to be manipulated as its first argument, followed by one or multiple
+arguments defining the new columns to be created. We can create this new columns
+as computations from the columns already present. To calculate the total turnout
+we write:</p>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="dplyr.html#cb190-1" aria-hidden="true" tabindex="-1"></a>exmpl_tbl <span class="sc">%&gt;%</span> </span>
+<span id="cb190-2"><a href="dplyr.html#cb190-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">turnout =</span> turnout_person <span class="sc">+</span> turnout_mail)</span>
+<span id="cb190-3"><a href="dplyr.html#cb190-3" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 4 x 5</span></span>
+<span id="cb190-4"><a href="dplyr.html#cb190-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   ybirth      eligible turnout_person turnout_mail turnout</span></span>
+<span id="cb190-5"><a href="dplyr.html#cb190-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;          &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span id="cb190-6"><a href="dplyr.html#cb190-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 1993 - 2002   100000          40000        35000   75000</span></span>
+<span id="cb190-7"><a href="dplyr.html#cb190-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 1983 - 1992   100000          50000        30000   80000</span></span>
+<span id="cb190-8"><a href="dplyr.html#cb190-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 1973 - 1982   100000          60000        25000   85000</span></span>
+<span id="cb190-9"><a href="dplyr.html#cb190-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 1963 - 1972   100000          70000        20000   90000</span></span></code></pre></div>
 <p>We can also immediately start calculating with new columns in the same pipe. So
-to calculate the turnout percentage:</p>
-<pre><code>exmpl_tbl %&gt;% 
-mutate(
-  turnout = turnout_person + turnout_mail,
-  turnout_pct = turnout / eligible
-)</code></pre>
-<p>As we no longer need <code>turnout_person</code> and <code>turnout_mail</code> we could drop them by
-using <code>select()</code> in a last step. Instead of telling <code>select()</code> which columns we
-want to keep, we can also tell it which noot to keep by adding a <code>-</code> before the
-column names.</p>
-<pre><code>exmpl_tbl &lt;- exmpl_tbl %&gt;% 
-  mutate(
-    turnout = turnout_person + turnout_mail,
-    turnout_pct = turnout / eligible
-  ) %&gt;% 
-  select(-turnout_person, -turnout_mail)
-
-exmpl_tbl</code></pre>
+to calculate the turnout percentage as a second step:</p>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="dplyr.html#cb191-1" aria-hidden="true" tabindex="-1"></a>exmpl_tbl <span class="sc">%&gt;%</span> </span>
+<span id="cb191-2"><a href="dplyr.html#cb191-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb191-3"><a href="dplyr.html#cb191-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout =</span> turnout_person <span class="sc">+</span> turnout_mail,</span>
+<span id="cb191-4"><a href="dplyr.html#cb191-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">turnout_pct =</span> turnout <span class="sc">/</span> eligible</span>
+<span id="cb191-5"><a href="dplyr.html#cb191-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb191-6"><a href="dplyr.html#cb191-6" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 4 x 6</span></span>
+<span id="cb191-7"><a href="dplyr.html#cb191-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   ybirth      eligible turnout_person turnout_mail turnout turnout_pct</span></span>
+<span id="cb191-8"><a href="dplyr.html#cb191-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;          &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;</span></span>
+<span id="cb191-9"><a href="dplyr.html#cb191-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 1993 - 2002   100000          40000        35000   75000        0.75</span></span>
+<span id="cb191-10"><a href="dplyr.html#cb191-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 1983 - 1992   100000          50000        30000   80000        0.8 </span></span>
+<span id="cb191-11"><a href="dplyr.html#cb191-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 1973 - 1982   100000          60000        25000   85000        0.85</span></span>
+<span id="cb191-12"><a href="dplyr.html#cb191-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 1963 - 1972   100000          70000        20000   90000        0.9</span></span></code></pre></div>
 <p>Note that <code>mutate()</code> is not limited to basic arithmetic operations. Many
 functions can be applied within <code>mutate()</code>, for example <code>sum()</code> or <code>mean()</code> to
 only name a few examples we already know.</p>
 </div>
+<div id="cleaning-the-running-example" class="section level3" number="11.1.2">
+<h3><span class="header-section-number">11.1.2</span> Cleaning the running example</h3>
+<p>As we now know the basics of working with <code>mutate()</code>, we can apply this to our
+running example. First we have to load the data we scraped in the last chapter
+and examine what we are working with.</p>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="dplyr.html#cb192-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;reports.RData&quot;</span>)</span>
+<span id="cb192-2"><a href="dplyr.html#cb192-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb192-3"><a href="dplyr.html#cb192-3" aria-hidden="true" tabindex="-1"></a>reports</span>
+<span id="cb192-4"><a href="dplyr.html#cb192-4" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 16,698 x 3</span></span>
+<span id="cb192-5"><a href="dplyr.html#cb192-5" aria-hidden="true" tabindex="-1"></a><span class="do">##    Date          Report                                   District              </span></span>
+<span id="cb192-6"><a href="dplyr.html#cb192-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;         &lt;chr&gt;                                    &lt;chr&gt;                 </span></span>
+<span id="cb192-7"><a href="dplyr.html#cb192-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 21.06.2021 1… &quot;Nach Hausfriedensbruch Widerstand gele… Ereignisort: Marzahn-…</span></span>
+<span id="cb192-8"><a href="dplyr.html#cb192-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 21.06.2021 1… &quot;Marzena MÄRZ vermisst – Polizei Berlin… Ereignisort: Reinicke…</span></span>
+<span id="cb192-9"><a href="dplyr.html#cb192-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 21.06.2021 1… &quot;Mehrere Verletzte nach Schüssen vor ei… Ereignisort: Mitte    </span></span>
+<span id="cb192-10"><a href="dplyr.html#cb192-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 21.06.2021 1… &quot;Streit eskalierte&quot;                      Ereignisort: Lichtenb…</span></span>
+<span id="cb192-11"><a href="dplyr.html#cb192-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 21.06.2021 1… &quot;Fünf Verletzte bei Unfall &quot;             Ereignisort: Tempelho…</span></span>
+<span id="cb192-12"><a href="dplyr.html#cb192-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 21.06.2021 1… &quot;Zivilstreife stoppt Raser&quot;              Ereignisort: Charlott…</span></span>
+<span id="cb192-13"><a href="dplyr.html#cb192-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 21.06.2021 0… &quot;In Jugendeinrichtung randaliert und Po… Ereignisort: Spandau  </span></span>
+<span id="cb192-14"><a href="dplyr.html#cb192-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 20.06.2021 1… &quot;Mehrere Verletzte nach Messerangriff&quot;   Ereignisort: Friedric…</span></span>
+<span id="cb192-15"><a href="dplyr.html#cb192-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 20.06.2021 1… &quot;Gemeinsame Meldung mit der Staatsanwal… Ereignisort: Mitte    </span></span>
+<span id="cb192-16"><a href="dplyr.html#cb192-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 20.06.2021 1… &quot;Senior mit Fahrrad gestürzt und schwer… Ereignisort: Spandau  </span></span>
+<span id="cb192-17"><a href="dplyr.html#cb192-17" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 16,688 more rows</span></span></code></pre></div>
+<p>We can leave the column containing the text of the police report as it is, but
+the columns containing the districts as well as the date and time could use some
+work.</p>
+<p>The data in the column “District” includes the string “Ereignisort:” before
+listing the actual name of the district the report refers to. This unnecessarily
+clutters this column. We can use <code>substr()</code> to remove these leading characters.
+Instead of selecting the column by <code>reports$District</code> we can apply the function
+to the column using <code>mutate()</code>. <code>substr()</code> extracts a part of a string we want
+to keep, taking the data to be applied to as its first argument – here the name
+of the column –, the starting character position where the extraction shall
+begin as its second and the character position where it shall stop as its third
+argument. Character position here refers to the numeric position of a character
+in a string. So the begin extraction after “Ereignisort:” we have to count the
+length of this substring including the whitespace after “:”, which is <span class="math inline">\(13\)</span> and
+thus use <span class="math inline">\(14\)</span> as the starting position. For the stopping position we could
+either use an unrealistically high number or use <code>length(District)</code> to determine
+the exact length of each string.</p>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="dplyr.html#cb193-1" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span> </span>
+<span id="cb193-2"><a href="dplyr.html#cb193-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">District =</span> <span class="fu">substr</span>(District, <span class="dv">14</span>, <span class="dv">99</span>))</span>
+<span id="cb193-3"><a href="dplyr.html#cb193-3" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 16,698 x 3</span></span>
+<span id="cb193-4"><a href="dplyr.html#cb193-4" aria-hidden="true" tabindex="-1"></a><span class="do">##    Date           Report                                       District         </span></span>
+<span id="cb193-5"><a href="dplyr.html#cb193-5" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;          &lt;chr&gt;                                        &lt;chr&gt;            </span></span>
+<span id="cb193-6"><a href="dplyr.html#cb193-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 21.06.2021 15… &quot;Nach Hausfriedensbruch Widerstand geleiste… Marzahn-Hellersd…</span></span>
+<span id="cb193-7"><a href="dplyr.html#cb193-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 21.06.2021 13… &quot;Marzena MÄRZ vermisst – Polizei Berlin bit… Reinickendorf    </span></span>
+<span id="cb193-8"><a href="dplyr.html#cb193-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 21.06.2021 13… &quot;Mehrere Verletzte nach Schüssen vor einem … Mitte            </span></span>
+<span id="cb193-9"><a href="dplyr.html#cb193-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 21.06.2021 13… &quot;Streit eskalierte&quot;                          Lichtenberg      </span></span>
+<span id="cb193-10"><a href="dplyr.html#cb193-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 21.06.2021 10… &quot;Fünf Verletzte bei Unfall &quot;                 Tempelhof-Schöne…</span></span>
+<span id="cb193-11"><a href="dplyr.html#cb193-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 21.06.2021 10… &quot;Zivilstreife stoppt Raser&quot;                  Charlottenburg-W…</span></span>
+<span id="cb193-12"><a href="dplyr.html#cb193-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 21.06.2021 09… &quot;In Jugendeinrichtung randaliert und Polizi… Spandau          </span></span>
+<span id="cb193-13"><a href="dplyr.html#cb193-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 20.06.2021 13… &quot;Mehrere Verletzte nach Messerangriff&quot;       Friedrichshain-K…</span></span>
+<span id="cb193-14"><a href="dplyr.html#cb193-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 20.06.2021 12… &quot;Gemeinsame Meldung mit der Staatsanwaltsch… Mitte            </span></span>
+<span id="cb193-15"><a href="dplyr.html#cb193-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 20.06.2021 11… &quot;Senior mit Fahrrad gestürzt und schwer ver… Spandau          </span></span>
+<span id="cb193-16"><a href="dplyr.html#cb193-16" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 16,688 more rows</span></span>
+<span id="cb193-17"><a href="dplyr.html#cb193-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb193-18"><a href="dplyr.html#cb193-18" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span> </span>
+<span id="cb193-19"><a href="dplyr.html#cb193-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">District =</span> <span class="fu">substr</span>(District, <span class="dv">14</span>, <span class="fu">length</span>(District)))</span>
+<span id="cb193-20"><a href="dplyr.html#cb193-20" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 16,698 x 3</span></span>
+<span id="cb193-21"><a href="dplyr.html#cb193-21" aria-hidden="true" tabindex="-1"></a><span class="do">##    Date           Report                                       District         </span></span>
+<span id="cb193-22"><a href="dplyr.html#cb193-22" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;          &lt;chr&gt;                                        &lt;chr&gt;            </span></span>
+<span id="cb193-23"><a href="dplyr.html#cb193-23" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 21.06.2021 15… &quot;Nach Hausfriedensbruch Widerstand geleiste… Marzahn-Hellersd…</span></span>
+<span id="cb193-24"><a href="dplyr.html#cb193-24" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 21.06.2021 13… &quot;Marzena MÄRZ vermisst – Polizei Berlin bit… Reinickendorf    </span></span>
+<span id="cb193-25"><a href="dplyr.html#cb193-25" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 21.06.2021 13… &quot;Mehrere Verletzte nach Schüssen vor einem … Mitte            </span></span>
+<span id="cb193-26"><a href="dplyr.html#cb193-26" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 21.06.2021 13… &quot;Streit eskalierte&quot;                          Lichtenberg      </span></span>
+<span id="cb193-27"><a href="dplyr.html#cb193-27" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 21.06.2021 10… &quot;Fünf Verletzte bei Unfall &quot;                 Tempelhof-Schöne…</span></span>
+<span id="cb193-28"><a href="dplyr.html#cb193-28" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 21.06.2021 10… &quot;Zivilstreife stoppt Raser&quot;                  Charlottenburg-W…</span></span>
+<span id="cb193-29"><a href="dplyr.html#cb193-29" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 21.06.2021 09… &quot;In Jugendeinrichtung randaliert und Polizi… Spandau          </span></span>
+<span id="cb193-30"><a href="dplyr.html#cb193-30" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 20.06.2021 13… &quot;Mehrere Verletzte nach Messerangriff&quot;       Friedrichshain-K…</span></span>
+<span id="cb193-31"><a href="dplyr.html#cb193-31" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 20.06.2021 12… &quot;Gemeinsame Meldung mit der Staatsanwaltsch… Mitte            </span></span>
+<span id="cb193-32"><a href="dplyr.html#cb193-32" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 20.06.2021 11… &quot;Senior mit Fahrrad gestürzt und schwer ver… Spandau          </span></span>
+<span id="cb193-33"><a href="dplyr.html#cb193-33" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 16,688 more rows</span></span></code></pre></div>
+<p>The column “Date” includes the data and the time of each report as a character
+string. To be able to use this data in analysis, we have to extract the date and
+time in a format we can calculate with. This is easily achieved using the
+parsing functions from lubridate. As the character data is written in the format
+“day.month.year hour:minute”, we have to use the function <code>dmy_hm()</code> on the
+column.</p>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="dplyr.html#cb194-1" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span> </span>
+<span id="cb194-2"><a href="dplyr.html#cb194-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date_cmpl =</span> <span class="fu">dmy_hm</span>(Date))</span>
+<span id="cb194-3"><a href="dplyr.html#cb194-3" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 16,698 x 4</span></span>
+<span id="cb194-4"><a href="dplyr.html#cb194-4" aria-hidden="true" tabindex="-1"></a><span class="do">##    Date       Report                       District          date_cmpl          </span></span>
+<span id="cb194-5"><a href="dplyr.html#cb194-5" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;      &lt;chr&gt;                        &lt;chr&gt;             &lt;dttm&gt;             </span></span>
+<span id="cb194-6"><a href="dplyr.html#cb194-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 21.06.202… &quot;Nach Hausfriedensbruch Wid… Ereignisort: Mar… 2021-06-21 15:17:00</span></span>
+<span id="cb194-7"><a href="dplyr.html#cb194-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 21.06.202… &quot;Marzena MÄRZ vermisst – Po… Ereignisort: Rei… 2021-06-21 13:35:00</span></span>
+<span id="cb194-8"><a href="dplyr.html#cb194-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 21.06.202… &quot;Mehrere Verletzte nach Sch… Ereignisort: Mit… 2021-06-21 13:19:00</span></span>
+<span id="cb194-9"><a href="dplyr.html#cb194-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 21.06.202… &quot;Streit eskalierte&quot;          Ereignisort: Lic… 2021-06-21 13:17:00</span></span>
+<span id="cb194-10"><a href="dplyr.html#cb194-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 21.06.202… &quot;Fünf Verletzte bei Unfall &quot; Ereignisort: Tem… 2021-06-21 10:41:00</span></span>
+<span id="cb194-11"><a href="dplyr.html#cb194-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 21.06.202… &quot;Zivilstreife stoppt Raser&quot;  Ereignisort: Cha… 2021-06-21 10:30:00</span></span>
+<span id="cb194-12"><a href="dplyr.html#cb194-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 21.06.202… &quot;In Jugendeinrichtung randa… Ereignisort: Spa… 2021-06-21 09:55:00</span></span>
+<span id="cb194-13"><a href="dplyr.html#cb194-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 20.06.202… &quot;Mehrere Verletzte nach Mes… Ereignisort: Fri… 2021-06-20 13:30:00</span></span>
+<span id="cb194-14"><a href="dplyr.html#cb194-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 20.06.202… &quot;Gemeinsame Meldung mit der… Ereignisort: Mit… 2021-06-20 12:12:00</span></span>
+<span id="cb194-15"><a href="dplyr.html#cb194-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 20.06.202… &quot;Senior mit Fahrrad gestürz… Ereignisort: Spa… 2021-06-20 11:21:00</span></span>
+<span id="cb194-16"><a href="dplyr.html#cb194-16" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 16,688 more rows</span></span></code></pre></div>
+<p>Later we will do some analysis by year, month, weekday and time of day.
+Lubridate includes functions that extract the subparts of date and time data.</p>
+<p><code>year()</code> extracts the year, <code>month()</code> the month and <code>wday()</code> the day of the
+week. The argument <code>label = TRUE</code> tells the function to use the names of months
+and days instead of a numerical value ranging from <span class="math inline">\(1\)</span> to <span class="math inline">\(12\)</span> and <span class="math inline">\(1\)</span> to <span class="math inline">\(7\)</span>
+respectively.</p>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="dplyr.html#cb195-1" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span> </span>
+<span id="cb195-2"><a href="dplyr.html#cb195-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date_cmpl =</span> <span class="fu">dmy_hm</span>(Date)) <span class="sc">%&gt;%</span> </span>
+<span id="cb195-3"><a href="dplyr.html#cb195-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">year</span>(date_cmpl)) <span class="sc">%&gt;%</span> </span>
+<span id="cb195-4"><a href="dplyr.html#cb195-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">month =</span> <span class="fu">month</span>(date_cmpl, <span class="at">label =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb195-5"><a href="dplyr.html#cb195-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">day =</span> <span class="fu">wday</span>(date_cmpl, <span class="at">label =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb195-6"><a href="dplyr.html#cb195-6" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 16,698 x 7</span></span>
+<span id="cb195-7"><a href="dplyr.html#cb195-7" aria-hidden="true" tabindex="-1"></a><span class="do">##    Date     Report            District     date_cmpl            year month day  </span></span>
+<span id="cb195-8"><a href="dplyr.html#cb195-8" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;    &lt;chr&gt;             &lt;chr&gt;        &lt;dttm&gt;              &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt;</span></span>
+<span id="cb195-9"><a href="dplyr.html#cb195-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 21.06.2… &quot;Nach Hausfriede… Ereignisort… 2021-06-21 15:17:00  2021 Jun   Mo   </span></span>
+<span id="cb195-10"><a href="dplyr.html#cb195-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 21.06.2… &quot;Marzena MÄRZ ve… Ereignisort… 2021-06-21 13:35:00  2021 Jun   Mo   </span></span>
+<span id="cb195-11"><a href="dplyr.html#cb195-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 21.06.2… &quot;Mehrere Verletz… Ereignisort… 2021-06-21 13:19:00  2021 Jun   Mo   </span></span>
+<span id="cb195-12"><a href="dplyr.html#cb195-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 21.06.2… &quot;Streit eskalier… Ereignisort… 2021-06-21 13:17:00  2021 Jun   Mo   </span></span>
+<span id="cb195-13"><a href="dplyr.html#cb195-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 21.06.2… &quot;Fünf Verletzte … Ereignisort… 2021-06-21 10:41:00  2021 Jun   Mo   </span></span>
+<span id="cb195-14"><a href="dplyr.html#cb195-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 21.06.2… &quot;Zivilstreife st… Ereignisort… 2021-06-21 10:30:00  2021 Jun   Mo   </span></span>
+<span id="cb195-15"><a href="dplyr.html#cb195-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 21.06.2… &quot;In Jugendeinric… Ereignisort… 2021-06-21 09:55:00  2021 Jun   Mo   </span></span>
+<span id="cb195-16"><a href="dplyr.html#cb195-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 20.06.2… &quot;Mehrere Verletz… Ereignisort… 2021-06-20 13:30:00  2021 Jun   So   </span></span>
+<span id="cb195-17"><a href="dplyr.html#cb195-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 20.06.2… &quot;Gemeinsame Meld… Ereignisort… 2021-06-20 12:12:00  2021 Jun   So   </span></span>
+<span id="cb195-18"><a href="dplyr.html#cb195-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 20.06.2… &quot;Senior mit Fahr… Ereignisort… 2021-06-20 11:21:00  2021 Jun   So   </span></span>
+<span id="cb195-19"><a href="dplyr.html#cb195-19" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 16,688 more rows</span></span></code></pre></div>
+<p>To extract the time of day, we first have to extract the substring of “Date”
+that contains the time and then apply the lubridate function <code>hm()</code> to it.</p>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="dplyr.html#cb196-1" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span> </span>
+<span id="cb196-2"><a href="dplyr.html#cb196-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time =</span> </span>
+<span id="cb196-3"><a href="dplyr.html#cb196-3" aria-hidden="true" tabindex="-1"></a>           <span class="fu">substr</span>(Date, <span class="dv">12</span>, <span class="fu">length</span>(Date)) <span class="sc">%&gt;%</span> </span>
+<span id="cb196-4"><a href="dplyr.html#cb196-4" aria-hidden="true" tabindex="-1"></a>           <span class="fu">hm</span>()</span>
+<span id="cb196-5"><a href="dplyr.html#cb196-5" aria-hidden="true" tabindex="-1"></a>         )</span>
+<span id="cb196-6"><a href="dplyr.html#cb196-6" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 16,698 x 4</span></span>
+<span id="cb196-7"><a href="dplyr.html#cb196-7" aria-hidden="true" tabindex="-1"></a><span class="do">##    Date        Report                             District            time      </span></span>
+<span id="cb196-8"><a href="dplyr.html#cb196-8" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;       &lt;chr&gt;                              &lt;chr&gt;               &lt;Period&gt;  </span></span>
+<span id="cb196-9"><a href="dplyr.html#cb196-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 21.06.2021… &quot;Nach Hausfriedensbruch Widerstan… Ereignisort: Marza… 15H 17M 0S</span></span>
+<span id="cb196-10"><a href="dplyr.html#cb196-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 21.06.2021… &quot;Marzena MÄRZ vermisst – Polizei … Ereignisort: Reini… 13H 35M 0S</span></span>
+<span id="cb196-11"><a href="dplyr.html#cb196-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 21.06.2021… &quot;Mehrere Verletzte nach Schüssen … Ereignisort: Mitte  13H 19M 0S</span></span>
+<span id="cb196-12"><a href="dplyr.html#cb196-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 21.06.2021… &quot;Streit eskalierte&quot;                Ereignisort: Licht… 13H 17M 0S</span></span>
+<span id="cb196-13"><a href="dplyr.html#cb196-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 21.06.2021… &quot;Fünf Verletzte bei Unfall &quot;       Ereignisort: Tempe… 10H 41M 0S</span></span>
+<span id="cb196-14"><a href="dplyr.html#cb196-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 21.06.2021… &quot;Zivilstreife stoppt Raser&quot;        Ereignisort: Charl… 10H 30M 0S</span></span>
+<span id="cb196-15"><a href="dplyr.html#cb196-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 21.06.2021… &quot;In Jugendeinrichtung randaliert … Ereignisort: Spand… 9H 55M 0S </span></span>
+<span id="cb196-16"><a href="dplyr.html#cb196-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 20.06.2021… &quot;Mehrere Verletzte nach Messerang… Ereignisort: Fried… 13H 30M 0S</span></span>
+<span id="cb196-17"><a href="dplyr.html#cb196-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 20.06.2021… &quot;Gemeinsame Meldung mit der Staat… Ereignisort: Mitte  12H 12M 0S</span></span>
+<span id="cb196-18"><a href="dplyr.html#cb196-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 20.06.2021… &quot;Senior mit Fahrrad gestürzt und … Ereignisort: Spand… 11H 21M 0S</span></span>
+<span id="cb196-19"><a href="dplyr.html#cb196-19" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 16,688 more rows</span></span></code></pre></div>
+<p>We can combine all these individual steps in one pipe and apply them to the
+object <code>reports</code>.</p>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="dplyr.html#cb197-1" aria-hidden="true" tabindex="-1"></a>reports <span class="ot">&lt;-</span> reports <span class="sc">%&gt;%</span> </span>
+<span id="cb197-2"><a href="dplyr.html#cb197-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">District =</span> <span class="fu">substr</span>(District, <span class="dv">14</span>, <span class="fu">length</span>(District))) <span class="sc">%&gt;%</span> </span>
+<span id="cb197-3"><a href="dplyr.html#cb197-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date_cmpl =</span> <span class="fu">dmy_hm</span>(Date)) <span class="sc">%&gt;%</span> </span>
+<span id="cb197-4"><a href="dplyr.html#cb197-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">year</span>(date_cmpl)) <span class="sc">%&gt;%</span> </span>
+<span id="cb197-5"><a href="dplyr.html#cb197-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">month =</span> <span class="fu">month</span>(date_cmpl, <span class="at">label =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb197-6"><a href="dplyr.html#cb197-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">day =</span> <span class="fu">wday</span>(date_cmpl, <span class="at">label =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb197-7"><a href="dplyr.html#cb197-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time =</span> </span>
+<span id="cb197-8"><a href="dplyr.html#cb197-8" aria-hidden="true" tabindex="-1"></a>           <span class="fu">substr</span>(Date, <span class="dv">12</span>, <span class="fu">length</span>(Date)) <span class="sc">%&gt;%</span> </span>
+<span id="cb197-9"><a href="dplyr.html#cb197-9" aria-hidden="true" tabindex="-1"></a>           <span class="fu">hm</span>()</span>
+<span id="cb197-10"><a href="dplyr.html#cb197-10" aria-hidden="true" tabindex="-1"></a>         )</span>
+<span id="cb197-11"><a href="dplyr.html#cb197-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb197-12"><a href="dplyr.html#cb197-12" aria-hidden="true" tabindex="-1"></a>reports</span>
+<span id="cb197-13"><a href="dplyr.html#cb197-13" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 16,698 x 8</span></span>
+<span id="cb197-14"><a href="dplyr.html#cb197-14" aria-hidden="true" tabindex="-1"></a><span class="do">##    Date    Report     District  date_cmpl            year month day   time      </span></span>
+<span id="cb197-15"><a href="dplyr.html#cb197-15" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;     &lt;dttm&gt;              &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt; &lt;Period&gt;  </span></span>
+<span id="cb197-16"><a href="dplyr.html#cb197-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 21.06.… &quot;Nach Hau… Marzahn-… 2021-06-21 15:17:00  2021 Jun   Mo    15H 17M 0S</span></span>
+<span id="cb197-17"><a href="dplyr.html#cb197-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 21.06.… &quot;Marzena … Reinicke… 2021-06-21 13:35:00  2021 Jun   Mo    13H 35M 0S</span></span>
+<span id="cb197-18"><a href="dplyr.html#cb197-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 21.06.… &quot;Mehrere … Mitte     2021-06-21 13:19:00  2021 Jun   Mo    13H 19M 0S</span></span>
+<span id="cb197-19"><a href="dplyr.html#cb197-19" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 21.06.… &quot;Streit e… Lichtenb… 2021-06-21 13:17:00  2021 Jun   Mo    13H 17M 0S</span></span>
+<span id="cb197-20"><a href="dplyr.html#cb197-20" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 21.06.… &quot;Fünf Ver… Tempelho… 2021-06-21 10:41:00  2021 Jun   Mo    10H 41M 0S</span></span>
+<span id="cb197-21"><a href="dplyr.html#cb197-21" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 21.06.… &quot;Zivilstr… Charlott… 2021-06-21 10:30:00  2021 Jun   Mo    10H 30M 0S</span></span>
+<span id="cb197-22"><a href="dplyr.html#cb197-22" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 21.06.… &quot;In Jugen… Spandau   2021-06-21 09:55:00  2021 Jun   Mo    9H 55M 0S </span></span>
+<span id="cb197-23"><a href="dplyr.html#cb197-23" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 20.06.… &quot;Mehrere … Friedric… 2021-06-20 13:30:00  2021 Jun   So    13H 30M 0S</span></span>
+<span id="cb197-24"><a href="dplyr.html#cb197-24" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 20.06.… &quot;Gemeinsa… Mitte     2021-06-20 12:12:00  2021 Jun   So    12H 12M 0S</span></span>
+<span id="cb197-25"><a href="dplyr.html#cb197-25" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 20.06.… &quot;Senior m… Spandau   2021-06-20 11:21:00  2021 Jun   So    11H 21M 0S</span></span>
+<span id="cb197-26"><a href="dplyr.html#cb197-26" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 16,688 more rows</span></span></code></pre></div>
+</div>
+</div>
+<div id="select" class="section level2" number="11.2">
+<h2><span class="header-section-number">11.2</span> <code>select()</code></h2>
+<p>As we have already extracted all we need from the “Date” column and we will not
+work with the “Report” column in this chapter, we should remove both from the
+tibble to keep the tibble neat and free of clutter. For this we can use the
+function <code>select()</code>. It takes the data as its first argument – here provided by
+the pipe – and one or several names of columns that should be kept. If columns
+foolow after each other in order, we can also use a “from:to” notation to safe
+typing.</p>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="dplyr.html#cb198-1" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span> </span>
+<span id="cb198-2"><a href="dplyr.html#cb198-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(District, date_cmpl, year, month, day, time)</span>
+<span id="cb198-3"><a href="dplyr.html#cb198-3" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 16,698 x 6</span></span>
+<span id="cb198-4"><a href="dplyr.html#cb198-4" aria-hidden="true" tabindex="-1"></a><span class="do">##    District                   date_cmpl            year month day   time      </span></span>
+<span id="cb198-5"><a href="dplyr.html#cb198-5" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                      &lt;dttm&gt;              &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt; &lt;Period&gt;  </span></span>
+<span id="cb198-6"><a href="dplyr.html#cb198-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Marzahn-Hellersdorf        2021-06-21 15:17:00  2021 Jun   Mo    15H 17M 0S</span></span>
+<span id="cb198-7"><a href="dplyr.html#cb198-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Reinickendorf              2021-06-21 13:35:00  2021 Jun   Mo    13H 35M 0S</span></span>
+<span id="cb198-8"><a href="dplyr.html#cb198-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Mitte                      2021-06-21 13:19:00  2021 Jun   Mo    13H 19M 0S</span></span>
+<span id="cb198-9"><a href="dplyr.html#cb198-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Lichtenberg                2021-06-21 13:17:00  2021 Jun   Mo    13H 17M 0S</span></span>
+<span id="cb198-10"><a href="dplyr.html#cb198-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Tempelhof-Schöneberg       2021-06-21 10:41:00  2021 Jun   Mo    10H 41M 0S</span></span>
+<span id="cb198-11"><a href="dplyr.html#cb198-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Charlottenburg-Wilmersdorf 2021-06-21 10:30:00  2021 Jun   Mo    10H 30M 0S</span></span>
+<span id="cb198-12"><a href="dplyr.html#cb198-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Spandau                    2021-06-21 09:55:00  2021 Jun   Mo    9H 55M 0S </span></span>
+<span id="cb198-13"><a href="dplyr.html#cb198-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Friedrichshain-Kreuzberg   2021-06-20 13:30:00  2021 Jun   So    13H 30M 0S</span></span>
+<span id="cb198-14"><a href="dplyr.html#cb198-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Mitte                      2021-06-20 12:12:00  2021 Jun   So    12H 12M 0S</span></span>
+<span id="cb198-15"><a href="dplyr.html#cb198-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Spandau                    2021-06-20 11:21:00  2021 Jun   So    11H 21M 0S</span></span>
+<span id="cb198-16"><a href="dplyr.html#cb198-16" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 16,688 more rows</span></span>
+<span id="cb198-17"><a href="dplyr.html#cb198-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb198-18"><a href="dplyr.html#cb198-18" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span> </span>
+<span id="cb198-19"><a href="dplyr.html#cb198-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(District<span class="sc">:</span>time)</span>
+<span id="cb198-20"><a href="dplyr.html#cb198-20" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 16,698 x 6</span></span>
+<span id="cb198-21"><a href="dplyr.html#cb198-21" aria-hidden="true" tabindex="-1"></a><span class="do">##    District                   date_cmpl            year month day   time      </span></span>
+<span id="cb198-22"><a href="dplyr.html#cb198-22" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                      &lt;dttm&gt;              &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt; &lt;Period&gt;  </span></span>
+<span id="cb198-23"><a href="dplyr.html#cb198-23" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Marzahn-Hellersdorf        2021-06-21 15:17:00  2021 Jun   Mo    15H 17M 0S</span></span>
+<span id="cb198-24"><a href="dplyr.html#cb198-24" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Reinickendorf              2021-06-21 13:35:00  2021 Jun   Mo    13H 35M 0S</span></span>
+<span id="cb198-25"><a href="dplyr.html#cb198-25" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Mitte                      2021-06-21 13:19:00  2021 Jun   Mo    13H 19M 0S</span></span>
+<span id="cb198-26"><a href="dplyr.html#cb198-26" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Lichtenberg                2021-06-21 13:17:00  2021 Jun   Mo    13H 17M 0S</span></span>
+<span id="cb198-27"><a href="dplyr.html#cb198-27" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Tempelhof-Schöneberg       2021-06-21 10:41:00  2021 Jun   Mo    10H 41M 0S</span></span>
+<span id="cb198-28"><a href="dplyr.html#cb198-28" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Charlottenburg-Wilmersdorf 2021-06-21 10:30:00  2021 Jun   Mo    10H 30M 0S</span></span>
+<span id="cb198-29"><a href="dplyr.html#cb198-29" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Spandau                    2021-06-21 09:55:00  2021 Jun   Mo    9H 55M 0S </span></span>
+<span id="cb198-30"><a href="dplyr.html#cb198-30" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Friedrichshain-Kreuzberg   2021-06-20 13:30:00  2021 Jun   So    13H 30M 0S</span></span>
+<span id="cb198-31"><a href="dplyr.html#cb198-31" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Mitte                      2021-06-20 12:12:00  2021 Jun   So    12H 12M 0S</span></span>
+<span id="cb198-32"><a href="dplyr.html#cb198-32" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Spandau                    2021-06-20 11:21:00  2021 Jun   So    11H 21M 0S</span></span>
+<span id="cb198-33"><a href="dplyr.html#cb198-33" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 16,688 more rows</span></span></code></pre></div>
+<p>Instead of telling <code>select()</code> which columns we want to keep, we can also tell it
+which not to keep by adding a <code>-</code> before the column names. For this last example
+of using <code>select()</code> we will assign the result to <code>reports</code>.</p>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="dplyr.html#cb199-1" aria-hidden="true" tabindex="-1"></a>reports <span class="ot">&lt;-</span> reports <span class="sc">%&gt;%</span> </span>
+<span id="cb199-2"><a href="dplyr.html#cb199-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(Date, Report))</span>
+<span id="cb199-3"><a href="dplyr.html#cb199-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb199-4"><a href="dplyr.html#cb199-4" aria-hidden="true" tabindex="-1"></a>reports</span>
+<span id="cb199-5"><a href="dplyr.html#cb199-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 16,698 x 6</span></span>
+<span id="cb199-6"><a href="dplyr.html#cb199-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    District                   date_cmpl            year month day   time      </span></span>
+<span id="cb199-7"><a href="dplyr.html#cb199-7" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                      &lt;dttm&gt;              &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt; &lt;Period&gt;  </span></span>
+<span id="cb199-8"><a href="dplyr.html#cb199-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Marzahn-Hellersdorf        2021-06-21 15:17:00  2021 Jun   Mo    15H 17M 0S</span></span>
+<span id="cb199-9"><a href="dplyr.html#cb199-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Reinickendorf              2021-06-21 13:35:00  2021 Jun   Mo    13H 35M 0S</span></span>
+<span id="cb199-10"><a href="dplyr.html#cb199-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Mitte                      2021-06-21 13:19:00  2021 Jun   Mo    13H 19M 0S</span></span>
+<span id="cb199-11"><a href="dplyr.html#cb199-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Lichtenberg                2021-06-21 13:17:00  2021 Jun   Mo    13H 17M 0S</span></span>
+<span id="cb199-12"><a href="dplyr.html#cb199-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Tempelhof-Schöneberg       2021-06-21 10:41:00  2021 Jun   Mo    10H 41M 0S</span></span>
+<span id="cb199-13"><a href="dplyr.html#cb199-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Charlottenburg-Wilmersdorf 2021-06-21 10:30:00  2021 Jun   Mo    10H 30M 0S</span></span>
+<span id="cb199-14"><a href="dplyr.html#cb199-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Spandau                    2021-06-21 09:55:00  2021 Jun   Mo    9H 55M 0S </span></span>
+<span id="cb199-15"><a href="dplyr.html#cb199-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Friedrichshain-Kreuzberg   2021-06-20 13:30:00  2021 Jun   So    13H 30M 0S</span></span>
+<span id="cb199-16"><a href="dplyr.html#cb199-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Mitte                      2021-06-20 12:12:00  2021 Jun   So    12H 12M 0S</span></span>
+<span id="cb199-17"><a href="dplyr.html#cb199-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Spandau                    2021-06-20 11:21:00  2021 Jun   So    11H 21M 0S</span></span>
+<span id="cb199-18"><a href="dplyr.html#cb199-18" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 16,688 more rows</span></span></code></pre></div>
+</div>
+<div id="rename" class="section level2" number="11.3">
+<h2><span class="header-section-number">11.3</span> <code>rename()</code></h2>
+<p>As you may have noticed, all newly created columns are written in lower case
+while “District” begins with an upper case letter. We may want to rename this
+column to a lower case name – or all the other to upper case names, depending
+on your preference.</p>
+<p>One approach to renaming is using the function <code>rename()</code> from dplyr. The
+function takes the data to applied to as its first argument – passed by the
+pipe in this case – followed by one or more arguments in the form
+<code>new_name = old_name</code>.</p>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="dplyr.html#cb200-1" aria-hidden="true" tabindex="-1"></a>reports <span class="ot">&lt;-</span> reports <span class="sc">%&gt;%</span> </span>
+<span id="cb200-2"><a href="dplyr.html#cb200-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">district =</span> District)</span>
+<span id="cb200-3"><a href="dplyr.html#cb200-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb200-4"><a href="dplyr.html#cb200-4" aria-hidden="true" tabindex="-1"></a>reports</span>
+<span id="cb200-5"><a href="dplyr.html#cb200-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 16,698 x 6</span></span>
+<span id="cb200-6"><a href="dplyr.html#cb200-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    district                   date_cmpl            year month day   time      </span></span>
+<span id="cb200-7"><a href="dplyr.html#cb200-7" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                      &lt;dttm&gt;              &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt; &lt;Period&gt;  </span></span>
+<span id="cb200-8"><a href="dplyr.html#cb200-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Marzahn-Hellersdorf        2021-06-21 15:17:00  2021 Jun   Mo    15H 17M 0S</span></span>
+<span id="cb200-9"><a href="dplyr.html#cb200-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Reinickendorf              2021-06-21 13:35:00  2021 Jun   Mo    13H 35M 0S</span></span>
+<span id="cb200-10"><a href="dplyr.html#cb200-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Mitte                      2021-06-21 13:19:00  2021 Jun   Mo    13H 19M 0S</span></span>
+<span id="cb200-11"><a href="dplyr.html#cb200-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Lichtenberg                2021-06-21 13:17:00  2021 Jun   Mo    13H 17M 0S</span></span>
+<span id="cb200-12"><a href="dplyr.html#cb200-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Tempelhof-Schöneberg       2021-06-21 10:41:00  2021 Jun   Mo    10H 41M 0S</span></span>
+<span id="cb200-13"><a href="dplyr.html#cb200-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Charlottenburg-Wilmersdorf 2021-06-21 10:30:00  2021 Jun   Mo    10H 30M 0S</span></span>
+<span id="cb200-14"><a href="dplyr.html#cb200-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Spandau                    2021-06-21 09:55:00  2021 Jun   Mo    9H 55M 0S </span></span>
+<span id="cb200-15"><a href="dplyr.html#cb200-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Friedrichshain-Kreuzberg   2021-06-20 13:30:00  2021 Jun   So    13H 30M 0S</span></span>
+<span id="cb200-16"><a href="dplyr.html#cb200-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Mitte                      2021-06-20 12:12:00  2021 Jun   So    12H 12M 0S</span></span>
+<span id="cb200-17"><a href="dplyr.html#cb200-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Spandau                    2021-06-20 11:21:00  2021 Jun   So    11H 21M 0S</span></span>
+<span id="cb200-18"><a href="dplyr.html#cb200-18" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 16,688 more rows</span></span></code></pre></div>
+</div>
+<div id="filter" class="section level2" number="11.4">
+<h2><span class="header-section-number">11.4</span> <code>filter()</code></h2>
+<p>Some of our analysis require complete years in our data. If we want to compare
+the police reports by year, it makes no sense to compare the numbers for a
+ongoing year with those that are complete, as the former obviously will have
+fewer reports. Incomplete years would also impact analysis by month, as some
+months will have more observations than others. For these reasons we should
+filter complete years from our data, at least for analysis by year and month.</p>
+<p>To filter on the observations we need and drop the remainder, we can use the
+function <code>filter()</code>. As always in tidyverse functions, it takes the data to be
+filtered as its first argument and one or multiple expressions that specify the
+rules by which to filter. To write these expressions, we can make use of the
+comparison operators discussed in subchapter <a href="R1.html#comparison">2.3.2</a>.</p>
+<p>To filter for all years that are not 2021, we can write:</p>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="dplyr.html#cb201-1" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span> </span>
+<span id="cb201-2"><a href="dplyr.html#cb201-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">!=</span> <span class="dv">2021</span>)</span>
+<span id="cb201-3"><a href="dplyr.html#cb201-3" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 15,480 x 6</span></span>
+<span id="cb201-4"><a href="dplyr.html#cb201-4" aria-hidden="true" tabindex="-1"></a><span class="do">##    district                   date_cmpl            year month day   time      </span></span>
+<span id="cb201-5"><a href="dplyr.html#cb201-5" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                      &lt;dttm&gt;              &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt; &lt;Period&gt;  </span></span>
+<span id="cb201-6"><a href="dplyr.html#cb201-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Lichtenberg                2020-12-31 14:13:00  2020 Dez   Do    14H 13M 0S</span></span>
+<span id="cb201-7"><a href="dplyr.html#cb201-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Charlottenburg-Wilmersdorf 2020-12-31 14:06:00  2020 Dez   Do    14H 6M 0S </span></span>
+<span id="cb201-8"><a href="dplyr.html#cb201-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Neukölln                   2020-12-31 13:31:00  2020 Dez   Do    13H 31M 0S</span></span>
+<span id="cb201-9"><a href="dplyr.html#cb201-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Tempelhof-Schöneberg       2020-12-31 11:33:00  2020 Dez   Do    11H 33M 0S</span></span>
+<span id="cb201-10"><a href="dplyr.html#cb201-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Marzahn-Hellersdorf        2020-12-31 11:26:00  2020 Dez   Do    11H 26M 0S</span></span>
+<span id="cb201-11"><a href="dplyr.html#cb201-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Neukölln                   2020-12-31 11:05:00  2020 Dez   Do    11H 5M 0S </span></span>
+<span id="cb201-12"><a href="dplyr.html#cb201-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Steglitz-Zehlendorf        2020-12-31 11:00:00  2020 Dez   Do    11H 0M 0S </span></span>
+<span id="cb201-13"><a href="dplyr.html#cb201-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Treptow-Köpenick           2020-12-31 10:58:00  2020 Dez   Do    10H 58M 0S</span></span>
+<span id="cb201-14"><a href="dplyr.html#cb201-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Neukölln                   2020-12-30 15:51:00  2020 Dez   Mi    15H 51M 0S</span></span>
+<span id="cb201-15"><a href="dplyr.html#cb201-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Mitte                      2020-12-30 13:10:00  2020 Dez   Mi    13H 10M 0S</span></span>
+<span id="cb201-16"><a href="dplyr.html#cb201-16" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 15,470 more rows</span></span></code></pre></div>
+<p>Thus only the observations where “year” does not equal “2021” remain in the
+tibble. Or in other words, those observations for whom the expression
+<code>year != 2021</code> is returned as <code>TRUE</code>.</p>
+<p>Closer inspection of the data reveals, that 2014 (the first year that was
+available on the website) is not complete as well. Also there seems to be one
+single report for 2013. We should also exclude these years for analysis that
+requires complete years. We can chain multiple expressions when using <code>filter()</code>
+separated by commas.</p>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="dplyr.html#cb202-1" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span> </span>
+<span id="cb202-2"><a href="dplyr.html#cb202-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">!=</span> <span class="dv">2021</span>, year <span class="sc">!=</span> <span class="dv">2014</span>, year <span class="sc">!=</span> <span class="dv">2013</span>)</span>
+<span id="cb202-3"><a href="dplyr.html#cb202-3" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 14,777 x 6</span></span>
+<span id="cb202-4"><a href="dplyr.html#cb202-4" aria-hidden="true" tabindex="-1"></a><span class="do">##    district                   date_cmpl            year month day   time      </span></span>
+<span id="cb202-5"><a href="dplyr.html#cb202-5" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                      &lt;dttm&gt;              &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt; &lt;Period&gt;  </span></span>
+<span id="cb202-6"><a href="dplyr.html#cb202-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Lichtenberg                2020-12-31 14:13:00  2020 Dez   Do    14H 13M 0S</span></span>
+<span id="cb202-7"><a href="dplyr.html#cb202-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Charlottenburg-Wilmersdorf 2020-12-31 14:06:00  2020 Dez   Do    14H 6M 0S </span></span>
+<span id="cb202-8"><a href="dplyr.html#cb202-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Neukölln                   2020-12-31 13:31:00  2020 Dez   Do    13H 31M 0S</span></span>
+<span id="cb202-9"><a href="dplyr.html#cb202-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Tempelhof-Schöneberg       2020-12-31 11:33:00  2020 Dez   Do    11H 33M 0S</span></span>
+<span id="cb202-10"><a href="dplyr.html#cb202-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Marzahn-Hellersdorf        2020-12-31 11:26:00  2020 Dez   Do    11H 26M 0S</span></span>
+<span id="cb202-11"><a href="dplyr.html#cb202-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Neukölln                   2020-12-31 11:05:00  2020 Dez   Do    11H 5M 0S </span></span>
+<span id="cb202-12"><a href="dplyr.html#cb202-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Steglitz-Zehlendorf        2020-12-31 11:00:00  2020 Dez   Do    11H 0M 0S </span></span>
+<span id="cb202-13"><a href="dplyr.html#cb202-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Treptow-Köpenick           2020-12-31 10:58:00  2020 Dez   Do    10H 58M 0S</span></span>
+<span id="cb202-14"><a href="dplyr.html#cb202-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Neukölln                   2020-12-30 15:51:00  2020 Dez   Mi    15H 51M 0S</span></span>
+<span id="cb202-15"><a href="dplyr.html#cb202-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Mitte                      2020-12-30 13:10:00  2020 Dez   Mi    13H 10M 0S</span></span>
+<span id="cb202-16"><a href="dplyr.html#cb202-16" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 14,767 more rows</span></span></code></pre></div>
+<p>Often there are multiple ways to formulate the expressions on which to filter.
+Here, we could tell R which values for “year” we want to keep instead of which
+we do not want to keep. Instead of listing all those individual year, we can use
+<code>%in%</code> to define a range of numerical values which should be kept when
+filtering. We save the result to a new object for later use.</p>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="dplyr.html#cb203-1" aria-hidden="true" tabindex="-1"></a>reports_fyears <span class="ot">&lt;-</span> reports <span class="sc">%&gt;%</span> </span>
+<span id="cb203-2"><a href="dplyr.html#cb203-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">%in%</span> <span class="dv">2015</span><span class="sc">:</span><span class="dv">2020</span>)</span></code></pre></div>
+<p>While the <code>,</code> behaves like the logical operator <code>&amp;</code>, we can also use <code>|</code> for
+“or” when combining expressions to be filtered upon.</p>
+</div>
 <div id="summarise-group_by" class="section level2" number="11.5">
 <h2><span class="header-section-number">11.5</span> <code>summarise()</code> &amp; <code>group_by()</code></h2>
-<p><code>summarise()</code> can be used to calculate summary statistics for a whole tibble.
-The syntax is similar to <code>mutate()</code>. Let us compute the total number of persons
-eligible to vote:</p>
-<pre><code>exmpl_tbl %&gt;% 
-summarise(eligible_total = sum(eligible))</code></pre>
-<p>As you can see, the result is a new tibble, containing only the summary
-statistics we requested.</p>
-<p>We also can compute multiple summary statistics in one step. Please note, that
-the overall mean for turnout percentage can be computed as the mean of the
-turnout percentages per group in this case only because all four groups are
-exactly of the same size (<span class="math inline">\(n = 100000\)</span>). We will later look into computing the
-same measure with our real data.</p>
-<pre><code>exmpl_tbl %&gt;% 
-  summarise(
-    eligible_total = sum(eligible),
-    turnout_total = sum(turnout),
-    turnout_pct_mean = mean(turnout_pct)
-  )</code></pre>
-<p>Often we are interested in summaries grouped by the value of one or more other
-variables. We might be interested in computing these summary statistics not for
-the complete tibble but by gender. For this purpose, we can group the data by
-the gender column using <code>group_by()</code> and then compute the summary statistics
-separately for each group. As always with dplyr functions, <code>group_by()</code> needs
-the data that shall be grouped as the first argument, followed by one or
-multiple variables to group by.</p>
-<pre><code>exmpl_tbl %&gt;% 
-  group_by(gender) %&gt;% 
-  summarise(
-    eligible_total = sum(eligible),
-    turnout_total = sum(turnout),
-    turnout_pct_mean = mean(turnout_pct)
-  )</code></pre>
-<p>Let us create a final example, with two variables to group by. Let us assume
-we have the turnout percentages by gender and age group for two elections. We
-also again assume the same group size, i.e. the same “n”, for all observations.</p>
-<pre><code>exmpl_tbl_2 &lt;- tibble(
-  election = c(1, 1, 1, 1, 2, 2, 2, 2),
-  gender = c(&quot;m&quot;, &quot;m&quot;, &quot;w&quot;, &quot;w&quot;, &quot;m&quot;, &quot;m&quot;, &quot;w&quot;, &quot;w&quot;),
-  ybirth = c(&quot;1993 - 1999&quot;, &quot;1983 - 1992&quot;, &quot;1993 - 1999&quot;, &quot;1983 - 1992&quot;, &quot;1993 - 1999&quot;, &quot;1983 - 1992&quot;, &quot;1993 - 1999&quot;, &quot;1983 - 1992&quot;),
-  turnout_pct = c(0.6, 0.55, 0.75, 0.625, 0.7, 0.65, 0.85, 0.725)
-)
-
-exmpl_tbl_2</code></pre>
-<p>To compute the mean turnout percentages by gender for each election separately,
-we can group by election and gender.</p>
-<pre><code>exmpl_tbl_2 %&gt;% 
-  group_by(election, gender) %&gt;% 
-  summarise(
-    turnout_pct_mean = mean(turnout_pct)
-  )</code></pre>
-<p>There is a peculiarity to the way <code>group_by()</code> works with <code>summarise()</code> that can
-cause headaches, if we are not aware of it. In general any <code>summarise()</code>
-function following a <code>group_by()</code> will calculate the summary statistic and then
-remove one level of grouping. In the examples where we only had one level of
-grouping, this essentially meant, that the data was ungrouped after
-<code>summarise()</code>. In the last example we had two levels of grouping. So after the
-computation of the mean turnout percentage by <code>election</code> and <code>gender</code>, the
-grouping by <code>gender</code> was removed, but the grouping by <code>election</code> remained in
-effect. We can see this in the output, where R informs us about the column by
-which the data is grouped and the number of groups in the output:
-<code>## # Groups:   election [2]</code>. Another <code>summarise()</code> function would compute the
-statistic by <code>election</code> and then remove this level also. We can also use
+<p>We can now begin with computing some basic summary statistics for our data. We
+should note though, that we do not knoow how the data we scraped is actually
+created. Do the dates and times on the website refer to the instance in time
+when a crime occurred – there are indications that this is not the case –,
+when a report was filed or even when the PR team of the Berlin police uploaded
+the report to the website – which might even be the most plausible scenario?
+Also, are all crimes reported on this website – the daily numbers are too low
+for this to be the case – or is there an internal selection process? And if so,
+on what criteria does the selection occur? If this was a real research project
+we absolutely would need to gain clarity on these and many other questions,
+before we even begin with collecting the data. We do not have clarity here, but
+we have to keep in mind that we may not analyse the statistical distribution of
+crimes in Berlin but rather the working practice of the PR team.</p>
+<div id="number-of-reports-by-groups" class="section level3" number="11.5.1">
+<h3><span class="header-section-number">11.5.1</span> Number of reports by groups</h3>
+<p>The dplyr function <code>summarise()</code> can be used to calculate summary statistics for
+a whole tibble; the syntax being similar to <code>mutate()</code>. The result is a new
+tibble, containing only the summary statistics we requested. Often we are
+interested in summaries grouped by the value of one or more other variables. We
+might ask ourselves, if there are differences in the number of released police
+reports by year. For this purpose, we can group the data by the values of the
+“year” column using <code>group_by()</code> and then compute the summary statistics
+separately for each group. The function we use for the summary statistic here is
+<code>n()</code>, which returns the size of each group. As each observation represents one
+police report, the group size equals the number of reports. As always with dplyr
+functions, <code>group_by()</code> needs the data that shall be grouped as the first
+argument, followed by one or multiple columns to group by.</p>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="dplyr.html#cb204-1" aria-hidden="true" tabindex="-1"></a>reports_fyears <span class="sc">%&gt;%</span> </span>
+<span id="cb204-2"><a href="dplyr.html#cb204-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span> </span>
+<span id="cb204-3"><a href="dplyr.html#cb204-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">reports =</span> <span class="fu">n</span>())</span>
+<span id="cb204-4"><a href="dplyr.html#cb204-4" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 6 x 2</span></span>
+<span id="cb204-5"><a href="dplyr.html#cb204-5" aria-hidden="true" tabindex="-1"></a><span class="do">##    year reports</span></span>
+<span id="cb204-6"><a href="dplyr.html#cb204-6" aria-hidden="true" tabindex="-1"></a><span class="do">## * &lt;dbl&gt;   &lt;int&gt;</span></span>
+<span id="cb204-7"><a href="dplyr.html#cb204-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1  2015    2369</span></span>
+<span id="cb204-8"><a href="dplyr.html#cb204-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 2  2016    2625</span></span>
+<span id="cb204-9"><a href="dplyr.html#cb204-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 3  2017    2232</span></span>
+<span id="cb204-10"><a href="dplyr.html#cb204-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 4  2018    2343</span></span>
+<span id="cb204-11"><a href="dplyr.html#cb204-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 5  2019    2622</span></span>
+<span id="cb204-12"><a href="dplyr.html#cb204-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 6  2020    2586</span></span></code></pre></div>
+<p>While there are differences between the years, there does not seem to be a
+systematic pattern to it. We can do the same kind of analysis grouped by months
+and weekdays.</p>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="dplyr.html#cb205-1" aria-hidden="true" tabindex="-1"></a>reports_fyears <span class="sc">%&gt;%</span> </span>
+<span id="cb205-2"><a href="dplyr.html#cb205-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(month) <span class="sc">%&gt;%</span> </span>
+<span id="cb205-3"><a href="dplyr.html#cb205-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">reports =</span> <span class="fu">n</span>())</span>
+<span id="cb205-4"><a href="dplyr.html#cb205-4" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 12 x 2</span></span>
+<span id="cb205-5"><a href="dplyr.html#cb205-5" aria-hidden="true" tabindex="-1"></a><span class="do">##    month reports</span></span>
+<span id="cb205-6"><a href="dplyr.html#cb205-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  * &lt;ord&gt;   &lt;int&gt;</span></span>
+<span id="cb205-7"><a href="dplyr.html#cb205-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Jan      1311</span></span>
+<span id="cb205-8"><a href="dplyr.html#cb205-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Feb      1154</span></span>
+<span id="cb205-9"><a href="dplyr.html#cb205-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Mär      1251</span></span>
+<span id="cb205-10"><a href="dplyr.html#cb205-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Apr      1216</span></span>
+<span id="cb205-11"><a href="dplyr.html#cb205-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Mai      1331</span></span>
+<span id="cb205-12"><a href="dplyr.html#cb205-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Jun      1202</span></span>
+<span id="cb205-13"><a href="dplyr.html#cb205-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Jul      1203</span></span>
+<span id="cb205-14"><a href="dplyr.html#cb205-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Aug      1248</span></span>
+<span id="cb205-15"><a href="dplyr.html#cb205-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Sep      1234</span></span>
+<span id="cb205-16"><a href="dplyr.html#cb205-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Okt      1246</span></span>
+<span id="cb205-17"><a href="dplyr.html#cb205-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 11 Nov      1188</span></span>
+<span id="cb205-18"><a href="dplyr.html#cb205-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 12 Dez      1193</span></span>
+<span id="cb205-19"><a href="dplyr.html#cb205-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb205-20"><a href="dplyr.html#cb205-20" aria-hidden="true" tabindex="-1"></a>reports_fyears <span class="sc">%&gt;%</span> </span>
+<span id="cb205-21"><a href="dplyr.html#cb205-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(day) <span class="sc">%&gt;%</span> </span>
+<span id="cb205-22"><a href="dplyr.html#cb205-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">reports =</span> <span class="fu">n</span>())</span>
+<span id="cb205-23"><a href="dplyr.html#cb205-23" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 7 x 2</span></span>
+<span id="cb205-24"><a href="dplyr.html#cb205-24" aria-hidden="true" tabindex="-1"></a><span class="do">##   day   reports</span></span>
+<span id="cb205-25"><a href="dplyr.html#cb205-25" aria-hidden="true" tabindex="-1"></a><span class="do">## * &lt;ord&gt;   &lt;int&gt;</span></span>
+<span id="cb205-26"><a href="dplyr.html#cb205-26" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 So       2088</span></span>
+<span id="cb205-27"><a href="dplyr.html#cb205-27" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Mo       2044</span></span>
+<span id="cb205-28"><a href="dplyr.html#cb205-28" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 Di       2093</span></span>
+<span id="cb205-29"><a href="dplyr.html#cb205-29" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 Mi       2175</span></span>
+<span id="cb205-30"><a href="dplyr.html#cb205-30" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 Do       2174</span></span>
+<span id="cb205-31"><a href="dplyr.html#cb205-31" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 Fr       2211</span></span>
+<span id="cb205-32"><a href="dplyr.html#cb205-32" aria-hidden="true" tabindex="-1"></a><span class="do">## 7 Sa       1992</span></span></code></pre></div>
+<p>The analysis by month again shows no systematic variation. Looking at the
+reports by day of the week on the other hand shows a slight increase in reports
+over the week, culminating on friday. as stated above, we don not really know
+how the data is created, so the main take away of this analysis might be, that
+the PR team of the Berlin police also works on the weekend.</p>
+<p>In the same wqay, we can analyse the number of released police reports by
+district.</p>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="dplyr.html#cb206-1" aria-hidden="true" tabindex="-1"></a>reports_fyears <span class="sc">%&gt;%</span> </span>
+<span id="cb206-2"><a href="dplyr.html#cb206-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(district) <span class="sc">%&gt;%</span> </span>
+<span id="cb206-3"><a href="dplyr.html#cb206-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">reports =</span> <span class="fu">n</span>())</span>
+<span id="cb206-4"><a href="dplyr.html#cb206-4" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 22 x 2</span></span>
+<span id="cb206-5"><a href="dplyr.html#cb206-5" aria-hidden="true" tabindex="-1"></a><span class="do">##    district                     reports</span></span>
+<span id="cb206-6"><a href="dplyr.html#cb206-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  * &lt;chr&gt;                          &lt;int&gt;</span></span>
+<span id="cb206-7"><a href="dplyr.html#cb206-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 berlinweit                       209</span></span>
+<span id="cb206-8"><a href="dplyr.html#cb206-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 bezirksübergreifend              724</span></span>
+<span id="cb206-9"><a href="dplyr.html#cb206-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 bundesweit                        32</span></span>
+<span id="cb206-10"><a href="dplyr.html#cb206-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Charlottenburg - Wilmersdorf     514</span></span>
+<span id="cb206-11"><a href="dplyr.html#cb206-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Charlottenburg-Wilmersdorf       869</span></span>
+<span id="cb206-12"><a href="dplyr.html#cb206-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Friedrichshain - Kreuzberg       577</span></span>
+<span id="cb206-13"><a href="dplyr.html#cb206-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Friedrichshain-Kreuzberg        1025</span></span>
+<span id="cb206-14"><a href="dplyr.html#cb206-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Lichtenberg                      769</span></span>
+<span id="cb206-15"><a href="dplyr.html#cb206-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Marzahn - Hellersdorf            225</span></span>
+<span id="cb206-16"><a href="dplyr.html#cb206-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Marzahn-Hellersdorf              495</span></span>
+<span id="cb206-17"><a href="dplyr.html#cb206-17" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 12 more rows</span></span></code></pre></div>
+<p>Before we interpret the result, let us examine the district names. Districts
+with a dash are written in two ways. With whitespace around the dash and without
+it. There may have been a change in the way these names are recorded in the data
+over the years. We should deal with this. We can use the function
+<code>str_remove_all()</code> to remove every occurence of a pattern we specify as its
+argument. If we remove the pattern " " we basically delete all whitespace.
+Again, this can be combined with <code>mutate()</code> to transform the data in our tibble.</p>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="dplyr.html#cb207-1" aria-hidden="true" tabindex="-1"></a>reports_fyears <span class="ot">&lt;-</span> reports_fyears <span class="sc">%&gt;%</span> </span>
+<span id="cb207-2"><a href="dplyr.html#cb207-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">district =</span> <span class="fu">str_remove_all</span>(district, <span class="at">pattern =</span> <span class="st">&quot; &quot;</span>))</span>
+<span id="cb207-3"><a href="dplyr.html#cb207-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb207-4"><a href="dplyr.html#cb207-4" aria-hidden="true" tabindex="-1"></a>reports_fyears <span class="sc">%&gt;%</span> </span>
+<span id="cb207-5"><a href="dplyr.html#cb207-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(district) <span class="sc">%&gt;%</span> </span>
+<span id="cb207-6"><a href="dplyr.html#cb207-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">reports =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb207-7"><a href="dplyr.html#cb207-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(reports))</span>
+<span id="cb207-8"><a href="dplyr.html#cb207-8" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 16 x 2</span></span>
+<span id="cb207-9"><a href="dplyr.html#cb207-9" aria-hidden="true" tabindex="-1"></a><span class="do">##    district                   reports</span></span>
+<span id="cb207-10"><a href="dplyr.html#cb207-10" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                        &lt;int&gt;</span></span>
+<span id="cb207-11"><a href="dplyr.html#cb207-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Mitte                         2291</span></span>
+<span id="cb207-12"><a href="dplyr.html#cb207-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Friedrichshain-Kreuzberg      1602</span></span>
+<span id="cb207-13"><a href="dplyr.html#cb207-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Charlottenburg-Wilmersdorf    1383</span></span>
+<span id="cb207-14"><a href="dplyr.html#cb207-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Neukölln                      1310</span></span>
+<span id="cb207-15"><a href="dplyr.html#cb207-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Tempelhof-Schöneberg          1197</span></span>
+<span id="cb207-16"><a href="dplyr.html#cb207-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Pankow                        1096</span></span>
+<span id="cb207-17"><a href="dplyr.html#cb207-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Treptow-Köpenick               909</span></span>
+<span id="cb207-18"><a href="dplyr.html#cb207-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Reinickendorf                  791</span></span>
+<span id="cb207-19"><a href="dplyr.html#cb207-19" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Lichtenberg                    769</span></span>
+<span id="cb207-20"><a href="dplyr.html#cb207-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 bezirksübergreifend            724</span></span>
+<span id="cb207-21"><a href="dplyr.html#cb207-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 11 Marzahn-Hellersdorf            720</span></span>
+<span id="cb207-22"><a href="dplyr.html#cb207-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 12 Spandau                        716</span></span>
+<span id="cb207-23"><a href="dplyr.html#cb207-23" aria-hidden="true" tabindex="-1"></a><span class="do">## 13 Steglitz-Zehlendorf            683</span></span>
+<span id="cb207-24"><a href="dplyr.html#cb207-24" aria-hidden="true" tabindex="-1"></a><span class="do">## 14 &lt;NA&gt;                           345</span></span>
+<span id="cb207-25"><a href="dplyr.html#cb207-25" aria-hidden="true" tabindex="-1"></a><span class="do">## 15 berlinweit                     209</span></span>
+<span id="cb207-26"><a href="dplyr.html#cb207-26" aria-hidden="true" tabindex="-1"></a><span class="do">## 16 bundesweit                      32</span></span></code></pre></div>
+<p>For the group summary we also included <code>arrange(desc())</code> which orders the values
+from highest to lowest. If you omit <code>desc()</code> the order is reversed.</p>
+<p>We might also be interested in the relative share of reports by district. To
+compute those, one option is to add another column to the tibble resulting from
+<code>summarise()</code> in which we calculate the relative share by dividing the “reports”
+columns values by the total of this column.</p>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="dplyr.html#cb208-1" aria-hidden="true" tabindex="-1"></a>reports_fyears <span class="sc">%&gt;%</span> </span>
+<span id="cb208-2"><a href="dplyr.html#cb208-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(district) <span class="sc">%&gt;%</span> </span>
+<span id="cb208-3"><a href="dplyr.html#cb208-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">reports =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb208-4"><a href="dplyr.html#cb208-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(reports)) <span class="sc">%&gt;%</span> </span>
+<span id="cb208-5"><a href="dplyr.html#cb208-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">reports_rel =</span> reports <span class="sc">/</span> <span class="fu">sum</span>(reports))</span>
+<span id="cb208-6"><a href="dplyr.html#cb208-6" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 16 x 3</span></span>
+<span id="cb208-7"><a href="dplyr.html#cb208-7" aria-hidden="true" tabindex="-1"></a><span class="do">##    district                   reports reports_rel</span></span>
+<span id="cb208-8"><a href="dplyr.html#cb208-8" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                        &lt;int&gt;       &lt;dbl&gt;</span></span>
+<span id="cb208-9"><a href="dplyr.html#cb208-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Mitte                         2291     0.155  </span></span>
+<span id="cb208-10"><a href="dplyr.html#cb208-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Friedrichshain-Kreuzberg      1602     0.108  </span></span>
+<span id="cb208-11"><a href="dplyr.html#cb208-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Charlottenburg-Wilmersdorf    1383     0.0936 </span></span>
+<span id="cb208-12"><a href="dplyr.html#cb208-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Neukölln                      1310     0.0887 </span></span>
+<span id="cb208-13"><a href="dplyr.html#cb208-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Tempelhof-Schöneberg          1197     0.0810 </span></span>
+<span id="cb208-14"><a href="dplyr.html#cb208-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Pankow                        1096     0.0742 </span></span>
+<span id="cb208-15"><a href="dplyr.html#cb208-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Treptow-Köpenick               909     0.0615 </span></span>
+<span id="cb208-16"><a href="dplyr.html#cb208-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Reinickendorf                  791     0.0535 </span></span>
+<span id="cb208-17"><a href="dplyr.html#cb208-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Lichtenberg                    769     0.0520 </span></span>
+<span id="cb208-18"><a href="dplyr.html#cb208-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 bezirksübergreifend            724     0.0490 </span></span>
+<span id="cb208-19"><a href="dplyr.html#cb208-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 11 Marzahn-Hellersdorf            720     0.0487 </span></span>
+<span id="cb208-20"><a href="dplyr.html#cb208-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 12 Spandau                        716     0.0485 </span></span>
+<span id="cb208-21"><a href="dplyr.html#cb208-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 13 Steglitz-Zehlendorf            683     0.0462 </span></span>
+<span id="cb208-22"><a href="dplyr.html#cb208-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 14 &lt;NA&gt;                           345     0.0233 </span></span>
+<span id="cb208-23"><a href="dplyr.html#cb208-23" aria-hidden="true" tabindex="-1"></a><span class="do">## 15 berlinweit                     209     0.0141 </span></span>
+<span id="cb208-24"><a href="dplyr.html#cb208-24" aria-hidden="true" tabindex="-1"></a><span class="do">## 16 bundesweit                      32     0.00217</span></span></code></pre></div>
+<p>Whether we look at the absolute or relative values, it is clear that there are
+differences between the districts in the number of police reports released and
+that the values for the district “Mitte” are considerably higher compared to the
+others. Again, we do not know how the data is created, so maybe it is just the
+case that the crimes in “Mitte” are more interesting than in other districts and
+that the data does not necessarily point to a higher number of crimes in central
+Berlin.</p>
+<p>Using <code>group_by()</code> we can also group by multiple columns. “Mitte” and
+“Friedrichshain-Kreuzberg” showed the highest numbers among all districts. Let
+us analyse if these numbers changed over the years for these two districts.
+First we have to use <code>filter()</code> to use only the observations referring to those
+and then group the data by the remaining districts and year before we again
+count the number of released reports.</p>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="dplyr.html#cb209-1" aria-hidden="true" tabindex="-1"></a>reports_fyears <span class="sc">%&gt;%</span> </span>
+<span id="cb209-2"><a href="dplyr.html#cb209-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(district <span class="sc">==</span> <span class="st">&quot;Mitte&quot;</span> <span class="sc">|</span> district <span class="sc">==</span> <span class="st">&quot;Friedrichshain-Kreuzberg&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb209-3"><a href="dplyr.html#cb209-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(district, year) <span class="sc">%&gt;%</span> </span>
+<span id="cb209-4"><a href="dplyr.html#cb209-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">reports =</span> <span class="fu">n</span>())</span>
+<span id="cb209-5"><a href="dplyr.html#cb209-5" aria-hidden="true" tabindex="-1"></a><span class="do">## `summarise()` has grouped output by &#39;district&#39;. You can override using the `.groups` argument.</span></span>
+<span id="cb209-6"><a href="dplyr.html#cb209-6" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 12 x 3</span></span>
+<span id="cb209-7"><a href="dplyr.html#cb209-7" aria-hidden="true" tabindex="-1"></a><span class="do">## # Groups:   district [2]</span></span>
+<span id="cb209-8"><a href="dplyr.html#cb209-8" aria-hidden="true" tabindex="-1"></a><span class="do">##    district                  year reports</span></span>
+<span id="cb209-9"><a href="dplyr.html#cb209-9" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                    &lt;dbl&gt;   &lt;int&gt;</span></span>
+<span id="cb209-10"><a href="dplyr.html#cb209-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Friedrichshain-Kreuzberg  2015     277</span></span>
+<span id="cb209-11"><a href="dplyr.html#cb209-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Friedrichshain-Kreuzberg  2016     269</span></span>
+<span id="cb209-12"><a href="dplyr.html#cb209-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Friedrichshain-Kreuzberg  2017     233</span></span>
+<span id="cb209-13"><a href="dplyr.html#cb209-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Friedrichshain-Kreuzberg  2018     237</span></span>
+<span id="cb209-14"><a href="dplyr.html#cb209-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Friedrichshain-Kreuzberg  2019     285</span></span>
+<span id="cb209-15"><a href="dplyr.html#cb209-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Friedrichshain-Kreuzberg  2020     301</span></span>
+<span id="cb209-16"><a href="dplyr.html#cb209-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Mitte                     2015     367</span></span>
+<span id="cb209-17"><a href="dplyr.html#cb209-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Mitte                     2016     448</span></span>
+<span id="cb209-18"><a href="dplyr.html#cb209-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Mitte                     2017     347</span></span>
+<span id="cb209-19"><a href="dplyr.html#cb209-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Mitte                     2018     363</span></span>
+<span id="cb209-20"><a href="dplyr.html#cb209-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 11 Mitte                     2019     392</span></span>
+<span id="cb209-21"><a href="dplyr.html#cb209-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 12 Mitte                     2020     374</span></span></code></pre></div>
+<p>While the number of reports seems to be rather constant over the years, for
+“Mitte” there is a considerable spike in 2016. To analyse this further, we had
+to go deeper into the data and look at the actual texts of the police reports.</p>
+<p>But we should briefly talk about a peculiarity to the way <code>group_by()</code> works
+with <code>summarise()</code> that can cause headaches, if we are not aware of it. In
+general, any <code>summarise()</code> function following a <code>group_by()</code> will calculate the
+summary statistic and then remove one level of grouping. In the examples where
+we only had one level of grouping, this essentially meant, that the data was
+ungrouped after <code>summarise()</code>. In the last example we had two levels of
+grouping. So after the computation of the number of reports by “district” and
+“year” the grouping by “year” was removed, but the grouping by “district”
+remained in effect. We can see this in the output, where R informs us about the
+column by which the data is grouped and the number of groups in the output:
+<code># Groups:   district [2]</code>. Another <code>summarise()</code> function would compute the
+statistic by “district” and then remove this level also. We can also use
 <code>ungroup()</code> to remove all grouping from a tibble. In the case of this example,
 this does not make a practical difference as we only compute the summary and
 move on. If we assign the results of a summary to an object for later use in
 data analysis, we have to think about removing groups though.</p>
+</div>
+<div id="summary-statistics-on-the-time" class="section level3" number="11.5.2">
+<h3><span class="header-section-number">11.5.2</span> Summary statistics on the time</h3>
+<p>The column “time” holds the time of day for each report in hours, minutes and
+seconds. This is a representation of the actual values, which are seconds from
+midnight.</p>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="dplyr.html#cb210-1" aria-hidden="true" tabindex="-1"></a>reports_fyears[[<span class="dv">1</span>, <span class="st">&#39;time&#39;</span>]]</span>
+<span id="cb210-2"><a href="dplyr.html#cb210-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;14H 13M 0S&quot;</span></span>
+<span id="cb210-3"><a href="dplyr.html#cb210-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb210-4"><a href="dplyr.html#cb210-4" aria-hidden="true" tabindex="-1"></a>reports_fyears[[<span class="dv">1</span>, <span class="st">&#39;time&#39;</span>]] <span class="sc">%&gt;%</span> </span>
+<span id="cb210-5"><a href="dplyr.html#cb210-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.numeric</span>()</span>
+<span id="cb210-6"><a href="dplyr.html#cb210-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 51180</span></span></code></pre></div>
+<p>To calculate with the “time” column, we first have to tell R that we explicitly
+want to use the data as seconds, then compute the summary statistic and after
+this transform the display of seconds back into the time of day. For this we can
+use the functions <code>period_to_seconds()</code> and <code>seconds_to_period()</code>. Here we wil
+calculate the mean and the median for the time of day over all police reports in
+one call of <code>summary()</code>.</p>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="dplyr.html#cb211-1" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span> </span>
+<span id="cb211-2"><a href="dplyr.html#cb211-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">period_to_seconds</span>(time) <span class="sc">%&gt;%</span> </span>
+<span id="cb211-3"><a href="dplyr.html#cb211-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">mean</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb211-4"><a href="dplyr.html#cb211-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">seconds_to_period</span>(),</span>
+<span id="cb211-5"><a href="dplyr.html#cb211-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">median =</span> <span class="fu">period_to_seconds</span>(time) <span class="sc">%&gt;%</span> </span>
+<span id="cb211-6"><a href="dplyr.html#cb211-6" aria-hidden="true" tabindex="-1"></a>              <span class="fu">median</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb211-7"><a href="dplyr.html#cb211-7" aria-hidden="true" tabindex="-1"></a>              <span class="fu">seconds_to_period</span>()</span>
+<span id="cb211-8"><a href="dplyr.html#cb211-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb211-9"><a href="dplyr.html#cb211-9" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 1 x 2</span></span>
+<span id="cb211-10"><a href="dplyr.html#cb211-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   mean                      median   </span></span>
+<span id="cb211-11"><a href="dplyr.html#cb211-11" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;Period&gt;                  &lt;Period&gt; </span></span>
+<span id="cb211-12"><a href="dplyr.html#cb211-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 11H 55M 47.6500179662253S 11H 1M 0S</span></span></code></pre></div>
+<p>The mean time of day over all police reports is 11:55 while the median is 11:01.
+This may indicate that the mean is biased towards a later time by a high number
+of very late reports. We will explore this further graphically in the next
+chapter. Again, the results may represent the time when crimes occur, but it may
+be more likely, that we are actually analysing the time when the PR team posts
+their police reports.</p>
 
+</div>
 </div>
 </div>
             </section>

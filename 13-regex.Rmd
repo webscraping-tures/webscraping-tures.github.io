@@ -14,6 +14,9 @@ lies outside the scope of this introduction. A good starting point could be the
 chapter on string from "R for Data Science" by Wickham and Grolemund:
 <https://r4ds.had.co.nz/strings.html>{target="_blank"}
 
+* reading crimes from the report text?
+* further cleaning of the district column
+
 ## str_detect()
 
 

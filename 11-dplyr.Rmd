@@ -7,207 +7,32 @@ knitr::opts_chunk$set(cache = TRUE)
 knitr::opts_chunk$set(cache.path = 'cache/')
 ```
 
-WIP! Content is due to change!
+In this chapter we will use several functions from the tidyverse package
+dplyr to clean the data we scraped in chapter \@ref(scraping), select the
+columns and filter the observations (rows) we need as well as compute some
+grouped summaries of the data.
+
+First, let us load the required packages. Dplyr is part of the core tidyverse.
+We will also need the package lubridate to deal with dates and times soon.
 
 ``` {r message = FALSE}
 library(tidyverse)
-library(rvest)
 library(lubridate)
 ```
 
-
-
-
-
-* mutate() to apply lubridate and remove "Ereignisort: "
-  * before that show some simple calculations
-* select() to remove raw data/time columns and maybe text
-* filter() for removing incomplete years
-  * "should have done this before downloading"
-* rename()
-* group_by() + summarize
-  * reports by year
-  * (reports by month)
-  * reports by district
-    * + relative to total
-  * mean/median for time of day
-
-
-
-
-
-
-
-
-At this point you should have a look at both tibbles either by clicking on them
-in the environment tab or by writing `View(eligible_tbl)` and 
-`View(turnout_tbl)`.
-
-A quick sidenote: You will notice, that most of the values we will compute in
-this chapter are already present in eligible.csv. We will soon drop those and
-compute them ourselves for the sake of having a good introductory example into
-data transformation. In a real world scenario we would most probably just use
-the values for turnout percentages etc. already present in the data.
-
-In the following, we will use several functions from the tidyverse package
-dplyr to filter observations, select columns and add new columns as 
-computations of existing ones.
-
-## `filter()`
-
-As a first step, we should limit our tibbles to the observations we actually
-need. For this example we should limit ourselves to an analysis on the federal
-level. Thus we can drop all observations referring to the individual states. We
-will also drop the totals for the gender and year of birth columns and compute
-them ourselves later on.
-
-To filter on the observations we need and drop the remainder, we can use the
-function `filter()`. It takes the tibble or data frame to be filtered as it's
-first argument -- which we don't need to specify when using the pipe -- and one
-or multiple expressions that specify which observations are to be filtered.
-
-To filter only those observations that have the value "Bund" for the column
-"Land", we can write:
-  
-  ``` 
-eligible_tbl %>% 
-  filter(Land == "Bund")
-```
-
-Thus only the observations for "Bund" remain in the tibble. Or in other words,
-those observations for whom the expression `Land == "Bund"` is returned as 
-`TRUE`. Besides `==`, all other comparison operators can be used and we can
-chain multiple expressions to be filtered upon in one call of `filter()`. So, to
-filter on those observations who refer to the "Bund" and don't have a sum for
-the gender and year of birth columns, we can write:
-
-``` 
-eligible_tbl %>% 
-  filter(Land == "Bund", Geschlecht != "Summe", Geburtsjahresgruppe != "Summe")
-```
-
-We can also use logical operators -- `&` for "and", `|` for "or" -- when
-combining expressions to be filtered upon. So instead of `Geschlecht = "Summe"`
-another approach would be to filter those that have "m" or "w" as values. To
-demonstrate this, let us filter the object `turnout_tbl`as well. Here we have an
-additional column we have to filter for called "Erst-/Zweitstimme". I propose
-we only analyse the party votes.
-
-``` 
-turnout_tbl %>% 
-  filter(Land == "Bund",
-         `Erst-/Zweitstimme` == 2,
-         Geschlecht == "m" | Geschlecht == "w",
-         Geburtsjahresgruppe != "Summe")
-```
-
-When we create rather long function calls with many arguments, it is often a
-good idea to insert some line breaks to keep your code easily readable, as seen
-above.
-
-Let's have another look at this line: `` `Erst-/Zweitstimme` == 2,``. You will
-notice, that the name of the column is enclosed by *backticks* `` ` ``. In
-general, object and variable (ie. column) names in R can only contain letters,
-numbers, points and underscores and have to start with a letter. It is possible
-to have names that violate those rules, but these have to enclosed in backticks.
-As you can see, "Erst-/Zweitstimme" contains two characters that are not allowed
-in R names. `turnout_tbl` also contains the column "DIE LINKE". The usage of
-whitespace in names is also not allowed. So to address this column in our code,
-we would have to write ` `DIE LINKE` `.
-
-## `select()`
-
-We should also limit our tibbles to the set of columns we will actually use.
-
-Looking at `eligible_tbl`, we will only need the first four columns. We can use
-the function `select()` to "select" the columns we need by name.
-
-``` 
-eligible_tbl %>% 
-  select(Land, Geschlecht, Geburtsjahresgruppe, Wahlberechtigte)
-```
-
-If, as in this case, the columns we want so select follow each other in their
-positions in the tibble, we can also use a shorter "from:to" notation, that
-saves us somy typing.
-
-``` 
-eligible_tbl %>% 
-  select(Land:Wahlberechtigte)
-```
-
-At this point we can combine the filtering of rows and selection of columns in
-the pipe and assign the result to a new object. But first, let us think about
-again about which columns we will actually need. Above we selected the first
-four columns from `turnout_tbl`. But we do not actually need the column "Land"
-after we filtered for the rows containing the federal state level as it contains
-no useful information anymore. So we can drop the column, if we filter first.
-Order matters! For `turnout_tbl` this is also true but extends to the column
-"Erst-/Zweitstimme" which also only contains one value after filtering.
-
-``` 
-eligible_tbl <- eligible_tbl %>% 
-  filter(Land == "Bund", 
-         Geschlecht != "Summe",
-         Geburtsjahresgruppe != "Summe") %>%
-  select(Geschlecht:Wahlberechtigte)
-
-turnout_tbl <- turnout_tbl %>% 
-  filter(Land == "Bund",
-         `Erst-/Zweitstimme` == 2,
-         Geschlecht == "m" | Geschlecht == "w",
-         Geburtsjahresgruppe != "Summe") %>% 
-  select(Geschlecht:Summe)
-```
-
-
-## `rename()`
-
-As we are working in english, it makes sense to also rename the columns using
-english wordings. Also, we have to write down the column names several time
-during analysis, so we should use names that are short but concise to limit
-unnecessary typing while maintaining recognisability. Imagine writing
-"Geburtsjahresgruppe" several times in your code, and you will know why
-renaming is approriate here. Also the column "Summe" in `turnout_tbl` does not
-describe what the values stored in it refer to. We should change this.
-
-One approach to renaming is using the function `rename()` from dplyr. The
-function takes the data to applied to as its first argument -- passed by the
-pipe in this case -- followed by one or more arguments in the form
-`new_name = old_name`. 
-
-``` 
-eligible_tbl <- eligible_tbl %>% 
-  rename(gender = Geschlecht,
-         ybirth = Geburtsjahresgruppe,
-         eligible = Wahlberechtigte)
-
-eligible_tbl
-
-turnout_tbl <- turnout_tbl %>% 
-  rename(gender = Geschlecht,
-         ybirth = Geburtsjahresgruppe,
-         turnout = Summe)
-
-turnout_tbl
-```
-
-
-
 ## `mutate()`
 
-We will now leave our running example for a short time and look at how to
-compute new variables in a tibble from existing ones, using `mutate()` from
-dplyr.
+### Computing new variables from existing ones
 
-For this purpose, let us create a new simple tibble on voter turnout. Note that
-the entered data is purely illustrational and has no meaning. We will return to
-the real data shortly.
+Before we begin working on the running example, we will examine some simple
+examples on how to compute new variables in a tibble from existing ones, using
+`mutate()` from dplyr. For this purpose, let us create a new simple tibble on
+voter turnout. Note that the entered data is purely illustrational and has no
+meaning.
 
-``` 
+```  {r}
 exmpl_tbl <- tibble(
-  gender = c("m", "m", "w", "w"),
-  ybirth = c("1993 - 1999", "1983 - 1992", "1993 - 1999", "1983 - 1992"),
+  ybirth = c("1993 - 2002", "1983 - 1992", "1973 - 1982", "1963 - 1972"),
   eligible = c(100000, 100000, 100000, 100000),
   turnout_person = c(40000, 50000, 60000, 70000),
   turnout_mail = c (35000, 30000, 25000, 20000)
@@ -217,44 +42,28 @@ exmpl_tbl
 ```
 
 In this hypothetical data, we have different columns for people who voted in
-person and who voted by mail. We do not care about this difference in voting
-method in this example and want one column that combines both. We can achieve
-this by using `mutate()`. The function takes the data to be manipulated as its
-first argument, followed by one or multiple arguments defining the new columns
-to be created. We can create this new columns as computations involving the
-columns already present. To calculate the total turnout we could write:
+person and who voted by mail by their year of birth. We do not actually care
+about the difference in voting method in this example and want one column that
+combines both. We can achieve this by using `mutate()`. The function takes the
+data to be manipulated as its first argument, followed by one or multiple
+arguments defining the new columns to be created. We can create this new columns
+as computations from the columns already present. To calculate the total turnout
+we write:
   
-  ``` 
+``` {r}
 exmpl_tbl %>% 
   mutate(turnout = turnout_person + turnout_mail)
 ```
 
 We can also immediately start calculating with new columns in the same pipe. So
-to calculate the turnout percentage:
+to calculate the turnout percentage as a second step:
   
-  ``` 
+``` {r}
 exmpl_tbl %>% 
   mutate(
     turnout = turnout_person + turnout_mail,
     turnout_pct = turnout / eligible
   )
-```
-
-
-As we no longer need `turnout_person` and `turnout_mail` we could drop them by
-using `select()` in a last step. Instead of telling `select()` which columns we
-want to keep, we can also tell it which noot to keep by adding a `-` before the
-column names. 
-
-``` 
-exmpl_tbl <- exmpl_tbl %>% 
-  mutate(
-    turnout = turnout_person + turnout_mail,
-    turnout_pct = turnout / eligible
-  ) %>% 
-  select(-turnout_person, -turnout_mail)
-
-exmpl_tbl
 ```
 
 Note that `mutate()` is not limited to basic arithmetic operations. Many
@@ -262,94 +71,383 @@ functions can be applied within `mutate()`, for example `sum()` or `mean()` to
 only name a few examples we already know.
 
 
+### Cleaning the running example
+
+As we now know the basics of working with `mutate()`, we can apply this to our
+running example. First we have to load the data we scraped in the last chapter
+and examine what we are working with.
+
+``` {r}
+load("reports.RData")
+
+reports
+```
+
+We can leave the column containing the text of the police report as it is, but
+the columns containing the districts as well as the date and time could use some
+work.
+
+The data in the column "District" includes the string "Ereignisort: " before
+listing the actual name of the district the report refers to. This unnecessarily
+clutters this column. We can use `substr()` to remove these leading characters.
+Instead of selecting the column by `reports$District` we can apply the function
+to the column using `mutate()`. `substr()` extracts a part of a string we want
+to keep, taking the data to be applied to as its first argument -- here the name
+of the column --, the starting character position where the extraction shall
+begin as its second and the  character position where it shall stop as its third
+argument. Character position here refers to the numeric position of a character
+in a string. So the begin extraction after "Ereignisort: " we have to count the
+length of this substring including the whitespace after ":", which is $13$ and
+thus use $14$ as the starting position. For the stopping position we could
+either use an unrealistically high number or use `length(District)` to determine
+the exact length of each string.
+
+``` {r}
+reports %>% 
+  mutate(District = substr(District, 14, 99))
+
+reports %>% 
+  mutate(District = substr(District, 14, length(District)))
+```
+
+The column "Date" includes the data and the time of each report as a character
+string. To be able to use this data in analysis, we have to extract the date and
+time in a format we can calculate with. This is easily achieved using the
+parsing functions from lubridate. As the character data is written in the format
+"day.month.year hour:minute", we have to use the function `dmy_hm()` on the
+column.
+
+``` {r}
+reports %>% 
+  mutate(date_cmpl = dmy_hm(Date))
+```
+
+Later we will do some analysis by year, month, weekday and time of day.
+Lubridate includes functions that extract the subparts of date and time data.
+
+`year()` extracts the year, `month()` the month and `wday()` the day of the
+week. The argument `label = TRUE` tells the function to use the names of months
+and days instead of a numerical value ranging from $1$ to $12$ and $1$ to $7$
+respectively.
+
+``` {r}
+reports %>% 
+  mutate(date_cmpl = dmy_hm(Date)) %>% 
+  mutate(year = year(date_cmpl)) %>% 
+  mutate(month = month(date_cmpl, label = TRUE)) %>% 
+  mutate(day = wday(date_cmpl, label = TRUE))
+```
+
+To extract the time of day, we first have to extract the substring of "Date"
+that contains the time and then apply the lubridate function `hm()` to it.
+
+``` {r}
+reports %>% 
+  mutate(time = 
+           substr(Date, 12, length(Date)) %>% 
+           hm()
+         )
+```
+
+We can combine all these individual steps in one pipe and apply them to the
+object `reports`.
+
+``` {r}
+reports <- reports %>% 
+  mutate(District = substr(District, 14, length(District))) %>% 
+  mutate(date_cmpl = dmy_hm(Date)) %>% 
+  mutate(year = year(date_cmpl)) %>% 
+  mutate(month = month(date_cmpl, label = TRUE)) %>% 
+  mutate(day = wday(date_cmpl, label = TRUE)) %>% 
+  mutate(time = 
+           substr(Date, 12, length(Date)) %>% 
+           hm()
+         )
+
+reports
+```
+
+
+## `select()`
+
+As we have already extracted all we need from the "Date" column and we will not
+work with the "Report" column in this chapter, we should remove both from the
+tibble to keep the tibble neat and free of clutter. For this we can use the
+function `select()`. It takes the data as its first argument -- here provided by
+the pipe -- and one or several names of columns that should be kept. If columns
+foolow after each other in order, we can also use a "from:to" notation to safe
+typing.
+
+``` {r}
+reports %>% 
+  select(District, date_cmpl, year, month, day, time)
+
+reports %>% 
+  select(District:time)
+```
+
+Instead of telling `select()` which columns we want to keep, we can also tell it
+which not to keep by adding a `-` before the column names. For this last example
+of using `select()` we will assign the result to `reports`.
+
+``` {r}
+reports <- reports %>% 
+  select(-c(Date, Report))
+
+reports
+```
+
+## `rename()`
+
+As you may have noticed, all newly created columns are written in lower case
+while "District" begins with an upper case letter. We may want to rename this
+column to a lower case name -- or all the other to upper case names, depending
+on your preference.
+
+One approach to renaming is using the function `rename()` from dplyr. The
+function takes the data to applied to as its first argument -- passed by the
+pipe in this case -- followed by one or more arguments in the form
+`new_name = old_name`. 
+
+``` {r}
+reports <- reports %>% 
+  rename(district = District)
+
+reports
+```
+
+
+## `filter()`
+
+Some of our analysis require complete years in our data. If we want to compare
+the police reports by year, it makes no sense to compare the numbers for a
+ongoing year with those that are complete, as the former obviously will have
+fewer reports. Incomplete years would also impact analysis by month, as some
+months will have more observations than others. For these reasons we should
+filter complete years from our data, at least for analysis by year and month.
+
+To filter on the observations we need and drop the remainder, we can use the
+function `filter()`. As always in tidyverse functions, it takes the data to be
+filtered as its first argument and one or multiple expressions that specify the
+rules by which to filter. To write these expressions, we can make use of the
+comparison operators discussed in subchapter \@ref(comparison).
+
+To filter for all years that are not 2021, we can write:
+
+``` {r}
+reports %>% 
+  filter(year != 2021)
+```
+
+Thus only the observations where "year" does not equal "2021" remain in the
+tibble. Or in other words, those observations for whom the expression
+`year != 2021` is returned as `TRUE`.
+
+Closer inspection of the data reveals, that 2014 (the first year that was
+available on the website) is not complete as well. Also there seems to be one
+single report for 2013. We should also exclude these years for analysis that
+requires complete years. We can chain multiple expressions when using `filter()`
+separated by commas.
+
+``` {r}
+reports %>% 
+  filter(year != 2021, year != 2014, year != 2013)
+```
+
+Often there are multiple ways to formulate the expressions on which to filter.
+Here, we could tell R which values for "year" we want to keep instead of which
+we do not want to keep. Instead of listing all those individual year, we can use
+`%in%` to define a range of numerical values which should be kept when
+filtering. We save the result to a new object for later use.
+
+``` {r}
+reports_fyears <- reports %>% 
+  filter(year %in% 2015:2020)
+```
+
+While the `,` behaves like the logical operator `&`, we can also use `|` for
+"or" when combining expressions to be filtered upon. 
+
+
+
 ## `summarise()` & `group_by()`
 
-`summarise()` can be used to calculate summary statistics for a whole tibble.
-The syntax is similar to `mutate()`. Let us compute the total number of persons
-eligible to vote:
-  
-  ``` 
-exmpl_tbl %>% 
-  summarise(eligible_total = sum(eligible))
+We can now begin with computing some basic summary statistics for our data. We
+should note though, that we do not knoow how the data we scraped is actually
+created. Do the dates and times on the website refer to the instance in time
+when a crime occurred -- there are indications that this is not the case --,
+when a report was filed or even when the PR team of the Berlin police uploaded
+the report to the website -- which might even be the most plausible scenario? 
+Also, are all crimes reported on this website -- the daily numbers are too low
+for this to be the case -- or is there an internal selection process? And if so,
+on what criteria does the selection occur? If this was a real research project
+we absolutely would need to gain clarity on these and many other questions,
+before we even begin with collecting the data. We do not have clarity here, but
+we have to keep in mind that we may not analyse the statistical distribution of
+crimes in Berlin but rather the working practice of the PR team.
+
+### Number of reports by groups
+
+The dplyr function `summarise()` can be used to calculate summary statistics for
+a whole tibble; the syntax being similar to `mutate()`. The result is a new
+tibble, containing only the summary statistics we requested. Often we are
+interested in summaries grouped by the value of one or more other variables. We
+might ask ourselves, if there are differences in the number of released police
+reports by year. For this purpose, we can group the data by the values of the
+"year" column using `group_by()` and then compute the summary statistics
+separately for each group. The function we use for the summary statistic here is
+`n()`, which returns the size of each group. As each observation represents one
+police report, the group size equals the number of reports. As always with dplyr
+functions, `group_by()` needs the data that shall be grouped as the first
+argument, followed by one or multiple columns to group by. 
+
+``` {r}
+reports_fyears %>% 
+  group_by(year) %>% 
+  summarize(reports = n())
 ```
 
-As you can see, the result is a new tibble, containing only the summary
-statistics we requested. 
+While there are differences between the years, there does not seem to be a
+systematic pattern to it. We can do the same kind of analysis grouped by months
+and weekdays.
 
-We also can compute multiple summary statistics in one step. Please note, that
-the overall mean for turnout percentage can be computed as the mean of the
-turnout percentages per group in this case only because all four groups are
-exactly of the same size ($n = 100000$). We will later look into computing the
-same measure with our real data.
+``` {r}
+reports_fyears %>% 
+  group_by(month) %>% 
+  summarize(reports = n())
 
-``` 
-exmpl_tbl %>% 
-  summarise(
-    eligible_total = sum(eligible),
-    turnout_total = sum(turnout),
-    turnout_pct_mean = mean(turnout_pct)
-  )
+reports_fyears %>% 
+  group_by(day) %>% 
+  summarize(reports = n())
 ```
 
-Often we are interested in summaries grouped by the value of one or more other
-variables. We might be interested in computing these summary statistics not for
-the complete tibble but by gender. For this purpose, we can group the data by
-the gender column using `group_by()` and then compute the summary statistics
-separately for each group. As always with dplyr functions, `group_by()` needs
-the data that shall be grouped as the first argument, followed by one or
-multiple variables to group by. 
+The analysis by month again shows no systematic variation. Looking at the
+reports by day of the week on the other hand shows a slight increase in reports
+over the week, culminating on friday. as stated above, we don not really know
+how the data is created, so the main take away of this analysis might be, that
+the PR team of the Berlin police also works on the weekend.
 
-``` 
-exmpl_tbl %>% 
-  group_by(gender) %>% 
-  summarise(
-    eligible_total = sum(eligible),
-    turnout_total = sum(turnout),
-    turnout_pct_mean = mean(turnout_pct)
-  )
+In the same wqay, we can analyse the number of released police reports by
+district.
+
+``` {r}
+reports_fyears %>% 
+  group_by(district) %>% 
+  summarize(reports = n())
 ```
 
-Let us create a final example, with two variables to group by. Let us assume
-we have the turnout percentages by gender and age group for two elections. We
-also again assume the same group size, i.e. the same "n", for all observations.
+Before we interpret the result, let us examine the district names. Districts
+with a dash are written in two ways. With whitespace around the dash and without
+it. There may have been a change in the way these names are recorded in the data
+over the years. We should deal with this. We can use the function
+`str_remove_all()` to remove every occurence of a pattern we specify as its
+argument. If we remove the pattern " " we basically delete all whitespace.
+Again, this can be combined with `mutate()` to transform the data in our tibble.
 
-``` 
-exmpl_tbl_2 <- tibble(
-  election = c(1, 1, 1, 1, 2, 2, 2, 2),
-  gender = c("m", "m", "w", "w", "m", "m", "w", "w"),
-  ybirth = c("1993 - 1999", "1983 - 1992", "1993 - 1999", "1983 - 1992", "1993 - 1999", "1983 - 1992", "1993 - 1999", "1983 - 1992"),
-  turnout_pct = c(0.6, 0.55, 0.75, 0.625, 0.7, 0.65, 0.85, 0.725)
-)
+``` {r}
+reports_fyears <- reports_fyears %>% 
+  mutate(district = str_remove_all(district, pattern = " "))
 
-exmpl_tbl_2
+reports_fyears %>% 
+  group_by(district) %>% 
+  summarize(reports = n()) %>% 
+  arrange(desc(reports))
 ```
 
-To compute the mean turnout percentages by gender for each election separately,
-we can group by election and gender.
+For the group summary we also included `arrange(desc())` which orders the values
+from highest to lowest. If you omit `desc()` the order is reversed.
 
-``` 
-exmpl_tbl_2 %>% 
-  group_by(election, gender) %>% 
-  summarise(
-    turnout_pct_mean = mean(turnout_pct)
-  )
+We might also be interested in the relative share of reports by district. To
+compute those, one option is to add another column to the tibble resulting from
+`summarise()` in which we calculate the relative share by dividing the "reports"
+columns values by the total of this column.
+
+``` {r}
+reports_fyears %>% 
+  group_by(district) %>% 
+  summarize(reports = n()) %>% 
+  arrange(desc(reports)) %>% 
+  mutate(reports_rel = reports / sum(reports))
 ```
 
-There is a peculiarity to the way `group_by()` works with `summarise()` that can
-cause headaches, if we are not aware of it. In general any `summarise()`
-function following a `group_by()` will calculate the summary statistic and then
-remove one level of grouping. In the examples where we only had one level of
-grouping, this essentially meant, that the data was ungrouped after 
-`summarise()`. In the last example we had two levels of grouping. So after the
-computation of the mean turnout percentage by `election` and `gender`, the
-grouping by `gender` was removed, but the grouping by `election` remained in
-effect. We can see this in the output, where R informs us about the column by
-which the data is grouped and the number of groups in the output:
-  `## # Groups:   election [2]`. Another `summarise()` function would compute the
-statistic by `election` and then remove this level also. We can also use
+Whether we look at the absolute or relative values, it is clear that there are
+differences between the districts in the number of police reports released and
+that the values for the district "Mitte" are considerably higher compared to the
+others. Again, we do not know how the data is created, so maybe it is just the
+case that the crimes in "Mitte" are more interesting than in other districts and
+that the data does not necessarily point to a higher number of crimes in central
+Berlin.
+
+Using `group_by()` we can also group by multiple columns. "Mitte" and
+"Friedrichshain-Kreuzberg" showed the highest numbers among all districts. Let
+us analyse if these numbers changed over the years for these two districts.
+First we have to use `filter()` to use only the observations referring to those
+and then group the data by the remaining districts and year before we again
+count the number of released reports.
+
+``` {r}
+reports_fyears %>% 
+  filter(district == "Mitte" | district == "Friedrichshain-Kreuzberg") %>% 
+  group_by(district, year) %>% 
+  summarize(reports = n())
+```
+
+While the number of reports seems to be rather constant over the years, for
+"Mitte" there is a considerable spike in 2016. To analyse this further, we had
+to go deeper into the data and look at the actual texts of the police reports.
+
+But we should briefly talk about a peculiarity to the way `group_by()` works
+with `summarise()` that can cause headaches, if we are not aware of it. In
+general, any `summarise()` function following a `group_by()` will calculate the
+summary statistic and then remove one level of grouping. In the examples where
+we only had one level of grouping, this essentially meant, that the data was
+ungrouped after `summarise()`. In the last example we had two levels of
+grouping. So after the computation of the number of reports by "district" and
+"year" the grouping by "year" was removed, but the grouping by "district"
+remained in effect. We can see this in the output, where R informs us about the
+column by which the data is grouped and the number of groups in the output:
+`# Groups:   district [2]`. Another `summarise()` function would compute the
+statistic by "district" and then remove this level also. We can also use
 `ungroup()` to remove all grouping from a tibble. In the case of this example,
 this does not make a practical difference as we only compute the summary and
 move on. If we assign the results of a summary to an object for later use in
 data analysis, we have to think about removing groups though.
 
 
+### Summary statistics on the time
+
+The column "time" holds the time of day for each report in hours, minutes and
+seconds. This is a representation of the actual values, which are seconds from
+midnight.
+
+``` {r}
+reports_fyears[[1, 'time']]
+
+reports_fyears[[1, 'time']] %>% 
+  as.numeric()
+```
+
+To calculate with the "time" column, we first have to tell R that we explicitly
+want to use the data as seconds, then compute the summary statistic and after
+this transform the display of seconds back into the time of day. For this we can
+use the functions `period_to_seconds()` and `seconds_to_period()`. Here we wil
+calculate the mean and the median for the time of day over all police reports in
+one call of `summary()`.
+
+``` {r}
+reports %>% 
+  summarize(mean = period_to_seconds(time) %>% 
+              mean() %>% 
+              seconds_to_period(),
+            median = period_to_seconds(time) %>% 
+              median() %>% 
+              seconds_to_period()
+  )
+```
+
+The mean time of day over all police reports is 11:55 while the median is 11:01.
+This may indicate that the mean is biased towards a later time by a high number
+of very late reports. We will explore this further graphically in the next
+chapter. Again, the results may represent the time when crimes occur, but it may
+be more likely, that we are actually analysing the time when the PR team posts
+their police reports.
