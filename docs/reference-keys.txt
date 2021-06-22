@@ -90,6 +90,12 @@ on-robots.txt-files
 reduce-traffic
 waiting-times-in-action
 citation-and-an-additional-resource
+scraping
+gathering-the-links
+downloading-the-subpages
+extracting-the-data-of-interest
+dealing-with-missing-data-in-lists
+saving-the-data
 dplyr
 filter
 select
@@ -98,7 +104,7 @@ mutate
 summarise-group_by
 ggplot
 ggplot-syntax
-aesthtetics
+aesthetics
 continuous
 continuous-x-continuous
 discrete-x-continuous

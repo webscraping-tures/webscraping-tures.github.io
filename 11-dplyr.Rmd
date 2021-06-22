@@ -1,4 +1,3 @@
-# (PART) Data analysis {-}
 
 # Transformation with dplyr {#dplyr}
 
@@ -10,7 +9,7 @@ knitr::opts_chunk$set(cache.path = 'cache/')
 
 WIP! Content is due to change!
 
-``` {r}
+``` {r message = FALSE}
 library(tidyverse)
 library(rvest)
 library(lubridate)
