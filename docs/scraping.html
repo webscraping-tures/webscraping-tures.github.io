@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>11 Transformation with dplyr | Web Scraping using R</title>
-  <meta name="description" content="11 Transformation with dplyr | Web Scraping using R" />
+  <title>10 Running example | Web Scraping using R</title>
+  <meta name="description" content="10 Running example | Web Scraping using R" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="11 Transformation with dplyr | Web Scraping using R" />
+  <meta property="og:title" content="10 Running example | Web Scraping using R" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="webscraping-tures/webscraping-tures.github.io" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="11 Transformation with dplyr | Web Scraping using R" />
+  <meta name="twitter:title" content="10 Running example | Web Scraping using R" />
   
   
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="scraping.html"/>
-<link rel="next" href="ggplot.html"/>
+<link rel="prev" href="good-practice.html"/>
+<link rel="next" href="dplyr.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -360,271 +360,195 @@ Web Scraping using R
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="dplyr" class="section level1" number="11">
-<h1><span class="header-section-number">11</span> Transformation with dplyr</h1>
-<p>WIP! Content is due to change!</p>
-<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="dplyr.html#cb188-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb188-2"><a href="dplyr.html#cb188-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span>
-<span id="cb188-3"><a href="dplyr.html#cb188-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span></code></pre></div>
-<ul>
-<li>mutate() to apply lubridate and remove “Ereignisort:”
-<ul>
-<li>before that show some simple calculations</li>
-</ul></li>
-<li>select() to remove raw data/time columns and maybe text</li>
-<li>filter() for removing incomplete years
-<ul>
-<li>“should have done this before downloading”</li>
-</ul></li>
-<li>rename()</li>
-<li>group_by() + summarize
-<ul>
-<li>reports by year</li>
-<li>(reports by month)</li>
-<li>reports by district
-<ul>
-<li><ul>
-<li>relative to total</li>
-</ul></li>
-</ul></li>
-<li>mean/median for time of day</li>
-</ul></li>
-</ul>
-<p>At this point you should have a look at both tibbles either by clicking on them
-in the environment tab or by writing <code>View(eligible_tbl)</code> and
-<code>View(turnout_tbl)</code>.</p>
-<p>A quick sidenote: You will notice, that most of the values we will compute in
-this chapter are already present in eligible.csv. We will soon drop those and
-compute them ourselves for the sake of having a good introductory example into
-data transformation. In a real world scenario we would most probably just use
-the values for turnout percentages etc. already present in the data.</p>
-<p>In the following, we will use several functions from the tidyverse package
-dplyr to filter observations, select columns and add new columns as
-computations of existing ones.</p>
-<div id="filter" class="section level2" number="11.1">
-<h2><span class="header-section-number">11.1</span> <code>filter()</code></h2>
-<p>As a first step, we should limit our tibbles to the observations we actually
-need. For this example we should limit ourselves to an analysis on the federal
-level. Thus we can drop all observations referring to the individual states. We
-will also drop the totals for the gender and year of birth columns and compute
-them ourselves later on.</p>
-<p>To filter on the observations we need and drop the remainder, we can use the
-function <code>filter()</code>. It takes the tibble or data frame to be filtered as it’s
-first argument – which we don’t need to specify when using the pipe – and one
-or multiple expressions that specify which observations are to be filtered.</p>
-<p>To filter only those observations that have the value “Bund” for the column
-“Land”, we can write:</p>
-<pre><code>eligible_tbl %&gt;% 
-filter(Land == &quot;Bund&quot;)</code></pre>
-<p>Thus only the observations for “Bund” remain in the tibble. Or in other words,
-those observations for whom the expression <code>Land == "Bund"</code> is returned as
-<code>TRUE</code>. Besides <code>==</code>, all other comparison operators can be used and we can
-chain multiple expressions to be filtered upon in one call of <code>filter()</code>. So, to
-filter on those observations who refer to the “Bund” and don’t have a sum for
-the gender and year of birth columns, we can write:</p>
-<pre><code>eligible_tbl %&gt;% 
-  filter(Land == &quot;Bund&quot;, Geschlecht != &quot;Summe&quot;, Geburtsjahresgruppe != &quot;Summe&quot;)</code></pre>
-<p>We can also use logical operators – <code>&amp;</code> for “and”, <code>|</code> for “or” – when
-combining expressions to be filtered upon. So instead of <code>Geschlecht = "Summe"</code>
-another approach would be to filter those that have “m” or “w” as values. To
-demonstrate this, let us filter the object <code>turnout_tbl</code>as well. Here we have an
-additional column we have to filter for called “Erst-/Zweitstimme”. I propose
-we only analyse the party votes.</p>
-<pre><code>turnout_tbl %&gt;% 
-  filter(Land == &quot;Bund&quot;,
-         `Erst-/Zweitstimme` == 2,
-         Geschlecht == &quot;m&quot; | Geschlecht == &quot;w&quot;,
-         Geburtsjahresgruppe != &quot;Summe&quot;)</code></pre>
-<p>When we create rather long function calls with many arguments, it is often a
-good idea to insert some line breaks to keep your code easily readable, as seen
-above.</p>
-<p>Let’s have another look at this line: <code>`Erst-/Zweitstimme` == 2,</code>. You will
-notice, that the name of the column is enclosed by <em>backticks</em> <code>`</code>. In
-general, object and variable (ie. column) names in R can only contain letters,
-numbers, points and underscores and have to start with a letter. It is possible
-to have names that violate those rules, but these have to enclosed in backticks.
-As you can see, “Erst-/Zweitstimme” contains two characters that are not allowed
-in R names. <code>turnout_tbl</code> also contains the column “DIE LINKE”. The usage of
-whitespace in names is also not allowed. So to address this column in our code,
-we would have to write <code></code>DIE LINKE<code></code>.</p>
+<div id="scraping" class="section level1" number="10">
+<h1><span class="header-section-number">10</span> Running example</h1>
+<p>This last part of the website will introduce the basics of data analysis and of
+using regular expressions when dealing with textual data. Before we begin, this
+chapter will show and briefly explain the scraping of the data we will use as a
+running example throughout the remaining chapters.</p>
+<p>The website
+<a href="https://www.berlin.de/polizei/polizeimeldungen/archiv/" target="_blank">https://www.berlin.de/polizei/polizeimeldungen/archiv/</a>
+contains publicly released reports by the Berlin police, beginning with the year
+2014. The goal for this chapter will be to gather the links to all subpages,
+download them and extract the text of the report as well as the date, time and
+district where it occurred.</p>
+<div id="gathering-the-links" class="section level2" number="10.1">
+<h2><span class="header-section-number">10.1</span> Gathering the links</h2>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="scraping.html#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb176-2"><a href="scraping.html#cb176-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span></code></pre></div>
+<p>We begin with downloading the mainpage.</p>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="scraping.html#cb177-1" aria-hidden="true" tabindex="-1"></a>website <span class="ot">&lt;-</span> <span class="st">&quot;https://www.berlin.de/polizei/polizeimeldungen/archiv/&quot;</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb177-2"><a href="scraping.html#cb177-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_html</span>()</span></code></pre></div>
+<p>The next step is to extract the URLs for the yearly archives. All the <code>&lt;a&gt;</code> tags
+that contain those links, have a <code>title=</code> attribute whose value begins with
+“Link”. We can use this in selector construction, extract the value of the
+<code>href=</code> attribute and, as they are incomplete URLs, append them to the base URL.</p>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="scraping.html#cb178-1" aria-hidden="true" tabindex="-1"></a>links <span class="ot">&lt;-</span> website <span class="sc">%&gt;%</span> </span>
+<span id="cb178-2"><a href="scraping.html#cb178-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;div.html5-section.body a[title^=&#39;Link&#39;]&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb178-3"><a href="scraping.html#cb178-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_attr</span>(<span class="at">name =</span> <span class="st">&quot;href&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb178-4"><a href="scraping.html#cb178-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_c</span>(<span class="st">&quot;https://www.berlin.de&quot;</span>, .)</span></code></pre></div>
+<p>Each yearly archive page contains several subpages for the reports in that year,
+divided by pagination. So to gather the links to all subpages, we have to
+understand how the pagination works in this case. Here the URL for the yearly
+archive is simply appended with the query “?page_at_1_0=” and a value indicating
+the number of the subpage we want to access.
+So “<a href="https://www.berlin.de/polizei/polizeimeldungen/archiv/2020/?page_at_1_0=5" class="uri">https://www.berlin.de/polizei/polizeimeldungen/archiv/2020/?page_at_1_0=5</a>”
+for example gives access to the fifth page for 2020.</p>
+<p>As the number of police reports is not constant over the years, the number of
+subpages per year will also differ. So, we do not know in advance, how many
+subpages we will have to download. But we can scrape this information from the
+last pagination link for each year. We read the first page for each year, select
+the <code>&lt;a&gt;</code> tag for the last subpage, extract the text from it and save it as a
+number. Note that I also added a waiting time of two seconds between each
+download, as shown in chapter @ref(good_practice).</p>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="scraping.html#cb179-1" aria-hidden="true" tabindex="-1"></a>max_pages <span class="ot">&lt;-</span> links <span class="sc">%&gt;%</span> </span>
+<span id="cb179-2"><a href="scraping.html#cb179-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span> {</span>
+<span id="cb179-3"><a href="scraping.html#cb179-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">Sys.sleep</span>(<span class="dv">2</span>)</span>
+<span id="cb179-4"><a href="scraping.html#cb179-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">read_html</span>(.x)</span>
+<span id="cb179-5"><a href="scraping.html#cb179-5" aria-hidden="true" tabindex="-1"></a>  }) <span class="sc">%&gt;%</span></span>
+<span id="cb179-6"><a href="scraping.html#cb179-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(html_node, <span class="at">css =</span> <span class="st">&quot;li.pager-item.last &gt; a&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb179-7"><a href="scraping.html#cb179-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(html_text) <span class="sc">%&gt;%</span> </span>
+<span id="cb179-8"><a href="scraping.html#cb179-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.numeric</span>()</span></code></pre></div>
+<p>Now we can construct the links to all subpages; in my script by nesting two for
+loops.</p>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="scraping.html#cb180-1" aria-hidden="true" tabindex="-1"></a>pag_links <span class="ot">&lt;-</span> <span class="fu">character</span>()</span>
+<span id="cb180-2"><a href="scraping.html#cb180-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb180-3"><a href="scraping.html#cb180-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(links)) {</span>
+<span id="cb180-4"><a href="scraping.html#cb180-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>max_pages[i]) {</span>
+<span id="cb180-5"><a href="scraping.html#cb180-5" aria-hidden="true" tabindex="-1"></a>    pag_links <span class="ot">&lt;-</span> <span class="fu">append</span>(pag_links, <span class="at">values =</span> <span class="fu">str_c</span>(links[i], <span class="st">&quot;?page_at_1_0=&quot;</span>, j))</span>
+<span id="cb180-6"><a href="scraping.html#cb180-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb180-7"><a href="scraping.html#cb180-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>The outer loop is a counter for the elements in the objects <code>links</code>. So
+in this case the loop counts from 1 to 8, one step for each yearly archive page.
+For each of these iterations, the inner loop will count from 1 to the number of
+the last subpage for this year, which we assigned to the vector <code>max_pages</code>.
+Using both counters together, we can construct the links to the subpages using
+<code>str_c()</code>. The function takes the link to a yearly archive indicated by the
+counter in the outer loop <code>i</code>, appends “?page_at_1_0=” and after this the value
+of the inner loop counter <code>j</code>. The resulting link is then added to the vector
+<code>pag_links</code> using the function <code>append()</code> which adds the data indicated by the
+argument <code>values</code> to the object specified in the first argument. For this to
+work, we first have to initialise the object as an empty object outside of the
+loop first. Here I created it as an empty character vector, using
+<code>pag_links &lt;- character()</code>. If you want to create an empty object without any
+data type assigned, you can also use <code>empty_vector &lt;- NULL</code></p>
 </div>
-<div id="select" class="section level2" number="11.2">
-<h2><span class="header-section-number">11.2</span> <code>select()</code></h2>
-<p>We should also limit our tibbles to the set of columns we will actually use.</p>
-<p>Looking at <code>eligible_tbl</code>, we will only need the first four columns. We can use
-the function <code>select()</code> to “select” the columns we need by name.</p>
-<pre><code>eligible_tbl %&gt;% 
-  select(Land, Geschlecht, Geburtsjahresgruppe, Wahlberechtigte)</code></pre>
-<p>If, as in this case, the columns we want so select follow each other in their
-positions in the tibble, we can also use a shorter “from:to” notation, that
-saves us somy typing.</p>
-<pre><code>eligible_tbl %&gt;% 
-  select(Land:Wahlberechtigte)</code></pre>
-<p>At this point we can combine the filtering of rows and selection of columns in
-the pipe and assign the result to a new object. But first, let us think about
-again about which columns we will actually need. Above we selected the first
-four columns from <code>turnout_tbl</code>. But we do not actually need the column “Land”
-after we filtered for the rows containing the federal state level as it contains
-no useful information anymore. So we can drop the column, if we filter first.
-Order matters! For <code>turnout_tbl</code> this is also true but extends to the column
-“Erst-/Zweitstimme” which also only contains one value after filtering.</p>
-<pre><code>eligible_tbl &lt;- eligible_tbl %&gt;% 
-  filter(Land == &quot;Bund&quot;, 
-         Geschlecht != &quot;Summe&quot;,
-         Geburtsjahresgruppe != &quot;Summe&quot;) %&gt;%
-  select(Geschlecht:Wahlberechtigte)
-
-turnout_tbl &lt;- turnout_tbl %&gt;% 
-  filter(Land == &quot;Bund&quot;,
-         `Erst-/Zweitstimme` == 2,
-         Geschlecht == &quot;m&quot; | Geschlecht == &quot;w&quot;,
-         Geburtsjahresgruppe != &quot;Summe&quot;) %&gt;% 
-  select(Geschlecht:Summe)</code></pre>
+<div id="downloading-the-subpages" class="section level2" number="10.2">
+<h2><span class="header-section-number">10.2</span> Downloading the subpages</h2>
+<p>Now that the the links to all subpages are gathered, we can finally download
+them. Please note, that the download will take up to 20 minutes due to the
+number of subpages (337 at the time of writing) and the waiting time of 2
+seconds between each iteration.</p>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="scraping.html#cb181-1" aria-hidden="true" tabindex="-1"></a>pages <span class="ot">&lt;-</span> pag_links <span class="sc">%&gt;%</span> </span>
+<span id="cb181-2"><a href="scraping.html#cb181-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span> {</span>
+<span id="cb181-3"><a href="scraping.html#cb181-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">Sys.sleep</span>(<span class="dv">2</span>)</span>
+<span id="cb181-4"><a href="scraping.html#cb181-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">read_html</span>(.x)</span>
+<span id="cb181-5"><a href="scraping.html#cb181-5" aria-hidden="true" tabindex="-1"></a>  })</span></code></pre></div>
 </div>
-<div id="rename" class="section level2" number="11.3">
-<h2><span class="header-section-number">11.3</span> <code>rename()</code></h2>
-<p>As we are working in english, it makes sense to also rename the columns using
-english wordings. Also, we have to write down the column names several time
-during analysis, so we should use names that are short but concise to limit
-unnecessary typing while maintaining recognisability. Imagine writing
-“Geburtsjahresgruppe” several times in your code, and you will know why
-renaming is approriate here. Also the column “Summe” in <code>turnout_tbl</code> does not
-describe what the values stored in it refer to. We should change this.</p>
-<p>One approach to renaming is using the function <code>rename()</code> from dplyr. The
-function takes the data to applied to as its first argument – passed by the
-pipe in this case – followed by one or more arguments in the form
-<code>new_name = old_name</code>.</p>
-<pre><code>eligible_tbl &lt;- eligible_tbl %&gt;% 
-  rename(gender = Geschlecht,
-         ybirth = Geburtsjahresgruppe,
-         eligible = Wahlberechtigte)
-
-eligible_tbl
-
-turnout_tbl &lt;- turnout_tbl %&gt;% 
-  rename(gender = Geschlecht,
-         ybirth = Geburtsjahresgruppe,
-         turnout = Summe)
-
-turnout_tbl</code></pre>
+<div id="extracting-the-data-of-interest" class="section level2" number="10.3">
+<h2><span class="header-section-number">10.3</span> Extracting the data of interest</h2>
+<p>Our goal is to extract the text of the report, the date/time and the district
+the report refers to. Let us try to appraoch this, using the techniques we
+developed over the last chapters:</p>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="scraping.html#cb182-1" aria-hidden="true" tabindex="-1"></a>reports <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb182-2"><a href="scraping.html#cb182-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Date =</span> pages <span class="sc">%&gt;%</span> </span>
+<span id="cb182-3"><a href="scraping.html#cb182-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(html_nodes, <span class="at">css =</span> <span class="st">&quot;div.cell.date&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb182-4"><a href="scraping.html#cb182-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(html_text) <span class="sc">%&gt;%</span> </span>
+<span id="cb182-5"><a href="scraping.html#cb182-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unlist</span>(),</span>
+<span id="cb182-6"><a href="scraping.html#cb182-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Report =</span> pages <span class="sc">%&gt;%</span> </span>
+<span id="cb182-7"><a href="scraping.html#cb182-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(html_nodes, <span class="at">css =</span> <span class="st">&quot;div.cell.text &gt; a&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb182-8"><a href="scraping.html#cb182-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(html_text) <span class="sc">%&gt;%</span> </span>
+<span id="cb182-9"><a href="scraping.html#cb182-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unlist</span>(),</span>
+<span id="cb182-10"><a href="scraping.html#cb182-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">District =</span> pages <span class="sc">%&gt;%</span> </span>
+<span id="cb182-11"><a href="scraping.html#cb182-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(html_nodes, <span class="at">css =</span> <span class="st">&quot;span.category&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb182-12"><a href="scraping.html#cb182-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(html_text) <span class="sc">%&gt;%</span> </span>
+<span id="cb182-13"><a href="scraping.html#cb182-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unlist</span>()</span>
+<span id="cb182-14"><a href="scraping.html#cb182-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb182-15"><a href="scraping.html#cb182-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Error: Tibble columns must have compatible sizes.</span></span>
+<span id="cb182-16"><a href="scraping.html#cb182-16" aria-hidden="true" tabindex="-1"></a><span class="do">## * Size 16698: Existing data.</span></span>
+<span id="cb182-17"><a href="scraping.html#cb182-17" aria-hidden="true" tabindex="-1"></a><span class="do">## * Size 16303: Column `District`.</span></span>
+<span id="cb182-18"><a href="scraping.html#cb182-18" aria-hidden="true" tabindex="-1"></a><span class="do">## ℹ Only values of size one are recycled.</span></span></code></pre></div>
+<p>That did not work. But why? Let us look at the error message we received.
+It informs us, that the column “District” we tried to create is shorter in
+length compared to the other two. As we can not create tibbles out of columns with
+different lengths, the error is thrown.</p>
+<p>The fact that the “District” column is shorter than the other two, must mean
+that there are police reports where the information on the district is not
+listed on the website. We can confirm this by browsing some of the subpages,
+e.g. <a href="https://www.berlin.de/polizei/polizeimeldungen/archiv/2014/" target="_blank">https://www.berlin.de/polizei/polizeimeldungen/archiv/2014/</a>.</p>
+<div id="dealing-with-missing-data-in-lists" class="section level3" number="10.3.1">
+<h3><span class="header-section-number">10.3.1</span> Dealing with missing data in lists</h3>
+<p>Some of the <code>&lt;span&gt;</code> tags that contain the district are missing. Using the
+approach presented above, <code>html_nodes()</code> just extracts the <code>&lt;span&gt;</code> tags that
+are present. We tell R that we do want all <code>&lt;span&gt;</code> tags of the class
+“category”, and this is what R returns to us. The cases where the tag is missing
+are skipped. But this is not what we want. What we actually want is, that R
+looks at every single police report and saves its text, date and time as well as
+the district, if it is not missing. If it is missing, we want R to save a <code>NA</code>
+in the cell of the tibble, the representation of missing values in R.</p>
+<p>The <code>&lt;div&gt;</code> and <code>&lt;span&gt;</code> tags that contain the data of interest are nested in
+<code>&lt;li&gt;</code> tags in this case. The <code>&lt;li&gt;</code> tags thus contain the whole set of data,
+the text, the date/time and the district. The approach here is to make R examine
+every single <code>&lt;li&gt;</code> tag and extract the data that is present as well as save an
+<code>NA</code> for every piece of data that is missing.</p>
+<p>So, first we have to extract all the <code>&lt;li&gt;</code> tags and their content from the
+subpages. Right now, the subpages are saved in the object <code>pages</code>. We use a for
+loop that takes every element of <code>pages</code> extracts all the <code>&lt;li&gt;</code> tags from it
+and adds them to a new list using <code>append()</code>. <code>append()</code> takes an existing
+object as its first argument and adds the data indicated in the <code>values =</code>
+argument to it. For this to work, we have to initiate the new list as an empty
+object, before the loop starts.</p>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="scraping.html#cb183-1" aria-hidden="true" tabindex="-1"></a>list_items <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb183-2"><a href="scraping.html#cb183-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb183-3"><a href="scraping.html#cb183-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(pages)) {</span>
+<span id="cb183-4"><a href="scraping.html#cb183-4" aria-hidden="true" tabindex="-1"></a>  list_items <span class="ot">&lt;-</span> <span class="fu">append</span>(list_items, <span class="at">values =</span> <span class="fu">html_nodes</span>(pages[[i]], <span class="at">css =</span> <span class="st">&quot;li.row-fluid&quot;</span>))</span>
+<span id="cb183-5"><a href="scraping.html#cb183-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>The newly created list <code>list_items</code> contains a nodeset for each <code>&lt;li&gt;</code> tag from
+all subpages:</p>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="scraping.html#cb184-1" aria-hidden="true" tabindex="-1"></a>list_items[[<span class="dv">1</span>]]</span>
+<span id="cb184-2"><a href="scraping.html#cb184-2" aria-hidden="true" tabindex="-1"></a><span class="do">## {html_node}</span></span>
+<span id="cb184-3"><a href="scraping.html#cb184-3" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;li class=&quot;row-fluid&quot;&gt;</span></span>
+<span id="cb184-4"><a href="scraping.html#cb184-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;div class=&quot;span2 cell date&quot;&gt;21.06.2021 15:17 Uhr&lt;/div&gt;\n</span></span>
+<span id="cb184-5"><a href="scraping.html#cb184-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &lt;div class=&quot;span10 cell text&quot;&gt;\n&lt;a href=&quot;/polizei/polizeimeldungen/2021/p ...</span></span></code></pre></div>
+<p>We can now make R examine every element of this list and extract all the data it
+contains. But what happens when we try to extract a node that is not present in
+one of the elements? R returns an <code>NA</code>:</p>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="scraping.html#cb185-1" aria-hidden="true" tabindex="-1"></a><span class="fu">html_node</span>(list_items[[<span class="dv">1</span>]], <span class="at">css =</span> <span class="st">&quot;span.notthere&quot;</span>)</span>
+<span id="cb185-2"><a href="scraping.html#cb185-2" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_missing}</span></span>
+<span id="cb185-3"><a href="scraping.html#cb185-3" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;NA&gt;</span></span></code></pre></div>
+<p>Using a for loop that iterates over the elements in <code>list_items</code> we write a
+tibble row by row; filling the data cells with the extracted information and
+with <code>NA</code> if a node could not be found for this element of <code>list_items</code>. We have
+to initiate the tibble before the for loop starts. So we define the columns
+names, the type of data to be saved and also the length of the columns. The
+latter is not strictly necessary as we could also have created a tibble with a
+column length of <span class="math inline">\(0\)</span>, but pre-defining their length increases computational
+efficiency. Still, the for loop has to iterate over several thousand elements
+and extract the data contained, which will take several minutes to complete.</p>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="scraping.html#cb186-1" aria-hidden="true" tabindex="-1"></a>reports <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb186-2"><a href="scraping.html#cb186-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Date =</span> <span class="fu">character</span>()[<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(list_items)],</span>
+<span id="cb186-3"><a href="scraping.html#cb186-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Report =</span> <span class="fu">character</span>()[<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(list_items)],</span>
+<span id="cb186-4"><a href="scraping.html#cb186-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">District =</span> <span class="fu">character</span>()[<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(list_items)]</span>
+<span id="cb186-5"><a href="scraping.html#cb186-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb186-6"><a href="scraping.html#cb186-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb186-7"><a href="scraping.html#cb186-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(list_items)) {</span>
+<span id="cb186-8"><a href="scraping.html#cb186-8" aria-hidden="true" tabindex="-1"></a>  reports[i, <span class="st">&quot;Date&quot;</span>] <span class="ot">&lt;-</span> <span class="fu">html_node</span>(list_items[[i]], <span class="at">css =</span> <span class="st">&quot;div.cell.date&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb186-9"><a href="scraping.html#cb186-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text</span>()</span>
+<span id="cb186-10"><a href="scraping.html#cb186-10" aria-hidden="true" tabindex="-1"></a>  reports[i, <span class="st">&quot;Report&quot;</span>] <span class="ot">&lt;-</span> <span class="fu">html_node</span>(list_items[[i]], <span class="at">css =</span> <span class="st">&quot;div.cell.text &gt; a&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb186-11"><a href="scraping.html#cb186-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text</span>()</span>
+<span id="cb186-12"><a href="scraping.html#cb186-12" aria-hidden="true" tabindex="-1"></a>  reports[i, <span class="st">&quot;District&quot;</span>] <span class="ot">&lt;-</span> <span class="fu">html_node</span>(list_items[[i]], <span class="at">css =</span> <span class="st">&quot;span.category&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb186-13"><a href="scraping.html#cb186-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text</span>()</span>
+<span id="cb186-14"><a href="scraping.html#cb186-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 </div>
-<div id="mutate" class="section level2" number="11.4">
-<h2><span class="header-section-number">11.4</span> <code>mutate()</code></h2>
-<p>We will now leave our running example for a short time and look at how to
-compute new variables in a tibble from existing ones, using <code>mutate()</code> from
-dplyr.</p>
-<p>For this purpose, let us create a new simple tibble on voter turnout. Note that
-the entered data is purely illustrational and has no meaning. We will return to
-the real data shortly.</p>
-<pre><code>exmpl_tbl &lt;- tibble(
-  gender = c(&quot;m&quot;, &quot;m&quot;, &quot;w&quot;, &quot;w&quot;),
-  ybirth = c(&quot;1993 - 1999&quot;, &quot;1983 - 1992&quot;, &quot;1993 - 1999&quot;, &quot;1983 - 1992&quot;),
-  eligible = c(100000, 100000, 100000, 100000),
-  turnout_person = c(40000, 50000, 60000, 70000),
-  turnout_mail = c (35000, 30000, 25000, 20000)
-)
-
-exmpl_tbl</code></pre>
-<p>In this hypothetical data, we have different columns for people who voted in
-person and who voted by mail. We do not care about this difference in voting
-method in this example and want one column that combines both. We can achieve
-this by using <code>mutate()</code>. The function takes the data to be manipulated as its
-first argument, followed by one or multiple arguments defining the new columns
-to be created. We can create this new columns as computations involving the
-columns already present. To calculate the total turnout we could write:</p>
-<pre><code>exmpl_tbl %&gt;% 
-mutate(turnout = turnout_person + turnout_mail)</code></pre>
-<p>We can also immediately start calculating with new columns in the same pipe. So
-to calculate the turnout percentage:</p>
-<pre><code>exmpl_tbl %&gt;% 
-mutate(
-  turnout = turnout_person + turnout_mail,
-  turnout_pct = turnout / eligible
-)</code></pre>
-<p>As we no longer need <code>turnout_person</code> and <code>turnout_mail</code> we could drop them by
-using <code>select()</code> in a last step. Instead of telling <code>select()</code> which columns we
-want to keep, we can also tell it which noot to keep by adding a <code>-</code> before the
-column names.</p>
-<pre><code>exmpl_tbl &lt;- exmpl_tbl %&gt;% 
-  mutate(
-    turnout = turnout_person + turnout_mail,
-    turnout_pct = turnout / eligible
-  ) %&gt;% 
-  select(-turnout_person, -turnout_mail)
-
-exmpl_tbl</code></pre>
-<p>Note that <code>mutate()</code> is not limited to basic arithmetic operations. Many
-functions can be applied within <code>mutate()</code>, for example <code>sum()</code> or <code>mean()</code> to
-only name a few examples we already know.</p>
 </div>
-<div id="summarise-group_by" class="section level2" number="11.5">
-<h2><span class="header-section-number">11.5</span> <code>summarise()</code> &amp; <code>group_by()</code></h2>
-<p><code>summarise()</code> can be used to calculate summary statistics for a whole tibble.
-The syntax is similar to <code>mutate()</code>. Let us compute the total number of persons
-eligible to vote:</p>
-<pre><code>exmpl_tbl %&gt;% 
-summarise(eligible_total = sum(eligible))</code></pre>
-<p>As you can see, the result is a new tibble, containing only the summary
-statistics we requested.</p>
-<p>We also can compute multiple summary statistics in one step. Please note, that
-the overall mean for turnout percentage can be computed as the mean of the
-turnout percentages per group in this case only because all four groups are
-exactly of the same size (<span class="math inline">\(n = 100000\)</span>). We will later look into computing the
-same measure with our real data.</p>
-<pre><code>exmpl_tbl %&gt;% 
-  summarise(
-    eligible_total = sum(eligible),
-    turnout_total = sum(turnout),
-    turnout_pct_mean = mean(turnout_pct)
-  )</code></pre>
-<p>Often we are interested in summaries grouped by the value of one or more other
-variables. We might be interested in computing these summary statistics not for
-the complete tibble but by gender. For this purpose, we can group the data by
-the gender column using <code>group_by()</code> and then compute the summary statistics
-separately for each group. As always with dplyr functions, <code>group_by()</code> needs
-the data that shall be grouped as the first argument, followed by one or
-multiple variables to group by.</p>
-<pre><code>exmpl_tbl %&gt;% 
-  group_by(gender) %&gt;% 
-  summarise(
-    eligible_total = sum(eligible),
-    turnout_total = sum(turnout),
-    turnout_pct_mean = mean(turnout_pct)
-  )</code></pre>
-<p>Let us create a final example, with two variables to group by. Let us assume
-we have the turnout percentages by gender and age group for two elections. We
-also again assume the same group size, i.e. the same “n”, for all observations.</p>
-<pre><code>exmpl_tbl_2 &lt;- tibble(
-  election = c(1, 1, 1, 1, 2, 2, 2, 2),
-  gender = c(&quot;m&quot;, &quot;m&quot;, &quot;w&quot;, &quot;w&quot;, &quot;m&quot;, &quot;m&quot;, &quot;w&quot;, &quot;w&quot;),
-  ybirth = c(&quot;1993 - 1999&quot;, &quot;1983 - 1992&quot;, &quot;1993 - 1999&quot;, &quot;1983 - 1992&quot;, &quot;1993 - 1999&quot;, &quot;1983 - 1992&quot;, &quot;1993 - 1999&quot;, &quot;1983 - 1992&quot;),
-  turnout_pct = c(0.6, 0.55, 0.75, 0.625, 0.7, 0.65, 0.85, 0.725)
-)
-
-exmpl_tbl_2</code></pre>
-<p>To compute the mean turnout percentages by gender for each election separately,
-we can group by election and gender.</p>
-<pre><code>exmpl_tbl_2 %&gt;% 
-  group_by(election, gender) %&gt;% 
-  summarise(
-    turnout_pct_mean = mean(turnout_pct)
-  )</code></pre>
-<p>There is a peculiarity to the way <code>group_by()</code> works with <code>summarise()</code> that can
-cause headaches, if we are not aware of it. In general any <code>summarise()</code>
-function following a <code>group_by()</code> will calculate the summary statistic and then
-remove one level of grouping. In the examples where we only had one level of
-grouping, this essentially meant, that the data was ungrouped after
-<code>summarise()</code>. In the last example we had two levels of grouping. So after the
-computation of the mean turnout percentage by <code>election</code> and <code>gender</code>, the
-grouping by <code>gender</code> was removed, but the grouping by <code>election</code> remained in
-effect. We can see this in the output, where R informs us about the column by
-which the data is grouped and the number of groups in the output:
-<code>## # Groups:   election [2]</code>. Another <code>summarise()</code> function would compute the
-statistic by <code>election</code> and then remove this level also. We can also use
-<code>ungroup()</code> to remove all grouping from a tibble. In the case of this example,
-this does not make a practical difference as we only compute the summary and
-move on. If we assign the results of a summary to an object for later use in
-data analysis, we have to think about removing groups though.</p>
+<div id="saving-the-data" class="section level2" number="10.4">
+<h2><span class="header-section-number">10.4</span> Saving the data</h2>
+<p>As discussed in chapter <a href="files.html#files">8</a>, at this point we should maybe save the
+scraped data. As you have seen, we downloaded a lot of subpages which took a
+considerable amount of time. If we repeat this for every instance of further
+data analysis, we create a lot of unnecessary traffic and waste a lot of our own
+time.</p>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="scraping.html#cb187-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(reports, <span class="at">file =</span> <span class="st">&quot;reports.RData&quot;</span>)</span></code></pre></div>
 
 </div>
 </div>
@@ -633,8 +557,8 @@ data analysis, we have to think about removing groups though.</p>
           </div>
         </div>
       </div>
-<a href="scraping.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="ggplot.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="good-practice.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="dplyr.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -656,7 +580,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/webscraping-tures/webscraping-tures.github.io/11-dplyr.Rmd",
+"link": "https://github.com/webscraping-tures/webscraping-tures.github.io/10-rvest4.Rmd",
 "text": "Edit"
 },
 "history": {

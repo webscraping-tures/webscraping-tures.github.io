@@ -1,0 +1,242 @@
+# (PART) Data analysis {-}
+
+# Running example {#scraping}
+
+``` {r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+knitr::opts_chunk$set(cache = TRUE)
+knitr::opts_chunk$set(cache.path = 'cache/')
+```
+
+
+This last part of the website will introduce the basics of data analysis and of
+using regular expressions when dealing with textual data. Before we begin, this
+chapter will show and briefly explain the scraping of the data we will use as a
+running example throughout the remaining chapters.
+
+The website
+<https://www.berlin.de/polizei/polizeimeldungen/archiv/>{target="_blank"}
+contains publicly released reports by the Berlin police, beginning with the year
+2014. The goal for this chapter will be to gather the links to all subpages,
+download them and extract the text of the report as well as the date, time and
+district where it occurred.
+
+## Gathering the links
+
+``` {r message = FALSE}
+library(tidyverse)
+library(rvest)
+```
+
+We begin with downloading the mainpage.
+
+``` {r}
+website <- "https://www.berlin.de/polizei/polizeimeldungen/archiv/" %>% 
+  read_html()
+```
+
+The next step is to extract the URLs for the yearly archives. All the `<a>` tags
+that contain those links, have a `title=` attribute whose value begins with
+"Link". We can use this in selector construction, extract the value of the
+`href=` attribute and, as they are incomplete URLs, append them to the base URL.
+
+``` {r}
+links <- website %>% 
+  html_nodes(css = "div.html5-section.body a[title^='Link']") %>% 
+  html_attr(name = "href") %>% 
+  str_c("https://www.berlin.de", .)
+```
+
+Each yearly archive page contains several subpages for the reports in that year,
+divided by pagination. So to gather the links to all subpages, we have to
+understand how the pagination works in this case. Here the URL for the yearly
+archive is simply appended with the query "?page_at_1_0=" and a value indicating
+the number of the subpage we want to access.
+So "https://www.berlin.de/polizei/polizeimeldungen/archiv/2020/?page_at_1_0=5"
+for example gives access to the fifth page for 2020. 
+
+As the number of police reports is not constant over the years, the number of
+subpages per year will also differ. So, we do not know in advance, how many
+subpages we will have to download. But we can scrape this information from the
+last pagination link for each year. We read the first page for each year, select
+the `<a>` tag for the last subpage, extract the text from it and save it as a
+number. Note that I also added a waiting time of two seconds between each
+download, as shown in chapter \@ref(good_practice). 
+
+``` {r}
+max_pages <- links %>% 
+  map(~ {
+    Sys.sleep(2)
+    read_html(.x)
+  }) %>%
+  map(html_node, css = "li.pager-item.last > a") %>% 
+  map(html_text) %>% 
+  as.numeric()
+```
+
+Now we can construct the links to all subpages; in my script by nesting two for
+loops. 
+
+```{r}
+pag_links <- character()
+
+for (i in 1:length(links)) {
+  for (j in 1:max_pages[i]) {
+    pag_links <- append(pag_links, values = str_c(links[i], "?page_at_1_0=", j))
+  }
+}
+```
+
+
+The outer loop is a counter for the elements in the objects `links`. So
+in this case the loop counts from 1 to 8, one step for each yearly archive page.
+For each of these iterations, the inner loop will count from 1 to the number of
+the last subpage for this year, which we assigned to the vector `max_pages`.
+Using both counters together, we can construct the links to the subpages using
+`str_c()`. The function takes the link to a yearly archive indicated by the
+counter in the outer loop `i`, appends "?page_at_1_0=" and after this the value
+of the inner loop counter `j`. The resulting link is then added to the vector
+`pag_links` using the function `append()` which adds the data indicated by the
+argument `values` to the object specified in the first argument. For this to
+work, we first have to initialise the object as an empty object outside of the
+loop first. Here I created it as an empty character vector, using
+`pag_links <- character()`. If you want to create an empty object without any
+data type assigned, you can also use `empty_vector <- NULL`
+
+
+## Downloading the subpages
+
+Now that the the links to all subpages are gathered, we can finally download
+them. Please note, that the download will take up to 20 minutes due to the
+number of subpages (337 at the time of writing) and the waiting time of 2
+seconds between each iteration.
+
+``` {r}
+pages <- pag_links %>% 
+  map(~ {
+    Sys.sleep(2)
+    read_html(.x)
+  })
+```
+
+## Extracting the data of interest
+
+Our goal is to extract the text of the report, the date/time and the district
+the report refers to. Let us try to appraoch this, using the techniques we
+developed over the last chapters:
+
+``` {r error=TRUE}
+reports <- tibble(
+  Date = pages %>% 
+    map(html_nodes, css = "div.cell.date") %>% 
+    map(html_text) %>% 
+    unlist(),
+  Report = pages %>% 
+    map(html_nodes, css = "div.cell.text > a") %>% 
+    map(html_text) %>% 
+    unlist(),
+  District = pages %>% 
+    map(html_nodes, css = "span.category") %>% 
+    map(html_text) %>% 
+    unlist()
+)
+```
+
+That did not work. But why? Let us look at the error message we received.
+It informs us, that the column "District" we tried to create is shorter in
+length compared to the other two. As we can not create tibbles out of columns with
+different lengths, the error is thrown.
+
+The fact that the "District" column is shorter than the other two, must mean
+that there are police reports where the information on the district is not
+listed on the website. We can confirm this by browsing some of the subpages,
+e.g. <https://www.berlin.de/polizei/polizeimeldungen/archiv/2014/>{target="_blank"}.
+
+
+### Dealing with missing data in lists
+
+Some of the `<span>` tags that contain the district are missing. Using the
+approach presented above, `html_nodes()` just extracts the `<span>` tags that
+are present. We tell R that we do want all `<span>` tags of the class
+"category", and this is what R returns to us. The cases where the tag is missing
+are skipped. But this is not what we want. What we actually want is, that R
+looks at every single police report and saves its text, date and time as well as
+the district, if it is not missing. If it is missing, we want R to save a `NA`
+in the cell of the tibble, the representation of missing values in R.
+
+The `<div>` and `<span>` tags that contain the data of interest are nested in
+`<li>` tags in this case. The `<li>` tags thus contain the whole set of data,
+the text, the date/time and the district. The approach here is to make R examine
+every single `<li>` tag and extract the data that is present as well as save an
+`NA` for every piece of data that is missing.
+
+So, first we have to extract all the `<li>` tags and their content from the
+subpages. Right now, the subpages are saved in the object `pages`. We use a for
+loop that takes every element of `pages` extracts all the `<li>` tags from it
+and adds them to a new list using `append()`. `append()` takes an existing
+object as its first argument and adds the data indicated in the `values =`
+argument to it. For this to work, we have to initiate the new list as an empty
+object, before the loop starts.
+
+``` {r}
+list_items <- NULL
+
+for (i in 1:length(pages)) {
+  list_items <- append(list_items, values = html_nodes(pages[[i]], css = "li.row-fluid"))
+}
+```
+
+The newly created list `list_items` contains a nodeset for each `<li>` tag from
+all subpages:
+
+``` {r}
+list_items[[1]]
+```
+
+We can now make R examine every element of this list and extract all the data it
+contains. But what happens when we try to extract a node that is not present in
+one of the elements? R returns an `NA`:
+
+``` {r}
+html_node(list_items[[1]], css = "span.notthere")
+```
+
+Using a for loop that iterates over the elements in `list_items` we write a
+tibble row by row; filling the data cells with the extracted information and
+with `NA` if a node could not be found for this element of `list_items`. We have
+to initiate the tibble before the for loop starts. So we define the columns
+names, the type of data to be saved and also the length of the columns. The
+latter is not strictly necessary as we could also have created a tibble with a
+column length of $0$, but pre-defining their length increases computational
+efficiency. Still, the for loop has to iterate over several thousand elements
+and extract the data contained, which will take several minutes to complete.
+
+``` {r}
+reports <- tibble(
+  Date = character()[1:length(list_items)],
+  Report = character()[1:length(list_items)],
+  District = character()[1:length(list_items)]
+)
+
+for (i in 1:length(list_items)) {
+  reports[i, "Date"] <- html_node(list_items[[i]], css = "div.cell.date") %>% 
+    html_text()
+  reports[i, "Report"] <- html_node(list_items[[i]], css = "div.cell.text > a") %>% 
+    html_text()
+  reports[i, "District"] <- html_node(list_items[[i]], css = "span.category") %>% 
+    html_text()
+}
+```
+
+
+## Saving the data
+
+As discussed in chapter \@ref(files), at this point we should maybe save the
+scraped data. As you have seen, we downloaded a lot of subpages which took a
+considerable amount of time. If we repeat this for every instance of further
+data analysis, we create a lot of unnecessary traffic and waste a lot of our own
+time. 
+
+``` {r}
+save(reports, file = "reports.RData")
+```
