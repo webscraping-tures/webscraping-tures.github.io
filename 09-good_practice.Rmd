@@ -1,4 +1,4 @@
-# Good practice {#good_practice}
+# Good practice {#goodpractice}
 
 ``` {r, include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE)

@@ -84,7 +84,7 @@ parsing-a-csv-file
 downloading-files
 parsing-the-csv-files
 saving-data-files
-good_practice
+goodpractice
 we-aint-no-web-crawlers
 on-robots.txt-files
 reduce-traffic
@@ -99,7 +99,7 @@ saving-the-data
 dplyr
 mutate
 computing-new-variables-from-existing-ones
-cleaning-the-running-example
+cleaning-the-data-on-police-reports
 select
 rename
 filter
