@@ -3,3 +3,6 @@
 .RData
 .Ruserdata
 cache/
+btw2017.RData
+*.Rdata
+*.csv
