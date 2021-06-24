@@ -1,6 +1,6 @@
 # (PART) Data analysis {-}
 
-# Running example {#scraping}
+# Scraping Berlin police reports {#scraping}
 
 ``` {r, include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
