@@ -126,3 +126,11 @@ practical-application
 str_count
 str_extract-str_match
 str_replace
+ggplot2-syntax
+geoms-and-aesthetics
+continuous-x-continuous-y
+discrete-x-continuous-y
+continuous-x
+graphical-analysis-of-berlin-police-reports
+categorical-x-variables
+continuous-x-variables
