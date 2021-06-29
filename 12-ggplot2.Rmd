@@ -327,7 +327,7 @@ an object. We also use the `colour =` argument outside of `aes()` to set a
 constant colour for the line -- instead of using it as an aesthetic and thus
 colouring the data by the values of a third variable.
 
-Sidenote: To get an overview of the available colours, have a look at:
+Sidenote: For an overview of the available colours, have a look at:
 <http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf>{target="_blank"}.
   
 ``` {r}
@@ -347,20 +347,38 @@ ggplot(data = reports_fyears, aes(x = period_to_seconds(time))) +
   geom_vline(aes(xintercept = mean_time), colour = "red")
 ```
 
+With readable labels and the mean line as reference points, the distribution of
+the time of day becomes more apparent. We see, that there are no reports filed
+beginning from the late evening to the early morning. This is another indication
+that the times we scraped do not actually represent the times when the event
+occurred but rather when the reports was officially filed or uploaded to the
+website. From this data, we can not conclude that it is safest to enter the
+streets of Berlin at nighttime, but rather the the working hours of the people
+responsible for communicating the police reports work from about 08:00 to 
+19:00-20:00.
 
+We can also see that the mean we calculated in chapter \@ref(dplyr) -- 11:55 --
+is misleading. As the many reports are filed in the late afternoon to early
+evening, the mean is biased to the right. 11:55 is not the time when most
+reports occur; actually half of all reports are filed before 11:00, as indicated
+by the median, which in general is more robust to skewed distributions. There
+seems to be a short period of high activity in the early to late morning hours.
+Again, we can infer more about the working context of the police PR team than
+about crimes in Berlin from this. It seems reasonable, that reports on the
+events that occurred in the night pile up and are then quickly published in the
+morning, when office hours begin. Following this, the number of reports gets
+considerably lower as events are reported at the rate they occur.
 
-
-
-
-
-
-
-
-using facets
+We can also ask, if the distribution of the time of day when reports are
+published has changed over time. To compare plots grouped by the values of
+another variable -- here `year` --, we can use *facets*. As the first argument
+of `facet_wrap()` we specify the variable by which we want subgroups to be
+formed, using the notation `~ variable`. The argument `nrows =` determines the
+number of rows to be displayed.
 
 ``` {r}
 ggplot(data = reports_fyears, aes(x = period_to_seconds(time))) +
-  geom_histogram(aes(fill = as.factor(year)), show.legend = FALSE) +
+  geom_histogram() +
   facet_wrap(~ year, nrow = 2) +
   scale_x_continuous(breaks = c(6 * 60 * 60, 12 * 60 * 60, 18 * 60 * 60),
                      labels = c("6:00", "12:00", "18:00")
@@ -369,4 +387,19 @@ ggplot(data = reports_fyears, aes(x = period_to_seconds(time))) +
        y = "Reports",
        title = "Distribution of police reports over time of day by year")
 ```
+
+Looking at the high numbers of very early reports and their maximum, we can see
+a gradual and moderate shift from the early to the late morning, which is
+especially apparent in 2019 and 2020. As there are still reports beginning from
+about 08:00, we can not necessarily infer that the working hours have changed,
+but maybe that the working process has. Maybe the writers started favouring the
+quality of the written reports overt the quantity of early reports. Maybe new
+rules have been implemented that require reports to be approved by some central
+authority, which might slow down the rate. Also the Corona pandemic started in
+early 2020, so the small shift to the right could be an effect of working
+realities involving home-office, daycare and home-schooling.
+
+While some of these interpretations seem reasonable, remember that we do not
+actually have enough information to draw any robust inferences on either the
+number and distribution of crimes in Berlin or the working hours of the PR team. 
 

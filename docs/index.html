@@ -24,7 +24,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2021-06-24" />
+<meta name="date" content="2021-06-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -320,14 +320,12 @@ Web Scraping using R
 </ul></li>
 <li class="chapter" data-level="12" data-path="ggplot.html"><a href="ggplot.html"><i class="fa fa-check"></i><b>12</b> Graphical analysis with ggplot</a>
 <ul>
-<li class="chapter" data-level="12.1" data-path="ggplot.html"><a href="ggplot.html#ggplot-syntax"><i class="fa fa-check"></i><b>12.1</b> ggplot syntax</a></li>
-<li class="chapter" data-level="12.2" data-path="ggplot.html"><a href="ggplot.html#aesthetics"><i class="fa fa-check"></i><b>12.2</b> Aesthetics</a>
+<li class="chapter" data-level="12.1" data-path="ggplot.html"><a href="ggplot.html#ggplot2-syntax"><i class="fa fa-check"></i><b>12.1</b> ggplot2 syntax</a></li>
+<li class="chapter" data-level="12.2" data-path="ggplot.html"><a href="ggplot.html#geoms-and-aesthetics"><i class="fa fa-check"></i><b>12.2</b> Geoms and aesthetics</a>
 <ul>
-<li class="chapter" data-level="12.2.1" data-path="ggplot.html"><a href="ggplot.html#continuous"><i class="fa fa-check"></i><b>12.2.1</b> Continuous</a></li>
-<li class="chapter" data-level="12.2.2" data-path="ggplot.html"><a href="ggplot.html#continuous-x-continuous"><i class="fa fa-check"></i><b>12.2.2</b> Continuous x Continuous</a></li>
-<li class="chapter" data-level="12.2.3" data-path="ggplot.html"><a href="ggplot.html#discrete-x-continuous"><i class="fa fa-check"></i><b>12.2.3</b> Discrete x Continuous</a></li>
+<li class="chapter" data-level="12.2.1" data-path="ggplot.html"><a href="ggplot.html#continuous-x-continuous-y"><i class="fa fa-check"></i><b>12.2.1</b> Continuous x, continuous y</a></li>
+<li class="chapter" data-level="12.2.2" data-path="ggplot.html"><a href="ggplot.html#graphical-analysis-of-berlin-police-reports"><i class="fa fa-check"></i><b>12.2.2</b> Graphical analysis of Berlin police reports</a></li>
 </ul></li>
-<li class="chapter" data-level="12.3" data-path="ggplot.html"><a href="ggplot.html#tuning-the-output"><i class="fa fa-check"></i><b>12.3</b> Tuning the output</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="regex.html"><a href="regex.html"><i class="fa fa-check"></i><b>13</b> Regular expressions</a>
 <ul>
@@ -371,7 +369,7 @@ Web Scraping using R
 <div id="header">
 <h1 class="title">Web Scraping using R</h1>
 <p class="author"><em>Jakob Tures</em></p>
-<p class="date"><em>2021-06-24</em></p>
+<p class="date"><em>2021-06-29</em></p>
 </div>
 <div id="introduction" class="section level1 unnumbered">
 <h1>Introduction</h1>
@@ -527,7 +525,7 @@ translating the original German draft and the great support.</p>
 <span id="cb2-9"><a href="index.html#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  collate  en_US.UTF-8                 </span></span>
 <span id="cb2-10"><a href="index.html#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  ctype    en_US.UTF-8                 </span></span>
 <span id="cb2-11"><a href="index.html#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  tz       Europe/Berlin               </span></span>
-<span id="cb2-12"><a href="index.html#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  date     2021-06-24                  </span></span>
+<span id="cb2-12"><a href="index.html#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  date     2021-06-29                  </span></span>
 <span id="cb2-13"><a href="index.html#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb2-14"><a href="index.html#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="do">## ─ Packages ───────────────────────────────────────────────────────────────────</span></span>
 <span id="cb2-15"><a href="index.html#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  package     * version date       lib source        </span></span>
