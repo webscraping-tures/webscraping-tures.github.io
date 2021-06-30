@@ -24,7 +24,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2021-06-29" />
+<meta name="date" content="2021-06-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -329,22 +329,9 @@ Web Scraping using R
 </ul></li>
 <li class="chapter" data-level="13" data-path="regex.html"><a href="regex.html"><i class="fa fa-check"></i><b>13</b> Regular expressions</a>
 <ul>
-<li class="chapter" data-level="13.1" data-path="regex.html"><a href="regex.html#str_detect"><i class="fa fa-check"></i><b>13.1</b> str_detect()</a></li>
-<li class="chapter" data-level="13.2" data-path="regex.html"><a href="regex.html#basic-pattern-matching"><i class="fa fa-check"></i><b>13.2</b> Basic pattern matching</a>
-<ul>
-<li class="chapter" data-level="13.2.1" data-path="regex.html"><a href="regex.html#literal-characters"><i class="fa fa-check"></i><b>13.2.1</b> Literal characters</a></li>
-<li class="chapter" data-level="13.2.2" data-path="regex.html"><a href="regex.html#escaping-metacharacters"><i class="fa fa-check"></i><b>13.2.2</b> Escaping metacharacters</a></li>
-<li class="chapter" data-level="13.2.3" data-path="regex.html"><a href="regex.html#character-classes"><i class="fa fa-check"></i><b>13.2.3</b> Character classes</a></li>
-<li class="chapter" data-level="13.2.4" data-path="regex.html"><a href="regex.html#anchors"><i class="fa fa-check"></i><b>13.2.4</b> Anchors</a></li>
-<li class="chapter" data-level="13.2.5" data-path="regex.html"><a href="regex.html#quantifiers"><i class="fa fa-check"></i><b>13.2.5</b> Quantifiers</a></li>
-<li class="chapter" data-level="13.2.6" data-path="regex.html"><a href="regex.html#groups"><i class="fa fa-check"></i><b>13.2.6</b> Groups</a></li>
-</ul></li>
-<li class="chapter" data-level="13.3" data-path="regex.html"><a href="regex.html#practical-application"><i class="fa fa-check"></i><b>13.3</b> Practical application</a>
-<ul>
-<li class="chapter" data-level="13.3.1" data-path="regex.html"><a href="regex.html#str_count"><i class="fa fa-check"></i><b>13.3.1</b> str_count()</a></li>
-<li class="chapter" data-level="13.3.2" data-path="regex.html"><a href="regex.html#str_extract-str_match"><i class="fa fa-check"></i><b>13.3.2</b> str_extract() &amp; str_match()</a></li>
-<li class="chapter" data-level="13.3.3" data-path="regex.html"><a href="regex.html#str_replace"><i class="fa fa-check"></i><b>13.3.3</b> str_replace()</a></li>
-</ul></li>
+<li class="chapter" data-level="13.1" data-path="regex.html"><a href="regex.html#cleaning-the-district-column"><i class="fa fa-check"></i><b>13.1</b> Cleaning the <code>district</code> column</a></li>
+<li class="chapter" data-level="13.2" data-path="regex.html"><a href="regex.html#detecting-and-counting-robberies-from-police-reports"><i class="fa fa-check"></i><b>13.2</b> Detecting and counting robberies from police reports</a></li>
+<li class="chapter" data-level="13.3" data-path="regex.html"><a href="regex.html#parsing-two-numbers-from-a-string"><i class="fa fa-check"></i><b>13.3</b> Parsing two numbers from a string</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -369,7 +356,7 @@ Web Scraping using R
 <div id="header">
 <h1 class="title">Web Scraping using R</h1>
 <p class="author"><em>Jakob Tures</em></p>
-<p class="date"><em>2021-06-29</em></p>
+<p class="date"><em>2021-06-30</em></p>
 </div>
 <div id="introduction" class="section level1 unnumbered">
 <h1>Introduction</h1>
@@ -525,7 +512,7 @@ translating the original German draft and the great support.</p>
 <span id="cb2-9"><a href="index.html#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  collate  en_US.UTF-8                 </span></span>
 <span id="cb2-10"><a href="index.html#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  ctype    en_US.UTF-8                 </span></span>
 <span id="cb2-11"><a href="index.html#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  tz       Europe/Berlin               </span></span>
-<span id="cb2-12"><a href="index.html#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  date     2021-06-29                  </span></span>
+<span id="cb2-12"><a href="index.html#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  date     2021-06-30                  </span></span>
 <span id="cb2-13"><a href="index.html#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb2-14"><a href="index.html#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="do">## ─ Packages ───────────────────────────────────────────────────────────────────</span></span>
 <span id="cb2-15"><a href="index.html#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  package     * version date       lib source        </span></span>
