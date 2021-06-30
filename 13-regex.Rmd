@@ -6,39 +6,231 @@ knitr::opts_chunk$set(cache = TRUE)
 knitr::opts_chunk$set(cache.path = 'cache/')
 ```
 
-WIP! Content is due to change!
 
- If you want to further follow the road of
-Web Scraping, you absolutely should acquire this knowledge at some point, but it
-lies outside the scope of this introduction. A good starting point could be the
-chapter on string from "R for Data Science" by Wickham and Grolemund:
-<https://r4ds.had.co.nz/strings.html>{target="_blank"}
+In Web Scraping, we are often dealing with textual data that has been collected
+from a website and may include information that is not directly accessible and
+usable in data analysis. We may be interested in counting the occurrence of
+certain words or in extracting several numbers from the strings in our data. For
+these purposes we will use some functions from the core tidyverse package
+stringr. To find substrings that include the words or terms we are searching 
+for, we will use *regular expressions*, a powerful and flexible formal
+representation of characters that are used to find and match patterns in
+character data. 
 
-* reading crimes from the report text?
-* further cleaning of the district column
+This chapter will make use of some practical examples, introducing the basics of
+regular expressions and stringr. This can only be a starting point, if you want
+to further follow the road of Web Scraping, you most probably will have to
+further your knowledge on regular expressions at some point. A recommended next
+step would be the chapter on string from "R for Data Science" by Wickham and
+Grolemund:
+<https://r4ds.had.co.nz/strings.html>{target="_blank"}, as well as the RStudio
+CHeat Sheet on stringr:
+<https://raw.githubusercontent.com/rstudio/cheatsheets/master/strings.pdf>{target="_blank"}.
 
-## str_detect()
+ 
+## Cleaning the `district` column
+
+``` {r message = FALSE}
+library(tidyverse)
+
+load("reports.RData")
+```
+
+The data on police reports we used contains the district a report refers to as a
+column which needs some cleaning to be usable.
+
+``` {r}
+reports %>% 
+  select(District) %>% 
+  head(n = 10)
+```
+
+The first problem is, that each string begins with "Ereignisort: ". We may want
+to get rid of this substring, as it does not contain any useful information.
+`str_remove()` does what the name implies, in that it removes substrings from a
+string. Like all stringr functions we will use here, `str_remove()` takes the
+string(s) to be applied to as its first argument as well as the argument
+`pattern =` to specify a regular expressions for the pattern that is to be
+matched and removed. In the code block below, the strings are passed through the
+pipe and the most basic form of a regular expression is used, the exact matching
+of characters, here `"Ereignisort: "`. In general, the complete regular
+expression is enclosed by `"`.
 
 
-## Basic pattern matching
+``` {r}
+reports$District %>% 
+  str_remove(pattern = "Ereignisort: ") %>% 
+  head(n = 10)
+```
 
-### Literal characters
+Maybe we want to keep the substring but translate it to English. For this, we
+can use `str_replace()` which also matches a regular expression, but replaces
+it with a string specified in `replacement =`. Here, the pattern is shortened to
+`"Ereignisort"`, as we want to keep the `": "`. 
 
-### Escaping metacharacters
+``` {r}
+reports$District %>% 
+  str_replace(pattern = "Ereignisort", replacement = "District") %>% 
+  head(n = 10)
+```
 
-### Character classes
+In the same way, we could replace the `": "` substring with an underscore.
 
-### Anchors
+``` {r}
+reports$District %>% 
+  str_replace(pattern = ": ", replacement = "_") %>% 
+  head(n = 10)
+```
 
-### Quantifiers
+As seen in chapter \@ref(dplyr), district names with two parts, are sometimes written with and
+sometimes without whitespace around the dash, as seen here:
 
-### Groups
+``` {r}
+reports %>% 
+  group_by(District) %>% 
+  summarize(reports = n())
+```
+
+We can easily unify those names using `str_replace` and regular expressions.
+
+``` {r}
+reports %>%
+  mutate(District = str_replace(District, pattern = " - ", replacement = "-")) %>% 
+  group_by(District) %>% 
+  summarize(reports = n())
+```
+
+If all we want is to remove the whitespace, unifying the names in the process,
+we can use `str_remove()` and the regular expression `"\s"`, being a shortcut
+for selecting all kinds of whitespace.
+
+At this point we have to talk about escaping characters. Some characters used in
+regular expressions have a special meaning, e.g. `"."`, `"?"` or `"\"`. If we
+just write one of those characters in a regular expression, R will not take it
+as a literal character but understand it by its special meaning. `"."` used in a
+regular expression stands for all characters, meaning the expression will select
+the complete string. If we want to match a literal `.` in a string though, we
+have to escape the dot by using the *escape character* `\`. So to match a dot,
+we write `"\."`. The `\` tells R to take the next character literally instead of
+using its special meaning.
+
+`"\s"` begins with a backslash. In this case we have to tell R to take this
+backslash literally by adding another backslash before it, escaping the second
+backslash; `"\\s"` is understood as `"\s"`. If this seems confusing and
+needlessly complicated, save your rage for when you find out what you have to
+write to match a literal backslash in a string. For a full list of characters
+that have to be escaped and how to escapte them, see the cheat sheet linked
+above. 
+
+``` {r}
+reports %>%
+  mutate(District = str_remove(District, pattern = "\\s")) %>% 
+  group_by(District) %>% 
+  summarize(reports = n())
+```
+
+This did not work as expected. The whitespace following the `":"` was removed,
+but not the whitespace around the dashes. This is the case, because most of the
+stringr functions stop after they found the first match for the pattern in a
+string. This is faster than always scanning the whole string, which is all the
+more relevant as operations on strings and pattern matching are computationally
+taxing. But there are versions of the functions, that do not stop after their
+first match, ending in `_all`, e.g. `str_replace_all()`. So if we use
+`str_remove_all()` in our code, all occurrences of whitespace will be removed.
+
+``` {r}
+reports %>%
+  mutate(District = str_remove_all(District, pattern = "\\s")) %>% 
+  group_by(District) %>% 
+  summarize(reports = n())
+```
+
+## Detecting and counting robberies from police reports
+
+When collecting the data on police reports, we also scraped the short
+description of the report's contents but did no analysis on these in chapters
+\@ref(dplyr) & \@ref(ggplot). We could try to catégorize the texts into types of
+crimes using regular expressions. Doing this proper, would require a lot of
+planning. We would have to decide which categories of crimes we want to extract
+and construct flexible regular expressions for all of these. Please understand
+the following only as a first outline for how to approach such a project.
+
+Let us focus on robberies. As a first step, we can try to find all texts, that
+contain the term "raub" in some form. `str_detect()` determines, if a pattern
+was found in a string, returning `TRUE`or `FALSE`.  We can than count the number
+of strings for which the result is `TRUE`-- remember `TRUE`is equal to $1$,
+`FALSE` equal to $0$ -- using `sum()`.
+
+``` {r}
+reports$Report %>% 
+  str_detect(pattern = "raub") %>% 
+  sum()
+```
+But what if a text beginns with "Raub". In this case the "R" will be upper case.
+Pattern matching is case sensitive and this means that "Raub" is not equal to
+"raub". If we want both ways of writing the term to be counted as equal, we have
+to write a regular expression that allows for an upper or lower case r as the
+first character. For this we can define a character class which contains both
+characters. Character classes are enclosed by `[]`; `"[Rr]aub"` meaning that we
+want to find either an "R" or an "r" as the first character and "aub" after
+this.
+
+``` {r}
+reports$Report %>% 
+  str_detect(pattern = "[Rr]aub") %>% 
+  sum()
+```
+
+If we also want to detect terms like "Räuber" or "räuberisch", we have to allow
+for an "ä" instead of the "a" as the second character. 
+
+``` {r}
+reports$Report %>% 
+  str_detect(pattern = "[rR][aä]ub") %>% 
+  sum()
+```
 
 
-## Practical application
+Let us have a look at some of the strings which returned a `TRUE` match, using
+`str_detect()` in subsetting; telling R we want to see only lines from `reports`
+for which the pattern could be found, and only the first $10$ of these.
 
-### str_count()
+``` {r}
+reports[str_detect(reports$Report, pattern = "[Rr][aä]ub"), ] %>% 
+  head(n=10)
+```
 
-### str_extract() & str_match()
+This looks good at first sight, but why was the second report included? Because
+"Rettungshubschrauber" also has "raub" in it. You notice, how reliably detecting
+a simple string as "raub" gets complicated very quickly.
 
-### str_replace()
+
+
+``` {r}
+reports[str_detect(reports$Report, pattern = "(\\s|ge|be|zu)[Rr][aä]ub"), ] %>% 
+  head(n=10)
+```
+
+
+
+
+* Quantifiers
+* or
+
+* Anchors
+
+
+## Parsing two numbers from a string
+
+* str_extract()
+
+numero_parso <- function(x) {
+    n1 <- parse_number(x, locale = locale(decimal_mark = ","))
+    n2 <- str_extract_all(x, "[:digit:]{1,2},{0,1}[:digit:]{0,2}\\s{0,1}%") %>%
+        unlist() %>%
+        parse_number(locale = locale(decimal_mark = ","))
+    n2 <- n2[1] + n2[2] ## macht dies einmal und trägt Wert in alle else-Fälle ein
+    ## n2 <- sum(n2) summiert ganzen nachträglichen Vektor
+    
+    ifelse(!(grepl(".+%.+%", x)), n1, n2)
+}

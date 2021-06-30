@@ -456,3 +456,7 @@ of very late reports. We will explore this further graphically in the next
 chapter. Again, the results may represent the time when crimes occur, but it is
 more likely, that we are actually analysing the time when the PR team posts
 their police reports.
+
+``` {r, include = FALSE}
+save(reports, reports_fyears, file = "reports_cleaned.RData")
+```
