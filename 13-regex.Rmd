@@ -7,24 +7,21 @@ knitr::opts_chunk$set(cache.path = 'cache/')
 ```
 
 
-In Web Scraping, we are often dealing with textual data that has been collected
+In Web Scraping, we are often dealing with text data that has been collected
 from a website and may include information that is not directly accessible and
-usable in data analysis. We may be interested in counting the occurrence of
-certain words or in extracting several numbers from the strings in our data. For
-these purposes we will use some functions from the core tidyverse package
-stringr. To find substrings that include the words or terms we are searching 
-for, we will use *regular expressions*, a powerful and flexible formal
-representation of characters that are used to find and match patterns in
-character data. 
+usable in data analysis. We may be interested in detecting the occurrence of
+certain words or in extracting some information from the strings in our data.
+For these purposes we will use some functions from the core tidyverse package
+stringr. We will also use *regular expressions*, a powerful and flexible formal
+representation of characters we can use to select substrings by their content.
 
 This chapter will make use of some practical examples, introducing the basics of
 regular expressions and stringr. This can only be a starting point, if you want
 to further follow the road of Web Scraping, you most probably will have to
 further your knowledge on regular expressions at some point. A recommended next
-step would be the chapter on string from "R for Data Science" by Wickham and
-Grolemund:
-<https://r4ds.had.co.nz/strings.html>{target="_blank"}, as well as the RStudio
-CHeat Sheet on stringr:
+step would be the chapter on strings from "R for Data Science" by Wickham and
+Grolemund: <https://r4ds.had.co.nz/strings.html>{target="_blank"}, as well as
+the RStudio Cheat Sheet on stringr:
 <https://raw.githubusercontent.com/rstudio/cheatsheets/master/strings.pdf>{target="_blank"}.
 
  
@@ -74,16 +71,16 @@ reports$District %>%
   head(n = 10)
 ```
 
-In the same way, we could replace the `": "` substring with an underscore.
+In the same way, we can replace the `": "` substring with a dash.
 
 ``` {r}
 reports$District %>% 
-  str_replace(pattern = ": ", replacement = "_") %>% 
+  str_replace(pattern = ": ", replacement = "-") %>% 
   head(n = 10)
 ```
 
-As seen in chapter \@ref(dplyr), district names with two parts, are sometimes written with and
-sometimes without whitespace around the dash, as seen here:
+As seen in chapter \@ref(dplyr), district names with two parts, are sometimes
+written with and sometimes without whitespace around the dash, as seen here:
 
 ``` {r}
 reports %>% 
@@ -101,26 +98,29 @@ reports %>%
 ```
 
 If all we want is to remove the whitespace, unifying the names in the process,
-we can use `str_remove()` and the regular expression `"\s"`, being a shortcut
+we can use `str_remove()` and the regular expression `"\\s"`, being a shortcut
 for selecting all kinds of whitespace.
 
-At this point we have to talk about escaping characters. Some characters used in
-regular expressions have a special meaning, e.g. `"."`, `"?"` or `"\"`. If we
-just write one of those characters in a regular expression, R will not take it
-as a literal character but understand it by its special meaning. `"."` used in a
-regular expression stands for all characters, meaning the expression will select
-the complete string. If we want to match a literal `.` in a string though, we
-have to escape the dot by using the *escape character* `\`. So to match a dot,
-we write `"\."`. The `\` tells R to take the next character literally instead of
-using its special meaning.
+At this point we have to talk about *escape characters*. Some characters used in
+regular expressions have a special meaning, e.g. `"."`, `"?"` or `"*"`. If we
+just write one of those characters in a regular expression, R will not interpret
+is as a literal character but by its special meaning. `"."` used in a regular
+expression for example, stands for *any* character. If we want to match a
+literal `.` in a string though, we have to escape the dot by using the
+*escape character* `\` or actually two of those, telling R to take the next
+character literally. So to match a dot, we write `"\\."`.
 
-`"\s"` begins with a backslash. In this case we have to tell R to take this
-backslash literally by adding another backslash before it, escaping the second
-backslash; `"\\s"` is understood as `"\s"`. If this seems confusing and
-needlessly complicated, save your rage for when you find out what you have to
-write to match a literal backslash in a string. For a full list of characters
-that have to be escaped and how to escapte them, see the cheat sheet linked
-above. 
+If this seems confusing and needlessly complicated, save your rage for when you
+find out what you have to write to match *one* literal backslash in a string:
+`\\\\`. Some commentary on this: <https://xkcd.com/1638/>{target="_blank"}
+
+Escape characters are hard to understand when starting out using regular
+expressions, but for now it is enough to know that some characters have to be
+escaped and that you find a full list of those in the cheat sheet linked above.
+
+In a similar way, we have to use two escape characters in `"\\s"` to make R
+interpret it not as an "s" but as the shortcut for whitespace characters we want
+to use:
 
 ``` {r}
 reports %>%
@@ -132,10 +132,8 @@ reports %>%
 This did not work as expected. The whitespace following the `":"` was removed,
 but not the whitespace around the dashes. This is the case, because most of the
 stringr functions stop after they found the first match for the pattern in a
-string. This is faster than always scanning the whole string, which is all the
-more relevant as operations on strings and pattern matching are computationally
-taxing. But there are versions of the functions, that do not stop after their
-first match, ending in `_all`, e.g. `str_replace_all()`. So if we use
+string. But there are versions of the functions that do not stop after their
+first match, ending in `_all`: e.g. `str_replace_all()`. So if we use
 `str_remove_all()` in our code, all occurrences of whitespace will be removed.
 
 ``` {r}
@@ -145,17 +143,17 @@ reports %>%
   summarize(reports = n())
 ```
 
-## Detecting and counting robberies from police reports
+## Detecting robberies in police reports
 
 When collecting the data on police reports, we also scraped the short
 description of the report's contents but did no analysis on these in chapters
-\@ref(dplyr) & \@ref(ggplot). We could try to catégorize the texts into types of
+\@ref(dplyr) & \@ref(ggplot). We could try to categorize the texts into types of
 crimes using regular expressions. Doing this proper, would require a lot of
 planning. We would have to decide which categories of crimes we want to extract
 and construct flexible regular expressions for all of these. Please understand
 the following only as a first outline for how to approach such a project.
 
-Let us focus on robberies. As a first step, we can try to find all texts, that
+Let us focus solely on robberies. As a first step, we detect all strings that
 contain the term "raub" in some form. `str_detect()` determines, if a pattern
 was found in a string, returning `TRUE`or `FALSE`.  We can than count the number
 of strings for which the result is `TRUE`-- remember `TRUE`is equal to $1$,
@@ -166,14 +164,14 @@ reports$Report %>%
   str_detect(pattern = "raub") %>% 
   sum()
 ```
-But what if a text beginns with "Raub". In this case the "R" will be upper case.
+But what if a text begins with "Raub". In this case the "R" will be upper case.
 Pattern matching is case sensitive and this means that "Raub" is not equal to
 "raub". If we want both ways of writing the term to be counted as equal, we have
-to write a regular expression that allows for an upper or lower case r as the
-first character. For this we can define a character class which contains both
-characters. Character classes are enclosed by `[]`; `"[Rr]aub"` meaning that we
-want to find either an "R" or an "r" as the first character and "aub" after
-this.
+to write a regular expression that allows for either an upper or lower case "r"
+as the first character. For this we can define a *class* which contains both
+characters enclosed by `[]`. `"[Rr]aub"` means that we want to find *either* an
+"R" or an "r" as the first character and "aub" after this; only one of the
+characters from the class is matched.
 
 ``` {r}
 reports$Report %>% 
@@ -181,8 +179,10 @@ reports$Report %>%
   sum()
 ```
 
-If we also want to detect terms like "Räuber" or "räuberisch", we have to allow
-for an "ä" instead of the "a" as the second character. 
+If we also want to detect terms like "Räuber" or "räuberische", we have to allow
+for an "ä" instead of the "a" as the second character by defining a class for
+the second position in the term:
+
 
 ``` {r}
 reports$Report %>% 
@@ -200,37 +200,174 @@ reports[str_detect(reports$Report, pattern = "[Rr][aä]ub"), ] %>%
   head(n=10)
 ```
 
-This looks good at first sight, but why was the second report included? Because
-"Rettungshubschrauber" also has "raub" in it. You notice, how reliably detecting
-a simple string as "raub" gets complicated very quickly.
+This looks good at first sight, but why was a report on a motorcycle accident
+included? Because the word "Rettungshubschrauber" also has "raub" in it. You
+see, how reliably detecting a simple string as "raub" gets complicated very
+quickly.
 
-
+At this point, we would have to put in the hours and define a list of phrases
+referring to robberies that we actually want to select, while constructing
+regular expressions that select those phrases and only those. This is beyond the
+scope of this introductory example, but as a first approximation we could say,
+that we want to find all instances in which the words begin with a capital "R",
+as in "*Raub*" or "*Räub*er", or where "aub" and "äub" are are prefixed with
+"ge", "be" or "zu", as in "*geraub*t", "*beraub*t", or "aus*zuraub*en". To
+achieve this, the regular expression has to allow for four optional substrings,
+using *grouping* and the "OR" operator `|`. Groups are defined by enclosing
+several expressions in parentheses. While groups have advanced functionality,
+for now you can interpret them like parentheses in mathematics. The enclosed
+expression is evaluated first and as a whole. If one of the prefixes, connected
+by `|`, is found in a string and is then followed up by either "a" or "ä" and
+"ub" after this, the pattern is matched.
 
 ``` {r}
-reports[str_detect(reports$Report, pattern = "(\\s|ge|be|zu)[Rr][aä]ub"), ] %>% 
+reports[str_detect(reports$Report, pattern = "(R|ger|ber|zur)[aä]ub"), ] %>% 
   head(n=10)
 ```
 
+There are other words in the German language that are used to describe the
+concept of robberies. Adding all of them, and the several individual pre- and/or
+suffixes that have to be taken into account to reliably select the terms we want
+to select and none of those we do not want to select, is beyond the scope of
+this example. But we can at least add one further word to the regular
+expression. Using the `|` operator we extend the regular expression to also
+detect "dieb" with a upper or lower case "d". The expression now selects all
+ways of writing "raub" and "dieb" we allowed for.
+
+``` {r}
+reports[str_detect(reports$Report, pattern = "(R|ger|ber|zur)[aä]ub|[Dd]ieb"), ] %>% 
+  head(n=10)
+```
+
+Now that we have a constructed a regular expression that can detect reports that
+are related to robberies -- at least approximately -- we can compute their
+number and relative proportion. Remember, we are dealing with a logical vector
+of ones and zeros; `sum()` counts all ones and thus returns the absolute number
+of reports and `mean()` divides the number of ones by the number of all reports,
+thus returning the relative proportion.
+
+``` {r}
+reports$Report %>% 
+  str_detect(pattern = "(R|ger|ber|zur)[aä]ub|[Dd]ieb") %>% 
+  sum()
+
+reports$Report %>% 
+  str_detect(pattern = "(R|ger|ber|zur)[aä]ub|[Dd]ieb") %>% 
+  mean()
+```
 
 
+## Extracting details from a list of names
 
-* Quantifiers
-* or
+The website
+<https://www.bundeswahlleiter.de/bundestagswahlen/2017/gewaehlte/bund-99/>{target="_blank"}
+lists all German members of parliament in tables, with the first column holding
+the full names and academic degrees in one character string. A common
+application of regular expressions in the context of web scraping is to extract
+substrings of interest from such text. 
 
-* Anchors
+We will first scrape the data. The members of parliament are divided into 26
+subpages, one for each first letter of their last names, in the form "a.html",
+"b.html" and so on. We construct links to all these pages using the base R
+object `letters`, a character vector conveniently containing of all 26 letters
+of the alphabet in lower case. We then read the links and extract the table
+cells containing the names into a character vector, which is then transformed
+into a tibble.
 
+``` {r}
+library(rvest)
 
-## Parsing two numbers from a string
+website <- "https://www.bundeswahlleiter.de/bundestagswahlen/2017/gewaehlte/bund-99/"
+links <- str_c(website, letters, ".html")
 
-* str_extract()
+pages <- links %>% 
+  map(~ {
+    Sys.sleep(2)
+    read_html(.x)
+  }) 
 
-numero_parso <- function(x) {
-    n1 <- parse_number(x, locale = locale(decimal_mark = ","))
-    n2 <- str_extract_all(x, "[:digit:]{1,2},{0,1}[:digit:]{0,2}\\s{0,1}%") %>%
-        unlist() %>%
-        parse_number(locale = locale(decimal_mark = ","))
-    n2 <- n2[1] + n2[2] ## macht dies einmal und trägt Wert in alle else-Fälle ein
-    ## n2 <- sum(n2) summiert ganzen nachträglichen Vektor
-    
-    ifelse(!(grepl(".+%.+%", x)), n1, n2)
-}
+names <- pages %>%
+  map(html_nodes, css = "th[scope='row']") %>% 
+  map(html_text, trim = TRUE) %>% 
+  unlist()
+
+names_tbl <- tibble(
+  full_name = names
+)
+```
+
+Our goal is to extract the academic degree from strings of full names. We
+first need to understand the pattern of how degrees are listed in those strings.
+Let us look at an example:
+
+``` {r}
+names_tbl[65:69, ]
+```
+
+If the members of parliament carry an academic degree, the string begins with
+it. The abbreviated titles always end in a dot. Based on this, we can start
+constructing a regular expression that will be used to detect and extract
+academic degrees. 
+
+We know that if there is a degree, they are listed at the beginning of the
+string. We can refer to the beginning and ending of a string by using an
+*anchor*. Writing `^` in a regular expression refers to the beginning of a
+string, `$` to the ending. `[:alpha:]` is a predefined class that includes all
+upper and lower case letters, which we will use to refer to letters in general.
+`"^[:alpha:]"` will select *one* upper or lower case letter that is the first
+character in a string. 
+
+We do not want to select only one character but complete titles. For this we
+need to use *quantifiers*. These are used to define how often elements of an
+expression are allowed or required too repeat. If we know the exact number of
+repetitions, we can set this number contained in `{}` after an element.
+`"^[:alpha:]{2}"` will select the first two letters in each string; always
+exactly *two*. The actual titles vary in the number of letters they contain. To
+allow for variation in the number of repetitions we use the quantifiers `?`, `*`
+and `+`. `?` stands for zero or one, `*` for zero or multiple and `+` for one or
+multiple repetitions; multiple meaning $n >=1$. 
+
+`"^[:alpha:]+"` will select the word a string begins with. `[:alpha:]` does not
+contain any whitespace characters. Because of this, the regular expression will
+begin selecting letters at the beginning of a string until it "hits" whitespace.
+For members of parliament without a degree, this would select their last name.
+To make sure we only select titles, we can make use of the fact that all titles
+in this data end with a ".". As the dot is a special character -- standing for
+*any* character -- we have to escape it by using two backslashs.
+
+The regular expression `"^[:alpha:]+\\."` selects all words at the beginning of
+a string that end with a dot. We use it in the function `str_extract()` which
+will extract the substring that is specified by the regular expression, if it
+could be found in a string. We use the function inside of `mutate()` to assign
+the extracted degrees into a new column. To get an overview of the result, we
+group the data by this new column and count the occurrences per group.
+
+``` {r}
+names_tbl %>% 
+  mutate(academic = str_extract(full_name, pattern = "^[:alpha:]+\\.")) %>% 
+  group_by(academic) %>% 
+  summarise(n())
+```
+
+We successfully identified a high percentage of doctors, as well as some
+professors. In some cases there actually are multiple titles -- i.e. "Prof.
+Dr.". We can extend the expression to allow for this as well.
+
+If there are two or more components to a title, they are separated by
+whitespace; which we can refer to using `\\s`. After the whitespace there will
+be another word ending in a dot. Thus we can reuse the first part of the
+expression, without the anchor: `"\\s[:alpha:]+\\."`. Some members of parliament
+have one title, others have mutliple. We have to allow for this as well. A
+quantifier that follows a part of an expression grouped by enclosure in
+parentheses will refer to the complete group. `"(\\s[:alpha:]+\\.)*"` allows
+there to be no additional title or multiple ones. Appending this to the regular
+expression used in the code above, allows us to select and extract one or more
+titles.
+
+``` {r}
+names_tbl %>% 
+  mutate(academic = str_extract(full_name, pattern = "^[:alpha:]+\\.(\\s[:alpha:]+\\.)*")) %>% 
+  group_by(academic) %>% 
+  summarise(n())
+```
+
