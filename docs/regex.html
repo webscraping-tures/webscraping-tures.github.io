@@ -24,7 +24,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2021-07-04" />
+<meta name="date" content="2021-07-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -358,7 +358,7 @@ For these purposes we will use some functions from the core tidyverse package
 stringr. We will also use <em>regular expressions</em>, a powerful and flexible formal
 representation of characters we can use to select substrings by their content.</p>
 <p>This chapter will make use of some practical examples, introducing the basics of
-regular expressions and stringr. This can only be a starting point, if you want
+regular expressions and stringr. This can only be a starting point. If you want
 to further follow the road of Web Scraping, you most probably will have to
 further your knowledge on regular expressions at some point. A recommended next
 step would be the chapter on strings from “R for Data Science” by Wickham and
@@ -372,8 +372,8 @@ the RStudio Cheat Sheet on stringr:
 <span id="cb1-3"><a href="regex.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;reports.RData&quot;</span>)</span></code></pre></div>
 <p>The data on police reports we used contains the district a report refers to as a
 column which needs some cleaning to be usable.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="regex.html#cb2-1" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span> </span>
-<span id="cb2-2"><a href="regex.html#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(District) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="regex.html#cb2-1" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span></span>
+<span id="cb2-2"><a href="regex.html#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(District) <span class="sc">%&gt;%</span></span>
 <span id="cb2-3"><a href="regex.html#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
 <span id="cb2-4"><a href="regex.html#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 10 x 1</span></span>
 <span id="cb2-5"><a href="regex.html#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="do">##    District                               </span></span>
@@ -390,16 +390,16 @@ column which needs some cleaning to be usable.</p>
 <span id="cb2-16"><a href="regex.html#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Ereignisort: Charlottenburg-Wilmersdorf</span></span></code></pre></div>
 <p>The first problem is, that each string begins with “Ereignisort:”. We may want
 to get rid of this substring, as it does not contain any useful information.
-<code>str_remove()</code> does what the name implies, in that it removes substrings from a
-string. Like all stringr functions we will use here, <code>str_remove()</code> takes the
-string(s) to be applied to as its first argument as well as the argument
-<code>pattern =</code> to specify a regular expressions for the pattern that is to be
-matched and removed. In the code block below, the strings are passed through the
-pipe and the most basic form of a regular expression is used, the exact matching
-of characters, here <code>"Ereignisort: "</code>. In general, the complete regular
-expression is enclosed by <code>"</code>.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="regex.html#cb3-1" aria-hidden="true" tabindex="-1"></a>reports<span class="sc">$</span>District <span class="sc">%&gt;%</span> </span>
-<span id="cb3-2"><a href="regex.html#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_remove</span>(<span class="at">pattern =</span> <span class="st">&quot;Ereignisort: &quot;</span>) <span class="sc">%&gt;%</span> </span>
+With <code>str_remove()</code> we can remove substrings from a string. Like all stringr
+functions we will use here, <code>str_remove()</code> takes the string(s) to be applied to
+as its first argument, as well as the argument <code>pattern =</code> to specify a regular
+expression for the pattern that is to be matched and removed. In the code block
+below, all strings from <code>District</code> are passed through the pipe and
+<code>"Ereignisort:</code> is removed. We’re using the most basic form of a regular
+expression here which is the exact matching of characters. In general, the
+complete regular expression is enclosed by <code>"</code>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="regex.html#cb3-1" aria-hidden="true" tabindex="-1"></a>reports<span class="sc">$</span>District <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="regex.html#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_remove</span>(<span class="at">pattern =</span> <span class="st">&quot;Ereignisort: &quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb3-3"><a href="regex.html#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
 <span id="cb3-4"><a href="regex.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] &quot;Treptow-Köpenick&quot;           &quot;Tempelhof-Schöneberg&quot;      </span></span>
 <span id="cb3-5"><a href="regex.html#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  [3] &quot;bezirksübergreifend&quot;        &quot;bezirksübergreifend&quot;       </span></span>
@@ -410,8 +410,8 @@ expression is enclosed by <code>"</code>.</p>
 can use <code>str_replace()</code> which also matches a regular expression, but replaces
 it with a string specified in <code>replacement =</code>. Here, the pattern is shortened to
 <code>"Ereignisort"</code>, as we want to keep the <code>": "</code>.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="regex.html#cb4-1" aria-hidden="true" tabindex="-1"></a>reports<span class="sc">$</span>District <span class="sc">%&gt;%</span> </span>
-<span id="cb4-2"><a href="regex.html#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace</span>(<span class="at">pattern =</span> <span class="st">&quot;Ereignisort&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;District&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="regex.html#cb4-1" aria-hidden="true" tabindex="-1"></a>reports<span class="sc">$</span>District <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="regex.html#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace</span>(<span class="at">pattern =</span> <span class="st">&quot;Ereignisort&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;District&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb4-3"><a href="regex.html#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
 <span id="cb4-4"><a href="regex.html#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] &quot;District: Treptow-Köpenick&quot;          </span></span>
 <span id="cb4-5"><a href="regex.html#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  [2] &quot;District: Tempelhof-Schöneberg&quot;      </span></span>
@@ -424,8 +424,8 @@ it with a string specified in <code>replacement =</code>. Here, the pattern is s
 <span id="cb4-12"><a href="regex.html#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  [9] &quot;District: Marzahn-Hellersdorf&quot;       </span></span>
 <span id="cb4-13"><a href="regex.html#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [10] &quot;District: Charlottenburg-Wilmersdorf&quot;</span></span></code></pre></div>
 <p>In the same way, we can replace the <code>": "</code> substring with a dash.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="regex.html#cb5-1" aria-hidden="true" tabindex="-1"></a>reports<span class="sc">$</span>District <span class="sc">%&gt;%</span> </span>
-<span id="cb5-2"><a href="regex.html#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace</span>(<span class="at">pattern =</span> <span class="st">&quot;: &quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;-&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="regex.html#cb5-1" aria-hidden="true" tabindex="-1"></a>reports<span class="sc">$</span>District <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="regex.html#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace</span>(<span class="at">pattern =</span> <span class="st">&quot;: &quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;-&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb5-3"><a href="regex.html#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
 <span id="cb5-4"><a href="regex.html#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] &quot;Ereignisort-Treptow-Köpenick&quot;          </span></span>
 <span id="cb5-5"><a href="regex.html#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  [2] &quot;Ereignisort-Tempelhof-Schöneberg&quot;      </span></span>
@@ -439,8 +439,8 @@ it with a string specified in <code>replacement =</code>. Here, the pattern is s
 <span id="cb5-13"><a href="regex.html#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [10] &quot;Ereignisort-Charlottenburg-Wilmersdorf&quot;</span></span></code></pre></div>
 <p>As seen in chapter <a href="dplyr.html#dplyr">11</a>, district names with two parts, are sometimes
 written with and sometimes without whitespace around the dash, as seen here:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="regex.html#cb6-1" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span> </span>
-<span id="cb6-2"><a href="regex.html#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(District) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="regex.html#cb6-1" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="regex.html#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(District) <span class="sc">%&gt;%</span></span>
 <span id="cb6-3"><a href="regex.html#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">reports =</span> <span class="fu">n</span>())</span>
 <span id="cb6-4"><a href="regex.html#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 22 x 2</span></span>
 <span id="cb6-5"><a href="regex.html#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="do">##    District                                  reports</span></span>
@@ -458,8 +458,8 @@ written with and sometimes without whitespace around the dash, as seen here:</p>
 <span id="cb6-17"><a href="regex.html#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 12 more rows</span></span></code></pre></div>
 <p>We can easily unify those names using <code>str_replace</code> and regular expressions.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="regex.html#cb7-1" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span></span>
-<span id="cb7-2"><a href="regex.html#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">District =</span> <span class="fu">str_replace</span>(District, <span class="at">pattern =</span> <span class="st">&quot; - &quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;-&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-3"><a href="regex.html#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(District) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="regex.html#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">District =</span> <span class="fu">str_replace</span>(District, <span class="at">pattern =</span> <span class="st">&quot; - &quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;-&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="regex.html#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(District) <span class="sc">%&gt;%</span></span>
 <span id="cb7-4"><a href="regex.html#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">reports =</span> <span class="fu">n</span>())</span>
 <span id="cb7-5"><a href="regex.html#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 16 x 2</span></span>
 <span id="cb7-6"><a href="regex.html#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    District                                reports</span></span>
@@ -488,9 +488,9 @@ regular expressions have a special meaning, e.g. <code>"."</code>, <code>"?"</c
 just write one of those characters in a regular expression, R will not interpret
 is as a literal character but by its special meaning. <code>"."</code> used in a regular
 expression for example, stands for <em>any</em> character. If we want to match a
-literal <code>.</code> in a string though, we have to escape the dot by using the
-<em>escape character</em> <code>\</code> or actually two of those, telling R to take the next
-character literally. So to match a dot, we write <code>"\\."</code>.</p>
+literal <code>.</code> in a string though, we have to escape the dot by using the <em>escape
+character</em> <code>\</code> or actually two, telling R to take the next character
+literally. So to match a dot, we write <code>"\\."</code>.</p>
 <p>If this seems confusing and needlessly complicated, save your rage for when you
 find out what you have to write to match <em>one</em> literal backslash in a string:
 <code>\\\\</code>. Some commentary on this: <a href="https://xkcd.com/1638/" target="_blank">https://xkcd.com/1638/</a></p>
@@ -501,8 +501,8 @@ escaped and that you find a full list of those in the cheat sheet linked above.<
 interpret it not as an “s” but as the shortcut for whitespace characters we want
 to use:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="regex.html#cb8-1" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span></span>
-<span id="cb8-2"><a href="regex.html#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">District =</span> <span class="fu">str_remove</span>(District, <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">s&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-3"><a href="regex.html#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(District) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="regex.html#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">District =</span> <span class="fu">str_remove</span>(District, <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">s&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-3"><a href="regex.html#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(District) <span class="sc">%&gt;%</span></span>
 <span id="cb8-4"><a href="regex.html#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">reports =</span> <span class="fu">n</span>())</span>
 <span id="cb8-5"><a href="regex.html#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 22 x 2</span></span>
 <span id="cb8-6"><a href="regex.html#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    District                                 reports</span></span>
@@ -525,8 +525,8 @@ string. But there are versions of the functions that do not stop after their
 first match, ending in <code>_all</code>: e.g. <code>str_replace_all()</code>. So if we use
 <code>str_remove_all()</code> in our code, all occurrences of whitespace will be removed.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="regex.html#cb9-1" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span></span>
-<span id="cb9-2"><a href="regex.html#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">District =</span> <span class="fu">str_remove_all</span>(District, <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">s&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-3"><a href="regex.html#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(District) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-2"><a href="regex.html#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">District =</span> <span class="fu">str_remove_all</span>(District, <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">s&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="regex.html#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(District) <span class="sc">%&gt;%</span></span>
 <span id="cb9-4"><a href="regex.html#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">reports =</span> <span class="fu">n</span>())</span>
 <span id="cb9-5"><a href="regex.html#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 16 x 2</span></span>
 <span id="cb9-6"><a href="regex.html#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    District                               reports</span></span>
@@ -551,19 +551,19 @@ first match, ending in <code>_all</code>: e.g. <code>str_replace_all()</code>. 
 <div id="detecting-robberies-in-police-reports" class="section level2" number="13.2">
 <h2><span class="header-section-number">13.2</span> Detecting robberies in police reports</h2>
 <p>When collecting the data on police reports, we also scraped the short
-description of the report’s contents but did no analysis on these in chapters
+description of the report’s contents, but did no analysis on these in chapters
 <a href="dplyr.html#dplyr">11</a> &amp; <a href="ggplot.html#ggplot">12</a>. We could try to categorize the texts into types of
-crimes using regular expressions. Doing this proper, would require a lot of
+crimes using regular expressions. Doing this properly, would require a lot of
 planning. We would have to decide which categories of crimes we want to extract
 and construct flexible regular expressions for all of these. Please understand
 the following only as a first outline for how to approach such a project.</p>
 <p>Let us focus solely on robberies. As a first step, we detect all strings that
-contain the term “raub” in some form. <code>str_detect()</code> determines, if a pattern
-was found in a string, returning <code>TRUE</code>or <code>FALSE</code>. We can than count the number
-of strings for which the result is <code>TRUE</code>– remember <code>TRUE</code>is equal to <span class="math inline">\(1\)</span>,
-<code>FALSE</code> equal to <span class="math inline">\(0\)</span> – using <code>sum()</code>.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="regex.html#cb10-1" aria-hidden="true" tabindex="-1"></a>reports<span class="sc">$</span>Report <span class="sc">%&gt;%</span> </span>
-<span id="cb10-2"><a href="regex.html#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">&quot;raub&quot;</span>) <span class="sc">%&gt;%</span> </span>
+contain the term “raub” in some form. <code>str_detect()</code> determines whether a
+pattern was found in a string, returning <code>TRUE</code>or <code>FALSE</code>. We can then count
+the number of strings for which the result is <code>TRUE</code>– remember <code>TRUE</code>is equal
+to <span class="math inline">\(1\)</span>, <code>FALSE</code> equal to <span class="math inline">\(0\)</span> – using <code>sum()</code>.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="regex.html#cb10-1" aria-hidden="true" tabindex="-1"></a>reports<span class="sc">$</span>Report <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="regex.html#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">&quot;raub&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb10-3"><a href="regex.html#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
 <span id="cb10-4"><a href="regex.html#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 424</span></span></code></pre></div>
 <p>But what if a text begins with “Raub”. In this case the “R” will be upper case.
@@ -574,21 +574,21 @@ as the first character. For this we can define a <em>class</em> which contains b
 characters enclosed by <code>[]</code>. <code>"[Rr]aub"</code> means that we want to find <em>either</em> an
 “R” or an “r” as the first character and “aub” after this; only one of the
 characters from the class is matched.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="regex.html#cb11-1" aria-hidden="true" tabindex="-1"></a>reports<span class="sc">$</span>Report <span class="sc">%&gt;%</span> </span>
-<span id="cb11-2"><a href="regex.html#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">&quot;[Rr]aub&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="regex.html#cb11-1" aria-hidden="true" tabindex="-1"></a>reports<span class="sc">$</span>Report <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="regex.html#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">&quot;[Rr]aub&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb11-3"><a href="regex.html#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
 <span id="cb11-4"><a href="regex.html#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 932</span></span></code></pre></div>
 <p>If we also want to detect terms like “Räuber” or “räuberische”, we have to allow
 for an “ä” instead of the “a” as the second character by defining a class for
 the second position in the term:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="regex.html#cb12-1" aria-hidden="true" tabindex="-1"></a>reports<span class="sc">$</span>Report <span class="sc">%&gt;%</span> </span>
-<span id="cb12-2"><a href="regex.html#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">&quot;[rR][aä]ub&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="regex.html#cb12-1" aria-hidden="true" tabindex="-1"></a>reports<span class="sc">$</span>Report <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="regex.html#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">&quot;[rR][aä]ub&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb12-3"><a href="regex.html#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
 <span id="cb12-4"><a href="regex.html#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1214</span></span></code></pre></div>
 <p>Let us have a look at some of the strings which returned a <code>TRUE</code> match, using
 <code>str_detect()</code> in subsetting; telling R we want to see only lines from <code>reports</code>
 for which the pattern could be found, and only the first <span class="math inline">\(10\)</span> of these.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="regex.html#cb13-1" aria-hidden="true" tabindex="-1"></a>reports[<span class="fu">str_detect</span>(reports<span class="sc">$</span>Report, <span class="at">pattern =</span> <span class="st">&quot;[Rr][aä]ub&quot;</span>), ] <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="regex.html#cb13-1" aria-hidden="true" tabindex="-1"></a>reports[<span class="fu">str_detect</span>(reports<span class="sc">$</span>Report, <span class="at">pattern =</span> <span class="st">&quot;[Rr][aä]ub&quot;</span>), ] <span class="sc">%&gt;%</span></span>
 <span id="cb13-2"><a href="regex.html#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n=</span><span class="dv">10</span>)</span>
 <span id="cb13-3"><a href="regex.html#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 10 x 3</span></span>
 <span id="cb13-4"><a href="regex.html#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="do">##    Date          Report                                   District              </span></span>
@@ -605,14 +605,14 @@ for which the pattern could be found, and only the first <span class="math inlin
 <span id="cb13-15"><a href="regex.html#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 05.05.2021 1… &quot;Ladenbesitzer bei Raubüberfall mit Mes… Ereignisort: Mitte</span></span></code></pre></div>
 <p>This looks good at first sight, but why was a report on a motorcycle accident
 included? Because the word “Rettungshubschrauber” also has “raub” in it. You
-see, how reliably detecting a simple string as “raub” gets complicated very
+see, how reliably detecting a simple string such as “raub” gets complicated very
 quickly.</p>
 <p>At this point, we would have to put in the hours and define a list of phrases
-referring to robberies that we actually want to select, while constructing
+referring to robberies that we actually want to select while constructing
 regular expressions that select those phrases and only those. This is beyond the
-scope of this introductory example, but as a first approximation we could say,
+scope of this introductory example, but as a first approximation we could say
 that we want to find all instances in which the words begin with a capital “R”,
-as in “<em>Raub</em>” or “<em>Räub</em>er”, or where “aub” and “äub” are are prefixed with
+as in “<em>Raub</em>” or “<em>Räub</em>er”, or where “aub” and “äub” are prefixed with
 “ge”, “be” or “zu”, as in “<em>geraub</em>t”, “<em>beraub</em>t”, or “aus<em>zuraub</em>en”. To
 achieve this, the regular expression has to allow for four optional substrings,
 using <em>grouping</em> and the “OR” operator <code>|</code>. Groups are defined by enclosing
@@ -621,7 +621,7 @@ for now you can interpret them like parentheses in mathematics. The enclosed
 expression is evaluated first and as a whole. If one of the prefixes, connected
 by <code>|</code>, is found in a string and is then followed up by either “a” or “ä” and
 “ub” after this, the pattern is matched.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="regex.html#cb14-1" aria-hidden="true" tabindex="-1"></a>reports[<span class="fu">str_detect</span>(reports<span class="sc">$</span>Report, <span class="at">pattern =</span> <span class="st">&quot;(R|ger|ber|zur)[aä]ub&quot;</span>), ] <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="regex.html#cb14-1" aria-hidden="true" tabindex="-1"></a>reports[<span class="fu">str_detect</span>(reports<span class="sc">$</span>Report, <span class="at">pattern =</span> <span class="st">&quot;(R|ger|ber|zur)[aä]ub&quot;</span>), ] <span class="sc">%&gt;%</span></span>
 <span id="cb14-2"><a href="regex.html#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n=</span><span class="dv">10</span>)</span>
 <span id="cb14-3"><a href="regex.html#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 10 x 3</span></span>
 <span id="cb14-4"><a href="regex.html#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="do">##    Date          Report                                  District               </span></span>
@@ -637,14 +637,14 @@ by <code>|</code>, is found in a string and is then followed up by either “a�
 <span id="cb14-14"><a href="regex.html#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 05.05.2021 1… Ladenbesitzer bei Raubüberfall mit Mes… Ereignisort: Mitte     </span></span>
 <span id="cb14-15"><a href="regex.html#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 04.05.2021 1… Ausgeraubt und fremdenfeindlich beleid… Ereignisort: Treptow-K…</span></span></code></pre></div>
 <p>There are other words in the German language that are used to describe the
-concept of robberies. Adding all of them, and the several individual pre- and/or
+concept of robberies. Adding all of them and the several individual pre- and/or
 suffixes that have to be taken into account to reliably select the terms we want
 to select and none of those we do not want to select, is beyond the scope of
 this example. But we can at least add one further word to the regular
 expression. Using the <code>|</code> operator we extend the regular expression to also
 detect “dieb” with a upper or lower case “d”. The expression now selects all
 ways of writing “raub” and “dieb” we allowed for.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="regex.html#cb15-1" aria-hidden="true" tabindex="-1"></a>reports[<span class="fu">str_detect</span>(reports<span class="sc">$</span>Report, <span class="at">pattern =</span> <span class="st">&quot;(R|ger|ber|zur)[aä]ub|[Dd]ieb&quot;</span>), ] <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="regex.html#cb15-1" aria-hidden="true" tabindex="-1"></a>reports[<span class="fu">str_detect</span>(reports<span class="sc">$</span>Report, <span class="at">pattern =</span> <span class="st">&quot;(R|ger|ber|zur)[aä]ub|[Dd]ieb&quot;</span>), ] <span class="sc">%&gt;%</span></span>
 <span id="cb15-2"><a href="regex.html#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n=</span><span class="dv">10</span>)</span>
 <span id="cb15-3"><a href="regex.html#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 10 x 3</span></span>
 <span id="cb15-4"><a href="regex.html#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="do">##    Date          Report                                  District               </span></span>
@@ -665,13 +665,13 @@ number and relative proportion. Remember, we are dealing with a logical vector
 of ones and zeros; <code>sum()</code> counts all ones and thus returns the absolute number
 of reports and <code>mean()</code> divides the number of ones by the number of all reports,
 thus returning the relative proportion.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="regex.html#cb16-1" aria-hidden="true" tabindex="-1"></a>reports<span class="sc">$</span>Report <span class="sc">%&gt;%</span> </span>
-<span id="cb16-2"><a href="regex.html#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">&quot;(R|ger|ber|zur)[aä]ub|[Dd]ieb&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="regex.html#cb16-1" aria-hidden="true" tabindex="-1"></a>reports<span class="sc">$</span>Report <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="regex.html#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">&quot;(R|ger|ber|zur)[aä]ub|[Dd]ieb&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb16-3"><a href="regex.html#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
 <span id="cb16-4"><a href="regex.html#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1617</span></span>
 <span id="cb16-5"><a href="regex.html#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-6"><a href="regex.html#cb16-6" aria-hidden="true" tabindex="-1"></a>reports<span class="sc">$</span>Report <span class="sc">%&gt;%</span> </span>
-<span id="cb16-7"><a href="regex.html#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">&quot;(R|ger|ber|zur)[aä]ub|[Dd]ieb&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-6"><a href="regex.html#cb16-6" aria-hidden="true" tabindex="-1"></a>reports<span class="sc">$</span>Report <span class="sc">%&gt;%</span></span>
+<span id="cb16-7"><a href="regex.html#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">&quot;(R|ger|ber|zur)[aä]ub|[Dd]ieb&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb16-8"><a href="regex.html#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>()</span>
 <span id="cb16-9"><a href="regex.html#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.09678578</span></span></code></pre></div>
 </div>
@@ -695,15 +695,15 @@ into a tibble.</p>
 <span id="cb17-3"><a href="regex.html#cb17-3" aria-hidden="true" tabindex="-1"></a>website <span class="ot">&lt;-</span> <span class="st">&quot;https://www.bundeswahlleiter.de/bundestagswahlen/2017/gewaehlte/bund-99/&quot;</span></span>
 <span id="cb17-4"><a href="regex.html#cb17-4" aria-hidden="true" tabindex="-1"></a>links <span class="ot">&lt;-</span> <span class="fu">str_c</span>(website, letters, <span class="st">&quot;.html&quot;</span>)</span>
 <span id="cb17-5"><a href="regex.html#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-6"><a href="regex.html#cb17-6" aria-hidden="true" tabindex="-1"></a>pages <span class="ot">&lt;-</span> links <span class="sc">%&gt;%</span> </span>
+<span id="cb17-6"><a href="regex.html#cb17-6" aria-hidden="true" tabindex="-1"></a>pages <span class="ot">&lt;-</span> links <span class="sc">%&gt;%</span></span>
 <span id="cb17-7"><a href="regex.html#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span> {</span>
 <span id="cb17-8"><a href="regex.html#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">Sys.sleep</span>(<span class="dv">2</span>)</span>
 <span id="cb17-9"><a href="regex.html#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">read_html</span>(.x)</span>
-<span id="cb17-10"><a href="regex.html#cb17-10" aria-hidden="true" tabindex="-1"></a>  }) </span>
+<span id="cb17-10"><a href="regex.html#cb17-10" aria-hidden="true" tabindex="-1"></a>  })</span>
 <span id="cb17-11"><a href="regex.html#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-12"><a href="regex.html#cb17-12" aria-hidden="true" tabindex="-1"></a>names <span class="ot">&lt;-</span> pages <span class="sc">%&gt;%</span></span>
-<span id="cb17-13"><a href="regex.html#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(html_nodes, <span class="at">css =</span> <span class="st">&quot;th[scope=&#39;row&#39;]&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-14"><a href="regex.html#cb17-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(html_text, <span class="at">trim =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-13"><a href="regex.html#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(html_nodes, <span class="at">css =</span> <span class="st">&quot;th[scope=&#39;row&#39;]&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-14"><a href="regex.html#cb17-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(html_text, <span class="at">trim =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb17-15"><a href="regex.html#cb17-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>()</span>
 <span id="cb17-16"><a href="regex.html#cb17-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-17"><a href="regex.html#cb17-17" aria-hidden="true" tabindex="-1"></a>names_tbl <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
@@ -734,7 +734,7 @@ upper and lower case letters, which we will use to refer to letters in general.
 character in a string.</p>
 <p>We do not want to select only one character but complete titles. For this we
 need to use <em>quantifiers</em>. These are used to define how often elements of an
-expression are allowed or required too repeat. If we know the exact number of
+expression are allowed or required to repeat. If we know the exact number of
 repetitions, we can set this number contained in <code>{}</code> after an element.
 <code>"^[:alpha:]{2}"</code> will select the first two letters in each string; always
 exactly <em>two</em>. The actual titles vary in the number of letters they contain. To
@@ -747,16 +747,16 @@ begin selecting letters at the beginning of a string until it “hits” whitesp
 For members of parliament without a degree, this would select their last name.
 To make sure we only select titles, we can make use of the fact that all titles
 in this data end with a “.”. As the dot is a special character – standing for
-<em>any</em> character – we have to escape it by using two backslashs.</p>
+<em>any</em> character – we have to escape it by using two backslashes.</p>
 <p>The regular expression <code>"^[:alpha:]+\\."</code> selects all words at the beginning of
 a string that end with a dot. We use it in the function <code>str_extract()</code> which
-will extract the substring that is specified by the regular expression, if it
-could be found in a string. We use the function inside of <code>mutate()</code> to assign
+will extract the substring that is specified by the regular expression if it
+could be found in the string. We use the function inside of <code>mutate()</code> to assign
 the extracted degrees into a new column. To get an overview of the result, we
 group the data by this new column and count the occurrences per group.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="regex.html#cb19-1" aria-hidden="true" tabindex="-1"></a>names_tbl <span class="sc">%&gt;%</span> </span>
-<span id="cb19-2"><a href="regex.html#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">academic =</span> <span class="fu">str_extract</span>(full_name, <span class="at">pattern =</span> <span class="st">&quot;^[:alpha:]+</span><span class="sc">\\</span><span class="st">.&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-3"><a href="regex.html#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(academic) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="regex.html#cb19-1" aria-hidden="true" tabindex="-1"></a>names_tbl <span class="sc">%&gt;%</span></span>
+<span id="cb19-2"><a href="regex.html#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">academic =</span> <span class="fu">str_extract</span>(full_name, <span class="at">pattern =</span> <span class="st">&quot;^[:alpha:]+</span><span class="sc">\\</span><span class="st">.&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb19-3"><a href="regex.html#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(academic) <span class="sc">%&gt;%</span></span>
 <span id="cb19-4"><a href="regex.html#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">n</span>())</span>
 <span id="cb19-5"><a href="regex.html#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 x 2</span></span>
 <span id="cb19-6"><a href="regex.html#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   academic `n()`</span></span>
@@ -777,9 +777,9 @@ parentheses will refer to the complete group. <code>"(\\s[:alpha:]+\\.)*"</code>
 there to be no additional title or multiple ones. Appending this to the regular
 expression used in the code above, allows us to select and extract one or more
 titles.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="regex.html#cb20-1" aria-hidden="true" tabindex="-1"></a>names_tbl <span class="sc">%&gt;%</span> </span>
-<span id="cb20-2"><a href="regex.html#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">academic =</span> <span class="fu">str_extract</span>(full_name, <span class="at">pattern =</span> <span class="st">&quot;^[:alpha:]+</span><span class="sc">\\</span><span class="st">.(</span><span class="sc">\\</span><span class="st">s[:alpha:]+</span><span class="sc">\\</span><span class="st">.)*&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-3"><a href="regex.html#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(academic) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="regex.html#cb20-1" aria-hidden="true" tabindex="-1"></a>names_tbl <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="regex.html#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">academic =</span> <span class="fu">str_extract</span>(full_name, <span class="at">pattern =</span> <span class="st">&quot;^[:alpha:]+</span><span class="sc">\\</span><span class="st">.(</span><span class="sc">\\</span><span class="st">s[:alpha:]+</span><span class="sc">\\</span><span class="st">.)*&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb20-3"><a href="regex.html#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(academic) <span class="sc">%&gt;%</span></span>
 <span id="cb20-4"><a href="regex.html#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">n</span>())</span>
 <span id="cb20-5"><a href="regex.html#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 5 x 2</span></span>
 <span id="cb20-6"><a href="regex.html#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   academic        `n()`</span></span>
