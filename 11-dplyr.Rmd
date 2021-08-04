@@ -460,3 +460,76 @@ their police reports.
 ``` {r, include = FALSE}
 save(reports, reports_fyears, file = "reports_cleaned.RData")
 ```
+
+
+## Exporting tables
+
+Exporting the results of our analysis -- e.g. summary statistics computed with
+`summarise()` -- sadly is not as straightforward as one might think or hope. We
+can always copy and paste values from the output into Word or other pieces of
+software we might use for writing a report. But this is cumbersome and error
+prone.
+
+One way of directly exporting tables we already know about is writing them to a
+.csv file. For more on this please review section \@ref(CSV). These can be
+imported into Excel and also possibly directly into Word. As I am not an active
+Microsoft Office user, I can only give you limited advice on this point. This
+may be a quick way of exporting the values of a table and importing them into
+Office, but we have to do all the formatting in the external software and may
+have to repeat the formatting procedure every time the values change. So we
+should make sure that all errors have been fixed and the analysis is final
+before exporting to .csv.
+
+In this example we save the number of police reports by year for the districts
+"Mitte" and "Friedrichshain-Kreuzberg" we computed earlier into a .csv file:
+
+``` {r}
+reports_fyears %>% 
+  filter(district == "Mitte" | district == "Friedrichshain-Kreuzberg") %>% 
+  group_by(district, year) %>% 
+  summarize(reports = n()) %>% 
+  write_csv("reports_year_M-FK.csv")
+```
+
+For reasons unknown to anyone but Microsoft, importing a .csv file that uses
+commas as the delimiter can actually be quite tricky on a German Windows
+installation if you are using Microsoft Office. Using Libre Office fixes this,
+but if you want to use Microsoft Office on a German system you might have to use
+semicolons as the delimiter by saving the file with `write_csv2()`.
+
+### Further resources
+
+A multitude of packages that provide functions for formatting and writing tables
+to different formats exist in the R world. To go into details is beyond the
+scope of this introduction, but I want to give you some pointers at least.
+
+If you want to skip importing a .csv into Microsoft Office, you may be
+interested in packages that allow writing directly to .xlsx files. Two options
+are:
+
+* writexl: <https://cran.r-project.org/web/packages/writexl/index.html>{target="_blank"}
+* openxlsx: <https://cran.r-project.org/web/packages/openxlsx/index.html>{target="_blank"}
+
+A way to directly produce tables in the .docx format is provided by the
+flextable package: <https://davidgohel.github.io/flextable/>{target="_blank"}
+
+If your are working with LaTeX, the huxtable package can directly output .tex
+files: <https://hughjonesd.github.io/huxtable/>{target="_blank"}
+
+If you want to circumvent using external software for producing reports
+completely, R Markdown may be of interest to you. This allows you to write your
+report and your R code in one document and write it to .pdf or a range of other
+formats. The produced file includes all the output from your code that you want
+to report, i.e. code, plots and tables. Some resources on R Markdown can be
+found here:
+
+* Introduction on the RStudio website: <https://rmarkdown.rstudio.com/lesson-1.html>{target_"blank"}
+* The R Markdown cheat sheet: <https://raw.githubusercontent.com/rstudio/cheatsheets/master/rmarkdown-2.0.pdf>{target="_blank"}
+* Chapter on R Markdown in "R for Data Science" by Hadley Wickham and Garrett Grolemund: <https://r4ds.had.co.nz/r-markdown.html>{target="_blank"}
+* "R Markdown Cookbook" by Yihui Xie, Christophe Dervieux, Emily Riederer: <https://bookdown.org/yihui/rmarkdown-cookbook/>{target="_blank"}
+
+The website your are viewing right now, as well as many of the linked resources,
+are built with the bookdown package, which extends the functionality of R
+Markdown.
+
+* "bookdown: Authoring Books and Technical Documents with R Markdown" by Yihui Xie: <https://bookdown.org/yihui/bookdown/>{target="_blank"}

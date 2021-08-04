@@ -408,3 +408,67 @@ and home-schooling.
 While some of these interpretations may seem reasonable, remember that we do not
 actually have enough information to draw any solid conclusions on either the
 number and distribution of crimes in Berlin or the working hours of the PR team.
+
+
+
+## Exporting plots
+
+Having created a beautiful plot, we have to start thinking about how to export
+it to a format we can use in an external piece of software, e.g. Word or LaTeX.
+The ggplot2 function `ggsave()` provides this functionality in an easy syntax.
+
+If we only provide a file name as its first argument, `ggsave()` defaults to
+saving the last plot created. Besides choosing a concise name for the file, we
+also have to decide on a format. In general I would advice on using vector
+graphics, e.g. .eps or .svg, for saving your plots, as these are scalable. The
+advantage being that you will be able to increase and decrease the size of the
+graphic in the software you chose for writing a document, without sacrificing
+image quality. Formats that are based on saving a graphic as pixels, like .png
+or .jpeg, will use compression, already lowering the image quality. Furthermore,
+increasing the size of such a graphic, will result in a blurry image. Decreasing
+the size works better, but will often also introduce graphical artefacts.
+
+We can set the format directly in the file name's extension. Here we save the
+last created plot (Distribution of police reports over time of day by year) as
+an .eps file. We could also provide a path argument. If we do not, the file is
+saved in the current working directory.
+
+``` {r}
+ggsave("distr_preports.eps")
+```
+
+If we want to export graphics in this manner, we have to use `ggsave()` directly
+after creating a plot. An alternative would be to assign plots to objects which
+can then be exported at a later point in the code. Here we assign two plots to
+two different objects and use `ggsave()` and it's plot argument to specify the
+objects to be saved. Note that you will not get any plotted output in this way.
+To see the plot, we can always call the created object by typing it's name in
+the console. I would advice building the plot until you are satisfied and only
+then assign it to an object.
+
+``` {r}
+distr_reports_day <- ggplot(data = reports_fyears, aes(x = period_to_seconds(time))) +
+  geom_histogram() +
+  scale_x_continuous(breaks = c(6 * 60 * 60, 9 * 60 * 60, 12 * 60 * 60,
+                                15 * 60 * 60, 18 * 60 * 60),
+                     labels = c("6:00", "9:00", "12:00", "15:00", "18:00")
+                     ) +
+  labs(x = "Time of Day",
+       y = "Reports",
+       title = "Distribution of police reports over time of day") +
+  geom_vline(aes(xintercept = mean_time), colour = "red")
+
+n_reports_district <- reports_fyears %>% 
+  drop_na(district) %>% 
+  group_by(district) %>% 
+  summarize(reports = n()) %>% 
+  ggplot(aes(x = reports, y = reorder(district, reports))) +
+    geom_col()
+
+ggsave("reports_timeofday.eps", plot = distr_reports_day)
+ggsave("reports_per_district.eps", plot = n_reports_district)
+```
+
+There are additional arguments that can be set. Arguments that control the size
+and resolution of the output may be of particular interest when saving a file in
+a format that is based on pixels. For more information see `?ggsave()`.
