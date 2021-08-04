@@ -12,7 +12,7 @@ save the scraping results locally to be reused without the need to scrape the
 data again. Most data files you will deal with online are CSV files. To begin we
 will talk briefly about what CSV files are and how we can use them in R.
 
-## CSV files
+## CSV files {#CSV}
 
 *CSV* stands for "comma-separated values". While they are limited to the display
 of two-dimensional tables, their simplicity and portability makes CSV files one
